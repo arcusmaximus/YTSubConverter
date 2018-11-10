@@ -15,11 +15,11 @@ YTSubConverter works around these problems as follows:
 * Inserts zero-width spaces between differently formatted sections to make coloring work everywhere without affecting text layout.
 
 ## Usage
-YTSubConverter is a command line tool, but you don't need to open a command prompt to use it.
+At its core, YTSubConverter is an .ass -> .rt converter. You can create .ass subtitles using e.g. [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the formatting before uploading.
 
 The tool has two functions:
-* If you drag&drop an .ass file onto it, it'll create an .rt file that's ready for uploading to YouTube.
-* If you drag&drop an .sbv file onto it, it'll create an .srt file that's ready for opening in a subtitle editing program (and saving to .ass afterwards). This feature is handy for adding formatting to subtitles that were created in YouTube's built-in editor; you can click the "Download" button to obtain the .sbv file.
+* If you drag&drop an .ass file onto the .exe, it'll create an .rt file that's ready for uploading to YouTube.
+* If you drag&drop an .sbv file, it'll create an .srt file that's ready for opening in a subtitle editing program (and saving to .ass afterwards). This feature is handy for adding formatting to subtitles that were created in YouTube's built-in editor; you can click the "Download" button to obtain the .sbv file.
 
 ## Formatting support
 YouTube only supports bold, italic, underline and coloring when using .rt files. Correspondingly, YTSubConverter only reads `{\b}`, `{\i}`, `{\u}` and `{\c}` tags from .ass files and ignores any others.
