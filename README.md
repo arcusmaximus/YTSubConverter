@@ -8,7 +8,7 @@ YouTube's built-in subtitle editor does not support formatting of any kind. Howe
 
 Of course, you could create such an .rt file using one of the many existing conversion tools. However, conversion alone is not enough to make the subtitles display correctly on YouTube:
 * Uploaded subtitles are shown with a delay of approximately 60ms.
-* If you have two adjacent `<font>...</font>` segments in an .rt file, the formatting of the second one will be ignored. (For example, `<font color="red">One</font><font color="blue">Two</font>` will result in a red "One" and a *white* "Two", but if a space is inserted between the first `</font>` and the second `<font>`, both words will be colored.)
+* If you have two adjacent `<font>...</font>` segments in an .rt file, the formatting of the second one will be ignored. For example, `<font color="red">One</font><font color="blue">Two</font>` will result in a red "One" and a *white* "Two", but if a space is inserted between the first `</font>` and the second `<font>`, both words will be colored.
 
 YTSubConverter works around these problems as follows:
 * Shifts all timings by -60ms to compensate for the delay.
