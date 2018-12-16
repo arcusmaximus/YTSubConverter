@@ -29,7 +29,7 @@ Some things to keep in mind while creating your subtitles:
 
 ![Style options](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/style-options.png)
 
-Apart from converting from .ass to .ytt, the tool can also convert from .sbv (the format you get when downloading subs from YouTube's built-in editor) to .srt. This allows you to download existing, unstyled subs and add styling to them. Simply drag the .sbv file onto the window, click Convert, and open the .srt file in Aegisub.
+Apart from converting from .ass to .ytt, the tool can also convert from .sbv (the format you get when downloading subs from YouTube's built-in editor) to .srt. This allows you to download existing, unstyled subs and add styling to them. Simply open the .sbv file, click Convert, and open the resulting .srt file in Aegisub.
 
 ## ASS feature support
 YTSubConverter supports .ass styles as well as the following override tags:
@@ -37,16 +37,16 @@ YTSubConverter supports .ass styles as well as the following override tags:
 * `{\i}` - italic
 * `{\u}` - underline
 * `{\fn}` - font. YouTube only allows the following fonts:
-** Carrois Gothic SC
-** Comic Sans MS
-** Courier New
-** Deja Vu Sans Mono
-** Monotype Corsiva
-** Times New Roman
-** YouTube Noto (default)
+  * Carrois Gothic SC
+  * Comic Sans MS
+  * Courier New
+  * Deja Vu Sans Mono
+  * Monotype Corsiva
+  * Times New Roman
+  * YouTube Noto (default)
 * `{\c}`/`{\1c}` - text color
-* `{\3c}` - glow/background color
-* `{\4c}` - glow/shadow color
+* `{\3c}` - outline color
+* `{\4c}` - shadow color
 * `{\1a}` - text transparency
 * `{\3a}` - background transparency
 * `{\pos}` - position
