@@ -114,7 +114,7 @@ namespace Arc.YTSubConverter.Ass
         private static ExtendedLine ParseLine(AssDialogue dialogue, AssStyle style, AssStyleOptions styleOptions)
         {
             DateTime startTime = SnapTimeToFrame(dialogue.Start.AddMilliseconds(33));
-            DateTime endTime = SnapTimeToFrame(dialogue.End);
+            DateTime endTime = SnapTimeToFrame(dialogue.End).AddMilliseconds(33);
             ExtendedLine line = new ExtendedLine(startTime, endTime) { AnchorPoint = style.AnchorPoint };
 
             TagContext context = new TagContext
@@ -354,9 +354,9 @@ namespace Arc.YTSubConverter.Ass
             ExtendedLine line = context.Line;
             line.UseFade = true;
 
-            line.FadeInitialAlpha = (int)args[0];
-            line.FadeMidAlpha = (int)args[1];
-            line.FadeFinalAlpha = (int)args[2];
+            line.FadeInitialAlpha = 255 - (int)args[0];
+            line.FadeMidAlpha = 255 - (int)args[1];
+            line.FadeFinalAlpha = 255 - (int)args[2];
 
             line.FadeInStartTime = line.Start.AddMilliseconds(args[3]);
             line.FadeInEndTime = line.Start.AddMilliseconds(args[4]);

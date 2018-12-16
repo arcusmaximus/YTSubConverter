@@ -32,7 +32,14 @@ Some things to keep in mind while creating your subtitles:
 Apart from converting from .ass to .ytt, the tool can also convert from .sbv (the format you get when downloading subs from YouTube's built-in editor) to .srt. This allows you to download existing, unstyled subs and add styling to them. Simply open the .sbv file, click Convert, and open the resulting .srt file in Aegisub.
 
 ## ASS feature support
-YTSubConverter supports .ass styles as well as the following override tags:
+YTSubConverter supports the following .ass style features:
+* Font name
+* Bold, italic, underline
+* Primary, outline and shadow color
+* Alignment
+* Outline and shadow thickness (only checking whether the value is 0 or greater than 0)
+
+It also supports the following override tags:
 * `{\b}` - bold
 * `{\i}` - italic
 * `{\u}` - underline
@@ -44,7 +51,7 @@ YTSubConverter supports .ass styles as well as the following override tags:
   * Monotype Corsiva
   * Times New Roman
   * YouTube Noto (default)
-* `{\c}`/`{\1c}` - text color
+* `{\c}` or `{\1c}` - text color
 * `{\3c}` - outline color
 * `{\4c}` - shadow color
 * `{\1a}` - text transparency
@@ -52,10 +59,15 @@ YTSubConverter supports .ass styles as well as the following override tags:
 * `{\pos}` - position
 * `{\k}` - karaoke segment duration
 * `{\r}` - reset to current style
-* `{\fad}` - simple fade
-* `{\fade}` - complex fade
+* `{\fad}` - simple fade (best used in combination with `{\pos}`)
+* `{\fade}` - complex fade (best used in combination with `{\pos}`)
 
-Unsupported tags will be ignored.
+Unsupported tags are ignored.
+
+## YouTube limitations
+Styled subtitles on YouTube currently have the following bugs and limitations:
+* You can't use multiple different styles within a subtitle. If you try this, one of the styles will apply to the entire sub, or the sub will lose its formatting altogether.
+* Subtitles positioned off-center will move out towards the sides in theater mode, possibly even hanging out of the video frame.
 
 ## Details about uploading
 Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles for it. In both cases, it's important to immediately submit the subtitles after uploading; if you make any change in the built-in editor, all styling information will be lost.
