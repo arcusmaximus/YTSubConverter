@@ -35,19 +35,19 @@ namespace Arc.YTSubConverter.Ass
             return Values[Section.Format[field]];
         }
 
-        public int GetInt(string field)
+        public int GetInt(string field, int defaultValue = 0)
         {
-            return int.Parse(GetString(field));
+            return int.TryParse(GetString(field), out int result) ? result : defaultValue;
         }
 
-        public float GetFloat(string field)
+        public float GetFloat(string field, float defaultValue = 0)
         {
-            return float.Parse(GetString(field), CultureInfo.InvariantCulture);
+            return float.TryParse(GetString(field), NumberStyles.Any, CultureInfo.InvariantCulture, out float result) ? result : defaultValue;
         }
 
-        public bool GetBool(string field)
+        public bool GetBool(string field, bool defaultValue = false)
         {
-            return GetInt(field) != 0;
+            return Convert.ToBoolean(GetInt(field, Convert.ToInt32(defaultValue)));
         }
 
         public Color GetColor(string field)

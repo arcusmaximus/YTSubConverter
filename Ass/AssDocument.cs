@@ -38,6 +38,10 @@ namespace Arc.YTSubConverter.Ass
         public AssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
         {
             Dictionary<string, AssSection> fileSections = ReadDocument(filePath);
+
+            AssSection infoSection = fileSections["Script Info"];
+            VideoDimensions = new Size(infoSection.GetItemInt("PlayResX", 384), infoSection.GetItemInt("PlayResY", 288));
+
             Styles = fileSections["V4+ Styles"].MapItems("Style", i => new AssStyle(i))
                                                .ToList();
 
