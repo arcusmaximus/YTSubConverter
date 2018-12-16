@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using Arc.YTSubConverter.Ass;
 
 namespace Arc.YTSubConverter
 {
     internal abstract class SubtitleDocument
     {
-        public List<Line> Lines { get; } = new List<Line>();
+        public static readonly DateTime TimeBase = new DateTime(2000, 1, 1);
 
         protected SubtitleDocument()
         {
@@ -14,8 +16,17 @@ namespace Arc.YTSubConverter
 
         protected SubtitleDocument(SubtitleDocument doc)
         {
+            VideoDimensions = doc.VideoDimensions;
             Lines.AddRange(doc.Lines);
         }
+
+        public Size VideoDimensions
+        {
+            get;
+            set;
+        }
+
+        public List<Line> Lines { get; } = new List<Line>();
 
         public static SubtitleDocument Load(string filePath)
         {
@@ -37,10 +48,9 @@ namespace Arc.YTSubConverter
 
         public void CloseGaps()
         {
-            TimeSpan threshold = new TimeSpan(0, 0, 0, 0, 50);
             for (int i = 0; i < Lines.Count - 1; i++)
             {
-                if (Lines[i + 1].Start - Lines[i].End < threshold)
+                if (Math.Abs((Lines[i + 1].Start - Lines[i].End).TotalMilliseconds) < 50)
                     Lines[i].End = Lines[i + 1].Start;
             }
         }
@@ -49,12 +59,15 @@ namespace Arc.YTSubConverter
         {
             foreach (Line line in Lines)
             {
-                line.Start += offset;
-                line.End += offset;
+                line.Start = Shift(line.Start, offset);
+                line.End = Shift(line.End, offset);
             }
+        }
 
-            if (Lines.Count > 0 && Lines[0].Start.Year < 2000)
-                Lines[0].Start = new DateTime(2000, 1, 1);
+        private static DateTime Shift(DateTime time, TimeSpan offset)
+        {
+            time += offset;
+            return time < TimeBase ? TimeBase : time;
         }
 
         public virtual void Save(string filePath)

@@ -1,8 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Arc.YTSubConverter
 {
-    internal class Section
+    internal class Section : ICloneable
     {
         public Section(string text)
         {
@@ -15,7 +16,7 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public Color Color
+        public string Font
         {
             get;
             set;
@@ -39,9 +40,60 @@ namespace Arc.YTSubConverter
             set;
         }
 
+        public Color ForeColor
+        {
+            get;
+            set;
+        }
+
+        public Color BackColor
+        {
+            get;
+            set;
+        }
+
+        public Color ShadowColor
+        {
+            get;
+            set;
+        }
+
+        public ShadowType ShadowType
+        {
+            get;
+            set;
+        }
+
+        public TimeSpan TimeOffset
+        {
+            get;
+            set;
+        }
+
         public override string ToString()
         {
             return Text;
+        }
+
+        public virtual object Clone()
+        {
+            Section newSection = new Section(Text);
+            newSection.Assign(this);
+            return newSection;
+        }
+
+        protected virtual void Assign(Section section)
+        {
+            Text = section.Text;
+            Font = section.Font;
+            Bold = section.Bold;
+            Italic = section.Italic;
+            Underline = section.Underline;
+            ForeColor = section.ForeColor;
+            BackColor = section.BackColor;
+            ShadowColor = section.ShadowColor;
+            ShadowType = section.ShadowType;
+            TimeOffset = section.TimeOffset;
         }
     }
 }

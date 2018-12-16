@@ -73,18 +73,18 @@ namespace Arc.YTSubConverter
             Match match = Regex.Match(timestamps, @"^(\d+):(\d+):(\d+),(\d+) --> (\d+):(\d+):(\d+),(\d+)");
             return (
                 new DateTime(
-                    2000,
-                    1,
-                    1,
+                    TimeBase.Year,
+                    TimeBase.Month,
+                    TimeBase.Day,
                     int.Parse(match.Groups[1].Value),
                     int.Parse(match.Groups[2].Value),
                     int.Parse(match.Groups[3].Value),
                     int.Parse(match.Groups[4].Value)
                 ),
                 new DateTime(
-                    2000,
-                    1,
-                    1,
+                    TimeBase.Year,
+                    TimeBase.Month,
+                    TimeBase.Day,
                     int.Parse(match.Groups[5].Value),
                     int.Parse(match.Groups[6].Value),
                     int.Parse(match.Groups[7].Value),

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace Arc.YTSubConverter
 {
-    internal class Line
+    internal class Line : ICloneable
     {
         public Line(DateTime start, DateTime end)
         {
@@ -45,9 +46,42 @@ namespace Arc.YTSubConverter
             get { return string.Join("", Sections.Select(s => s.Text)); }
         }
 
+        public AnchorPoint? AnchorPoint
+        {
+            get;
+            set;
+        }
+
+        public PointF? Position
+        {
+            get;
+            set;
+        }
+
         public override string ToString()
         {
             return Text;
+        }
+
+        public virtual object Clone()
+        {
+            Line newLine = new Line(Start, End);
+            newLine.Assign(this);
+            return newLine;
+        }
+
+        protected virtual void Assign(Line line)
+        {
+            Start = line.Start;
+            End = line.End;
+            AnchorPoint = line.AnchorPoint;
+            Position = line.Position;
+
+            Sections.Clear();
+            foreach (Section section in line.Sections)
+            {
+                Sections.Add((Section)section.Clone());
+            }
         }
     }
 }
