@@ -117,44 +117,21 @@ namespace Arc.YTSubConverter
         private int SplitOnLineBreaks(int lineIndex)
         {
             Line originalLine = Lines[lineIndex];
-            List<Line> newLines = new List<Line>();
-            Line currentNewLine = null;
-            foreach (Section section in originalLine.Sections)
-            {
-                int start = 0;
-                int end;
-                while (start < section.Text.Length)
-                {
-                    end = section.Text.IndexOf("\r\n", start);
-                    if (end < 0)
-                        end = section.Text.Length;
-
-                    if (currentNewLine == null)
-                    {
-                        currentNewLine = (Line)originalLine.Clone();
-                        currentNewLine.Sections.Clear();
-                        newLines.Add(currentNewLine);
-                    }
-
-                    if (end > start)
-                    {
-                        Section newSection = (Section)section.Clone();
-                        newSection.Text = section.Text.Substring(start, end - start);
-                        currentNewLine.Sections.Add(newSection);
-                    }
-
-                    if (end < section.Text.Length)
-                        currentNewLine = null;
-
-                    start = end + 2;
-                }
-            }
-
-            if (newLines.Count == 1)
+            List<List<Section>> subLines = GetSubLines(originalLine);
+            if (subLines.Count == 1)
                 return 1;
 
-            if (newLines.Count > 2)
+            if (subLines.Count > 2)
                 throw new NotSupportedException($"Centered or right-aligned text can have at most one line break ({originalLine.Text})");
+
+            List<Line> newLines = new List<Line>();
+            foreach (List<Section> sections in subLines)
+            {
+                Line newLine = (Line)originalLine.Clone();
+                newLine.Sections.Clear();
+                newLine.Sections.AddRange(sections);
+                newLines.Add(newLine);
+            }
 
             AnchorPoint anchorPoint = originalLine.AnchorPoint ?? AnchorPoint.BottomCenter;
             if (AnchorPointUtil.IsTopAligned(anchorPoint))
@@ -182,6 +159,42 @@ namespace Arc.YTSubConverter
                 Lines.Insert(lineIndex + i, newLines[i]);
             }
             return newLines.Count;
+        }
+
+        private static List<List<Section>> GetSubLines(Line line)
+        {
+            List<List<Section>> subLines = new List<List<Section>>();
+            List<Section> currentSubLine = null;
+            foreach (Section section in line.Sections)
+            {
+                int start = 0;
+                int end;
+                while (start < section.Text.Length)
+                {
+                    end = section.Text.IndexOf("\r\n", start);
+                    if (end < 0)
+                        end = section.Text.Length;
+
+                    if (currentSubLine == null)
+                    {
+                        currentSubLine = new List<Section>();
+                        subLines.Add(currentSubLine);
+                    }
+
+                    if (end > start)
+                    {
+                        Section newSection = (Section)section.Clone();
+                        newSection.Text = section.Text.Substring(start, end - start);
+                        currentSubLine.Add(newSection);
+                    }
+
+                    if (end < section.Text.Length)
+                        currentSubLine = null;
+
+                    start = end + 2;
+                }
+            }
+            return subLines;
         }
 
         private void MakeLeftAligned(Line line)
@@ -274,63 +287,135 @@ namespace Arc.YTSubConverter
             if (originalLine.Sections.Count == 1 && !ColorUtil.IsDark(originalLine.Sections[0].ForeColor))
                 return 1;
 
+            AnchorPoint anchorPoint = originalLine.AnchorPoint ?? AnchorPoint.BottomCenter;
+            if (AnchorPointUtil.IsMiddleAligned(anchorPoint) && originalLine.Sections.Any(s => s.Text.Contains("\r\n")))
+                throw new NotSupportedException($"Vertically centered lines with multiple styles can't have line breaks ({originalLine.Text})");
+
             Lines.RemoveAt(lineIndex);
             int numReplacementLines = 0;
 
             // Duplicate the line for each section
-            for (int numSections = originalLine.Sections.Count; numSections >= 1; numSections--)
+            List<List<Section>> subLines = GetSubLines(originalLine);
+            int startSubLineIdx, endSubLineIdx, subLineIdxStep;
+            if (AnchorPointUtil.IsTopAligned(anchorPoint))
             {
-                Line colorLine = (Line)originalLine.Clone();
-                colorLine.Sections.Clear();
-
-                Section colorSection = (Section)originalLine.Sections[numSections - 1].Clone();
-                colorLine.Sections.Add(colorSection);
-
-                colorSection.Text = string.Join("", originalLine.Sections.Take(numSections).Select(s => s.Text));
-
-                // Bottom-aligned text needs the line breaks of the excluded sections to push it up to where it needs to be.
-                colorSection.Text += "\r\n".Repeat(originalLine.Sections.Skip(numSections).Sum(s => s.Text.CountOccurrences("\r\n")));
-
-                // Add a non-breaking space to prevent these trailing line breaks from getting trimmed on mobile
-                if (colorSection.Text.EndsWith("\r\n"))
-                    colorSection.Text += " ";
-
-                if (numReplacementLines > 0)
-                {
-                    // The first layer already gave us the background, so we don't need to include it again in
-                    // the following layers - unless, of course, the current layer needs a different background than the one before.
-                    if (colorSection.BackColor == originalLine.Sections[numSections].BackColor)
-                        colorSection.BackColor = ColorUtil.ChangeColorAlpha(colorSection.BackColor, 0);
-
-                    // Same for the shadow
-                    if (colorSection.ShadowType == originalLine.Sections[numSections].ShadowType &&
-                        colorSection.ShadowColor == originalLine.Sections[numSections].ShadowColor)
-                    {
-                        colorSection.ShadowType = ShadowType.None;
-                    }
-                }
-
-                Lines.Insert(lineIndex + numReplacementLines, colorLine);
-                numReplacementLines++;
+                startSubLineIdx = subLines.Count - 1;
+                endSubLineIdx = -1;
+                subLineIdxStep = -1;
+            }
+            else
+            {
+                startSubLineIdx = 0;
+                endSubLineIdx = subLines.Count;
+                subLineIdxStep = 1;
             }
 
-            // Add the mobile-only line
-            Line mobileLine = (Line)originalLine.Clone();
-            mobileLine.Sections.RemoveRange(1, mobileLine.Sections.Count - 1);
+            Section prevSection = null;
+            for (int subLineIdx = startSubLineIdx; subLineIdx != endSubLineIdx; subLineIdx += subLineIdxStep)
+            {
+                List<Line> newLines = CreateColoredLinesFromSubLine(originalLine, subLines, subLineIdx, ref prevSection);
+                foreach (Line newLine in newLines)
+                {
+                    Lines.Insert(lineIndex + numReplacementLines, newLine);
+                    numReplacementLines++;
+                }
 
-            Section mobileSection = mobileLine.Sections[0];
-            mobileSection.Text = string.Join("", originalLine.Sections.Select(s => s.Text));
-            if (ColorUtil.IsDark(mobileSection.ForeColor))
-                mobileSection.ForeColor = ColorUtil.Brighten(mobileSection.ForeColor);
-
-            mobileSection.BackColor = ColorUtil.ChangeColorAlpha(mobileSection.BackColor, 0);
-            mobileSection.ForeColor = ColorUtil.ChangeColorAlpha(mobileSection.ForeColor, 0);
-            mobileSection.ShadowType = ShadowType.None; // Edges don't follow foreground opacity, so explicitly disable
-
-            Lines.Insert(lineIndex + numReplacementLines, mobileLine);
-            numReplacementLines++;
+                List<Section> subLine = subLines[subLineIdx];
+                if (subLine.Count > 1 || subLine.Any(s => ColorUtil.IsDark(s.ForeColor)))
+                {
+                    Line mobileLine = CreateMobileLineFromSubLine(originalLine, subLines, subLineIdx);
+                    Lines.Insert(lineIndex + numReplacementLines, mobileLine);
+                    numReplacementLines++;
+                }
+            }
 
             return numReplacementLines;
+        }
+
+        private List<Line> CreateColoredLinesFromSubLine(Line originalLine, List<List<Section>> subLines, int subLineIdx, ref Section prevSection)
+        {
+            List<Line> newLines = new List<Line>();
+            List<Section> subLineSections = subLines[subLineIdx];
+            for (int numSections = subLineSections.Count; numSections >= 1; numSections--)
+            {
+                Section newSection = (Section)subLineSections[numSections - 1].Clone();
+                newSection.Text = string.Join("", subLineSections.Take(numSections).Select(s => s.Text));
+
+                if (prevSection != null)
+                {
+                    // If the previous layer already gave us the background we need, we don't need to render it again
+                    if (newSection.BackColor == prevSection.BackColor)
+                        newSection.BackColor = ColorUtil.ChangeColorAlpha(newSection.BackColor, 0);
+
+                    // Same for the shadow
+                    if (newSection.ShadowType == prevSection.ShadowType && newSection.ShadowColor == prevSection.ShadowColor)
+                        newSection.ShadowType = ShadowType.None;
+                }
+
+                PadSectionForColoring(newSection, originalLine, subLines, subLineIdx);
+
+                Line newLine = (Line)originalLine.Clone();
+                newLine.Sections.Clear();
+                newLine.Sections.Add(newSection);
+                newLines.Add(newLine);
+
+                prevSection = subLineSections[numSections - 1];
+            }
+            return newLines;
+        }
+
+        private Line CreateMobileLineFromSubLine(Line originalLine, List<List<Section>> subLines, int subLineIdx)
+        {
+            List<Section> subLine = subLines[subLineIdx];
+            Section newSection = (Section)subLine[0].Clone();
+            newSection.Text = string.Join("", subLine.Select(s => s.Text));
+            if (ColorUtil.IsDark(newSection.ForeColor))
+                newSection.ForeColor = ColorUtil.Brighten(newSection.ForeColor);
+
+            newSection.BackColor = ColorUtil.ChangeColorAlpha(newSection.BackColor, 0);
+            newSection.ForeColor = ColorUtil.ChangeColorAlpha(newSection.ForeColor, 0);
+            newSection.ShadowType = ShadowType.None; // Edges don't follow foreground opacity, so explicitly disable
+
+            PadSectionForColoring(newSection, originalLine, subLines, subLineIdx);
+
+            Line newLine = (Line)originalLine.Clone();
+            newLine.Sections.Clear();
+            newLine.Sections.Add(newSection);
+            return newLine;
+        }
+
+        private void PadSectionForColoring(Section newSection, Line originalLine, List<List<Section>> subLines, int subLineIdx)
+        {
+            bool topAligned = AnchorPointUtil.IsTopAligned(originalLine.AnchorPoint ?? AnchorPoint.BottomCenter);
+            if (newSection.BackColor.A == 0)
+            {
+                // If the background color is empty, we can just add a bunch of line breaks to get the line in place
+                // (and a non-breaking space to prevent those line breaks from getting trimmed on mobile)
+                if (topAligned)
+                {
+                    if (subLineIdx > 0)
+                        newSection.Text = " " + "\r\n".Repeat(subLineIdx) + newSection.Text;
+                }
+                else
+                {
+                    if (subLineIdx < subLines.Count - 1)
+                        newSection.Text += "\r\n".Repeat(subLines.Count - 1 - subLineIdx) + " ";
+                }
+            }
+            else
+            {
+                // Otherwise, we need to repeat the whole text
+                if (topAligned)
+                {
+                    IEnumerable<string> remainingSubLines = subLines.Take(subLineIdx).Select(l => string.Join("", l.Select(s => s.Text)));
+                    newSection.Text = string.Join("\r\n", remainingSubLines) + "\r\n" + newSection.Text;
+                }
+                else
+                {
+                    IEnumerable<string> remainingSubLines = subLines.Skip(subLineIdx + 1).Select(l => string.Join("", l.Select(s => s.Text)));
+                    newSection.Text = newSection.Text + "\r\n" + string.Join("\r\n", remainingSubLines);
+                }
+            }
         }
 
         private void WriteHead(XmlWriter writer, List<Line> positions, List<Section> pens)
@@ -450,7 +535,11 @@ namespace Arc.YTSubConverter
                 return;
 
             writer.WriteStartElement("p");
-            writer.WriteAttributeString("t", ((int)(line.Start - TimeBase).TotalMilliseconds).ToString());
+
+            // The mobile player does not respect the positioning of, and sometimes does not display,
+            // subtitles that start at 0ms. Use 1ms instead.
+            writer.WriteAttributeString("t", Math.Max((int)(line.Start - TimeBase).TotalMilliseconds, 1).ToString());
+
             writer.WriteAttributeString("d", ((int)(line.End - line.Start).TotalMilliseconds).ToString());
             if (line.Sections.Count == 1)
                 writer.WriteAttributeString("p", penIds[line.Sections[0]].ToString());
