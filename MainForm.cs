@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using Arc.YTSubConverter.Ass;
+using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter
 {
     public partial class MainForm : Form
     {
-        private const string StyleOptionsFileName = "StyleOptions.xml";
-
         private Dictionary<string, AssStyleOptions> _styleOptions;
         private Dictionary<string, AssStyle> _styles;
 
@@ -20,9 +19,14 @@ namespace Arc.YTSubConverter
         {
             InitializeComponent();
 
-            LoadStyleOptions();
+            _styleOptions = AssStyleOptionsList.Load().ToDictionary(o => o.Name);
             ExpandCollapseStyleOptions();
             ClearUi();
+        }
+
+        private AssStyleOptions SelectedStyleOptions
+        {
+            get { return (AssStyleOptions)_lstStyles.SelectedItem; }
         }
 
         private void _chkStyleOptions_CheckedChanged(object sender, EventArgs e)
@@ -37,10 +41,10 @@ namespace Arc.YTSubConverter
 
         private void _btnBrowse_Click(object sender, EventArgs e)
         {
-            if (_openFileDialog.ShowDialog() != DialogResult.OK)
+            if (_dlgOpenFile.ShowDialog() != DialogResult.OK)
                 return;
 
-            LoadFile(_openFileDialog.FileName);
+            LoadFile(_dlgOpenFile.FileName);
         }
 
         private void LoadFile(string filePath)
@@ -95,7 +99,7 @@ namespace Arc.YTSubConverter
 
         private void _lstStyles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            AssStyleOptions options = (AssStyleOptions)_lstStyles.SelectedItem;
+            AssStyleOptions options = SelectedStyleOptions;
             if (options == null)
             {
                 _spltStyleOptions.Panel2.Enabled = false;
@@ -110,6 +114,14 @@ namespace Arc.YTSubConverter
             _radGlow.Checked = options.ShadowType == ShadowType.Glow;
             _radSoftShadow.Checked = options.ShadowType == ShadowType.SoftShadow;
             _radHardShadow.Checked = options.ShadowType == ShadowType.HardShadow;
+
+            Color currentWordTextColor = options.CurrentWordTextColor;
+            Color currentWordShadowColor = options.CurrentWordShadowColor;
+
+            _chkKaraoke.Checked = options.IsKaraoke;
+            _chkHighlightCurrentWord.Checked = !currentWordShadowColor.IsEmpty;
+            _txtCurrentWordTextColor.Text = ColorTranslator.ToHtml(currentWordTextColor);
+            _txtCurrentWordGlowColor.Text = ColorTranslator.ToHtml(currentWordShadowColor);
             UpdateStylePreview();
         }
 
@@ -118,7 +130,7 @@ namespace Arc.YTSubConverter
             if (!_radGlow.Checked)
                 return;
 
-            ((AssStyleOptions)_lstStyles.SelectedItem).ShadowType = ShadowType.Glow;
+            SelectedStyleOptions.ShadowType = ShadowType.Glow;
             UpdateStylePreview();
         }
 
@@ -127,7 +139,7 @@ namespace Arc.YTSubConverter
             if (!_radSoftShadow.Checked)
                 return;
 
-            ((AssStyleOptions)_lstStyles.SelectedItem).ShadowType = ShadowType.SoftShadow;
+            SelectedStyleOptions.ShadowType = ShadowType.SoftShadow;
             UpdateStylePreview();
         }
 
@@ -136,15 +148,45 @@ namespace Arc.YTSubConverter
             if (!_radHardShadow.Checked)
                 return;
 
-            ((AssStyleOptions)_lstStyles.SelectedItem).ShadowType = ShadowType.HardShadow;
+            SelectedStyleOptions.ShadowType = ShadowType.HardShadow;
+            UpdateStylePreview();
+        }
+
+        private void _chkKaraoke_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectedStyleOptions.IsKaraoke = _chkKaraoke.Checked;
+            _chkHighlightCurrentWord.Enabled = _chkKaraoke.Checked;
+            _chkHighlightCurrentWord.Checked = false;
+            UpdateStylePreview();
+        }
+
+        private void _chkHighlightCurrentWord_CheckedChanged(object sender, EventArgs e)
+        {
+            _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
+            _txtCurrentWordTextColor.Text = ColorTranslator.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].PrimaryColor : Color.Empty);
+
+            _txtCurrentWordGlowColor.Enabled = _chkHighlightCurrentWord.Checked;
+            _txtCurrentWordGlowColor.Text = ColorTranslator.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].ShadowColor : Color.Empty);
+
+            UpdateStylePreview();
+        }
+
+        private void _txtCurrentWordTextColor_TextChanged(object sender, EventArgs e)
+        {
+            SelectedStyleOptions.CurrentWordTextColor = ColorTranslator.FromHtml(_txtCurrentWordTextColor.Text);
+            UpdateStylePreview();
+        }
+
+        private void _txtCurrentWordGlowColor_TextChanged(object sender, EventArgs e)
+        {
+            SelectedStyleOptions.CurrentWordShadowColor = ColorTranslator.FromHtml(_txtCurrentWordGlowColor.Text);
             UpdateStylePreview();
         }
 
         private void UpdateStylePreview()
         {
-            AssStyleOptions options = (AssStyleOptions)_lstStyles.SelectedItem;
-            AssStyle style = _styles?[options.Name];
-            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, options);
+            AssStyle style = _styles?[SelectedStyleOptions.Name];
+            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions);
         }
 
         private async void _btnConvert_Click(object sender, EventArgs e)
@@ -156,9 +198,6 @@ namespace Arc.YTSubConverter
                 {
                     AssDocument inputDoc = new AssDocument(_txtInputFile.Text, (List<AssStyleOptions>)_lstStyles.DataSource);
                     YttDocument outputDoc = new YttDocument(inputDoc);
-                    outputDoc.Shift(new TimeSpan(0, 0, 0, 0, -60));
-                    outputDoc.CloseGaps();
-
                     outputFilePath = Path.ChangeExtension(_txtInputFile.Text, ".ytt");
                     outputDoc.Save(outputFilePath);
                 }
@@ -211,33 +250,7 @@ namespace Arc.YTSubConverter
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveStyleOptions();
-        }
-
-        private void LoadStyleOptions()
-        {
-            if (!File.Exists(StyleOptionsFileName))
-            {
-                _styleOptions = new Dictionary<string, AssStyleOptions>();
-                return;
-            }
-
-            using (Stream stream = File.Open(StyleOptionsFileName, FileMode.Open, FileAccess.Read))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
-                AssStyleOptionsList options = (AssStyleOptionsList)serializer.Deserialize(stream);
-                _styleOptions = options.Options.ToDictionary(o => o.Name);
-            }
-        }
-
-        private void SaveStyleOptions()
-        {
-            using (Stream stream = File.Open(StyleOptionsFileName, FileMode.Create, FileAccess.Write))
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
-                AssStyleOptionsList options = new AssStyleOptionsList(_styleOptions.Values);
-                serializer.Serialize(stream, options);
-            }
+            AssStyleOptionsList.Save(_styleOptions.Values);
         }
     }
 }

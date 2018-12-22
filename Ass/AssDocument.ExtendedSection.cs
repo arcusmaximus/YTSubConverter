@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Arc.YTSubConverter.Ass
 {
@@ -9,6 +10,24 @@ namespace Arc.YTSubConverter.Ass
             public ExtendedSection(string text)
                 : base(text)
             {
+            }
+
+            public Color SecondaryColor
+            {
+                get;
+                set;
+            }
+
+            public Color CurrentWordTextColor
+            {
+                get;
+                set;
+            }
+
+            public Color CurrentWordShadowColor
+            {
+                get;
+                set;
             }
 
             public TimeSpan Duration
@@ -28,6 +47,9 @@ namespace Arc.YTSubConverter.Ass
             {
                 base.Assign(section);
                 ExtendedSection extendedSection = (ExtendedSection)section;
+                SecondaryColor = extendedSection.SecondaryColor;
+                CurrentWordTextColor = extendedSection.CurrentWordTextColor;
+                CurrentWordShadowColor = extendedSection.CurrentWordShadowColor;
                 Duration = extendedSection.Duration;
             }
         }

@@ -50,17 +50,19 @@ It also supports the following override tags:
   * Deja Vu Sans Mono
   * Monotype Corsiva
   * Times New Roman
-  * YouTube Noto (default)
-* `{\c}` or `{\1c}` - text color
+  * Roboto (default)
+* `{\c}` or `{\1c}` - regular text color
+* `{\2c}` - unsung karaoke text color
 * `{\3c}` - outline color
 * `{\4c}` - shadow color
-* `{\1a}` - text transparency
+* `{\1a}` - regular text transparency
+* `{\2c}` - unsung karaoke text transparency
 * `{\3a}` - background transparency
 * `{\pos}` - position
 * `{\k}` - karaoke segment duration
 * `{\r}` - reset to current style
-* `{\fad}` - simple fade (best used in combination with `{\pos}`)
-* `{\fade}` - complex fade (best used in combination with `{\pos}`)
+* `{\fad}` - simple fade
+* `{\fade}` - complex fade
 
 Unsupported tags are ignored.
 

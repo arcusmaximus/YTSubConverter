@@ -47,9 +47,32 @@ namespace Arc.YTSubConverter
             return -1;
         }
 
+        public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> predicate)
+        {
+            int index = 0;
+            foreach (T item in items)
+            {
+                if (predicate(item))
+                    return index;
+
+                index++;
+            }
+            return -1;
+        }
+
         public static TValue GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
         {
             dict.TryGetValue(key, out TValue value);
+            return value;
+        }
+
+        public static TValue FetchValue<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key, Func<TValue> getValue)
+        {
+            if (!dict.TryGetValue(key, out TValue value))
+            {
+                value = getValue();
+                dict.Add(key, value);
+            }
             return value;
         }
     }

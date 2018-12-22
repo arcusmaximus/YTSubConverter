@@ -1,4 +1,6 @@
-﻿using Arc.YTSubConverter.Ass;
+﻿using System.Drawing;
+using System.Xml.Serialization;
+using Arc.YTSubConverter.Ass;
 
 namespace Arc.YTSubConverter
 {
@@ -14,7 +16,7 @@ namespace Arc.YTSubConverter
             if (style.HasOutline && !style.HasOutlineBox)
                 ShadowType = ShadowType.Glow;
             else if (style.HasShadow)
-                ShadowType = ShadowType.SoftShadow;
+                ShadowType = ShadowType.Glow;
             else
                 ShadowType = ShadowType.None;
         }
@@ -29,6 +31,40 @@ namespace Arc.YTSubConverter
         {
             get;
             set;
+        }
+
+        public bool IsKaraoke
+        {
+            get;
+            set;
+        }
+
+        [XmlIgnore]
+        public Color CurrentWordTextColor
+        {
+            get;
+            set;
+        }
+
+        [XmlElement("CurrentWordTextColor")]
+        public string CurrentWordTextColorHtml
+        {
+            get { return ColorTranslator.ToHtml(CurrentWordTextColor); }
+            set { CurrentWordTextColor = ColorTranslator.FromHtml(value); }
+        }
+
+        [XmlIgnore]
+        public Color CurrentWordShadowColor
+        {
+            get;
+            set;
+        }
+
+        [XmlElement("CurrentWordShadowColor")]
+        public string CurrentWordShadowColorHtml
+        {
+            get { return ColorTranslator.ToHtml(CurrentWordShadowColor); }
+            set { CurrentWordShadowColor = ColorTranslator.FromHtml(value); }
         }
 
         public override string ToString()

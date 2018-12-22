@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter.Ass
 {
@@ -72,10 +73,10 @@ namespace Arc.YTSubConverter.Ass
 
             private static Color MultiplyColorAlpha(Color color, float factor)
             {
-                if (color == Color.Empty)
+                if (color.IsEmpty)
                     return color;
 
-                return ChangeColorAlpha(color, (int)(color.A * factor));
+                return ColorUtil.ChangeColorAlpha(color, (int)(color.A * factor));
             }
 
             public override object Clone()

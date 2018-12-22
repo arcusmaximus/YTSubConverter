@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NativeMethods.cs" />
+    <Compile Include="SectionFormatComparer.cs" />
+    <Compile Include="Util\AnchorPointUtil.cs" />
     <Compile Include="AssStyleOptions.cs" />
     <Compile Include="AssStyleOptionsList.cs" />
     <Compile Include="Ass\AssDialogue.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="Ass\AssItem.cs" />
     <Compile Include="Ass\AssSection.cs" />
     <Compile Include="Ass\AssStyle.cs" />
+    <Compile Include="Util\ColorUtil.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +76,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StylePreviewGenerator.cs" />
+    <Compile Include="Util\TextUtil.cs" />
     <Compile Include="YttDocument.cs" />
     <Compile Include="RtDocument.cs" />
     <Compile Include="Section.cs" />

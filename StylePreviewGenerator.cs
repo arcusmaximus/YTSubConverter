@@ -31,7 +31,21 @@ namespace Arc.YTSubConverter
             ");
 
             if (options != null)
-                GenerateCss(html, style, options);
+            {
+                GenerateCss(html, "#regular", style, style.PrimaryColor, style.ShadowColor, options.ShadowType);
+                if (options.IsKaraoke)
+                {
+                    GenerateCss(
+                        html,
+                        "#singing",
+                        style,
+                        !options.CurrentWordTextColor.IsEmpty ? options.CurrentWordTextColor : style.PrimaryColor,
+                        !options.CurrentWordShadowColor.IsEmpty ? options.CurrentWordShadowColor : style.ShadowColor,
+                        options.ShadowType
+                    );
+                    GenerateCss(html, "#unsung", style, style.SecondaryColor, style.ShadowColor, options.ShadowType);
+                }
+            }
 
             html.Append(@"
                       </style>
@@ -41,7 +55,12 @@ namespace Arc.YTSubConverter
             ");
 
             if (options != null)
-                html.Append(@"<span id=""preview"">Sample text</span>");
+            {
+                if (options.IsKaraoke)
+                    html.Append(@"<span id=""regular"">This is a</span><span id=""singing"">sample</span><span id=""unsung"">text</span>");
+                else
+                    html.Append(@"<span id=""regular"">Sample text</span>");
+            }
 
             html.Append(@"
                       </div>
@@ -51,11 +70,11 @@ namespace Arc.YTSubConverter
             return html.ToString();
         }
 
-        private static void GenerateCss(StringBuilder html, AssStyle style, AssStyleOptions options)
+        private static void GenerateCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color shadowColor, ShadowType shadowType)
         {
-            html.Append(@"
-                #preview
-                {
+            html.Append($@"
+                {selector}
+                {{
                     padding: 3px;
                     font-size: 12pt;
             ");
@@ -74,7 +93,7 @@ namespace Arc.YTSubConverter
             else
                 html.Append("font-family: 'Arial';");
 
-            html.Append($"color: {ToRgba(style.PrimaryColor)};");
+            html.Append($"color: {ToRgba(foreColor)};");
 
             if (style.HasOutline)
             {
@@ -86,18 +105,18 @@ namespace Arc.YTSubConverter
 
             if (style.HasShadow && (!style.HasOutline || style.OutlineIsBox))
             {
-                switch (options.ShadowType)
+                switch (shadowType)
                 {
                     case ShadowType.Glow:
-                        html.Append($"text-shadow: 0 0 3px {ToHex(style.ShadowColor)};");
+                        html.Append($"text-shadow: 0 0 3px {ToHex(shadowColor)};");
                         break;
 
                     case ShadowType.SoftShadow:
-                        html.Append($"text-shadow: 2px 2px 3px {ToHex(style.ShadowColor)};");
+                        html.Append($"text-shadow: 2px 2px 3px {ToHex(shadowColor)};");
                         break;
 
                     case ShadowType.HardShadow:
-                        html.Append($"text-shadow: 1px 1px 0 {ToHex(style.ShadowColor)};");
+                        html.Append($"text-shadow: 1px 1px 0 {ToHex(shadowColor)};");
                         break;
                 }
             }

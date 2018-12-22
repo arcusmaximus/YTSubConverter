@@ -64,12 +64,6 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public TimeSpan TimeOffset
-        {
-            get;
-            set;
-        }
-
         public override string ToString()
         {
             return Text;
@@ -93,7 +87,6 @@ namespace Arc.YTSubConverter
             BackColor = section.BackColor;
             ShadowColor = section.ShadowColor;
             ShadowType = section.ShadowType;
-            TimeOffset = section.TimeOffset;
         }
     }
 }

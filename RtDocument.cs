@@ -58,7 +58,7 @@ namespace Arc.YTSubConverter
             if (section.Underline)
                 writer.WriteStartElement("u");
 
-            if (section.ForeColor != Color.Empty)
+            if (!section.ForeColor.IsEmpty)
             {
                 writer.WriteStartElement("font");
                 writer.WriteAttributeString("color", $"#{section.ForeColor.R:X02}{section.ForeColor.G:X02}{section.ForeColor.B:X02}");
@@ -66,7 +66,7 @@ namespace Arc.YTSubConverter
 
             WriteText(section.Text, writer);
 
-            if (section.ForeColor != Color.Empty)
+            if (!section.ForeColor.IsEmpty)
                 writer.WriteEndElement();
 
             if (section.Underline)

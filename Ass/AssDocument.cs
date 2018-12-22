@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter.Ass
 {
@@ -22,9 +23,11 @@ namespace Arc.YTSubConverter.Ass
                               { "fn", HandleFontTag },
                               { "c", HandleForeColorTag },
                               { "1c", HandleForeColorTag },
+                              { "2c", HandleSecondaryColorTag },
                               { "3c", HandleOutlineColorTag },
                               { "4c", HandleShadowColorTag },
                               { "1a", HandleForeColorAlphaTag },
+                              { "2a", HandleSecondaryColorAlphaTag },
                               { "3a", HandleOutlineAlphaTag },
                               { "4a", HandleShadowAlphaTag },
                               { "pos", HandlePositionTag },
@@ -57,6 +60,11 @@ namespace Arc.YTSubConverter.Ass
 
                 ExtendedLine line = ParseLine(dialogue, style, options);
                 Lines.AddRange(ExpandLine(line));
+            }
+
+            foreach (Line line in Lines)
+            {
+                MergeIdenticallyFormattedSections(line);
             }
         }
 
@@ -141,6 +149,7 @@ namespace Arc.YTSubConverter.Ass
 
                     context.Section = (ExtendedSection)context.Section.Clone();
                     context.Section.Text = null;
+                    context.Section.Duration = TimeSpan.Zero;
                 }
 
                 CaptureCollection commands = match.Groups["cmd"].Captures;
@@ -160,78 +169,7 @@ namespace Arc.YTSubConverter.Ass
                 line.Sections.Add(context.Section);
             }
 
-            SetSectionTimeOffsets(line);
             return line;
-        }
-
-        private static void SetSectionTimeOffsets(Line line)
-        {
-            TimeSpan offset = TimeSpan.Zero;
-            foreach (ExtendedSection section in line.Sections.Cast<ExtendedSection>())
-            {
-                section.TimeOffset = offset;
-                offset += section.Duration;
-            }
-        }
-
-        private static IEnumerable<Line> ExpandLine(ExtendedLine line)
-        {
-            if (!line.UseFade)
-            {
-                yield return line;
-                yield break;
-            }
-
-            int startFrame = TimeToFrame(line.Start.AddMilliseconds(2));
-            int fadeInStartFrame = TimeToFrame(line.FadeInStartTime);
-            int fadeInEndFrame = TimeToFrame(line.FadeInEndTime);
-            int fadeOutStartFrame = TimeToFrame(line.FadeOutStartTime);
-            int fadeOutEndFrame = TimeToFrame(line.FadeOutEndTime);
-            int endFrame = TimeToFrame(line.End);
-
-            if (startFrame < fadeInStartFrame)
-                yield return CreateAlphaBlendedLine(line, startFrame, fadeInStartFrame, line.FadeInitialAlpha);
-            else
-                fadeInStartFrame = startFrame;
-
-            foreach (ExtendedLine fadeLine in CreateAlphaBlendedLines(line, fadeInStartFrame, fadeInEndFrame, line.FadeInitialAlpha, line.FadeMidAlpha))
-            {
-                yield return fadeLine;
-            }
-
-            if (fadeInEndFrame < fadeOutStartFrame)
-                yield return CreateAlphaBlendedLine(line, fadeInEndFrame, fadeOutStartFrame, line.FadeMidAlpha);
-            else
-                fadeOutStartFrame = fadeInEndFrame;
-
-            foreach (ExtendedLine fadeLine in CreateAlphaBlendedLines(line, fadeOutStartFrame, fadeOutEndFrame, line.FadeMidAlpha, line.FadeFinalAlpha))
-            {
-                yield return fadeLine;
-            }
-
-            if (fadeOutEndFrame < endFrame)
-                yield return CreateAlphaBlendedLine(line, fadeOutEndFrame, endFrame, line.FadeFinalAlpha);
-        }
-
-        private static IEnumerable<ExtendedLine> CreateAlphaBlendedLines(ExtendedLine baseLine, int startFrame, int endFrame, int startAlpha, int endAlpha)
-        {
-            const int frameStepSize = 2;
-            int lastIterationFrame = startFrame + (endFrame - 1 - startFrame) / frameStepSize * frameStepSize;
-            for (int frame = startFrame; frame <= lastIterationFrame; frame += frameStepSize)
-            {
-                float t = ((float)frame - startFrame) / (lastIterationFrame - startFrame);
-                int alpha = startAlpha + (int)(t * (endAlpha - startAlpha));
-                yield return CreateAlphaBlendedLine(baseLine, frame, Math.Min(frame + frameStepSize, endFrame), alpha);
-            }
-        }
-
-        private static ExtendedLine CreateAlphaBlendedLine(ExtendedLine baseLine, int startFrame, int endFrame, int alpha)
-        {
-            ExtendedLine newLine = (ExtendedLine)baseLine.Clone();
-            newLine.Start = FrameToTime(startFrame);
-            newLine.End = FrameToTime(endFrame);
-            newLine.MultiplySectionAlphas(alpha / 255F);
-            return newLine;
         }
 
         private static void HandleBoldTag(TagContext context, string arg)
@@ -259,6 +197,11 @@ namespace Arc.YTSubConverter.Ass
             context.Section.ForeColor = ParseColor(arg, context.Section.ForeColor.A);
         }
 
+        private static void HandleSecondaryColorTag(TagContext context, string arg)
+        {
+            context.Section.SecondaryColor = ParseColor(arg, context.Section.SecondaryColor.A);
+        }
+
         private static void HandleOutlineColorTag(TagContext context, string arg)
         {
             if (!context.Style.HasOutline)
@@ -281,7 +224,13 @@ namespace Arc.YTSubConverter.Ass
         private static void HandleForeColorAlphaTag(TagContext context, string arg)
         {
             int alpha = 255 - ParseHex(arg);
-            context.Section.ForeColor = ChangeColorAlpha(context.Section.ForeColor, alpha);
+            context.Section.ForeColor = ColorUtil.ChangeColorAlpha(context.Section.ForeColor, alpha);
+        }
+
+        private static void HandleSecondaryColorAlphaTag(TagContext context, string arg)
+        {
+            int alpha = 255 - ParseHex(arg);
+            context.Section.SecondaryColor = ColorUtil.ChangeColorAlpha(context.Section.SecondaryColor, alpha);
         }
 
         private static void HandleOutlineAlphaTag(TagContext context, string arg)
@@ -292,9 +241,9 @@ namespace Arc.YTSubConverter.Ass
             int alpha = 255 - ParseHex(arg);
 
             if (context.Style.OutlineIsBox)
-                context.Section.BackColor = ChangeColorAlpha(context.Section.BackColor, alpha);
+                context.Section.BackColor = ColorUtil.ChangeColorAlpha(context.Section.BackColor, alpha);
             else
-                context.Section.ShadowColor = ChangeColorAlpha(context.Section.ShadowColor, alpha);
+                context.Section.ShadowColor = ColorUtil.ChangeColorAlpha(context.Section.ShadowColor, alpha);
         }
 
         private static void HandleShadowAlphaTag(TagContext context, string arg)
@@ -303,7 +252,7 @@ namespace Arc.YTSubConverter.Ass
                 return;
 
             int alpha = 255 - ParseHex(arg);
-            context.Section.ShadowColor = ChangeColorAlpha(context.Section.ShadowColor, alpha);
+            context.Section.ShadowColor = ColorUtil.ChangeColorAlpha(context.Section.ShadowColor, alpha);
         }
 
         private static void HandlePositionTag(TagContext context, string arg)
@@ -364,13 +313,24 @@ namespace Arc.YTSubConverter.Ass
             line.FadeOutEndTime = line.Start.AddMilliseconds(args[6]);
         }
 
-        private static void ApplyStyle(Section section, AssStyle style, AssStyleOptions options)
+        private static void ApplyStyle(ExtendedSection section, AssStyle style, AssStyleOptions options)
         {
             section.Font = style.Font;
             section.Bold = style.Bold;
             section.Italic = style.Italic;
             section.Underline = style.Underline;
             section.ForeColor = style.PrimaryColor;
+            section.SecondaryColor = style.SecondaryColor;
+            if (options?.IsKaraoke ?? false)
+            {
+                section.CurrentWordTextColor = options.CurrentWordTextColor;
+                section.CurrentWordShadowColor = options.CurrentWordShadowColor;
+            }
+            else
+            {
+                section.CurrentWordTextColor = Color.Empty;
+                section.CurrentWordShadowColor = Color.Empty;
+            }
 
             section.BackColor = Color.Empty;
             section.ShadowColor = Color.Empty;
@@ -389,10 +349,197 @@ namespace Arc.YTSubConverter.Ass
                 }
             }
 
-            if (style.HasShadow && section.ShadowColor == Color.Empty)
+            if (style.HasShadow && section.ShadowColor.IsEmpty)
             {
                 section.ShadowColor = style.ShadowColor;
                 section.ShadowType = options?.ShadowType ?? ShadowType.SoftShadow;
+            }
+        }
+
+        private static IEnumerable<ExtendedLine> ExpandLine(ExtendedLine line)
+        {
+            return ExpandLineForKaraoke(line).SelectMany(ExpandLineForFade);
+        }
+
+        private static IEnumerable<ExtendedLine> ExpandLineForKaraoke(ExtendedLine line)
+        {
+            if (((ExtendedSection)line.Sections[0]).Duration == TimeSpan.Zero)
+            {
+                yield return line;
+                yield break;
+            }
+
+            SortedList<TimeSpan, int> visibleSectionsPerStep = GetKaraokeSteps(line);
+
+            for (int stepIdx = 0; stepIdx < visibleSectionsPerStep.Count; stepIdx++)
+            {
+                TimeSpan timeOffset = visibleSectionsPerStep.Keys[stepIdx];
+                int numVisibleSections = visibleSectionsPerStep.Values[stepIdx];
+
+                ExtendedLine stepLine = (ExtendedLine)line.Clone();
+                ChangeLineTimes(stepLine, line.Start + timeOffset, stepIdx < visibleSectionsPerStep.Count - 1 ? line.Start + visibleSectionsPerStep.Keys[stepIdx + 1] : line.End);
+                for (int i = numVisibleSections; i < stepLine.Sections.Count; i++)
+                {
+                    stepLine.Sections[i].ForeColor = ((ExtendedSection)stepLine.Sections[i]).SecondaryColor;
+                }
+
+                ExtendedSection singingSection = (ExtendedSection)stepLine.Sections[numVisibleSections - 1];
+                if (!singingSection.CurrentWordTextColor.IsEmpty)
+                    singingSection.ForeColor = singingSection.CurrentWordTextColor;
+
+                if (!singingSection.CurrentWordShadowColor.IsEmpty)
+                    singingSection.ShadowColor = singingSection.CurrentWordShadowColor;
+
+                // Hack: make sure YttDocument will also recognize the final (single-color) step as a karaoke line
+                // so it gets the exact same position as the previous steps
+                if (stepIdx == visibleSectionsPerStep.Count - 1)
+                    stepLine.Sections.Add(new Section(string.Empty));
+
+                yield return stepLine;
+            }
+        }
+
+        private static SortedList<TimeSpan, int> GetKaraokeSteps(ExtendedLine line)
+        {
+            SortedList<TimeSpan, int> visibleSectionsPerStep = new SortedList<TimeSpan, int>();
+            TimeSpan currentTimeOffset = TimeSpan.Zero;
+            int currentVisibleSections = 0;
+            foreach (ExtendedSection section in line.Sections)
+            {
+                currentVisibleSections++;
+                if (section.Duration > TimeSpan.Zero)
+                {
+                    visibleSectionsPerStep.Add(currentTimeOffset, currentVisibleSections);
+                    currentTimeOffset += section.Duration;
+                }
+                else
+                {
+                    visibleSectionsPerStep[visibleSectionsPerStep.Keys.Last()] = currentVisibleSections;
+                }
+            }
+            return visibleSectionsPerStep;
+        }
+
+        private static void ChangeLineTimes(ExtendedLine line, DateTime start, DateTime end)
+        {
+            if (line.UseFade)
+            {
+                TimeSpan offset = start - line.Start;
+                line.FadeInStartTime -= offset;
+                line.FadeInEndTime -= offset;
+                line.FadeOutStartTime -= offset;
+                line.FadeOutEndTime -= offset;
+
+                if (line.FadeInStartTime < line.Start)
+                {
+                    if (line.FadeInEndTime > line.Start)
+                    {
+                        double fadeInProgress = (line.Start - line.FadeInStartTime).TotalMilliseconds / (line.FadeInEndTime - line.FadeInStartTime).TotalMilliseconds;
+                        line.FadeInitialAlpha += (int)((line.FadeMidAlpha - line.FadeInitialAlpha) * fadeInProgress);
+                        line.FadeInStartTime = line.Start;
+                    }
+                    else
+                    {
+                        line.FadeInStartTime = line.Start;
+                        line.FadeInEndTime = line.Start;
+                    }
+                }
+
+                if (line.FadeOutEndTime > line.End)
+                {
+                    if (line.FadeOutStartTime < line.End)
+                    {
+                        double fadeOutProgress = (line.End - line.FadeOutStartTime).TotalMilliseconds / (line.FadeOutEndTime - line.FadeOutStartTime).TotalMilliseconds;
+                        line.FadeFinalAlpha += (int)((line.FadeFinalAlpha - line.FadeMidAlpha) * fadeOutProgress);
+                        line.FadeOutEndTime = line.End;
+                    }
+                    else
+                    {
+                        line.FadeOutStartTime = line.End;
+                        line.FadeOutEndTime = line.End;
+                    }
+                }
+            }
+
+            line.Start = start;
+            line.End = end;
+        }
+
+        private static IEnumerable<ExtendedLine> ExpandLineForFade(ExtendedLine line)
+        {
+            if (!line.UseFade)
+            {
+                yield return line;
+                yield break;
+            }
+
+            int startFrame = TimeToFrame(line.Start.AddMilliseconds(2));
+            int fadeInStartFrame = TimeToFrame(line.FadeInStartTime);
+            int fadeInEndFrame = TimeToFrame(line.FadeInEndTime);
+            int fadeOutStartFrame = TimeToFrame(line.FadeOutStartTime);
+            int fadeOutEndFrame = TimeToFrame(line.FadeOutEndTime);
+            int endFrame = TimeToFrame(line.End);
+
+            if (startFrame < fadeInStartFrame)
+                yield return CreateAlphaBlendedLine(line, startFrame, fadeInStartFrame, line.FadeInitialAlpha);
+            else
+                fadeInStartFrame = startFrame;
+
+            foreach (ExtendedLine fadeLine in CreateAlphaBlendedLines(line, fadeInStartFrame, fadeInEndFrame, line.FadeInitialAlpha, line.FadeMidAlpha))
+            {
+                yield return fadeLine;
+            }
+
+            if (fadeInEndFrame < fadeOutStartFrame)
+                yield return CreateAlphaBlendedLine(line, fadeInEndFrame, fadeOutStartFrame, line.FadeMidAlpha);
+            else
+                fadeOutStartFrame = fadeInEndFrame;
+
+            foreach (ExtendedLine fadeLine in CreateAlphaBlendedLines(line, fadeOutStartFrame, fadeOutEndFrame, line.FadeMidAlpha, line.FadeFinalAlpha))
+            {
+                yield return fadeLine;
+            }
+
+            if (fadeOutEndFrame < endFrame)
+                yield return CreateAlphaBlendedLine(line, fadeOutEndFrame, endFrame, line.FadeFinalAlpha);
+        }
+
+        private static IEnumerable<ExtendedLine> CreateAlphaBlendedLines(ExtendedLine baseLine, int startFrame, int endFrame, int startAlpha, int endAlpha)
+        {
+            const int frameStepSize = 2;
+            int lastIterationFrame = startFrame + (endFrame - 1 - startFrame) / frameStepSize * frameStepSize;
+            for (int frame = startFrame; frame <= lastIterationFrame; frame += frameStepSize)
+            {
+                float t = ((float)frame - startFrame) / (lastIterationFrame - startFrame);
+                int alpha = startAlpha + (int)(t * (endAlpha - startAlpha));
+                yield return CreateAlphaBlendedLine(baseLine, frame, Math.Min(frame + frameStepSize, endFrame), alpha);
+            }
+        }
+
+        private static ExtendedLine CreateAlphaBlendedLine(ExtendedLine baseLine, int startFrame, int endFrame, int alpha)
+        {
+            ExtendedLine newLine = (ExtendedLine)baseLine.Clone();
+            newLine.Start = FrameToTime(startFrame);
+            newLine.End = FrameToTime(endFrame);
+            newLine.MultiplySectionAlphas(alpha / 255F);
+            return newLine;
+        }
+
+        private static void MergeIdenticallyFormattedSections(Line line)
+        {
+            SectionFormatComparer comparer = new SectionFormatComparer();
+            int i = 0;
+            while (i < line.Sections.Count - 1)
+            {
+                if (comparer.Equals(line.Sections[i], line.Sections[i + 1]))
+                {
+                    line.Sections[i].Text += line.Sections[i + 1].Text;
+                    line.Sections.RemoveAt(i + 1);
+                }
+                else
+                {
+                    i++;
+                }
             }
         }
 
@@ -422,11 +569,6 @@ namespace Arc.YTSubConverter.Ass
                 list.Add(float.Parse(capture.Value, CultureInfo.InvariantCulture));
             }
             return list;
-        }
-
-        private static Color ChangeColorAlpha(Color color, int alpha)
-        {
-            return Color.FromArgb(alpha, color.R, color.G, color.B);
         }
 
         private static int TimeToFrame(DateTime time)

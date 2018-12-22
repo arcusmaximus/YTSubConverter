@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Xml;
+using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter
 {
@@ -11,12 +12,16 @@ namespace Arc.YTSubConverter
         public YttDocument(SubtitleDocument doc)
             : base(doc)
         {
+            Shift(new TimeSpan(0, 0, 0, 0, -60));
+            CloseGaps();
         }
 
         public override void Save(string filePath)
         {
+            ApplyWorkarounds();
+
             ExtractAttributes(
-                Lines.Where(l => (l.AnchorPoint ?? AnchorPoint.BottomCenter) != AnchorPoint.BottomCenter || l.Position != null),
+                Lines,
                 new LinePositionComparer(),
                 out Dictionary<Line, int> positionIds,
                 out List<Line> positions
@@ -39,6 +44,293 @@ namespace Arc.YTSubConverter
 
                 writer.WriteEndElement();
             }
+        }
+
+        /// <summary>
+        /// Applies various workarounds for bugs and limitations in YouTube's subtitles.
+        /// </summary>
+        private void ApplyWorkarounds()
+        {
+            for (int i = 0; i < Lines.Count; i++)
+            {
+                PrepareForMultiColor(i);
+                
+                i += ExpandLineForHighAlpha(i) - 1;
+                i += ExpandLineForColoring(i) - 1;
+            }
+        }
+
+        /// <summary>
+        /// Once you read how the multicolor workaround works (see <see cref="ExpandLineForColoring"/>),
+        /// you'll notice that it doesn't work in a specific scenario: text that is centered or right-aligned
+        /// and has a section boundary (= style change) between two line breaks. For example, if we
+        /// have the right-aligned text "Red Green" (where each word has its respective color),
+        /// <see cref="ExpandLineForColoring"/> would produce the following (+ indicates the subtitle's anchor point):
+        ///       Layer 1 (#00FF00): |        Red Green+ |
+        ///       Layer 2 (#FF0000): |              Red+ |
+        ///
+        /// This is of course not what we want - the two "Red"s should overlap. We have to make
+        /// the text left-aligned (and change the position to compensate).
+        ///      Layer 1 (#00FF00): |        +Red Green  |
+        ///      Layer 2 (#FF0000): |        +Red        |
+        ///
+        /// In the case of text with line breaks, we have an additional complication: only the longest
+        /// line of text would keep its position while the others would shift.
+        ///
+        ///      Original:          |         This is a multiline+ |
+        ///                         |                        sub.  |
+        ///
+        ///      Adjusted:          |        +This is a multiline  |
+        ///                         |         sub.                 |
+        ///
+        /// To work around *this*, we need to split the line so each line of text can be positioned individually:
+        ///                         |        +This is a multiline  |
+        ///                         |                       +sub.  |
+        /// </summary>
+        private void PrepareForMultiColor(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+            AnchorPoint anchorPoint = line.AnchorPoint ?? AnchorPoint.BottomCenter;
+            if (AnchorPointUtil.IsLeftAligned(anchorPoint) || !HasSectionBorderBetweenLineBreaks(line))
+                return;
+
+            int numLines = SplitOnLineBreaks(lineIndex);
+            for (int i = 0; i < numLines; i++)
+            {
+                MakeLeftAligned(Lines[lineIndex + i]);
+            }
+        }
+
+        private bool HasSectionBorderBetweenLineBreaks(Line line)
+        {
+            for (int i = 0; i < line.Sections.Count - 1; i++)
+            {
+                if (!line.Sections[i].Text.EndsWith("\r\n") && !line.Sections[i + 1].Text.StartsWith("\r\n"))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Splits one line into multiple lines at the line breaks. (Currently only one line break is supported)
+        /// </summary>
+        private int SplitOnLineBreaks(int lineIndex)
+        {
+            Line originalLine = Lines[lineIndex];
+            List<Line> newLines = new List<Line>();
+            Line currentNewLine = null;
+            foreach (Section section in originalLine.Sections)
+            {
+                int start = 0;
+                int end;
+                while (start < section.Text.Length)
+                {
+                    end = section.Text.IndexOf("\r\n", start);
+                    if (end < 0)
+                        end = section.Text.Length;
+
+                    if (currentNewLine == null)
+                    {
+                        currentNewLine = (Line)originalLine.Clone();
+                        currentNewLine.Sections.Clear();
+                        newLines.Add(currentNewLine);
+                    }
+
+                    if (end > start)
+                    {
+                        Section newSection = (Section)section.Clone();
+                        newSection.Text = section.Text.Substring(start, end - start);
+                        currentNewLine.Sections.Add(newSection);
+                    }
+
+                    if (end < section.Text.Length)
+                        currentNewLine = null;
+
+                    start = end + 2;
+                }
+            }
+
+            if (newLines.Count == 1)
+                return 1;
+
+            if (newLines.Count > 2)
+                throw new NotSupportedException($"Centered or right-aligned text can have at most one line break ({originalLine.Text})");
+
+            AnchorPoint anchorPoint = originalLine.AnchorPoint ?? AnchorPoint.BottomCenter;
+            if (AnchorPointUtil.IsTopAligned(anchorPoint))
+            {
+                PointF pos = originalLine.Position ?? GetDefaultPosition(anchorPoint);
+                pos.Y += (int)Math.Ceiling(VideoDimensions.Height * 0.05f);
+                newLines[0].Position = newLines[1].Position = pos;
+                newLines[0].AnchorPoint = AnchorPointUtil.GetVerticalOpposite(anchorPoint);
+            }
+            else if (AnchorPointUtil.IsBottomAligned(anchorPoint))
+            {
+                PointF pos = originalLine.Position ?? GetDefaultPosition(anchorPoint);
+                pos.Y -= (int)Math.Ceiling(VideoDimensions.Height * 0.05f);
+                newLines[0].Position = newLines[1].Position = pos;
+                newLines[1].AnchorPoint = AnchorPointUtil.GetVerticalOpposite(anchorPoint);
+            }
+            else
+            {
+                throw new NotSupportedException($"Centered or right-aligned text with line breaks must be top- or bottom-aligned ({originalLine.Text})");
+            }
+
+            Lines.RemoveAt(lineIndex);
+            for (int i = 0; i < newLines.Count; i++)
+            {
+                Lines.Insert(lineIndex + i, newLines[i]);
+            }
+            return newLines.Count;
+        }
+
+        private void MakeLeftAligned(Line line)
+        {
+            AnchorPoint anchorPoint = line.AnchorPoint ?? AnchorPoint.BottomCenter;
+            if (AnchorPointUtil.IsLeftAligned(anchorPoint))
+                return;
+
+            if (line.Sections.Any(s => s.Text.Contains("\r\n")))
+                throw new NotSupportedException($"Can't left-align text with line breaks ({line.Text})");
+
+            line.AnchorPoint = AnchorPointUtil.AlignLeft(anchorPoint);
+
+            int widthAt720p = TextUtil.MeasureWidth(line.Text, line.Sections[0].Font, 30, line.Sections[0].Bold, line.Sections[0].Italic, 3);
+            float widthAtVideoSize = widthAt720p / 1280f * VideoDimensions.Width;
+
+            PointF position = line.Position ?? GetDefaultPosition(anchorPoint);
+            if (AnchorPointUtil.IsCenterAligned(anchorPoint))
+                line.Position = new PointF(position.X - widthAtVideoSize / 2, position.Y);
+            else
+                line.Position = new PointF(position.X - widthAtVideoSize, position.Y);
+        }
+
+        /// <summary>
+        /// For reasons only YouTube's developers understand, background opacity is capped to a maximum of 75% on PC
+        /// (even though it's locked to 100% on mobile). So, if the subtitle file wants a higher opacity, we stack
+        /// lines on top of each other until we reach that goal.
+        /// </summary>
+        private int ExpandLineForHighAlpha(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+
+            // Find the desired background opacity, limiting it to 250 to keep line duplication within reasonable bounds.
+            // (As we progress, we need more and more duplications for less and less opacity gain)
+            int targetAlpha = Math.Min(line.Sections.Max(s => s.BackColor.A), (byte)250);
+
+            // If it's already 75% or less, we don't need any duplication.
+            if (targetAlpha <= 191)
+                return 1;
+
+            foreach (Section section in line.Sections)
+            {
+                section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, 191);
+            }
+
+            int numReplacementLines = 1;
+            int reachedAlpha = 191;
+            while (reachedAlpha < targetAlpha)
+            {
+                line = (Line)line.Clone();
+                float stepFraction = Math.Min((float)(targetAlpha - reachedAlpha) / (255 - reachedAlpha), 0.75f);
+                int stepAlpha = (int)(stepFraction * 255);
+                foreach (Section section in line.Sections)
+                {
+                    section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, stepAlpha);
+                }
+
+                reachedAlpha += (int)((255 - reachedAlpha) * stepFraction);
+                Lines.Insert(lineIndex + numReplacementLines, line);
+                numReplacementLines++;
+            }
+            return numReplacementLines;
+        }
+
+        /// <summary>
+        /// This method handles two problems: broken multicolored text, and lack of custom background colors on mobile.
+        /// 
+        /// YouTube used to support multiple different styles within a line, but in the beginning of November 2018,
+        /// they broke it. Attempting to use multiple styles in a line now results in partial or complete loss of formatting.
+        /// 
+        /// We can at least restore support for multiple colors by overlaying multiple single-color lines as follows:
+        ///     Layer 1 (#0000FF,    background): "Red Green Blue"
+        ///     Layer 2 (#00FF00, no background): "Red Green"
+        ///     Layer 3 (#FF0000, no background): "Red"
+        /// 
+        /// This looks good on PC, but because subtitles on mobile always have a padded background, the "G" and "B" would
+        /// be partially covered by the background of layers 3 and 2 respectively. For this reason, we add another
+        /// layer which contains the whole text (to prevent clipping) with one color (because we can't use multiple
+        /// sections no matter what) and 0% opacity (so it only gets displayed on mobile).
+        ///
+        /// The mobile-only layer is also handy to address the second problem. Even in single-colored lines,
+        /// we can't change the background color on mobile, so dark text on a bright background will be
+        /// displayed as dark text on a black background there - unreadable. By adding an invisible layer,
+        /// we can make the text bright on mobile only: not the intended color scheme, but at least readable.
+        /// </summary>
+        private int ExpandLineForColoring(int lineIndex)
+        {
+            Line originalLine = Lines[lineIndex];
+            originalLine.Sections.RemoveAll(s => s.Text.Length == 0);
+            if (originalLine.Sections.Count == 1 && !ColorUtil.IsDark(originalLine.Sections[0].ForeColor))
+                return 1;
+
+            Lines.RemoveAt(lineIndex);
+            int numReplacementLines = 0;
+
+            // Duplicate the line for each section
+            for (int numSections = originalLine.Sections.Count; numSections >= 1; numSections--)
+            {
+                Line colorLine = (Line)originalLine.Clone();
+                colorLine.Sections.Clear();
+
+                Section colorSection = (Section)originalLine.Sections[numSections - 1].Clone();
+                colorLine.Sections.Add(colorSection);
+
+                colorSection.Text = string.Join("", originalLine.Sections.Take(numSections).Select(s => s.Text));
+
+                // Bottom-aligned text needs the line breaks of the excluded sections to push it up to where it needs to be.
+                colorSection.Text += "\r\n".Repeat(originalLine.Sections.Skip(numSections).Sum(s => s.Text.CountOccurrences("\r\n")));
+
+                // Add a non-breaking space to prevent these trailing line breaks from getting trimmed on mobile
+                if (colorSection.Text.EndsWith("\r\n"))
+                    colorSection.Text += " ";
+
+                if (numReplacementLines > 0)
+                {
+                    // The first layer already gave us the background, so we don't need to include it again in
+                    // the following layers - unless, of course, the current layer needs a different background than the one before.
+                    if (colorSection.BackColor == originalLine.Sections[numSections].BackColor)
+                        colorSection.BackColor = ColorUtil.ChangeColorAlpha(colorSection.BackColor, 0);
+
+                    // Same for the shadow
+                    if (colorSection.ShadowType == originalLine.Sections[numSections].ShadowType &&
+                        colorSection.ShadowColor == originalLine.Sections[numSections].ShadowColor)
+                    {
+                        colorSection.ShadowType = ShadowType.None;
+                    }
+                }
+
+                Lines.Insert(lineIndex + numReplacementLines, colorLine);
+                numReplacementLines++;
+            }
+
+            // Add the mobile-only line
+            Line mobileLine = (Line)originalLine.Clone();
+            mobileLine.Sections.RemoveRange(1, mobileLine.Sections.Count - 1);
+
+            Section mobileSection = mobileLine.Sections[0];
+            mobileSection.Text = string.Join("", originalLine.Sections.Select(s => s.Text));
+            if (ColorUtil.IsDark(mobileSection.ForeColor))
+                mobileSection.ForeColor = ColorUtil.Brighten(mobileSection.ForeColor);
+
+            mobileSection.BackColor = ColorUtil.ChangeColorAlpha(mobileSection.BackColor, 0);
+            mobileSection.ForeColor = ColorUtil.ChangeColorAlpha(mobileSection.ForeColor, 0);
+            mobileSection.ShadowType = ShadowType.None; // Edges don't follow foreground opacity, so explicitly disable
+
+            Lines.Insert(lineIndex + numReplacementLines, mobileLine);
+            numReplacementLines++;
+
+            return numReplacementLines;
         }
 
         private void WriteHead(XmlWriter writer, List<Line> positions, List<Section> pens)
@@ -79,6 +371,12 @@ namespace Arc.YTSubConverter
             writer.WriteEndElement();
         }
 
+        /// <summary>
+        /// YouTube decided to be helpful by moving your subtitles slightly towards the center so they'll never sit at the video's edge.
+        /// However, it doesn't just impose a cap on each coordinate - it moves your sub regardless of where it is. You doesn't just
+        /// get your X = 0% changed to a 2%, but also your 10% to an 11.6%, for example.
+        /// We counteract this cleverness so our subs actually get displayed where we said they should be.
+        /// </summary>
         private static float CounteractYouTubePositionScaling(float percentage)
         {
             percentage = (percentage - 2) / 0.96f;
@@ -113,13 +411,13 @@ namespace Arc.YTSubConverter
             if (format.Underline)
                 writer.WriteAttributeString("u", "1");
 
-            Color foreColor = IsWhiteOrEmpty(format.ForeColor) ? Color.FromArgb(254, 254, 254) : format.ForeColor;
-            writer.WriteAttributeString("fc", ToHtmlColor(foreColor));
+            Color foreColor = IsWhiteOrEmpty(format.ForeColor) ? Color.FromArgb(format.ForeColor.A, 254, 254, 254) : format.ForeColor;
+            writer.WriteAttributeString("fc", ColorTranslator.ToHtml(foreColor));
             writer.WriteAttributeString("fo", foreColor.A.ToString());
 
-            if (format.BackColor != Color.Empty)
+            if (!format.BackColor.IsEmpty)
             {
-                writer.WriteAttributeString("bc", ToHtmlColor(format.BackColor));
+                writer.WriteAttributeString("bc", ColorTranslator.ToHtml(format.BackColor));
                 writer.WriteAttributeString("bo", format.BackColor.A.ToString());
             }
             else
@@ -130,7 +428,7 @@ namespace Arc.YTSubConverter
             if (format.ShadowType != ShadowType.None && format.ShadowColor.A > 0)
             {
                 writer.WriteAttributeString("et", GetEdgeType(format.ShadowType).ToString());
-                writer.WriteAttributeString("ec", ToHtmlColor(format.ShadowColor));
+                writer.WriteAttributeString("ec", ColorTranslator.ToHtml(format.ShadowColor));
             }
 
             writer.WriteEndElement();
@@ -154,19 +452,20 @@ namespace Arc.YTSubConverter
             writer.WriteStartElement("p");
             writer.WriteAttributeString("t", ((int)(line.Start - TimeBase).TotalMilliseconds).ToString());
             writer.WriteAttributeString("d", ((int)(line.End - line.Start).TotalMilliseconds).ToString());
+            if (line.Sections.Count == 1)
+                writer.WriteAttributeString("p", penIds[line.Sections[0]].ToString());
 
-            if ((line.AnchorPoint ?? AnchorPoint.BottomCenter) != AnchorPoint.BottomCenter || line.Position != null)
-            {
-                writer.WriteAttributeString("wp", positionIds[line].ToString());
-                writer.WriteAttributeString("ws", GetWindowStyleId(line.AnchorPoint ?? AnchorPoint.BottomCenter).ToString());
-            }
+            writer.WriteAttributeString("wp", positionIds[line].ToString());
+            writer.WriteAttributeString("ws", GetWindowStyleId(line.AnchorPoint ?? AnchorPoint.BottomCenter).ToString());
 
             if (line.Sections.Count == 1)
             {
-                WriteSectionAttributesAndContent(writer, line.Sections[0], penIds);
+                writer.WriteValue(line.Sections[0].Text);
             }
             else
             {
+                throw new NotSupportedException("YouTube's support for multiple sections in a line is currently broken on PC");
+                
                 foreach (Section section in line.Sections)
                 {
                     WriteSection(writer, section, penIds);
@@ -179,17 +478,9 @@ namespace Arc.YTSubConverter
         private void WriteSection(XmlWriter writer, Section section, Dictionary<Section, int> penIds)
         {
             writer.WriteStartElement("s");
-            WriteSectionAttributesAndContent(writer, section, penIds);
-            writer.WriteEndElement();
-        }
-
-        private void WriteSectionAttributesAndContent(XmlWriter writer, Section section, Dictionary<Section, int> penIds)
-        {
             writer.WriteAttributeString("p", penIds[section].ToString());
-            if (section.TimeOffset != TimeSpan.Zero)
-                writer.WriteAttributeString("t", ((int)section.TimeOffset.TotalMilliseconds).ToString());
-
             writer.WriteValue(section.Text);
+            writer.WriteEndElement();
         }
 
         private static void ExtractAttributes<T>(
@@ -209,7 +500,7 @@ namespace Arc.YTSubConverter
                     index = attributes.Count;
                     attributes.Add(attr);
                 }
-                mappings.Add(attr, index);
+                mappings[attr] = index;
             }
         }
 
@@ -378,14 +669,9 @@ namespace Arc.YTSubConverter
             }
         }
 
-        private static string ToHtmlColor(Color color)
-        {
-            return $"#{color.R:X02}{color.G:X02}{color.B:X02}";
-        }
-
         private static bool IsWhiteOrEmpty(Color color)
         {
-            if (color == Color.Empty)
+            if (color.IsEmpty)
                 return true;
 
             return color.R == 255 &&
@@ -401,29 +687,10 @@ namespace Arc.YTSubConverter
                        x.Position == y.Position;
             }
 
-            public int GetHashCode(Line obj)
+            public int GetHashCode(Line line)
             {
-                throw new NotImplementedException();
-            }
-        }
-
-        private struct SectionFormatComparer : IEqualityComparer<Section>
-        {
-            public bool Equals(Section x, Section y)
-            {
-                return x.Bold == y.Bold &&
-                       x.Italic == y.Italic &&
-                       x.Underline == y.Underline &&
-                       x.Font == y.Font &&
-                       x.ForeColor == y.ForeColor &&
-                       x.BackColor == y.BackColor &&
-                       x.ShadowColor == y.ShadowColor &&
-                       x.ShadowType == y.ShadowType;
-            }
-
-            public int GetHashCode(Section obj)
-            {
-                throw new NotImplementedException();
+                return (line.AnchorPoint?.GetHashCode() ?? 0) ^
+                       (line.Position?.GetHashCode() ?? 0);
             }
         }
     }
