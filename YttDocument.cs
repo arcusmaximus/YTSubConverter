@@ -247,13 +247,18 @@ namespace Arc.YTSubConverter
                 line = (Line)line.Clone();
                 float stepFraction = Math.Min((float)(targetAlpha - reachedAlpha) / (255 - reachedAlpha), 0.75f);
                 int stepAlpha = (int)(stepFraction * 255);
-                foreach (Section section in line.Sections)
+
+                if (line.Sections.Count > 1)
                 {
-                    section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, stepAlpha);
+                    line.Sections[0].Text = line.Text;
+                    line.Sections.RemoveRange(1, line.Sections.Count - 1);
                 }
+                line.Sections[0].ForeColor = ColorUtil.ChangeColorAlpha(line.Sections[0].ForeColor, 0);
+                line.Sections[0].ShadowType = ShadowType.None;
+                line.Sections[0].BackColor = ColorUtil.ChangeColorAlpha(line.Sections[0].BackColor, stepAlpha);
 
                 reachedAlpha += (int)((255 - reachedAlpha) * stepFraction);
-                Lines.Insert(lineIndex + numReplacementLines, line);
+                Lines.Insert(lineIndex, line);
                 numReplacementLines++;
             }
             return numReplacementLines;
@@ -348,8 +353,8 @@ namespace Arc.YTSubConverter
                         newSection.BackColor = ColorUtil.ChangeColorAlpha(newSection.BackColor, 0);
 
                     // Same for the shadow
-                    if (newSection.ShadowType == prevSection.ShadowType && newSection.ShadowColor == prevSection.ShadowColor)
-                        newSection.ShadowType = ShadowType.None;
+                    //if (newSection.ShadowType == prevSection.ShadowType && newSection.ShadowColor == prevSection.ShadowColor)
+                    //    newSection.ShadowType = ShadowType.None;
                 }
 
                 PadSectionForColoring(newSection, originalLine, subLines, subLineIdx);
@@ -407,13 +412,19 @@ namespace Arc.YTSubConverter
                 // Otherwise, we need to repeat the whole text
                 if (topAligned)
                 {
-                    IEnumerable<string> remainingSubLines = subLines.Take(subLineIdx).Select(l => string.Join("", l.Select(s => s.Text)));
-                    newSection.Text = string.Join("\r\n", remainingSubLines) + "\r\n" + newSection.Text;
+                    if (subLineIdx > 0)
+                    {
+                        IEnumerable<string> remainingSubLines = subLines.Take(subLineIdx).Select(l => string.Join("", l.Select(s => s.Text)));
+                        newSection.Text = string.Join("\r\n", remainingSubLines) + "\r\n" + newSection.Text;
+                    }
                 }
                 else
                 {
-                    IEnumerable<string> remainingSubLines = subLines.Skip(subLineIdx + 1).Select(l => string.Join("", l.Select(s => s.Text)));
-                    newSection.Text = newSection.Text + "\r\n" + string.Join("\r\n", remainingSubLines);
+                    if (subLineIdx < subLines.Count - 1)
+                    {
+                        IEnumerable<string> remainingSubLines = subLines.Skip(subLineIdx + 1).Select(l => string.Join("", l.Select(s => s.Text)));
+                        newSection.Text = newSection.Text + "\r\n" + string.Join("\r\n", remainingSubLines);
+                    }
                 }
             }
         }

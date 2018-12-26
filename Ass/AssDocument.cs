@@ -258,7 +258,7 @@ namespace Arc.YTSubConverter.Ass
         private static void HandlePositionTag(TagContext context, string arg)
         {
             List<float> coords = ParseNumberList(arg);
-            if (coords == null || coords.Count != 2)
+            if (coords == null || coords.Count != 2 || context.Line.Position != null)
                 return;
 
             context.Line.Position = new PointF(coords[0], coords[1]);
