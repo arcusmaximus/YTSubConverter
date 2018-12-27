@@ -4,7 +4,7 @@ A tool for creating styled YouTube subtitles.
 ![Sample image](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/sample.png)
 
 ## About this tool
-YouTube's built-in subtitle editor does not support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called YTT (YouTube Timed Text). It supports the following:
+YouTube's built-in subtitle editor doesn't support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called YTT (YouTube Timed Text). It supports the following:
 * Text coloring and transparency
 * Background coloring and transparency (including hiding the background box completely)
 * Glowing text
@@ -66,6 +66,11 @@ It also supports the following override tags:
 * `{\fade}` - complex fade
 
 Unsupported tags are ignored.
+
+## Example
+The repository contains a sample .ass file which uses the most common styling features.
+[Sample .ass file](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample.ass)
+[YouTube video with these subtitles](https://www.youtube.com/watch?v=4HsiIqcHsRs)
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
