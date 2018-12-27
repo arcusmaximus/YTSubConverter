@@ -72,16 +72,48 @@ The repository contains a sample .ass file which uses the most common styling fe
 * [Sample .ass file](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample.ass)
 * [YouTube video with these subtitles](https://www.youtube.com/watch?v=AvBxTdwCfzs)
 
+## Testing
+After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing - each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the “real” player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
+
+Fortunately, there's an easier way to test your subtitles - one which doesn't require you to upload them at all. It works by using Fiddler, a program which can intercept web requests from your browser and send back a file from your hard drive (rather than one from YouTube's servers). By redirecting your browser's request for subtitles to your local .ytt file, you can see those local subtitles in your browser *as though* you uploaded them. Since you're not *actually* uploading them, you can test your changes much more quickly.
+
+While this approach can save you a lot of time, it does require some initial setup:
+* Download and install [Fiddler](https://www.telerik.com/download/fiddler).
+* Launch the program.
+* Open the menu Tools → Options.
+  * On the “HTTPS” tab, enable “Capture HTTPS CONNECTs” as well as “Decrypt HTTPS traffic.”
+  * Allow the program to install the security certificate. (Note: if you're using Firefox, some [additional steps](https://docs.telerik.com/fiddler/Configure-Fiddler/Tasks/FirefoxHTTPS) are needed)
+  * Change the dropdown that says “...from all processes” to “...from browsers only.”
+  * Click OK.
+* In the toolbar, change “Keep: All sessions” to “Keep: 100 sessions.” (This is to keep the request log from growing too much if you leave the program open for a long time)
+* Switch to the “AutoResponder” tab in the right hand panel.
+  * Put checkmarks in “Enable rules” and “Unmatched requests passthrough.”
+  * Click “Add Rule.”
+  * In the “Rule Editor” at the bottom, put the following text in the top textbox: `regex:^https://www.youtube.com/api/timedtext`
+  * Click “Save.”
+
+Once this initial setup is done, you only need to do the following whenever you want to test subtitles:
+* Launch Fiddler
+* Select the rule on the “AutoResponder” tab
+* Put the path to your local .ytt file in the bottom textbox in the “Rule Editor”
+* Click “Save.”
+
+As long as Fiddler is running (and “Capture Traffic” is enabled in the “File” menu), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it; simply disable and re-enable subtitles in the video, which will cause the YouTube player to “redownload” them.
+
+## Uploading
+Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles for it.
+
+You can upload subtitles through the “Actions” dropdown in YouTube's built-in subtitle editor.
+
+![Upload menu](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/upload.png)
+
+Once the upload is complete, click “Submit contribution” while making sure not to change *anything* in the built-in editor. If you do, all styling information will be lost. (YouTube warns you about this when uploading to your own channel, but not when uploading to others').
+
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
 * In general, you can only use one style per line of text. For example, while you can make an entire line bold or italic, you can't do this for a single word within a line. In other words, this works: `What's happening?\N{\b1}Nononono!` (only the second line is bold) but this doesn't: `I {\b1}told{\b0} you not to go there!` (nothing will be bold).
   * As an exception to the above, multiple colors within a line *are* possible, but only on desktop. For example, the “MAAAN” in `Devil{\c&H0000FF&}MAAAN{\r}!` will be red on desktop; on mobile, however, it'll have the same color as the rest of the line.
 * Subtitles positioned off-center will move out towards the sides in theater mode, possibly even hanging out of the video frame.
-
-## Details about uploading
-Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles for it. In both cases, it's important to immediately submit the subtitles after uploading; if you make any change in the built-in editor, all styling information will be lost.
-
-Note that the subtitle preview in the built-in editor *does not* show the styling; it'll only become visible on the actual video once the subtitles are published/approved.
 
 ## Example workflow for creating subtitles that are color-coded by speaker
 * Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f <number>` to download a smaller file.)
