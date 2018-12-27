@@ -70,7 +70,7 @@ Unsupported tags are ignored.
 ## Example
 The repository contains a sample .ass file which uses the most common styling features.
 * [Sample .ass file](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample.ass)
-* [YouTube video with these subtitles](https://www.youtube.com/watch?v=4HsiIqcHsRs)
+* [YouTube video with these subtitles](https://www.youtube.com/watch?v=AvBxTdwCfzs)
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:

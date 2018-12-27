@@ -5,249 +5,156 @@ Title: Default Aegisub file
 ScriptType: v4.00+
 WrapStyle: 0
 ScaledBorderAndShadow: yes
-PlayResX: 384
-PlayResY: 288
 YCbCr Matrix: None
 
 [Aegisub Project Garbage]
 Last Style Storage: Default
-Video Zoom Percent: 0.750000
-Scroll Position: 81
-Active Line: 112
-Video Position: 11266
+Scroll Position: 103
+Active Line: 117
+Video Position: 7303
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Default,Arial,20,&H00000000,&H000000FF,&H1EFFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,3,2,2,2,10,10,10,1
-Style: Black with white outline - Top,Arial,20,&H00000000,&H000000FF,&H00FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,2,0,8,10,10,10,1
-Style: Black with white outline - Center,Arial,20,&H00000000,&H000000FF,&H1EFFFFFF,&H00FFFFFF,0,0,0,0,100,100,0,0,3,2,2,5,10,10,10,1
-Style: Black with white outline - Bottom,Arial,20,&H00000000,&H000000FF,&H00FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1
-Style: White with black outline - Top,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,8,10,10,10,1
-Style: White with black outline - Center,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,5,10,10,10,1
-Style: White with black outline - Bottom,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1
-Style: Note - Violet,Arial,20,&H00FFFFFF,&H000000FF,&H007000D2,&H007000D2,-1,0,0,0,100,100,0,0,3,2,2,5,10,10,10,1
-Style: Note - Blue,Arial,20,&H00FFFFFF,&H000000FF,&H00D08311,&H00D08311,-1,0,0,0,100,100,0,0,3,2,2,5,10,10,10,1
-Style: Wiki,Arial,20,&H0020009E,&H000000FF,&H00CFE9F2,&H00FFFFFF,0,0,0,0,100,100,0,0,3,2,2,7,10,10,10,1
-Style: Plain,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,8,10,10,10,1
-Style: Plain box,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,5,10,10,10,1
-Style: Otome mode,Arial,20,&H004800C3,&H000000FF,&H00FDDBFC,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
-Style: Detective mode,Arial,20,&H001000BD,&H000000FF,&H000AFFFC,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
+Style: Top center White,Arial,20,&H00FFFFFF,&H000000FF,&H00434343,&H00434343,0,0,0,0,100,100,0,0,1,2,0,8,10,10,10,1
+Style: Top center Black,Arial,20,&H00000000,&H000000FF,&H00FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,2,0,8,10,10,10,1
+Style: Bottom center Black,Arial,20,&H00000000,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,2,10,10,10,1
+Style: Object label,Arial,20,&H00000000,&H000000FF,&H009AE1DF,&H00FFFFFF,0,0,0,0,100,100,0,0,3,2,2,2,10,10,10,1
 Style: Outro,Arial,20,&H00FFFFFF,&H000000FF,&H000F049D,&H00000000,0,0,0,0,100,100,0,0,3,2,2,2,10,10,10,1
+Style: Note - Violet,Arial,20,&H00FFFFFF,&H000000FF,&H007000D2,&H007000D2,-1,0,0,0,100,100,0,0,3,2,2,5,10,10,10,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:20.23,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:00:00.48,0:00:05.32,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}We should avoid places with too many people
-Dialogue: 0,0:00:05.32,0:00:07.09,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Right? We'd get killed instantly
-Dialogue: 0,0:00:07.09,0:00:09.05,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Then let's go to the corner of the map
-Dialogue: 0,0:00:09.05,0:00:12.49,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Let's try to survive until the end, guys
-Dialogue: 0,0:00:12.49,0:00:14.96,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Alright, go
-Dialogue: 0,0:00:15.43,0:00:19.00,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Hina-chan, can you mute your mic for a second?
-Dialogue: 0,0:00:19.00,0:00:19.87,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Done
-Dialogue: 0,0:00:20.73,0:00:36.58,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:00:21.13,0:00:24.14,Black with white outline - Center,,0,0,0,,{\c&H6D00CE&\pos(108.4,56.533)}Veteran detective\NHime Tanaka
-Dialogue: 0,0:00:21.13,0:00:24.14,Black with white outline - Center,,0,0,0,,{\pos(268.4,56.533)\c&HD48114&}Newbie detective\NHina Suzuki
-Dialogue: 0,0:00:21.13,0:00:24.64,Black with white outline - Center,,0,0,0,,{\pos(192,152.533)\b1\c&H0D00BF&}Infiltrating
-Dialogue: 0,0:00:20.47,0:00:21.63,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Inspector Suzuki!
-Dialogue: 0,0:00:21.63,0:00:26.47,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Yeah, what's up?\N{\c&H9257E3&}Look at our beautiful tandem drop
-Dialogue: 0,0:00:26.47,0:00:29.57,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}We've become one\N{\c&HC4950C&}We look like flying squirrels
-Dialogue: 0,0:00:29.57,0:00:32.91,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Our performance is a sight to behold
-Dialogue: 0,0:00:32.91,0:00:34.85,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Also, can I say one thing?\N{\c&HC4950C&}Yes?
-Dialogue: 0,0:00:34.85,0:00:36.58,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}We're heading to the wrong place
-Dialogue: 0,0:00:36.82,0:00:39.55,White with black outline - Bottom,,0,0,0,,{\c&H0C00BE&\i1\b1}Undercover Cops
-Dialogue: 0,0:00:40.75,0:00:43.22,Black with white outline - Top,,0,0,0,,{\pos(192,34.134)\c&H09018A&}Mission
-Dialogue: 0,0:00:40.75,0:00:43.22,Black with white outline - Top,,0,0,0,,{\pos(199.6,120)}Go undercover in Knives Out
-Dialogue: 0,0:00:40.75,0:00:43.22,Black with white outline - Top,,0,0,0,,{\b1\pos(202.8,201.6)}Don't let anyone find out you're a cop
-Dialogue: 0,0:00:43.22,0:01:16.92,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:00:43.22,0:00:45.02,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Hello\N{\c&H0B00BD&}Hi
-Dialogue: 0,0:00:45.02,0:00:47.26,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Hi
-Dialogue: 0,0:00:45.22,0:00:50.56,White with black outline - Bottom,,0,0,0,,{\pos(191.6,137.6)\c&HD8DADA&\3c&H2E292A&\b1}Infiltrating...
-Dialogue: 0,0:00:47.26,0:00:50.53,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Pleased to meet you\N{\c&HC4950C&}Nice to meet you
-Dialogue: 0,0:00:50.53,0:00:51.38,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Nice to meet you too
-Dialogue: 0,0:00:51.38,0:00:53.57,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Do you play this game a lot?\N{\c&H0B00BD&}What?
-Dialogue: 0,0:00:53.57,0:00:56.77,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Do you often play Knives Out?
-Dialogue: 0,0:00:56.77,0:01:00.04,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Nah. I'm terrible at it
-Dialogue: 0,0:01:00.04,0:01:04.34,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Don't worry, we're playing it for the first time\N{\c&H9257E3&}Yeah
-Dialogue: 0,0:01:01.47,0:01:06.08,Wiki,,0,0,0,,{\pos(52,53.867)}{\c&H000000&}HimeHina wiki{\r}\NPlaying the game for the first time on recording day
-Dialogue: 0,0:01:04.34,0:01:06.81,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Us No. 1 and 2 are friends, actually
-Dialogue: 0,0:01:06.08,0:01:08.51,Wiki,,0,0,0,,{\c&H000000&\pos(85.2,53.867)}HimeHina wiki{\r}\NActing like two girls just having fun
-Dialogue: 0,0:01:06.81,0:01:08.51,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Looking forward to playing with you
-Dialogue: 0,0:01:08.51,0:01:10.35,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Just so you know
-Dialogue: 0,0:01:10.35,0:01:13.39,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}I really, really suck
-Dialogue: 0,0:01:13.39,0:01:16.92,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Well... We suck at least as much
-Dialogue: 0,0:01:16.15,0:01:16.92,Note - Violet,,0,0,0,,{\pos(192,28.267)}Getting competitive at sucking
-Dialogue: 0,0:01:17.42,0:01:25.20,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:01:17.42,0:01:19.26,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}We're heading to the wrong place
-Dialogue: 0,0:01:19.26,0:01:22.06,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Senpaai!\N{\c&H9257E3&}We're heading for the wrong place!
-Dialogue: 0,0:01:22.06,0:01:23.80,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}I'm not even close
-Dialogue: 0,0:01:23.80,0:01:25.18,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I'm gonna talk to him
-Dialogue: 0,0:01:25.70,0:01:34.47,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:01:25.53,0:01:28.37,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I'm so sorry. We botched our jump
-Dialogue: 0,0:01:28.37,0:01:29.53,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Is there anyone around?
-Dialogue: 0,0:01:29.53,0:01:31.40,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Lemme know if you see an enemy
-Dialogue: 0,0:01:31.40,0:01:32.47,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Okay\N{\c&H9257E3&}Will do
-Dialogue: 0,0:01:32.57,0:01:34.70,Note - Violet,,0,0,0,,{\pos(192,29.333)}Sounds like a fun guy
-Dialogue: 0,0:01:34.97,0:01:40.41,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:01:34.70,0:01:36.04,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Inspector Suzuki!
-Dialogue: 0,0:01:36.04,0:01:36.68,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}What is it?\N{\c&H0B00BD&}Huh? Where'd 1 and 2 go?
-Dialogue: 0,0:01:36.68,0:01:40.65,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Huh? Where'd 1 and 2 go?
-Dialogue: 0,0:01:36.68,0:01:40.65,Black with white outline - Bottom,,0,0,0,,{\c&HD28412&\pos(315.6,113.599)}Nr. 1
-Dialogue: 0,0:01:37.38,0:01:40.65,Default,,0,0,0,,{\c&H398AF1&\pos(63.2,113.599)}Nr. 2
-Dialogue: 0,0:01:40.78,0:01:42.61,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Sorry\N{\c&HC4950C&}We're still here
-Dialogue: 0,0:01:40.65,0:01:50.89,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:01:42.61,0:01:45.78,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I think we landed miles away from the center\N{\c&HC4950C&}Really?!
-Dialogue: 0,0:01:45.78,0:01:47.05,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Huh? Me too
-Dialogue: 0,0:01:47.05,0:01:49.42,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}We're scattered across the map\N{\c&H9257E3&}Oh, oh dear
-Dialogue: 0,0:01:49.42,0:01:50.89,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}We're reeeaaally far away
-Dialogue: 0,0:01:50.89,0:01:53.29,Wiki,,0,0,0,,{\c&H000000&\pos(72.8,37.2)}HimeHina wiki{\r}\NAbout as far from the safe zone as they can be
-Dialogue: 0,0:01:50.89,0:01:53.29,Otome mode,,0,0,0,,{\c&H6500B2&\3c&HFFBAE0&}Innocent girl mode
-Dialogue: 0,0:01:53.29,0:02:17.42,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:01:53.29,0:01:55.56,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Inspector Suzuki!
-Dialogue: 0,0:01:55.56,0:01:56.93,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Can I say something, inspector Suzuki?
-Dialogue: 0,0:01:56.93,0:01:59.00,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}What is it?\N{\c&H9257E3&}Wait, I mean “detective”
-Dialogue: 0,0:01:59.00,0:02:00.63,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}What is it, detective Tanaka?\N{\c&H9257E3&}Just one thing
-Dialogue: 0,0:02:00.63,0:02:03.34,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Our acting is all over the place
-Dialogue: 0,0:02:01.83,0:02:05.70,Wiki,,0,0,0,,{\c&H000000&\pos(43.2,38.8)}HimeHina wiki{\r}\NSwitching between personalities gets confusing
-Dialogue: 0,0:02:03.34,0:02:05.70,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Right. We need to concentrate!
-Dialogue: 0,0:02:05.70,0:02:08.47,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Yes, we're on a missh, on a misshionnm
-Dialogue: 0,0:02:08.47,0:02:09.84,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Pull yourself together!\N{\c&H0B00BD&}Oh crap
-Dialogue: 0,0:02:09.84,0:02:10.91,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}He's saying something
-Dialogue: 0,0:02:10.91,0:02:12.84,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Aye've only found a helmet so far
-Dialogue: 0,0:02:12.84,0:02:13.81,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Just a helmet!
-Dialogue: 0,0:02:12.84,0:02:15.71,Note - Violet,,0,0,0,,{\pos(192,186.133)}Cute
-Dialogue: 0,0:02:13.82,0:02:15.71,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Must be a little girl from Kansai
-Dialogue: 0,0:02:15.71,0:02:17.65,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Wait, not a girl
-Dialogue: 0,0:02:17.92,0:02:46.51,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:02:18.02,0:02:20.59,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Are you from Kansai?
-Dialogue: 0,0:02:20.59,0:02:22.29,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}I am
-Dialogue: 0,0:02:22.39,0:02:26.39,Note - Violet,,0,0,0,,{\pos(192,25.067)}Talking to No. 3 as well
-Dialogue: 0,0:02:22.29,0:02:23.49,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Hey, Magi
-Dialogue: 0,0:02:23.49,0:02:26.39,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Are you a piece of trash?
-Dialogue: 0,0:02:23.49,0:02:26.39,Plain box,,0,0,0,,{\3c&H8B8483&\pos(94.8,94.4)}Magi @ Trash
-Dialogue: 0,0:02:26.39,0:02:27.59,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}I hear a car coming
-Dialogue: 0,0:02:27.59,0:02:29.79,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Are they coming to pick us up?
-Dialogue: 0,0:02:29.79,0:02:31.63,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}That's so nice! Thank you!\N{\c&HC4950C&}Awesome!
-Dialogue: 0,0:02:31.63,0:02:32.30,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Wait
-Dialogue: 0,0:02:32.30,0:02:33.77,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}You can't get in
-Dialogue: 0,0:02:34.30,0:02:37.80,White with black outline - Top,,0,0,0,,{\c&HD6DADF&\pos(192,170.133)}Two-seater...
-Dialogue: 0,0:02:33.77,0:02:36.23,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Oh, it's full\N{\c&HC4950C&}Already full
-Dialogue: 0,0:02:36.23,0:02:42.11,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Wow! Living up to his name
-Dialogue: 0,0:02:42.11,0:02:46.75,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}At least he came over to us\N{\c&H9257E3&}Yes, thank you
-Dialogue: 0,0:02:46.98,0:03:07.93,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:02:47.18,0:02:49.71,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Detective Suzuki!
-Dialogue: 0,0:02:49.71,0:02:51.35,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Detective Suzuki, we have...
-Dialogue: 0,0:02:51.35,0:02:52.92,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}...some really friendly guys on our team!
-Dialogue: 0,0:02:52.92,0:02:54.22,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}You're right, they are
-Dialogue: 0,0:02:54.22,0:02:58.12,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}That Kansai girl and that... trash girl are fantastic\N{\c&HC4950C&}The Kansai one is so kind
-Dialogue: 0,0:02:58.89,0:03:02.03,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}This infiltration is going great\N{\c&HC4950C&}We're completely undercover
-Dialogue: 0,0:03:02.03,0:03:05.30,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Yes, no one is noticing our true identity
-Dialogue: 0,0:03:05.30,0:03:06.57,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Oh, gunshots
-Dialogue: 0,0:03:06.57,0:03:08.17,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Apparently he heard shooting\N{\c&HC4950C&}Shooting
-Dialogue: 0,0:03:08.40,0:03:51.78,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:03:08.43,0:03:10.10,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Are they shooting? (Completely different)
-Dialogue: 0,0:03:10.10,0:03:11.84,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Gunshots?\N{\c&H0B00BD&}Over there
-Dialogue: 0,0:03:11.84,0:03:13.04,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Where?
-Dialogue: 0,0:03:13.04,0:03:13.91,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Where could they be?
-Dialogue: 0,0:03:13.91,0:03:15.41,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}Oh, found one. Enemy spotted
-Dialogue: 0,0:03:15.41,0:03:16.74,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}An enemy!\N{\c&H9257E3&}Where is he?
-Dialogue: 0,0:03:15.74,0:03:18.31,Note - Violet,,0,0,0,,{\pos(192,27.733)}Tanaka sprinting in the opposite direction
-Dialogue: 0,0:03:16.74,0:03:17.78,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Let's follow him
-Dialogue: 0,0:03:19.18,0:03:21.55,Note - Violet,,0,0,0,,{\pos(192,28.8)}Suzuki firing by accident
-Dialogue: 0,0:03:19.51,0:03:21.55,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Whoops, wrong button
-Dialogue: 0,0:03:22.51,0:03:25.48,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Are the others nearby?\N{\c&H0B00BD&}Found 'em!
-Dialogue: 0,0:03:23.55,0:03:28.25,Note - Violet,,0,0,0,,{\pos(192,28.267)}Tanaka corrects her course as a result
-Dialogue: 0,0:03:25.48,0:03:27.12,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Where?\N{\c&H9257E3&}I heard a gunshot
-Dialogue: 0,0:03:28.65,0:03:31.52,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Where are they...\N{\c&HC4950C&}Oh, they're shooting
-Dialogue: 0,0:03:32.29,0:03:33.39,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}That looks bad!
-Dialogue: 0,0:03:33.39,0:03:35.16,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}He got him\N{\c&HC4950C&}He's taking hits
-Dialogue: 0,0:03:35.16,0:03:37.03,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Wait, he did? Wow
-Dialogue: 0,0:03:37.03,0:03:38.60,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}I got him...
-Dialogue: 0,0:03:38.60,0:03:40.06,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Awesome!\N{\c&HC4950C&}Awesome!
-Dialogue: 0,0:03:40.06,0:03:42.10,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}You're good at this\N{\c&H9257E3&}How's your health?
-Dialogue: 0,0:03:42.10,0:03:43.80,Default,,0,0,0,,{\pos(192,255)}{\c&H0B00BD&}I gawt him!
-Dialogue: 0,0:03:43.90,0:03:45.60,Note - Violet,,0,0,0,,{\pos(192,186.667)}Cute
-Dialogue: 0,0:03:43.80,0:03:45.60,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Whooo!
-Dialogue: 0,0:03:45.60,0:03:48.24,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}You gawt him!
-Dialogue: 0,0:03:51.04,0:03:51.88,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Amazing
-Dialogue: 0,0:03:51.88,0:03:58.65,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:03:52.11,0:03:53.45,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Ah, found one
-Dialogue: 0,0:03:56.51,0:03:58.65,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Ow! I got shot!\N{\c&HC4950C&}Where are you?
-Dialogue: 0,0:03:58.64,0:04:00.15,Wiki,,0,0,0,,{\c&H000000&\pos(100.8,222.267)}HimeHina wiki{\r}\NControls are super hard
-Dialogue: 0,0:04:00.15,0:04:05.49,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:03:58.65,0:04:00.79,Default,,0,0,0,,{\pos(192,215.067)}{\c&H9257E3&}Oww...\N{\c&HC4950C&}I think you're close
-Dialogue: 0,0:04:01.42,0:04:03.96,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Oooow I died\N{\c&HC4950C&}Whoa, that scared me
-Dialogue: 0,0:04:03.99,0:04:05.72,White with black outline - Top,,0,0,0,,{\pos(192,133.866)\b1}Detective Tanaka KIA
-Dialogue: 0,0:04:05.99,0:04:26.51,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:04:05.98,0:04:07.09,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}You died?!
-Dialogue: 0,0:04:08.36,0:04:10.16,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Detective Suzuki
-Dialogue: 0,0:04:10.16,0:04:12.33,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Detective Suzuki!\N{\c&HC4950C&}What?
-Dialogue: 0,0:04:12.33,0:04:14.77,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I'm watching you from heaven
-Dialogue: 0,0:04:15.07,0:04:15.77,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Sooner or la-
-Dialogue: 0,0:04:17.74,0:04:19.50,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Sooner or later, your time comes to an end
-Dialogue: 0,0:04:19.50,0:04:21.44,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}That's how it goes in life!
-Dialogue: 0,0:04:21.44,0:04:26.11,White with black outline - Top,,0,0,0,,{\pos(192,158.934)\b1\c&H49C1F8&\3c&H6A6059&}Having another go
-Dialogue: 0,0:04:21.81,0:04:23.51,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Where's the safe zone...?
-Dialogue: 0,0:04:23.51,0:04:24.72,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Oh, we're already in it
-Dialogue: 0,0:04:24.71,0:04:26.75,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I'll talk to them\N{\c&HC4950C&}Go ahead
-Dialogue: 0,0:04:27.01,0:04:33.45,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:04:26.75,0:04:30.28,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}We're in the safe zone, aren't we
-Dialogue: 0,0:04:30.28,0:04:33.69,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Nice, isn't it?
-Dialogue: 0,0:04:33.92,0:05:56.27,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:04:33.94,0:04:35.19,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}They ignored me
-Dialogue: 0,0:04:34.29,0:04:36.49,White with black outline - Top,,0,0,0,,{\pos(192,141.333)\b1\3c&H878482&}No response
-Dialogue: 0,0:04:36.49,0:04:39.72,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I'm get the impression they find me annoying
-Dialogue: 0,0:04:39.72,0:04:41.76,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Maybe they realized we're undercover cops?
-Dialogue: 0,0:04:41.76,0:04:43.26,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}That's bad!
-Dialogue: 0,0:04:43.26,0:04:45.30,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I almost forgot our objective
-Dialogue: 0,0:04:45.30,0:04:49.07,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I just wanted to talk in a cute voice and get pampered
-Dialogue: 0,0:04:49.07,0:04:50.77,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Truly playing like a Hime\N{\c&H000000&}(※ “Hime” = “Princess” = Girl getting free stuff in MMOs)
-Dialogue: 0,0:04:51.07,0:04:52.37,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Do you have a backpack?
-Dialogue: 0,0:04:52.37,0:04:54.16,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Yup, got one
-Dialogue: 0,0:04:54.14,0:04:56.21,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Good
-Dialogue: 0,0:04:56.21,0:04:58.11,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Huh? What?\N{\c&HC4950C&}Oops, my bad
-Dialogue: 0,0:04:58.11,0:04:59.21,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Sorry
-Dialogue: 0,0:04:59.21,0:05:00.95,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Already I'm shooting by accident
-Dialogue: 0,0:05:00.95,0:05:03.98,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Shouldn't you tell them it wasn't on purpose?
-Dialogue: 0,0:05:03.98,0:05:07.42,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Make sure it sounds cute. “Oops, my bad～”\N{\c&H000000&}(※ Tara-chan from the anime Sazae-san)
-Dialogue: 0,0:05:07.42,0:05:09.52,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}I'd rather die
-Dialogue: 0,0:05:09.52,0:05:11.46,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Feeling rebellious, detective Suzuki?!
-Dialogue: 0,0:05:11.79,0:05:13.33,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Did the suspects make a run for it?
-Dialogue: 0,0:05:13.33,0:05:16.49,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}They must be scared of us, right?
-Dialogue: 0,0:05:16.49,0:05:17.76,Default,,0,0,0,,{\pos(192,255)}{\b1}{\c&H9257E3&}It's just as I thought!
-Dialogue: 0,0:05:17.76,0:05:20.20,Default,,0,0,0,,{\pos(192,255)}{\b1}{\c&H9257E3&}We're simply too powerful
-Dialogue: 0,0:05:20.20,0:05:24.24,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}They're probably running for their lives\N{\b1}{\c&H9257E3&}First they ran from us in PUBG
-Dialogue: 0,0:05:24.24,0:05:26.14,Default,,0,0,0,,{\pos(192,255)}{\b1}{\c&H9257E3&}And now in Knives Out!
-Dialogue: 0,0:05:26.14,0:05:28.81,Default,,0,0,0,,{\pos(192,255)}{\b1}{\c&H9257E3&}I cannot believe how little resistance they put up!
-Dialogue: 0,0:05:28.81,0:05:32.48,Default,,0,0,0,,{\pos(192,255)}{\b1}{\c&H9257E3&}We could take over this world with the snap of a finger!
-Dialogue: 0,0:05:34.18,0:05:39.35,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Next thing you know you'll get shot\N{\c&H9257E3&}For a second there I was scared my mic was still on
-Dialogue: 0,0:05:39.35,0:05:41.59,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}“With the snap of a finger!”
-Dialogue: 0,0:05:41.59,0:05:44.26,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}That would've jeopardized the mission\N{\c&H9257E3&}Yeah, no kidding
-Dialogue: 0,0:05:46.16,0:05:47.39,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Missed him completely...
-Dialogue: 0,0:05:49.76,0:05:52.06,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}We're in a pickle, Suzuki!
-Dialogue: 0,0:05:52.06,0:05:53.70,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}The enemy is too strong!
-Dialogue: 0,0:05:53.70,0:05:54.83,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}We have a situation, alright
-Dialogue: 0,0:05:56.77,0:06:04.74,Otome mode,,0,0,0,,Innocent girl mode
-Dialogue: 0,0:05:54.83,0:05:57.10,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Need some healing items, senpai?
-Dialogue: 0,0:05:57.10,0:06:00.71,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}This is it, right?\N{\c&H9257E3&}Aah, thank you so much～
-Dialogue: 0,0:06:00.71,0:06:01.47,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Thank you...
-Dialogue: 0,0:06:01.47,0:06:03.27,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Wait, my mic...
-Dialogue: 0,0:06:03.27,0:06:04.98,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}My mic has been on this whole time
-Dialogue: 0,0:06:05.21,0:06:37.14,Detective mode,,0,0,0,,Detective mode
-Dialogue: 0,0:06:04.98,0:06:07.88,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Suzuki! Get your act together!
-Dialogue: 0,0:06:07.88,0:06:08.98,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Turn off your mic
-Dialogue: 0,0:06:08.98,0:06:12.25,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}It's fine, they're probably ignoring us anyway
-Dialogue: 0,0:06:12.25,0:06:14.05,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Detective Suzuki
-Dialogue: 0,0:06:14.05,0:06:15.69,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}What is it, senpai?
-Dialogue: 0,0:06:15.70,0:06:20.23,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}Detective Suzuki, I feel so calm in this mode
-Dialogue: 0,0:06:21.66,0:06:23.46,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I feel comfortable
-Dialogue: 0,0:06:23.46,0:06:25.13,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}I know what you mean
-Dialogue: 0,0:06:25.13,0:06:28.27,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}It feels like coming home
-Dialogue: 0,0:06:28.93,0:06:31.87,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}NOOOOOooooo
-Dialogue: 0,0:06:32.50,0:06:33.14,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}THIRD PLACE!
-Dialogue: 0,0:06:33.70,0:06:35.37,Default,,0,0,0,,{\pos(192,255)}{\c&HC4950C&}Sorry. Third place?
-Dialogue: 0,0:06:35.37,0:06:37.14,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}That's terrible
-Dialogue: 0,0:06:37.14,0:06:39.28,Default,,0,0,0,,{\pos(192,255)}{\c&H9257E3&}I guess the knives really are out in Knives Out
-Dialogue: 0,0:06:39.28,0:06:43.35,Outro,,0,0,0,,Tantaranta tantaranta sub-scri-be!
-Dialogue: 0,0:06:43.35,0:06:45.32,Outro,,0,0,0,,Tanaka and Suzuki
-Dialogue: 0,0:06:45.32,0:06:48.09,Outro,,0,0,0,,Sub-scri-be!
-Dialogue: 0,0:06:53.19,0:06:54.69,Outro,,0,0,0,,Aw yeah!
+Dialogue: 0,0:00:00.15,0:00:00.88,Default,,0,0,0,,{\c&H9257E3&}Haooo!\N{\c&HC4950C&}Haooo!
+Dialogue: 0,0:00:00.88,0:00:02.85,Default,,0,0,0,,{\c&H9257E3&}HimeHina's red side Tanaka Hime here!
+Dialogue: 0,0:00:02.85,0:00:05.42,Default,,0,0,0,,{\c&HC4950C&}HimeHina's blue side Suzuki Hina here!
+Dialogue: 0,0:00:05.78,0:00:09.12,Default,,0,0,0,,{\c&H9257E3&}You know, when I was having bread today,
+Dialogue: 0,0:00:09.12,0:00:12.92,Default,,0,0,0,,{\c&H9257E3&}there was this blue thingy stuck on the bag
+Dialogue: 0,0:00:12.92,0:00:14.19,Default,,0,0,0,,{\c&H9257E3&}The clicky thing
+Dialogue: 0,0:00:14.19,0:00:15.83,Default,,0,0,0,,{\c&H9257E3&}I was wondering, what's that called?
+Dialogue: 0,0:00:15.83,0:00:17.83,Default,,0,0,0,,{\c&HC4950C&}Right, you get that sometimes, don't you?
+Dialogue: 0,0:00:17.83,0:00:21.10,Default,,0,0,0,,{\c&HC4950C&}And then you Google it but end up forgetting it anyway
+Dialogue: 0,0:00:21.10,0:00:23.64,Default,,0,0,0,,{\c&H9257E3&}You go “Oh, I see” and that's it
+Dialogue: 0,0:00:24.17,0:00:26.24,Default,,0,0,0,,{\c&HC4950C&}I do know one thing about it though
+Dialogue: 0,0:00:26.24,0:00:27.17,Default,,0,0,0,,{\c&H9257E3&}What's that?
+Dialogue: 0,0:00:27.17,0:00:29.54,Default,,0,0,0,,{\c&HC4950C&}If you want to hatch a Pokémon egg
+Dialogue: 0,0:00:29.54,0:00:34.65,Default,,0,0,0,,{\c&HC4950C&}it's really handy to keep your character running
+Dialogue: 0,0:00:34.65,0:00:37.45,Default,,0,0,0,,{\c&HC4950C&}You jam it under the analog stick
+Dialogue: 0,0:00:37.45,0:00:40.19,Default,,0,0,0,,{\c&HC4950C&}and your character will keep running forward by himself
+Dialogue: 0,0:00:40.19,0:00:41.12,Default,,0,0,0,,{\c&H9257E3&}Nice trick
+Dialogue: 0,0:00:41.12,0:00:43.92,Default,,0,0,0,,{\c&HC4950C&}It's super handy\N{\c&H9257E3&}No kidding!
+Dialogue: 0,0:00:43.92,0:00:46.12,Top center Black,,0,0,0,,(※ Real English name: bread clip)
+Dialogue: 0,0:00:43.92,0:00:46.12,Default,,0,0,0,,{\c&H9257E3&}Bag closer?!\N{\c&HC4950C&}Bag closer?!
+Dialogue: 0,0:00:46.12,0:00:48.36,Default,,0,0,0,,{\c&HC4950C&}That sounds so cool
+Dialogue: 0,0:00:48.36,0:00:51.06,Default,,0,0,0,,{\c&H9257E3&}Sounds epic, doesn't it?\N{\c&HC4950C&}It does. Bag Closer
+Dialogue: 0,0:00:53.70,0:00:55.17,Default,,0,0,0,,{\c&H9257E3&}That's how epic it sounds
+Dialogue: 0,0:00:55.17,0:00:56.17,Top center Black,,0,0,0,,{\pos(192,173.2)}What's it called?
+Dialogue: 0,0:00:56.17,0:00:58.87,Default,,0,0,0,,{\c&H9257E3&}That thing you slide threads through
+Dialogue: 0,0:00:58.87,0:01:00.67,Default,,0,0,0,,{\c&HC4950C&}Ooh, this thing\N{\c&H9257E3&}Yes, this
+Dialogue: 0,0:01:00.67,0:01:02.21,Default,,0,0,0,,{\c&H9257E3&}It kind of looks like a coin
+Dialogue: 0,0:01:02.21,0:01:05.28,Default,,0,0,0,,{\c&HC4950C&}You know, I've looked this up before
+Dialogue: 0,0:01:05.28,0:01:08.61,Default,,0,0,0,,{\c&HC4950C&}Its name sounds like a special attack from an anime
+Dialogue: 0,0:01:08.71,0:01:12.68,Note - Violet,,0,0,0,,{\pos(192,245.867)}Trying to guess the name
+Dialogue: 0,0:01:08.61,0:01:11.12,Default,,0,0,0,,{\c&H9257E3&}Nightspring Crochet
+Dialogue: 0,0:01:11.12,0:01:12.68,Default,,0,0,0,,{\c&H9257E3&}Cool, right\N{\c&HC4950C&}Oh, cool
+Dialogue: 0,0:01:12.68,0:01:14.52,Default,,0,0,0,,{\c&HC4950C&}How do you even say “ito” (thread) in English?
+Dialogue: 0,0:01:17.09,0:01:19.79,Top center Black,,0,0,0,,(※ Real English name: needle threader)
+Dialogue: 0,0:01:17.09,0:01:19.79,Default,,0,0,0,,{\c&H9257E3&}Needle slider!\N{\c&HC4950C&}Needle slider!
+Dialogue: 0,0:01:19.79,0:01:20.86,Default,,0,0,0,,{\c&HC4950C&}Slider!
+Dialogue: 0,0:01:20.86,0:01:22.03,Default,,0,0,0,,{\c&H9257E3&}What's a “needle”?
+Dialogue: 0,0:01:22.03,0:01:24.03,Default,,0,0,0,,{\c&H9257E3&}Some kind of noodle? I don't know
+Dialogue: 0,0:01:24.03,0:01:25.70,Default,,0,0,0,,{\c&HC4950C&}Sounds yummy\N{\c&H9257E3&}It does
+Dialogue: 0,0:01:25.70,0:01:26.70,Top center Black,,0,0,0,,{\pos(192,173.2)}What's it called?
+Dialogue: 0,0:01:26.70,0:01:29.50,Default,,0,0,0,,{\c&HC4950C&}It's that thing that spins around, right?\N{\c&H9257E3&}It's for Christmas
+Dialogue: 0,0:01:29.50,0:01:32.10,Default,,0,0,0,,{\c&HC4950C&}Christmas is red and green\N{\c&H9257E3&}Right
+Dialogue: 0,0:01:32.10,0:01:34.71,Default,,0,0,0,,{\c&HC4950C&}I only know it as the spinny thing at barbershops
+Dialogue: 0,0:01:34.71,0:01:36.54,Default,,0,0,0,,{\c&H9257E3&}“Get your punch perm here”\N{\c&H000000&}(※ Yakuza hairstyle from the 70s)
+Dialogue: 0,0:01:36.54,0:01:38.94,Default,,0,0,0,,{\c&HC4950C&}Why only punch perms?
+Dialogue: 0,0:01:38.94,0:01:41.25,Default,,0,0,0,,{\c&HC4950C&}I want other hairstyles too
+Dialogue: 0,0:01:41.25,0:01:43.32,Default,,0,0,0,,{\c&HC4950C&}Like pompadour\N{\c&H000000&}(※ Think Elvis Presley)
+Dialogue: 0,0:01:43.42,0:01:46.99,Note - Violet,,0,0,0,,{\pos(192,245.333)}Taking guesses
+Dialogue: 0,0:01:43.32,0:01:46.99,Default,,0,0,0,,{\c&HC4950C&}Hair salon typhoon
+Dialogue: 0,0:01:46.99,0:01:48.92,Default,,0,0,0,,{\c&H9257E3&}Cyclone bomber!
+Dialogue: 0,0:01:48.92,0:01:49.72,Default,,0,0,0,,{\c&H9257E3&}That's not it
+Dialogue: 0,0:01:49.72,0:01:51.62,Top center Black,,0,0,0,,(※ Real English name: barber's pole)
+Dialogue: 0,0:01:49.72,0:01:51.62,Default,,0,0,0,,{\c&HC4950C&}Signpole!
+Dialogue: 0,0:01:51.62,0:01:54.26,Default,,0,0,0,,{\c&H9257E3&}I knew that! I remember now!
+Dialogue: 0,0:01:54.26,0:01:56.19,Default,,0,0,0,,{\c&HC4950C&}As if\N{\c&H9257E3&}Just kidding
+Dialogue: 0,0:01:56.19,0:01:57.96,Default,,0,0,0,,{\c&HC4950C&}You didn't have the slightest idea
+Dialogue: 0,0:01:59.36,0:02:00.63,Default,,0,0,0,,{\c&H9257E3&}We know this one, right?
+Dialogue: 0,0:02:00.63,0:02:02.27,Default,,0,0,0,,{\c&HC4950C&}It's... that, right?
+Dialogue: 0,0:02:02.27,0:02:03.70,Default,,0,0,0,,{\c&H9257E3&}That thing women use
+Dialogue: 0,0:02:03.70,0:02:05.50,Default,,0,0,0,,{\c&HC4950C&}Men use it too, you know
+Dialogue: 0,0:02:05.50,0:02:07.67,Default,,0,0,0,,{\c&HC4950C&}Anyone can use it\N{\c&H9257E3&}Let's say it together
+Dialogue: 0,0:02:07.67,0:02:08.67,Default,,0,0,0,,{\c&H9257E3&}One, two
+Dialogue: 0,0:02:08.67,0:02:09.84,Default,,0,0,0,,{\c&H9257E3&}Castanets!\N{\c&HC4950C&}Clari- Wait
+Dialogue: 0,0:02:09.84,0:02:12.08,Default,,0,0,0,,{\c&H9257E3&}You said “clarinet”, didn't you?!
+Dialogue: 0,0:02:13.08,0:02:16.55,Default,,0,0,0,,{\c&HC4950C&}I meant castanets, of course
+Dialogue: 0,0:02:16.55,0:02:17.72,Default,,0,0,0,,{\c&H9257E3&}Clarinet, she says!
+Dialogue: 0,0:02:17.72,0:02:21.25,Default,,0,0,0,,{\c&H9257E3&}That's what you get from your dad
+Dialogue: 0,0:02:21.62,0:02:22.42,Default,,0,0,0,,{\c&H9257E3&}Cla...
+Dialogue: 0,0:02:23.92,0:02:26.66,Object label,,0,0,0,,{\pos(192,236.4)\b1}Miharus
+Dialogue: 0,0:02:25.69,0:02:26.66,Default,,0,0,0,,{\c&H9257E3&}Miharus\N{\c&HC4950C&}Miharus
+Dialogue: 0,0:02:26.66,0:02:27.66,Default,,0,0,0,,{\c&H9257E3&}Who's that?\N{\c&HC4950C&}What? What?
+Dialogue: 0,0:02:27.66,0:02:28.86,Default,,0,0,0,,{\c&H9257E3&}That sounds like a boss
+Dialogue: 0,0:02:28.86,0:02:30.66,Default,,0,0,0,,{\c&HC4950C&}A hero from a legend\N{\c&H9257E3&}Right?
+Dialogue: 0,0:02:30.66,0:02:32.26,Default,,0,0,0,,{\c&HC4950C&}Miharus\N{\c&H9257E3&}Miharus
+Dialogue: 0,0:02:32.26,0:02:33.40,Default,,0,0,0,,{\c&H9257E3&}His name was Miharus
+Dialogue: 0,0:02:34.47,0:02:35.47,Top center Black,,0,0,0,,{\pos(192,173.2)}Recognizable phenomena
+Dialogue: 0,0:02:35.47,0:02:38.57,Default,,0,0,0,,{\c&HC4950C&}The phenomenon where you twitch in your sleep!
+Dialogue: 0,0:02:38.57,0:02:41.47,Default,,0,0,0,,{\c&H9257E3&}That happens, right? It's like...\N{\c&HC4950C&}Right?
+Dialogue: 0,0:02:44.18,0:02:45.54,Default,,0,0,0,,{\c&HC4950C&}I mostly have it on the train
+Dialogue: 0,0:02:45.54,0:02:48.15,Default,,0,0,0,,{\c&H9257E3&}Hime has it when she sleeps at her desk
+Dialogue: 0,0:02:48.15,0:02:50.05,Default,,0,0,0,,{\c&HC4950C&}Ah, at school too, right?
+Dialogue: 0,0:02:50.05,0:02:52.72,Default,,0,0,0,,{\c&H9257E3&}Or when you're having a dream!
+Dialogue: 0,0:02:52.72,0:02:56.72,Default,,0,0,0,,{\c&H9257E3&}You're going down some stairs and slip\N{\c&HC4950C&}Oh, yes, I've had that!
+Dialogue: 0,0:02:56.72,0:02:59.22,Default,,0,0,0,,{\c&HC4950C&}Apparently it's called “jerking”
+Dialogue: 0,0:02:59.22,0:03:01.29,Default,,0,0,0,,{\c&H9257E3&}Jerking?\N{\c&HC4950C&}Jerking
+Dialogue: 0,0:03:01.29,0:03:03.06,Default,,0,0,0,,{\c&H9257E3&}Sounds yummy\N{\c&HC4950C&}It's...
+Dialogue: 0,0:03:03.06,0:03:05.06,Default,,0,0,0,,{\c&HC4950C&}The king of jerky\N{\c&H9257E3&}Jerky
+Dialogue: 0,0:03:05.06,0:03:07.90,Default,,0,0,0,,{\c&H9257E3&}The king of jerky!\N{\c&HC4950C&}That has to be delicious
+Dialogue: 0,0:03:07.90,0:03:10.54,Default,,0,0,0,,{\c&H9257E3&}Being at a bookstore making you want to go to the bathroom
+Dialogue: 0,0:03:10.54,0:03:12.54,Default,,0,0,0,,{\c&H9257E3&}Do you have that?\N{\c&HC4950C&}What? No
+Dialogue: 0,0:03:12.54,0:03:14.71,Default,,0,0,0,,{\c&HC4950C&}I never stay in bookstores for long
+Dialogue: 0,0:03:14.71,0:03:17.48,Default,,0,0,0,,{\c&HC4950C&}I just buy what I want and leave
+Dialogue: 0,0:03:17.48,0:03:19.04,Default,,0,0,0,,{\c&HC4950C&}Get my manga and head out
+Dialogue: 0,0:03:19.04,0:03:19.78,Default,,0,0,0,,{\c&H9257E3&}So cool\N{\c&HC4950C&}Get my manga and head out
+Dialogue: 0,0:03:19.78,0:03:23.92,Default,,0,0,0,,{\c&HC4950C&}I read it at home\N{\c&H9257E3&}Right, where you can concentrate
+Dialogue: 0,0:03:23.92,0:03:26.89,Default,,0,0,0,,{\c&H9257E3&}Apparently the smell of ink causes it
+Dialogue: 0,0:03:26.89,0:03:28.42,Default,,0,0,0,,{\c&H9257E3&}Let's look how it's called
+Dialogue: 0,0:03:28.42,0:03:30.66,Default,,0,0,0,,{\c&H9257E3&}Mariko Aoki phenomenon!
+Dialogue: 0,0:03:30.66,0:03:32.89,Default,,0,0,0,,{\c&H9257E3&}Who's that?\N{\c&HC4950C&}Who could it be?
+Dialogue: 0,0:03:32.89,0:03:35.26,Default,,0,0,0,,{\c&HC4950C&}Who is Mariko
+Dialogue: 0,0:03:35.26,0:03:39.73,Default,,0,0,0,,{\c&H9257E3&}When this Mariko wrote a reader's letter to a magazine
+Dialogue: 0,0:03:39.73,0:03:44.80,Default,,0,0,0,,{\c&H9257E3&}asking what it's all about,
+Dialogue: 0,0:03:44.80,0:03:46.57,Default,,0,0,0,,{\c&H9257E3&}her name got attached to it
+Dialogue: 0,0:03:47.57,0:03:50.41,Default,,0,0,0,,{\c&H9257E3&}She only asked about it, and people went...
+Dialogue: 0,0:03:50.41,0:03:52.88,Default,,0,0,0,,{\c&H9257E3&}“Let's call it the Suzu-” Wait, not Suzuki
+Dialogue: 0,0:03:52.88,0:03:54.68,Default,,0,0,0,,{\c&HC4950C&}Why are you trying to steal it?
+Dialogue: 0,0:03:54.68,0:03:56.78,Default,,0,0,0,,{\c&H9257E3&}Hina Suzuki phenomenon
+Dialogue: 0,0:03:56.78,0:03:58.58,Default,,0,0,0,,{\c&H9257E3&}Apparently that's how it went
+Dialogue: 0,0:03:58.58,0:04:01.39,Default,,0,0,0,,{\c&HC4950C&}She's a victim in a way, right?\N{\c&H9257E3&}Yeah
+Dialogue: 0,0:04:01.39,0:04:03.66,Default,,0,0,0,,{\c&H9257E3&}She only wanted to know why it happens,
+Dialogue: 0,0:04:03.66,0:04:06.93,Default,,0,0,0,,{\c&H9257E3&}but when they figured it out they called it the Mariko Aoki phenomenon
+Dialogue: 0,0:04:06.93,0:04:09.23,Default,,0,0,0,,{\c&HC4950C&}“You asked about it, so it gets your name”
+Dialogue: 0,0:04:09.23,0:04:12.10,Default,,0,0,0,,{\c&H9257E3&}Isn't that cool though? It's like she invented it
+Dialogue: 0,0:04:12.10,0:04:13.47,Default,,0,0,0,,{\c&HC4950C&}She's an inventor, alright
+Dialogue: 0,0:04:13.47,0:04:17.50,Default,,0,0,0,,{\c&H9257E3&}The inventor who noticed the phenomenon of suddenly wanting to go to the bathroooom
+Dialogue: 0,0:04:17.50,0:04:21.61,Default,,0,0,0,,{\c&H9257E3&}Isn't it cool when some phenomenon gets named after you?
+Dialogue: 0,0:04:21.61,0:04:22.87,Default,,0,0,0,,{\c&HC4950C&}Hey, Hime, laugh for a bit
+Dialogue: 0,0:04:26.44,0:04:29.61,Default,,0,0,0,,{\c&H9257E3&}Okay, what now
+Dialogue: 0,0:04:29.61,0:04:32.92,Default,,0,0,0,,{\c&HC4950C&}You laugh in vibrato, so we can call that...
+Dialogue: 0,0:04:32.92,0:04:35.09,Default,,0,0,0,,{\c&HC4950C&}...the Hime Tanaka phenomenon
+Dialogue: 0,0:04:37.62,0:04:39.32,Default,,0,0,0,,{\c&H9257E3&}I like that!
+Dialogue: 0,0:04:40.13,0:04:42.09,Default,,0,0,0,,{\c&H9257E3&}I feel proud of my laugh now\N{\c&HC4950C&}Laugh, laugh
+Dialogue: 0,0:04:42.09,0:04:42.89,Default,,0,0,0,,{\c&H9257E3&}Wuuuuu~
+Dialogue: 0,0:04:43.76,0:04:44.60,Default,,0,0,0,,{\c&HC4950C&}Yes, that
+Dialogue: 0,0:04:44.60,0:04:45.06,Default,,0,0,0,,{\c&H9257E3&}Wuuuuu~
+Dialogue: 0,0:04:45.06,0:04:46.87,Default,,0,0,0,,{\c&HC4950C&}Well then, goodbye!
+Dialogue: 0,0:04:46.87,0:04:48.40,Default,,0,0,0,,{\c&H9257E3&}Goodbye. Wuuuuuu~
+Dialogue: 0,0:04:49.30,0:04:50.90,Default,,0,0,0,,{\c&HC4950C&}Uuuuuu~
+Dialogue: 0,0:04:51.30,0:04:53.64,Default,,0,0,0,,{\c&H9257E3&}Hina Suzuki phenomenon!\N{\c&HC4950C&}Uuuuuu~
+Dialogue: 0,0:04:55.67,0:04:59.71,Outro,,0,0,0,,Tantaranta tantaranta sub-scri-be!
+Dialogue: 0,0:04:59.71,0:05:01.71,Outro,,0,0,0,,Tanaka and Suzuki
+Dialogue: 0,0:05:01.71,0:05:04.55,Outro,,0,0,0,,Sub-scri-be!
+Dialogue: 0,0:05:09.55,0:05:10.92,Outro,,0,0,0,,Aw yeah!
