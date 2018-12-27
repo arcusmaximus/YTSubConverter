@@ -22,9 +22,9 @@ At its core, YTSubConverter is an .ass -> .ytt converter. You can create .ass su
 Conversion is straightforward: launch the program, open your .ass file and click Convert. You'll get a .ytt file that's ready for upload.
 
 Some things to keep in mind while creating your subtitles:
-* By default, Aegisub subtitles don't have a background box, meaning the resulting YouTube subtitles also won't have one. If you want a background box, open Aegisub's Style Editor and check ÅgOpaque boxÅh in the ÅgOutlineÅh section.
+* By default, Aegisub subtitles don't have a background box, meaning the resulting YouTube subtitles also won't have one. If you want a background box, open Aegisub's Style Editor and check ‚ÄúOpaque box‚Äù in the ‚ÄúOutline‚Äù section.
 * A regular (non-box) outline in the .ass will result in a glow effect in the .ytt.
-* A shadow in the .ass will result in a soft shadow in the .ytt. If you want to change this to a hard shadow or a glow effect, you can do so in YTSubConverter's ÅgStyle options.Åh
+* A shadow in the .ass will result in a soft shadow in the .ytt. If you want to change this to a hard shadow or a glow effect, you can do so in YTSubConverter's ‚ÄúStyle options.‚Äù
 
 ![Outlines](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/outlines.png)
 
@@ -70,7 +70,7 @@ Unsupported tags are ignored.
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
 * In general, you can only use one style per line of text. For example, while you can make an entire line bold or italic, you can't do this for a single word within a line. In other words, this works: `What's happening?\N{\b1}Nononono!` (only the second line is bold) but this doesn't: `I {\b1}told{\b0} you not to go there!` (nothing will be bold).
-  * As an exception to the above, multiple colors within a line *are* possible, but only on desktop. For example, the ÅgMAAANÅh in `Devil{\c&H0000FF&}MAAAN{\r}!` will be red on desktop; on mobile, however, it'll have the same color as the rest of the line.
+  * As an exception to the above, multiple colors within a line *are* possible, but only on desktop. For example, the ‚ÄúMAAAN‚Äù in `Devil{\c&H0000FF&}MAAAN{\r}!` will be red on desktop; on mobile, however, it'll have the same color as the rest of the line.
 * Subtitles positioned off-center will move out towards the sides in theater mode, possibly even hanging out of the video frame.
 
 ## Details about uploading
@@ -82,7 +82,7 @@ Note that the subtitle preview in the built-in editor *does not* show the stylin
 * Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f <number>` to download a smaller file.)
 * Open the locally saved video in a player that supports global hotkeys (e.g. VLC). If you haven't yet, set up hotkeys for pausing, resuming and rewinding the video.
 * Open Notepad and type out the subtitles, using the global hotkeys to control the video without having to switch between windows.
-* While typing, prefix each line with a ÅgspecialÅh character (such as `*`, `+`...) to identify the speaker. Use `\N` for manual line breaks. (Example: `*Huh, that sign has an evil rabbit on it\N+That does look evil`)
+* While typing, prefix each line with a ‚Äúspecial‚Äù character (such as `*`, `+`...) to identify the speaker. Use `\N` for manual line breaks. (Example: `*Huh, that sign has an evil rabbit on it\N+That does look evil`)
 * When done, do a search/replace of each special character by the corresponding .ass color code (e.g. `*` -> `{\c&HA92EED&}`); note that the color is in the format BBGGRR, that is, in the opposite order as it would be in HTML.
 * Copy the text document and paste it into Aegisub's subtitle grid.
 * Set up the timings and (if needed) additional formatting.
