@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace Arc.YTSubConverter.Util
 {
@@ -31,6 +30,29 @@ namespace Arc.YTSubConverter.Util
                 (byte)(g * factor),
                 (byte)(b * factor)
             );
+        }
+
+        public static Color FromHtml(string html)
+        {
+            if (html == null || html.Length != 7 || !html.StartsWith("#"))
+                return Color.Empty;
+
+            if (!int.TryParse(html.Substring(1, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int r) ||
+                !int.TryParse(html.Substring(3, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int g) ||
+                !int.TryParse(html.Substring(5, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int b))
+            {
+                return Color.Empty;
+            }
+
+            return Color.FromArgb(255, r, g, b);
+        }
+
+        public static string ToHtml(Color color)
+        {
+            if (color.IsEmpty)
+                return string.Empty;
+
+            return $"#{color.R:X02}{color.G:X02}{color.B:X02}";
         }
     }
 }

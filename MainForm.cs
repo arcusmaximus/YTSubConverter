@@ -120,8 +120,8 @@ namespace Arc.YTSubConverter
 
             _chkKaraoke.Checked = options.IsKaraoke;
             _chkHighlightCurrentWord.Checked = !currentWordShadowColor.IsEmpty;
-            _txtCurrentWordTextColor.Text = ColorTranslator.ToHtml(currentWordTextColor);
-            _txtCurrentWordGlowColor.Text = ColorTranslator.ToHtml(currentWordShadowColor);
+            _txtCurrentWordTextColor.Text = ColorUtil.ToHtml(currentWordTextColor);
+            _txtCurrentWordGlowColor.Text = ColorUtil.ToHtml(currentWordShadowColor);
             UpdateStylePreview();
         }
 
@@ -163,23 +163,23 @@ namespace Arc.YTSubConverter
         private void _chkHighlightCurrentWord_CheckedChanged(object sender, EventArgs e)
         {
             _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
-            _txtCurrentWordTextColor.Text = ColorTranslator.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].PrimaryColor : Color.Empty);
+            _txtCurrentWordTextColor.Text = ColorUtil.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].PrimaryColor : Color.Empty);
 
             _txtCurrentWordGlowColor.Enabled = _chkHighlightCurrentWord.Checked;
-            _txtCurrentWordGlowColor.Text = ColorTranslator.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].ShadowColor : Color.Empty);
+            _txtCurrentWordGlowColor.Text = ColorUtil.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].ShadowColor : Color.Empty);
 
             UpdateStylePreview();
         }
 
         private void _txtCurrentWordTextColor_TextChanged(object sender, EventArgs e)
         {
-            SelectedStyleOptions.CurrentWordTextColor = ColorTranslator.FromHtml(_txtCurrentWordTextColor.Text);
+            SelectedStyleOptions.CurrentWordTextColor = ColorUtil.FromHtml(_txtCurrentWordTextColor.Text);
             UpdateStylePreview();
         }
 
         private void _txtCurrentWordGlowColor_TextChanged(object sender, EventArgs e)
         {
-            SelectedStyleOptions.CurrentWordShadowColor = ColorTranslator.FromHtml(_txtCurrentWordGlowColor.Text);
+            SelectedStyleOptions.CurrentWordShadowColor = ColorUtil.FromHtml(_txtCurrentWordGlowColor.Text);
             UpdateStylePreview();
         }
 

@@ -377,10 +377,20 @@ namespace Arc.YTSubConverter.Ass
                 int numVisibleSections = visibleSectionsPerStep.Values[stepIdx];
 
                 ExtendedLine stepLine = (ExtendedLine)line.Clone();
-                ChangeLineTimes(stepLine, line.Start + timeOffset, stepIdx < visibleSectionsPerStep.Count - 1 ? line.Start + visibleSectionsPerStep.Keys[stepIdx + 1] : line.End);
-                for (int i = numVisibleSections; i < stepLine.Sections.Count; i++)
+                DateTime start = SnapTimeToFrame((line.Start + timeOffset).AddMilliseconds(20));
+                DateTime end;
+                if (stepIdx < visibleSectionsPerStep.Count - 1)
+                    end = SnapTimeToFrame((line.Start + visibleSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20));
+                else
+                    end = line.End;
+
+                ChangeLineTimes(stepLine, start, end);
+
+                foreach (ExtendedSection section in stepLine.Sections.Skip(numVisibleSections))
                 {
-                    stepLine.Sections[i].ForeColor = ((ExtendedSection)stepLine.Sections[i]).SecondaryColor;
+                    section.ForeColor = section.SecondaryColor;
+                    if (section.ForeColor.A == 0)
+                        section.ShadowType = ShadowType.None;
                 }
 
                 ExtendedSection singingSection = (ExtendedSection)stepLine.Sections[numVisibleSections - 1];
@@ -392,8 +402,7 @@ namespace Arc.YTSubConverter.Ass
 
                 // Hack: make sure YttDocument will also recognize the final (single-color) step as a karaoke line
                 // so it gets the exact same position as the previous steps
-                if (stepIdx == visibleSectionsPerStep.Count - 1)
-                    stepLine.Sections.Add(new Section(string.Empty));
+                stepLine.Sections.Add(new Section(string.Empty));
 
                 yield return stepLine;
             }
@@ -545,7 +554,11 @@ namespace Arc.YTSubConverter.Ass
 
         private static int ParseHex(string arg)
         {
-            return int.Parse(arg.Substring(2, arg.Length - 3), NumberStyles.AllowHexSpecifier);
+            if (arg.Length != 9 || !arg.StartsWith("&H") || !arg.EndsWith("&"))
+                return 0;
+
+            int.TryParse(arg.Substring(2, arg.Length - 3), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);
+            return value;
         }
 
         private static Color ParseColor(string arg, int alpha)

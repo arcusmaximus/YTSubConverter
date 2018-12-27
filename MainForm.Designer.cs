@@ -34,12 +34,6 @@
             this._spltStyleOptions = new System.Windows.Forms.SplitContainer();
             this._lstStyles = new System.Windows.Forms.ListBox();
             this._pnlShadowType = new System.Windows.Forms.Panel();
-            this._txtCurrentWordGlowColor = new System.Windows.Forms.TextBox();
-            this._txtCurrentWordTextColor = new System.Windows.Forms.TextBox();
-            this._lblCurrentWordGlowColor = new System.Windows.Forms.Label();
-            this._lblCurrentWordTextColor = new System.Windows.Forms.Label();
-            this._chkHighlightCurrentWord = new System.Windows.Forms.CheckBox();
-            this._chkKaraoke = new System.Windows.Forms.CheckBox();
             this._lblShadowType = new System.Windows.Forms.Label();
             this._radGlow = new System.Windows.Forms.RadioButton();
             this._radSoftShadow = new System.Windows.Forms.RadioButton();
@@ -49,21 +43,31 @@
             this._btnConvert = new System.Windows.Forms.Button();
             this._lblConversionSuccess = new System.Windows.Forms.Label();
             this._btnBrowse = new System.Windows.Forms.Button();
+            this._pnlOptions = new System.Windows.Forms.Panel();
+            this._pnlKaraokeType = new System.Windows.Forms.Panel();
+            this._txtCurrentWordGlowColor = new System.Windows.Forms.TextBox();
+            this._txtCurrentWordTextColor = new System.Windows.Forms.TextBox();
+            this._lblCurrentWordGlowColor = new System.Windows.Forms.Label();
+            this._lblCurrentWordTextColor = new System.Windows.Forms.Label();
+            this._chkHighlightCurrentWord = new System.Windows.Forms.CheckBox();
+            this._chkKaraoke = new System.Windows.Forms.CheckBox();
             this._grpStyleOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._spltStyleOptions)).BeginInit();
             this._spltStyleOptions.Panel1.SuspendLayout();
             this._spltStyleOptions.Panel2.SuspendLayout();
             this._spltStyleOptions.SuspendLayout();
             this._pnlShadowType.SuspendLayout();
+            this._pnlOptions.SuspendLayout();
+            this._pnlKaraokeType.SuspendLayout();
             this.SuspendLayout();
             // 
             // _brwPreview
             // 
             this._brwPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._brwPreview.Location = new System.Drawing.Point(0, 99);
+            this._brwPreview.Location = new System.Drawing.Point(0, 92);
             this._brwPreview.MinimumSize = new System.Drawing.Size(20, 20);
             this._brwPreview.Name = "_brwPreview";
-            this._brwPreview.Size = new System.Drawing.Size(468, 232);
+            this._brwPreview.Size = new System.Drawing.Size(468, 239);
             this._brwPreview.TabIndex = 0;
             // 
             // _txtInputFile
@@ -102,7 +106,7 @@
             // _spltStyleOptions.Panel2
             // 
             this._spltStyleOptions.Panel2.Controls.Add(this._brwPreview);
-            this._spltStyleOptions.Panel2.Controls.Add(this._pnlShadowType);
+            this._spltStyleOptions.Panel2.Controls.Add(this._pnlOptions);
             this._spltStyleOptions.Size = new System.Drawing.Size(763, 331);
             this._spltStyleOptions.SplitterDistance = 291;
             this._spltStyleOptions.TabIndex = 5;
@@ -120,80 +124,15 @@
             // 
             // _pnlShadowType
             // 
-            this._pnlShadowType.Controls.Add(this._txtCurrentWordGlowColor);
-            this._pnlShadowType.Controls.Add(this._txtCurrentWordTextColor);
-            this._pnlShadowType.Controls.Add(this._lblCurrentWordGlowColor);
-            this._pnlShadowType.Controls.Add(this._lblCurrentWordTextColor);
-            this._pnlShadowType.Controls.Add(this._chkHighlightCurrentWord);
-            this._pnlShadowType.Controls.Add(this._chkKaraoke);
             this._pnlShadowType.Controls.Add(this._lblShadowType);
             this._pnlShadowType.Controls.Add(this._radGlow);
             this._pnlShadowType.Controls.Add(this._radSoftShadow);
             this._pnlShadowType.Controls.Add(this._radHardShadow);
-            this._pnlShadowType.Dock = System.Windows.Forms.DockStyle.Top;
+            this._pnlShadowType.Dock = System.Windows.Forms.DockStyle.Left;
             this._pnlShadowType.Location = new System.Drawing.Point(0, 0);
             this._pnlShadowType.Name = "_pnlShadowType";
-            this._pnlShadowType.Size = new System.Drawing.Size(468, 99);
+            this._pnlShadowType.Size = new System.Drawing.Size(198, 92);
             this._pnlShadowType.TabIndex = 5;
-            // 
-            // _txtCurrentWordGlowColor
-            // 
-            this._txtCurrentWordGlowColor.Enabled = false;
-            this._txtCurrentWordGlowColor.Location = new System.Drawing.Point(309, 68);
-            this._txtCurrentWordGlowColor.Name = "_txtCurrentWordGlowColor";
-            this._txtCurrentWordGlowColor.Size = new System.Drawing.Size(65, 20);
-            this._txtCurrentWordGlowColor.TabIndex = 9;
-            this._txtCurrentWordGlowColor.TextChanged += new System.EventHandler(this._txtCurrentWordGlowColor_TextChanged);
-            // 
-            // _txtCurrentWordTextColor
-            // 
-            this._txtCurrentWordTextColor.Enabled = false;
-            this._txtCurrentWordTextColor.Location = new System.Drawing.Point(309, 47);
-            this._txtCurrentWordTextColor.Name = "_txtCurrentWordTextColor";
-            this._txtCurrentWordTextColor.Size = new System.Drawing.Size(65, 20);
-            this._txtCurrentWordTextColor.TabIndex = 9;
-            this._txtCurrentWordTextColor.TextChanged += new System.EventHandler(this._txtCurrentWordTextColor_TextChanged);
-            // 
-            // _lblCurrentWordGlowColor
-            // 
-            this._lblCurrentWordGlowColor.AutoSize = true;
-            this._lblCurrentWordGlowColor.Location = new System.Drawing.Point(229, 71);
-            this._lblCurrentWordGlowColor.Name = "_lblCurrentWordGlowColor";
-            this._lblCurrentWordGlowColor.Size = new System.Drawing.Size(60, 13);
-            this._lblCurrentWordGlowColor.TabIndex = 8;
-            this._lblCurrentWordGlowColor.Text = "Glow color:";
-            // 
-            // _lblCurrentWordTextColor
-            // 
-            this._lblCurrentWordTextColor.AutoSize = true;
-            this._lblCurrentWordTextColor.Location = new System.Drawing.Point(229, 52);
-            this._lblCurrentWordTextColor.Name = "_lblCurrentWordTextColor";
-            this._lblCurrentWordTextColor.Size = new System.Drawing.Size(57, 13);
-            this._lblCurrentWordTextColor.TabIndex = 7;
-            this._lblCurrentWordTextColor.Text = "Text color:";
-            // 
-            // _chkHighlightCurrentWord
-            // 
-            this._chkHighlightCurrentWord.AutoSize = true;
-            this._chkHighlightCurrentWord.Enabled = false;
-            this._chkHighlightCurrentWord.Location = new System.Drawing.Point(204, 31);
-            this._chkHighlightCurrentWord.Name = "_chkHighlightCurrentWord";
-            this._chkHighlightCurrentWord.Size = new System.Drawing.Size(129, 17);
-            this._chkHighlightCurrentWord.TabIndex = 6;
-            this._chkHighlightCurrentWord.Text = "Highlight current word";
-            this._chkHighlightCurrentWord.UseVisualStyleBackColor = true;
-            this._chkHighlightCurrentWord.CheckedChanged += new System.EventHandler(this._chkHighlightCurrentWord_CheckedChanged);
-            // 
-            // _chkKaraoke
-            // 
-            this._chkKaraoke.AutoSize = true;
-            this._chkKaraoke.Location = new System.Drawing.Point(204, 8);
-            this._chkKaraoke.Name = "_chkKaraoke";
-            this._chkKaraoke.Size = new System.Drawing.Size(102, 17);
-            this._chkKaraoke.TabIndex = 5;
-            this._chkKaraoke.Text = "Use for karaoke";
-            this._chkKaraoke.UseVisualStyleBackColor = true;
-            this._chkKaraoke.CheckedChanged += new System.EventHandler(this._chkKaraoke_CheckedChanged);
             // 
             // _lblShadowType
             // 
@@ -290,6 +229,89 @@
             this._btnBrowse.UseVisualStyleBackColor = true;
             this._btnBrowse.Click += new System.EventHandler(this._btnBrowse_Click);
             // 
+            // _pnlOptions
+            // 
+            this._pnlOptions.Controls.Add(this._pnlKaraokeType);
+            this._pnlOptions.Controls.Add(this._pnlShadowType);
+            this._pnlOptions.Dock = System.Windows.Forms.DockStyle.Top;
+            this._pnlOptions.Location = new System.Drawing.Point(0, 0);
+            this._pnlOptions.Name = "_pnlOptions";
+            this._pnlOptions.Size = new System.Drawing.Size(468, 92);
+            this._pnlOptions.TabIndex = 6;
+            // 
+            // _pnlKaraokeType
+            // 
+            this._pnlKaraokeType.Controls.Add(this._txtCurrentWordGlowColor);
+            this._pnlKaraokeType.Controls.Add(this._txtCurrentWordTextColor);
+            this._pnlKaraokeType.Controls.Add(this._lblCurrentWordGlowColor);
+            this._pnlKaraokeType.Controls.Add(this._lblCurrentWordTextColor);
+            this._pnlKaraokeType.Controls.Add(this._chkHighlightCurrentWord);
+            this._pnlKaraokeType.Controls.Add(this._chkKaraoke);
+            this._pnlKaraokeType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._pnlKaraokeType.Location = new System.Drawing.Point(198, 0);
+            this._pnlKaraokeType.Name = "_pnlKaraokeType";
+            this._pnlKaraokeType.Size = new System.Drawing.Size(270, 92);
+            this._pnlKaraokeType.TabIndex = 6;
+            // 
+            // _txtCurrentWordGlowColor
+            // 
+            this._txtCurrentWordGlowColor.Enabled = false;
+            this._txtCurrentWordGlowColor.Location = new System.Drawing.Point(111, 68);
+            this._txtCurrentWordGlowColor.Name = "_txtCurrentWordGlowColor";
+            this._txtCurrentWordGlowColor.Size = new System.Drawing.Size(65, 20);
+            this._txtCurrentWordGlowColor.TabIndex = 14;
+            this._txtCurrentWordGlowColor.TextChanged += new System.EventHandler(this._txtCurrentWordGlowColor_TextChanged);
+            // 
+            // _txtCurrentWordTextColor
+            // 
+            this._txtCurrentWordTextColor.Enabled = false;
+            this._txtCurrentWordTextColor.Location = new System.Drawing.Point(111, 47);
+            this._txtCurrentWordTextColor.Name = "_txtCurrentWordTextColor";
+            this._txtCurrentWordTextColor.Size = new System.Drawing.Size(65, 20);
+            this._txtCurrentWordTextColor.TabIndex = 15;
+            this._txtCurrentWordTextColor.TextChanged += new System.EventHandler(this._txtCurrentWordTextColor_TextChanged);
+            // 
+            // _lblCurrentWordGlowColor
+            // 
+            this._lblCurrentWordGlowColor.AutoSize = true;
+            this._lblCurrentWordGlowColor.Location = new System.Drawing.Point(31, 71);
+            this._lblCurrentWordGlowColor.Name = "_lblCurrentWordGlowColor";
+            this._lblCurrentWordGlowColor.Size = new System.Drawing.Size(60, 13);
+            this._lblCurrentWordGlowColor.TabIndex = 13;
+            this._lblCurrentWordGlowColor.Text = "Glow color:";
+            // 
+            // _lblCurrentWordTextColor
+            // 
+            this._lblCurrentWordTextColor.AutoSize = true;
+            this._lblCurrentWordTextColor.Location = new System.Drawing.Point(31, 52);
+            this._lblCurrentWordTextColor.Name = "_lblCurrentWordTextColor";
+            this._lblCurrentWordTextColor.Size = new System.Drawing.Size(57, 13);
+            this._lblCurrentWordTextColor.TabIndex = 12;
+            this._lblCurrentWordTextColor.Text = "Text color:";
+            // 
+            // _chkHighlightCurrentWord
+            // 
+            this._chkHighlightCurrentWord.AutoSize = true;
+            this._chkHighlightCurrentWord.Enabled = false;
+            this._chkHighlightCurrentWord.Location = new System.Drawing.Point(6, 31);
+            this._chkHighlightCurrentWord.Name = "_chkHighlightCurrentWord";
+            this._chkHighlightCurrentWord.Size = new System.Drawing.Size(129, 17);
+            this._chkHighlightCurrentWord.TabIndex = 11;
+            this._chkHighlightCurrentWord.Text = "Highlight current word";
+            this._chkHighlightCurrentWord.UseVisualStyleBackColor = true;
+            this._chkHighlightCurrentWord.CheckedChanged += new System.EventHandler(this._chkHighlightCurrentWord_CheckedChanged);
+            // 
+            // _chkKaraoke
+            // 
+            this._chkKaraoke.AutoSize = true;
+            this._chkKaraoke.Location = new System.Drawing.Point(6, 8);
+            this._chkKaraoke.Name = "_chkKaraoke";
+            this._chkKaraoke.Size = new System.Drawing.Size(102, 17);
+            this._chkKaraoke.TabIndex = 10;
+            this._chkKaraoke.Text = "Use for karaoke";
+            this._chkKaraoke.UseVisualStyleBackColor = true;
+            this._chkKaraoke.CheckedChanged += new System.EventHandler(this._chkKaraoke_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -316,6 +338,9 @@
             this._spltStyleOptions.ResumeLayout(false);
             this._pnlShadowType.ResumeLayout(false);
             this._pnlShadowType.PerformLayout();
+            this._pnlOptions.ResumeLayout(false);
+            this._pnlKaraokeType.ResumeLayout(false);
+            this._pnlKaraokeType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -338,11 +363,13 @@
         private System.Windows.Forms.Label _lblConversionSuccess;
         private System.Windows.Forms.Panel _pnlShadowType;
         private System.Windows.Forms.Button _btnBrowse;
-        private System.Windows.Forms.CheckBox _chkHighlightCurrentWord;
-        private System.Windows.Forms.CheckBox _chkKaraoke;
-        private System.Windows.Forms.Label _lblCurrentWordTextColor;
-        private System.Windows.Forms.Label _lblCurrentWordGlowColor;
+        private System.Windows.Forms.Panel _pnlOptions;
+        private System.Windows.Forms.Panel _pnlKaraokeType;
         private System.Windows.Forms.TextBox _txtCurrentWordGlowColor;
         private System.Windows.Forms.TextBox _txtCurrentWordTextColor;
+        private System.Windows.Forms.Label _lblCurrentWordGlowColor;
+        private System.Windows.Forms.Label _lblCurrentWordTextColor;
+        private System.Windows.Forms.CheckBox _chkHighlightCurrentWord;
+        private System.Windows.Forms.CheckBox _chkKaraoke;
     }
 }

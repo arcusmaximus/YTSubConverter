@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Xml.Serialization;
 using Arc.YTSubConverter.Ass;
+using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter
 {
@@ -49,8 +50,8 @@ namespace Arc.YTSubConverter
         [XmlElement("CurrentWordTextColor")]
         public string CurrentWordTextColorHtml
         {
-            get { return ColorTranslator.ToHtml(CurrentWordTextColor); }
-            set { CurrentWordTextColor = ColorTranslator.FromHtml(value); }
+            get { return ColorUtil.ToHtml(CurrentWordTextColor); }
+            set { CurrentWordTextColor = ColorUtil.FromHtml(value); }
         }
 
         [XmlIgnore]
@@ -63,8 +64,8 @@ namespace Arc.YTSubConverter
         [XmlElement("CurrentWordShadowColor")]
         public string CurrentWordShadowColorHtml
         {
-            get { return ColorTranslator.ToHtml(CurrentWordShadowColor); }
-            set { CurrentWordShadowColor = ColorTranslator.FromHtml(value); }
+            get { return ColorUtil.ToHtml(CurrentWordShadowColor); }
+            set { CurrentWordShadowColor = ColorUtil.FromHtml(value); }
         }
 
         public override string ToString()

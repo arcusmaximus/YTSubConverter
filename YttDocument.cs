@@ -208,7 +208,7 @@ namespace Arc.YTSubConverter
 
             line.AnchorPoint = AnchorPointUtil.AlignLeft(anchorPoint);
 
-            int widthAt720p = TextUtil.MeasureWidth(line.Text, line.Sections[0].Font, 30, line.Sections[0].Bold, line.Sections[0].Italic, 3);
+            int widthAt720p = TextUtil.MeasureWidth(line.Text, line.Sections[0].Font, 24, line.Sections[0].Bold, line.Sections[0].Italic, 3);
             float widthAtVideoSize = widthAt720p / 1280f * VideoDimensions.Width;
 
             PointF position = line.Position ?? GetDefaultPosition(anchorPoint);
@@ -508,12 +508,12 @@ namespace Arc.YTSubConverter
                 writer.WriteAttributeString("u", "1");
 
             Color foreColor = IsWhiteOrEmpty(format.ForeColor) ? Color.FromArgb(format.ForeColor.A, 254, 254, 254) : format.ForeColor;
-            writer.WriteAttributeString("fc", ColorTranslator.ToHtml(foreColor));
+            writer.WriteAttributeString("fc", ColorUtil.ToHtml(foreColor));
             writer.WriteAttributeString("fo", foreColor.A.ToString());
 
             if (!format.BackColor.IsEmpty)
             {
-                writer.WriteAttributeString("bc", ColorTranslator.ToHtml(format.BackColor));
+                writer.WriteAttributeString("bc", ColorUtil.ToHtml(format.BackColor));
                 writer.WriteAttributeString("bo", format.BackColor.A.ToString());
             }
             else
@@ -524,7 +524,7 @@ namespace Arc.YTSubConverter
             if (format.ShadowType != ShadowType.None && format.ShadowColor.A > 0)
             {
                 writer.WriteAttributeString("et", GetEdgeType(format.ShadowType).ToString());
-                writer.WriteAttributeString("ec", ColorTranslator.ToHtml(format.ShadowColor));
+                writer.WriteAttributeString("ec", ColorUtil.ToHtml(format.ShadowColor));
             }
 
             writer.WriteEndElement();
@@ -564,7 +564,7 @@ namespace Arc.YTSubConverter
             }
             else
             {
-                throw new NotSupportedException("YouTube's support for multiple sections in a line is currently broken on PC");
+                throw new NotSupportedException($"YouTube's support for multiple sections in a line is currently broken on PC ({line.Text})");
                 
                 foreach (Section section in line.Sections)
                 {

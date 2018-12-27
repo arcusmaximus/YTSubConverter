@@ -8,20 +8,6 @@ namespace Arc.YTSubConverter.Util
     {
         private static readonly Dictionary<string, Measurer> Measurers = new Dictionary<string, Measurer>();
 
-        public static int CountOccurrences(this string str, string substr)
-        {
-            int pos = -1;
-            int count = 0;
-            while (true)
-            {
-                pos = str.IndexOf(substr, pos + 1);
-                if (pos < 0)
-                    return count;
-
-                count++;
-            }
-        }
-
         public static string Repeat(this string str, int times)
         {
             if (times < 0)
