@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Arc.YTSubConverter.Ass;
@@ -18,6 +19,9 @@ namespace Arc.YTSubConverter
         public MainForm()
         {
             InitializeComponent();
+
+            Version version = Assembly.GetEntryAssembly().GetName().Version;
+            Text += $" {version.Major}.{version.Minor}.{version.Build}";
 
             _styleOptions = AssStyleOptionsList.Load().ToDictionary(o => o.Name);
             ExpandCollapseStyleOptions();
