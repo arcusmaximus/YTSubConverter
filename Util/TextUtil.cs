@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Arc.YTSubConverter.Util
@@ -31,7 +32,7 @@ namespace Arc.YTSubConverter.Util
         {
             string key = $"{font}|{pointSize}|{bold}|{italic}|{pitch}";
             Measurer measurer = Measurers.FetchValue(key, () => new Measurer(font, pointSize, bold, italic, pitch));
-            return measurer.Measure(text);
+            return text.Split(new[] { "\r\n" }, StringSplitOptions.None).Max(measurer.Measure);
         }
 
         private class Measurer

@@ -363,7 +363,7 @@ namespace Arc.YTSubConverter.Ass
 
         private static IEnumerable<ExtendedLine> ExpandLineForKaraoke(ExtendedLine line)
         {
-            if (((ExtendedSection)line.Sections[0]).Duration == TimeSpan.Zero)
+            if (line.Sections.Cast<ExtendedSection>().All(s => s.Duration == TimeSpan.Zero))
             {
                 yield return line;
                 yield break;
@@ -378,6 +378,9 @@ namespace Arc.YTSubConverter.Ass
 
                 ExtendedLine stepLine = (ExtendedLine)line.Clone();
                 DateTime start = SnapTimeToFrame((line.Start + timeOffset).AddMilliseconds(20));
+                if (start >= line.End)
+                    continue;
+
                 DateTime end;
                 if (stepIdx < visibleSectionsPerStep.Count - 1)
                     end = SnapTimeToFrame((line.Start + visibleSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20));
@@ -418,12 +421,13 @@ namespace Arc.YTSubConverter.Ass
                 currentVisibleSections++;
                 if (section.Duration > TimeSpan.Zero)
                 {
-                    visibleSectionsPerStep.Add(currentTimeOffset, currentVisibleSections);
+                    visibleSectionsPerStep[currentTimeOffset] = currentVisibleSections;
                     currentTimeOffset += section.Duration;
                 }
                 else
                 {
-                    visibleSectionsPerStep[visibleSectionsPerStep.Keys.Last()] = currentVisibleSections;
+                    TimeSpan prevTimeOffset = visibleSectionsPerStep.Count > 0 ? visibleSectionsPerStep.Keys.Last() : TimeSpan.Zero;
+                    visibleSectionsPerStep[prevTimeOffset] = currentVisibleSections;
                 }
             }
             return visibleSectionsPerStep;
@@ -517,6 +521,9 @@ namespace Arc.YTSubConverter.Ass
         {
             const int frameStepSize = 2;
             int lastIterationFrame = startFrame + (endFrame - 1 - startFrame) / frameStepSize * frameStepSize;
+            if (lastIterationFrame == startFrame)
+                yield break;
+
             for (int frame = startFrame; frame <= lastIterationFrame; frame += frameStepSize)
             {
                 float t = ((float)frame - startFrame) / (lastIterationFrame - startFrame);
@@ -554,7 +561,7 @@ namespace Arc.YTSubConverter.Ass
 
         private static int ParseHex(string arg)
         {
-            if (arg.Length != 9 || !arg.StartsWith("&H") || !arg.EndsWith("&"))
+            if (!arg.StartsWith("&H") || !arg.EndsWith("&"))
                 return 0;
 
             int.TryParse(arg.Substring(2, arg.Length - 3), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);

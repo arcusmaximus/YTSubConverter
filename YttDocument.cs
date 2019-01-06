@@ -392,20 +392,39 @@ namespace Arc.YTSubConverter
         private void PadSectionForColoring(Section newSection, Line originalLine, List<List<Section>> subLines, int subLineIdx)
         {
             bool topAligned = AnchorPointUtil.IsTopAligned(originalLine.AnchorPoint ?? AnchorPoint.BottomCenter);
-            if (topAligned)
+            if (newSection.BackColor.A == 0)
             {
-                if (subLineIdx > 0)
+                // If the background color is empty, we can just add a bunch of line breaks to get the line in place
+                // (and a non-breaking space to prevent those line breaks from getting trimmed on mobile)
+                if (topAligned)
                 {
-                    IEnumerable<string> remainingSubLines = subLines.Take(subLineIdx).Select(l => string.Join("", l.Select(s => s.Text)));
-                    newSection.Text = string.Join("\r\n", remainingSubLines) + "\r\n" + newSection.Text;
+                    if (subLineIdx > 0)
+                        newSection.Text = " " + "\r\n".Repeat(subLineIdx) + newSection.Text;
+                }
+                else
+                {
+                    if (subLineIdx < subLines.Count - 1)
+                        newSection.Text += "\r\n".Repeat(subLines.Count - 1 - subLineIdx) + " ";
                 }
             }
             else
             {
-                if (subLineIdx < subLines.Count - 1)
+                // Otherwise, we need to repeat the whole text
+                if (topAligned)
                 {
-                    IEnumerable<string> remainingSubLines = subLines.Skip(subLineIdx + 1).Select(l => string.Join("", l.Select(s => s.Text)));
-                    newSection.Text = newSection.Text + "\r\n" + string.Join("\r\n", remainingSubLines);
+                    if (subLineIdx > 0)
+                    {
+                        IEnumerable<string> remainingSubLines = subLines.Take(subLineIdx).Select(l => string.Join("", l.Select(s => s.Text)));
+                        newSection.Text = string.Join("\r\n", remainingSubLines) + "\r\n" + newSection.Text;
+                    }
+                }
+                else
+                {
+                    if (subLineIdx < subLines.Count - 1)
+                    {
+                        IEnumerable<string> remainingSubLines = subLines.Skip(subLineIdx + 1).Select(l => string.Join("", l.Select(s => s.Text)));
+                        newSection.Text = newSection.Text + "\r\n" + string.Join("\r\n", remainingSubLines);
+                    }
                 }
             }
         }
