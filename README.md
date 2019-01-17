@@ -19,13 +19,13 @@ YTSubConverter can produce this file format for you.
 ## Usage
 At its core, YTSubConverter is an .ass -> .ytt converter. You can create .ass subtitles using e.g. [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the styling before uploading.
 
-Conversion is straightforward: launch the program, open your .ass file and click Convert. You'll get a .ytt file that's ready for upload.
+Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe. In both cases, you'll get a .ytt file that's ready for upload.
 
 The program tries to approximate the look of the Aegisub subtitles as closely as possible on YouTube:
 
 ![Outlines](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/outlines.png)
 
-YouTube supports three different shadow types: glow (same result as an outline), soft shadow and hard shadow. You can choose which shadow type you want in the conversion GUI. This is also where you can configure current word highlighting for karaoke ([example](https://www.youtube.com/watch?v=mtb-qa8xvFU)).
+You'll notice that each .ass shadow can turn into one of three different YouTube shadow types: soft shadow, hard shadow and glow (same as outline). You can configure the shadow type in the conversion UI. This is also where you can configure current word highlighting for karaoke ([example](https://www.youtube.com/watch?v=mtb-qa8xvFU)).
 
 ![Style options](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/style-options.png)
 
