@@ -25,7 +25,7 @@ The program tries to approximate the look of the Aegisub subtitles as closely as
 
 ![Outlines](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/outlines.png)
 
-YouTube supports three different shadow types: glow (same result as an outline), soft shadow (shown in the above image) and hard shadow (not shown). You can choose which shadow type you want in the conversion GUI. This is also where you can configure current word highlighting for karaoke ([example](https://www.youtube.com/watch?v=mtb-qa8xvFU)).
+YouTube supports three different shadow types: glow (same result as an outline), soft shadow and hard shadow. You can choose which shadow type you want in the conversion GUI. This is also where you can configure current word highlighting for karaoke ([example](https://www.youtube.com/watch?v=mtb-qa8xvFU)).
 
 ![Style options](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/style-options.png)
 
@@ -66,10 +66,10 @@ It also supports the following override tags:
 
 Unsupported tags are ignored.
 
-## Example
-The repository contains a sample .ass file which uses the most common styling features.
-* [Sample .ass file](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample.ass)
-* [YouTube video with these subtitles](https://www.youtube.com/watch?v=AvBxTdwCfzs)
+## Examples
+The repository contains two sample .ass files:
+* [Color-coded dialogue sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=AvBxTdwCfzs))
+* [Karaoke sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=DdqEdO4EOuU))
 
 ## Testing
 After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing - each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the “real” player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
@@ -110,9 +110,11 @@ Once the upload is complete, click “Submit contribution” while making sure n
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
-* In general, you can only use one style per line of text. For example, while you can make an entire line bold or italic, you can't do this for a single word within a line. In other words, this works: `What's happening?\N{\b1}Nononono!` (only the second line is bold) but this doesn't: `I {\b1}told{\b0} you not to go there!` (nothing will be bold).
-  * As an exception to the above, multiple colors within a line *are* possible, but only on desktop. For example, the “MAAAN” in `Devil{\c&H0000FF&}MAAAN{\r}!` will be red on desktop; on mobile, however, it'll have the same color as the rest of the line.
+* In general, you can only use one style per line of text. For example, while you can make an entire line bold or italic, you can't do this for a single word within a line. In other words, this works: `What's happening?\N{\b1}Nononono!` (only the second line is bold), but this doesn't: `I {\b1}told{\b0} you not to go there!` (nothing will be bold).
+  * As an exception to the above, multiple colors within a line *are* possible, but only on PC. For example, the “MAAAN” in `Devil{\c&H0000FF&}MAAAN{\r}!` will be red on PC; on mobile, however, it'll have the same color as the rest of the line.
 * Subtitles positioned off-center will move out towards the sides in theater mode, possibly even hanging out of the video frame.
+* The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
+  * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
 
 ## Example workflow for creating subtitles that are color-coded by speaker
 * Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f <number>` to download a smaller file.)
