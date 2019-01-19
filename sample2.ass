@@ -5,163 +5,247 @@ Title: Default Aegisub file
 ScriptType: v4.00+
 WrapStyle: 0
 ScaledBorderAndShadow: yes
-PlayResX: 384
-PlayResY: 288
 YCbCr Matrix: None
 
 [Aegisub Project Garbage]
 Last Style Storage: Default
 Video Zoom Percent: 1.000000
-Scroll Position: 75
-Active Line: 101
-Video Position: 4346
+Scroll Position: 54
+Active Line: 89
+Video Position: 1896
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,Arial,20,&H00FFFFFF,&HFFFFFFFF,&H3C000000,&H00000000,0,0,0,0,100,100,0,0,3,2,2,2,10,10,10,1
-Style: Black with white outline - Top,Arial,20,&H00000000,&H000000FF,&H00FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,2,0,8,10,10,10,1
-Style: Black with white outline - Center,Arial,20,&H00000000,&H000000FF,&H00FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,2,0,5,10,10,10,1
-Style: Black with white outline - Bottom,Arial,20,&H00000000,&H000000FF,&H00FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1
-Style: White with black outline - Top,Arial,20,&H00FFFFFF,&H00C0C0C0,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,2,8,10,10,10,1
-Style: White with black outline - Center,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,5,10,10,10,1
-Style: White with black outline - Bottom,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1
-Style: Note - Violet,Arial,20,&H00FFFFFF,&H000000FF,&H007000D2,&H007000D2,-1,0,0,0,100,100,0,0,3,2,2,5,10,10,10,1
-Style: Note - Blue,Arial,20,&H00FFFFFF,&H000000FF,&H00D08311,&H00D08311,-1,0,0,0,100,100,0,0,3,2,2,5,10,10,10,1
-Style: Wiki,Arial,20,&H0020009E,&H000000FF,&H00FFFFFF,&H00CFE9F2,0,0,0,0,100,100,0,0,3,2,2,7,10,10,10,1
-Style: YouTube default,Arial,20,&H00FFFFFF,&H000000FF,&H00080808,&H00000000,0,0,0,0,100,100,0,0,3,2,0,5,10,10,10,1
-Style: No outline - Left,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,7,10,10,10,1
+Style: Default,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,0,2,10,10,10,1
+Style: Top,Arial,20,&H00FFFFFF,&H00C0C0C0,&H00000000,&H00000000,0,-1,0,0,100,100,0,0,1,0,2,8,10,10,10,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.70,0:00:02.05,Default,,0,0,0,,{\c&HC4950C&}Hime
-Dialogue: 0,0:00:02.82,0:00:04.28,Default,,0,0,0,,{\c&HC4950C&}Where did she go?
-Dialogue: 0,0:00:04.82,0:00:08.62,White with black outline - Top,,0,0,0,,{\k26}{\i1}a{\k21}no {\k41}it{\k27}tou{\k50}sei {\k11}no {\k46}san{\k17}za{\k23}me{\k20}ku {\k18}hi{\k26}ka{\k19}ri {\k35}de
-Dialogue: 0,0:00:04.82,0:00:08.62,White with black outline - Bottom,,0,0,0,,Under the eerie light of the first star
-Dialogue: 0,0:00:08.62,0:00:11.16,YouTube default,,0,0,0,,{\pos(192,144)}“You know, I want to be like a sun”
-Dialogue: 0,0:00:08.62,0:00:11.21,White with black outline - Top,,0,0,0,,{\k13}{\i1}a{\k14}na{\k12}ta {\k17}to {\k43}dan{\k29}su {\k18}o {\k13}o{\k22}do{\k35}rou {\k43}ka
-Dialogue: 0,0:00:08.62,0:00:11.21,White with black outline - Bottom,,0,0,0,,Let's dance a dance together
-Dialogue: 0,0:00:11.21,0:00:15.04,White with black outline - Top,,0,0,0,,{\k21}{\i1}wa{\k19}ga {\k44}tai{\k33}you{\k43}kei {\k24}no {\k40}ko{\k23}do{\k22}u {\k16}ni {\k16}a{\k16}wa{\k26}se{\k40}te
-Dialogue: 0,0:00:11.21,0:00:15.04,White with black outline - Bottom,,0,0,0,,To the heartbeat of our solar system
-Dialogue: 0,0:00:12.66,0:00:14.56,YouTube default,,0,0,0,,{\pos(192,144)}“You can be a sun, Hime”
-Dialogue: 0,0:00:15.04,0:00:17.99,White with black outline - Top,,0,0,0,,{\k12}{\i1}ka{\k9}ra{\k21}ma{\k9}tta {\k40}sutep{\k32}pu {\k12}de {\k25}ki{\k22}ra{\k40}mei{\k22}te, {\k51}sei!
-Dialogue: 0,0:00:15.04,0:00:17.99,White with black outline - Bottom,,0,0,0,,Shine with entwined steps, Star!
-Dialogue: 0,0:00:22.63,0:00:24.40,No outline - Left,,0,0,0,,{\c&HF9CE01&\pos(21.4,183.6)}Bellybutton girl\NHina Suzuki
-Dialogue: 0,0:00:24.40,0:00:27.57,White with black outline - Bottom,,0,0,0,,{\i1}Nayutan Seijin - Solar System Disco
-Dialogue: 0,0:00:28.97,0:00:30.71,No outline - Left,,0,0,0,,{\c&H3400EC&\pos(235.6,187.6)}Giggling girl\NHime Tanaka
-Dialogue: 0,0:00:30.84,0:00:34.05,White with black outline - Top,,0,0,0,,{\k21}{\i1}ran{\k11}ba{\k14}da {\k17}run{\k26}ba {\k26}fu{\k27}ta{\k26}ri {\k34}so{\k20}ra {\k17}de {\k19}ran{\k23}de{\k22}buu {\k18}na
-Dialogue: 0,0:00:30.78,0:00:34.05,White with black outline - Bottom,,0,0,0,,Ranbada rumba the two of us rendezvous in space
-Dialogue: 0,0:00:34.05,0:00:37.12,White with black outline - Top,,0,0,0,,{\k23}{\i1}mou, {\k10}wa{\k9}zu{\k16}rat{\k39}te {\k21}re{\k25}n{\k35}ya {\k22}ne{\k20}mu{\k11}re{\k76}nai
-Dialogue: 0,0:00:34.05,0:00:37.12,White with black outline - Bottom,,0,0,0,,I suffer every night and can't sleep
-Dialogue: 0,0:00:37.12,0:00:40.45,White with black outline - Top,,0,0,0,,{\k37}{\i1}sei{\k10}za {\k9}ni {\k20}nat{\k35}te {\k22}ma{\k24}za{\k34}ru {\k25}do{\k19}n{\k21}na {\k16}it{\k17}tou{\k27}sei {\k17}mo
-Dialogue: 0,0:00:37.12,0:00:40.45,White with black outline - Bottom,,0,0,0,,No planet that mixes into a constellation
-Dialogue: 0,0:00:40.45,0:00:43.61,White with black outline - Top,,0,0,0,,{\k22}{\i1}a{\k20}na{\k21}ta {\k35}ni {\k22}ka{\k22}wa{\k16}ru {\k45}kou{\k27}do {\k13}wa {\k40}nai {\k33}wa
-Dialogue: 0,0:00:40.45,0:00:43.61,White with black outline - Bottom,,0,0,0,,Can shine as your replacement
-Dialogue: 0,0:00:43.61,0:00:46.89,White with black outline - Top,,0,0,0,,{\k17}{\i1}kou{\k20}sha {\k14}no {\k15}u{\k41}ra {\k19}a{\k19}no {\k41}hi {\k19}a{\k22}na{\k19}ta {\k18}mi{\k21}tsu{\k23}ke{\k20}ta
-Dialogue: 0,0:00:43.61,0:00:46.89,White with black outline - Bottom,,0,0,0,,That day I found you behind the school building
-Dialogue: 0,0:00:46.89,0:00:50.06,White with black outline - Top,,0,0,0,,{\k13}{\i1}ki{\k22}se{\k17}ki {\k48}sae {\k12}i{\k20}ma {\k40}mo {\k21}ha{\k24}na{\k18}re{\k82}nai
-Dialogue: 0,0:00:46.89,0:00:50.06,White with black outline - Bottom,,0,0,0,,Not even a miracle will leave now
-Dialogue: 0,0:00:50.06,0:00:53.20,White with black outline - Top,,0,0,0,,{\k11}{\i1}to{\k31}na{\k14}ri {\k39}ni {\k23}shi{\k23}ge{\k37}ku {\k24}mi{\k15}e{\k19}ru {\k24}mei{\k12}ou{\k30}sei {\k12}mo
-Dialogue: 0,0:00:50.06,0:00:53.20,White with black outline - Bottom,,0,0,0,,Even Pluto that haunts my view
-Dialogue: 0,0:00:53.20,0:00:56.37,White with black outline - Top,,0,0,0,,{\k28}{\i1}a{\k17}i{\k19}ni{\k44}ku, {\k14}i{\k18}ma {\k19}wa {\k49}kyou{\k22}mi {\k18}ga {\k39}nai {\k30}wa
-Dialogue: 0,0:00:53.20,0:00:56.37,White with black outline - Bottom,,0,0,0,,Unfortunately, I have no interest in now
-Dialogue: 0,0:00:56.37,0:00:57.67,White with black outline - Top,,0,0,0,,{\k10}{\i1}ho{\k28}shi {\k10}ga {\k16}mac{\k19}chat{\k47}te
-Dialogue: 0,0:00:56.37,0:00:57.67,White with black outline - Bottom,,0,0,0,,Stars floated
-Dialogue: 0,0:00:58.00,0:00:59.24,White with black outline - Top,,0,0,0,,{\k8}{\i1}mu{\k28}ne {\k11}ga {\k17}nac{\k18}chat{\k42}te
-Dialogue: 0,0:00:58.00,0:00:59.24,White with black outline - Bottom,,0,0,0,,My chest beat loudly
-Dialogue: 0,0:00:59.24,0:01:02.37,White with black outline - Top,,0,0,0,,{\k15}{\i1}ki{\k15}dzu{\k53}ke{\k37}ba {\k39}ka{\k44}na{\k110}ta
-Dialogue: 0,0:00:59.24,0:01:02.37,White with black outline - Bottom,,0,0,0,,When I realize I was already beyond
-Dialogue: 0,0:01:02.37,0:01:06.23,White with black outline - Top,,0,0,0,,{\k27}{\i1}a{\k24}no {\k41}it{\k27}tou{\k47}sei {\k15}no {\k47}san{\k23}za{\k19}me{\k15}ku {\k15}hi{\k28}ka{\k17}ri {\k41}de
-Dialogue: 0,0:01:02.37,0:01:06.23,White with black outline - Bottom,,0,0,0,,Under the eerie light of the first star
-Dialogue: 0,0:01:06.23,0:01:08.80,White with black outline - Top,,0,0,0,,{\k17}{\i1}a{\k8}na{\k11}ta {\k27}to {\k23}dan{\k37}su {\k19}o {\k18}o{\k22}do{\k32}rou {\k43}ka
-Dialogue: 0,0:01:06.23,0:01:08.80,White with black outline - Bottom,,0,0,0,,Let's dance a dance together
-Dialogue: 0,0:01:08.80,0:01:12.61,White with black outline - Top,,0,0,0,,{\k25}{\i1}wa{\k14}ga {\k49}tai{\k31}you{\k45}kei {\k14}no {\k38}hou{\k32}so{\k15}ku {\k19}ni {\k14}sa{\k32}so{\k19}wa{\k34}re
-Dialogue: 0,0:01:08.80,0:01:12.61,White with black outline - Bottom,,0,0,0,,Invited by our solar system's rules
-Dialogue: 0,0:01:12.61,0:01:15.62,White with black outline - Top,,0,0,0,,{\k15}{\i1}ma{\k9}ji{\k14}wat{\k22}ta {\k44}kan{\k18}do {\k28}de {\k14}ki{\k15}ra{\k38}mei{\k43}te, {\k41}sei!
-Dialogue: 0,0:01:12.61,0:01:15.62,White with black outline - Bottom,,0,0,0,,Shine with mixed brightness, Star!
-Dialogue: 0,0:01:15.62,0:01:18.82,White with black outline - Top,,0,0,0,,{\k66}{\i1}oo {\k20}o {\k70}oo! {\k21}sei{\k23}kan{\k25}sen {\k14}o {\k27}tsu{\k20}na{\k16}i{\k18}de
-Dialogue: 0,0:01:15.62,0:01:18.82,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! Connect the star lines
-Dialogue: 0,0:01:18.82,0:01:21.99,White with black outline - Top,,0,0,0,,{\k65}{\i1}oo {\k20}o {\k78}oo! {\k17}a{\k16}na{\k26}ta {\k15}ni {\k20}to{\k19}do{\k41}ke
-Dialogue: 0,0:01:18.82,0:01:21.99,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! Deliver to you
-Dialogue: 0,0:01:21.99,0:01:25.26,White with black outline - Top,,0,0,0,,{\k68}{\i1}oo {\k24}o {\k77}oo! {\k18}u{\k25}chu{\k16}u {\k15}no {\k25}ha{\k19}te {\k19}ka{\k21}ra
-Dialogue: 0,0:01:21.99,0:01:25.26,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! From the ends of space
-Dialogue: 0,0:01:25.26,0:01:28.93,White with black outline - Top,,0,0,0,,{\k63}{\i1}oo {\k20}o {\k59}oo! {\k21}a{\k34}na{\k36}ta {\k35}shin{\k43}kou{\k56}kei!
-Dialogue: 0,0:01:25.26,0:01:28.93,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! You're an invasion system!
-Dialogue: 0,0:01:41.28,0:01:44.20,White with black outline - Top,,0,0,0,,{\k32}{\i1}dai{\k30}tai {\k18}no {\k19}dan{\k11}su {\k30}wa {\k10}ho{\k9}shi {\k9}ga {\k12}hi{\k10}ka{\k4}ri {\k19}shi{\k9}ru{\k9}be {\k7}to {\k12}na{\k10}ru {\k6}no {\k26}sa
-Dialogue: 0,0:01:41.28,0:01:44.20,White with black outline - Bottom,,0,0,0,,For most dances starlight becomes a standard
-Dialogue: 0,0:01:44.20,0:01:47.60,White with black outline - Top,,0,0,0,,{\k27}{\i1}mi{\k32}tai{\k29}ken {\k14}na {\k27}sutep{\k39}pu {\k23}de {\k36}HA, {\k40}HA, {\k41}HA, {\k32}HA
-Dialogue: 0,0:01:44.20,0:01:47.60,White with black outline - Bottom,,0,0,0,,With inexperienced steps HA, HA, HA, HA
-Dialogue: 0,0:01:47.60,0:01:50.66,White with black outline - Top,,0,0,0,,{\k34}{\i1}dai{\k34}tan {\k11}na {\k22}sutan{\k16}su {\k19}de {\k31}shuu{\k23}kai {\k6}ki{\k23}dou {\k10}jou {\k11}na{\k8}zo{\k11}ru {\k10}no {\k37}sa
-Dialogue: 0,0:01:47.60,0:01:50.66,White with black outline - Bottom,,0,0,0,,With a bold stance trace the path of orbit
-Dialogue: 0,0:01:50.66,0:01:54.00,White with black outline - Top,,0,0,0,,{\k21}{\i1}tai{\k24}you{\k36}kei {\k17}no {\k36}desu{\k26}ko {\k20}de {\k42}HA, {\k39}HA, {\k40}HA, {\k33}HA
-Dialogue: 0,0:01:50.66,0:01:54.00,White with black outline - Bottom,,0,0,0,,With the solar system disco HA, HA, HA, HA
-Dialogue: 0,0:01:54.00,0:01:57.26,White with black outline - Top,,0,0,0,,{\k29}{\i1}chuu {\k12}ta{\k7}yu{\k22}tat{\k40}te {\k18}i{\k19}tsu{\k43}ka {\k17}fu{\k21}ta{\k20}ri {\k8}wa{\k24}su{\k28}re{\k18}ru
-Dialogue: 0,0:01:54.00,0:01:57.26,White with black outline - Bottom,,0,0,0,,Floating away in space, we will someday forget
-Dialogue: 0,0:01:57.26,0:02:00.38,White with black outline - Top,,0,0,0,,{\k21}{\i1}ko{\k17}to{\k18}ba {\k48}sae {\k19}i{\k16}ma {\k40}wa {\k22}mo{\k20}to{\k11}me{\k80}tai
-Dialogue: 0,0:01:57.26,0:02:00.38,White with black outline - Bottom,,0,0,0,,Those words I seek now
-Dialogue: 0,0:02:00.38,0:02:03.67,White with black outline - Top,,0,0,0,,{\k29}{\i1}chou{\k21}shin{\k21}sei {\k38}o {\k20}ne{\k21}ga{\k37}u {\k24}ku{\k18}re{\k16}ta {\k23}se{\k22}ka{\k15}i {\k24}mo
-Dialogue: 0,0:02:00.38,0:02:03.67,White with black outline - Bottom,,0,0,0,,This dimmed world that wishes for a supernova
-Dialogue: 0,0:02:03.67,0:02:06.79,White with black outline - Top,,0,0,0,,{\k12}{\i1}fu{\k29}shi{\k18}gi {\k43}to {\k19}i{\k16}ma {\k16}wa {\k40}dou {\k32}de{\k19}mo {\k33}ii {\k35}wa
-Dialogue: 0,0:02:03.67,0:02:06.79,White with black outline - Bottom,,0,0,0,,Strangely I don't care at all now
-Dialogue: 0,0:02:06.79,0:02:07.81,White with black outline - Top,,0,0,0,,{\k11}{\i1}aa {\k23}nan {\k11}mo {\k18}naku {\k19}tat{\k20}te
-Dialogue: 0,0:02:06.79,0:02:07.81,White with black outline - Bottom,,0,0,0,,Ah, even without anything
-Dialogue: 0,0:02:08.40,0:02:09.59,White with black outline - Top,,0,0,0,,{\k38}{\i1}nan{\k8}to{\k17}naku {\k22}dat{\k34}te
-Dialogue: 0,0:02:08.40,0:02:09.59,White with black outline - Bottom,,0,0,0,,Somehow still
-Dialogue: 0,0:02:09.59,0:02:12.79,White with black outline - Top,,0,0,0,,{\k22}{\i1}ho{\k23}shi {\k35}wa {\k43}me{\k84}gu{\k113}tte
-Dialogue: 0,0:02:09.59,0:02:12.79,White with black outline - Bottom,,0,0,0,,Stars orbitー
-Dialogue: 0,0:02:12.79,0:02:16.60,White with black outline - Top,,0,0,0,,{\k24}{\i1}a{\k22}no {\k45}it{\k26}tou{\k53}sei {\k13}no {\k36}to{\k20}do{\k31}ka{\k15}nu {\k17}hi{\k26}ka{\k17}ri {\k36}wa
-Dialogue: 0,0:02:12.79,0:02:16.60,White with black outline - Bottom,,0,0,0,,The first star's light that is impossible to reach
-Dialogue: 0,0:02:16.60,0:02:19.25,White with black outline - Top,,0,0,0,,{\k14}{\i1}ha{\k13}ru{\k15}ka {\k17}na {\k25}ka{\k20}na{\k22}ta {\k18}de {\k24}ki{\k15}ra{\k37}mei{\k45}ta
-Dialogue: 0,0:02:16.60,0:02:19.25,White with black outline - Bottom,,0,0,0,,Shined far beyond
-Dialogue: 0,0:02:19.25,0:02:23.02,White with black outline - Top,,0,0,0,,{\k20}{\i1}wa{\k16}ga {\k46}tai{\k31}you{\k48}kei {\k14}no {\k35}hou{\k22}so{\k25}ku {\k19}mo {\k20}ha{\k23}zu{\k16}re{\k42}te
-Dialogue: 0,0:02:19.25,0:02:23.02,White with black outline - Bottom,,0,0,0,,Even outside our solar system's rules
-Dialogue: 0,0:02:23.02,0:02:24.19,White with black outline - Top,,0,0,0,,{\k15}{\i1}“so{\k11}re {\k16}de{\k23}mo {\k31}ii {\k22}sa”{\k1} te o nobashite!
-Dialogue: 0,0:02:23.02,0:02:24.19,White with black outline - Bottom,,0,0,0,,“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.19,0:02:24.26,White with black outline - Top,,0,0,0,,{\i1\4c&HFBFBFF&}“sore demo ii sa” te o nobashite!
-Dialogue: 0,0:02:24.19,0:02:24.26,White with black outline - Bottom,,0,0,0,,{\3c&HFBFBFF&}“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.26,0:02:24.39,White with black outline - Top,,0,0,0,,{\i1}{\k0}“sore demo ii sa” {\k10}te {\k10}o{\k1} nobashite!
-Dialogue: 0,0:02:24.26,0:02:24.39,White with black outline - Bottom,,0,0,0,,“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.39,0:02:24.46,White with black outline - Top,,0,0,0,,{\i1\4c&HFBFBFF&}“sore demo ii sa” te o nobashite!
-Dialogue: 0,0:02:24.39,0:02:24.46,White with black outline - Bottom,,0,0,0,,{\3c&HFBFBFF&}“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.46,0:02:24.56,White with black outline - Top,,0,0,0,,{\i1}{\k0}“sore demo ii sa” te {\k10}o {\k10}nobashite!
-Dialogue: 0,0:02:24.46,0:02:24.56,White with black outline - Bottom,,0,0,0,,“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.56,0:02:24.62,White with black outline - Top,,0,0,0,,{\i1\4c&HFBFBFF&}“sore demo ii sa” te o nobashite!
-Dialogue: 0,0:02:24.56,0:02:24.62,White with black outline - Bottom,,0,0,0,,{\3c&HFBFBFF&}“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.62,0:02:24.76,White with black outline - Top,,0,0,0,,{\k0}{\i1}“sore demo ii sa” te o {\k14}no{\k1}bashite!
-Dialogue: 0,0:02:24.62,0:02:24.76,White with black outline - Bottom,,0,0,0,,“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.76,0:02:24.82,White with black outline - Top,,0,0,0,,{\i1\4c&HFBFBFF&}“sore demo ii sa” te o nobashite!
-Dialogue: 0,0:02:24.76,0:02:24.82,White with black outline - Bottom,,0,0,0,,{\3c&HFBFBFF&}“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.82,0:02:24.92,White with black outline - Top,,0,0,0,,{\i1}{\k0}“sore demo ii sa” te o no{\k10}bashi{\k10}te!
-Dialogue: 0,0:02:24.82,0:02:24.92,White with black outline - Bottom,,0,0,0,,“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.92,0:02:24.99,White with black outline - Top,,0,0,0,,{\i1\4c&HFBFBFF&}“sore demo ii sa” te o nobashite!
-Dialogue: 0,0:02:24.92,0:02:24.99,White with black outline - Bottom,,0,0,0,,{\3c&HFBFBFF&}“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:24.99,0:02:25.12,White with black outline - Top,,0,0,0,,{\i1}{\k0}“sore demo ii sa” te o no{\k10}bashi{\k10}te!
-Dialogue: 0,0:02:24.99,0:02:25.12,White with black outline - Bottom,,0,0,0,,“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:25.12,0:02:25.19,White with black outline - Top,,0,0,0,,{\i1\4c&HFBFBFF&}“sore demo ii sa” te o nobashite!
-Dialogue: 0,0:02:25.12,0:02:25.19,White with black outline - Bottom,,0,0,0,,{\3c&HFBFBFF&}“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:25.19,0:02:25.56,White with black outline - Top,,0,0,0,,{\k0}{\i1}“sore demo ii sa” te o nobashi{\k37}te!
-Dialogue: 0,0:02:25.19,0:02:25.56,White with black outline - Bottom,,0,0,0,,“But that's okay” I stretch out my arms!
-Dialogue: 0,0:02:25.56,0:02:29.39,White with black outline - Top,,0,0,0,,{\k52}{\i1}saa, {\k28}iku{\k36}sei{\k54}sou {\k17}to {\k41}ya{\k14}do{\k23}shi{\k27}ta {\k12}o{\k28}mo{\k16}i {\k35}de
-Dialogue: 0,0:02:25.56,0:02:29.39,White with black outline - Bottom,,0,0,0,,Your weight and stored memories
-Dialogue: 0,0:02:29.39,0:02:32.02,White with black outline - Top,,0,0,0,,{\k9}{\i1}a{\k19}na{\k18}ta {\k12}no {\k29}su{\k23}be{\k15}te {\k24}mo{\k17}to{\k21}me{\k33}you {\k43}ka
-Dialogue: 0,0:02:29.39,0:02:32.02,White with black outline - Bottom,,0,0,0,,I'll seek your everything
-Dialogue: 0,0:02:32.02,0:02:35.80,White with black outline - Top,,0,0,0,,{\k39}{\i1}nee, {\k47}nan {\k39}kou{\k41}nen {\k12}no {\k42}kou{\k25}da{\k20}i {\k20}na {\k17}ta{\k20}bi{\k22}ji {\k34}de
-Dialogue: 0,0:02:32.02,0:02:35.80,White with black outline - Bottom,,0,0,0,,Yeah, on a vast journey of many light years
-Dialogue: 0,0:02:35.80,0:02:38.38,White with black outline - Top,,0,0,0,,{\k24}{\i1}hi{\k19}ku {\k24}no {\k38}ren{\k24}ri {\k10}o {\k26}sa{\k12}ga{\k41}sou {\k40}ka
-Dialogue: 0,0:02:35.80,0:02:38.38,White with black outline - Bottom,,0,0,0,,Let's look for comparative love affairs
-Dialogue: 0,0:02:38.38,0:02:42.20,White with black outline - Top,,0,0,0,,{\k28}{\i1}a{\k23}no {\k39}it{\k28}tou{\k50}sei {\k13}no {\k42}san{\k22}za{\k16}me{\k23}ku {\k17}hi{\k25}ka{\k22}ri {\k34}de
-Dialogue: 0,0:02:38.38,0:02:42.20,White with black outline - Bottom,,0,0,0,,Under the eerie light of the first star
-Dialogue: 0,0:02:42.20,0:02:44.82,White with black outline - Top,,0,0,0,,{\k16}{\i1}a{\k7}na{\k19}ta {\k19}to {\k33}dan{\k33}su {\k16}o {\k21}o{\k16}do{\k40}rou {\k42}ka
-Dialogue: 0,0:02:42.20,0:02:44.82,White with black outline - Bottom,,0,0,0,,Let's dance a dance together
-Dialogue: 0,0:02:44.82,0:02:48.58,White with black outline - Top,,0,0,0,,{\k19}{\i1}ho{\k16}ra {\k41}sui{\k47}kin {\k35}dat{\k23}te {\k34}chi {\k23}ka {\k18}mo{\k27}ku {\k9}do {\k24}ten {\k24}kai {\k36}mo
-Dialogue: 0,0:02:44.82,0:02:48.58,White with black outline - Bottom,,0,0,0,,Come on, even all the elements
-Dialogue: 0,0:02:48.58,0:02:51.63,White with black outline - Top,,0,0,0,,{\k14}{\i1}fu{\k15}ta{\k18}ri {\k15}no {\k40}gin{\k25}ga {\k14}de {\k24}ki{\k15}ra{\k37}mei{\k37}ta, {\k51}sei!
-Dialogue: 0,0:02:48.58,0:02:51.63,White with black outline - Bottom,,0,0,0,,Shined in our galaxy, Star!
-Dialogue: 0,0:02:51.63,0:02:54.85,White with black outline - Top,,0,0,0,,{\k65}{\i1}oo {\k19}o {\k73}oo! {\k20}sei{\k22}kan{\k25}sen {\k13}o {\k28}tsu{\k21}na{\k16}i{\k20}de
-Dialogue: 0,0:02:51.63,0:02:54.85,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! Connect the star lines
-Dialogue: 0,0:02:54.85,0:02:57.99,White with black outline - Top,,0,0,0,,{\k63}{\i1}oo {\k18}o {\k80}oo! {\k16}a{\k17}na{\k27}ta {\k14}ni {\k26}to{\k14}do{\k39}ke
-Dialogue: 0,0:02:54.85,0:02:57.99,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! Deliver to you
-Dialogue: 0,0:02:57.99,0:03:01.26,White with black outline - Top,,0,0,0,,{\k70}{\i1}oo {\k19}o {\k78}oo! {\k18}u{\k23}chu{\k15}u {\k24}no {\k16}ha{\k18}te {\k27}ka{\k19}ra
-Dialogue: 0,0:02:57.99,0:03:01.26,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! From the end of space
-Dialogue: 0,0:03:01.26,0:03:05.17,White with black outline - Top,,0,0,0,,{\k62}{\i1}oo {\k21}o {\k55}oo! {\k22}a{\k29}na{\k41}ta {\k38}shin{\k44}kou{\k79}kei!
-Dialogue: 0,0:03:01.26,0:03:05.17,White with black outline - Bottom,,0,0,0,,Oh, oh, oh! You're an invasion system!
-Dialogue: 0,0:03:24.32,0:03:25.85,Default,,0,0,0,,{\c&H9257E3&}Aah, this is nice
+Dialogue: 0,0:00:04.32,0:00:05.23,Default,,0,0,0,,Grow up! Nah mean?
+Dialogue: 0,0:00:14.43,0:00:15.73,Top,,0,0,0,,{\pos(192,10)}{\k24}Hey, {\k41}hey, {\k36}hey, {\k29}hey
+Dialogue: 0,0:00:14.43,0:00:15.73,Default,,0,0,0,,{\pos(192,278)}Hey, hey, hey, hey
+Dialogue: 0,0:00:15.73,0:00:17.46,Top,,0,0,0,,{\k18}{\pos(192,10)}ret{\k23}tou {\k20}jou{\k16}tou {\k21}BRING {\k18}IT {\k57}ON
+Dialogue: 0,0:00:15.73,0:00:17.46,Default,,0,0,0,,{\pos(192,278)}Bottom to top BRING IT ON
+Dialogue: 0,0:00:17.46,0:00:18.76,Top,,0,0,0,,{\pos(192,10)}{\k34}Hey, {\k38}hey, {\k40}hey, {\k12}hey
+Dialogue: 0,0:00:17.46,0:00:18.76,Default,,0,0,0,,{\pos(192,278)}Hey, hey, hey, hey
+Dialogue: 0,0:00:18.76,0:00:20.37,Top,,0,0,0,,{\k19}{\pos(192,10)}ret{\k18}tou {\k18}jou{\k24}jou {\k15}fumin {\k19}ni{\k48}ppon
+Dialogue: 0,0:00:18.76,0:00:20.37,Default,,0,0,0,,{\pos(192,278)}Jumpin Japan NUMBER ONE
+Dialogue: 0,0:00:20.43,0:00:23.04,Top,,0,0,0,,{\k20}{\pos(192,10)}ko{\k21}do{\k17}mo {\k19}da{\k18}ma{\k23}shi {\k14}no {\k18}ma{\k20}se{\k19}ma{\k17}ti{\k55}ka
+Dialogue: 0,0:00:20.37,0:00:23.04,Default,,0,0,0,,{\pos(192,278)}I’m over all this stupid mathematica
+Dialogue: 0,0:00:23.04,0:00:24.77,Top,,0,0,0,,{\k15}{\pos(192,10)}ba{\k9}re{\k27}ten {\k27}dat{\k11}te {\k39}son{\k27}nano{\k18}tte
+Dialogue: 0,0:00:23.04,0:00:24.77,Default,,0,0,0,,{\pos(192,278)}I don’t care bout a thing now
+Dialogue: 0,0:00:24.77,0:00:26.44,Top,,0,0,0,,{\k29}{\pos(192,10)}purai{\k28}do {\k17}ga {\k93}nai ya
+Dialogue: 0,0:00:24.77,0:00:26.44,Default,,0,0,0,,{\pos(192,278)}No pride left to hide
+Dialogue: 0,0:00:26.44,0:00:28.91,Top,,0,0,0,,{\k21}{\pos(192,10)}go{\k19}rip{\k14}pa {\k34}kei{\k50}shou {\k15}ki{\k18}do{\k17}ri {\k59}de
+Dialogue: 0,0:00:26.44,0:00:28.91,Default,,0,0,0,,{\pos(192,278)}Putting on a show but I’m over it now
+Dialogue: 0,0:00:28.91,0:00:32.08,Top,,0,0,0,,{\k14}{\pos(192,10)}ta{\k37}ka{\k13}mi {\k8}no {\k21}ken{\k10}bu{\k8}tsu {\k16}ba{\k17}ka{\k20}ri {\k13}ja {\k11}tsu{\k28}man{\k21}nee
+Dialogue: 0,0:00:28.91,0:00:32.08,Default,,0,0,0,,{\pos(192,278)}Riding upon a horse up high, I wanna get down
+Dialogue: 0,0:00:32.08,0:00:35.11,Top,,0,0,0,,{\k36}{\pos(192,10)}ho{\k16}ra {\k41}mot{\k56}to {\k14}ma{\k7}chi{\k15}gat{\k13}te {\k46}jou{\k59}tou
+Dialogue: 0,0:00:32.08,0:00:35.11,Default,,0,0,0,,{\pos(192,278)}Again they don’t see, that I’m really not king
+Dialogue: 0,0:00:35.11,0:00:37.18,Top,,0,0,0,,{\k17}{\pos(192,10)}ta{\k15}i{\k12}ku{\k24}tsu {\k23}ni {\k15}te {\k17}o {\k17}ka{\k20}ke{\k47}te
+Dialogue: 0,0:00:35.11,0:00:37.18,Default,,0,0,0,,{\pos(192,278)}And every day repeating all the same
+Dialogue: 0,0:00:38.28,0:00:40.65,Top,,0,0,0,,{\k39}{\pos(192,10)}ma{\k55}ma, {\k38}yap{\k19}pa a{\k35}tashi {\k51}wa
+Dialogue: 0,0:00:38.28,0:00:40.65,Default,,0,0,0,,{\pos(192,278)}Mama, I dunno what
+Dialogue: 0,0:00:40.65,0:00:42.89,Top,,0,0,0,,{\k45}{\pos(192,10)}kon{\k17}na {\k17}to{\k19}ko{\k21}ro {\k21}ja {\k17}o{\k18}wa{\k19}re{\k30}nai
+Dialogue: 0,0:00:40.65,0:00:42.89,Default,,0,0,0,,{\pos(192,278)}What to do, I couldn’t stop it tonight
+Dialogue: 0,0:00:43.96,0:00:46.66,Top,,0,0,0,,{\k29}{\pos(192,10)}nu{\k41}ruku{\k54}te {\k19}ki {\k21}ga {\k16}fu{\k36}re{\k54}sou
+Dialogue: 0,0:00:43.96,0:00:46.66,Default,,0,0,0,,{\pos(192,278)}And maybe I’m going crazy
+Dialogue: 0,0:00:46.66,0:00:49.69,Top,,0,0,0,,{\k42}{\pos(192,10)}gok{\k17}ko {\k14}a{\k26}so{\k19}bi {\k8}mo {\k25}shi{\k23}ba{\k18}i {\k11}mo {\k20}sa{\k26}yo{\k17}na{\k37}ra
+Dialogue: 0,0:00:46.66,0:00:49.69,Default,,0,0,0,,{\pos(192,278)}In a fantasy of make believe, I’m living my life
+Dialogue: 0,0:00:49.69,0:00:53.21,Top,,0,0,0,,{\k39}{\pos(192,10)}zut{\k15}to {\k27}ko{\k16}no {\k19}ma{\k39}ma {\k31}nan{\k21}te {\k145}saa
+Dialogue: 0,0:00:49.69,0:00:53.21,Default,,0,0,0,,{\pos(192,278)}No more playing around, say goodbye
+Dialogue: 0,0:00:53.36,0:00:54.77,Top,,0,0,0,,{\k28}{\pos(192,10)}i{\k28}rare{\k39}nai {\k36}yo
+Dialogue: 0,0:00:53.36,0:00:54.77,Default,,0,0,0,,{\pos(192,278)}I don’t need it, no
+Dialogue: 0,0:00:54.77,0:00:55.67,Top,,0,0,0,,{\k33}{\pos(192,10)}da {\k40}da {\k15}da
+Dialogue: 0,0:00:54.77,0:00:55.67,Default,,0,0,0,,{\pos(192,278)}DA DA DA
+Dialogue: 0,0:00:55.67,0:00:57.67,Top,,0,0,0,,{\k16}{\pos(192,10)}a{\k19}ta{\k26}shi {\k38}o{\k32}to{\k24}na {\k14}ni {\k17}na{\k14}ru
+Dialogue: 0,0:00:55.67,0:00:57.67,Default,,0,0,0,,{\pos(192,278)}I’m growing up and out into the world
+Dialogue: 0,0:00:57.67,0:01:00.81,Top,,0,0,0,,{\k49}{\pos(192,10)}su{\k22}i {\k13}mo {\k23}a{\k19}mai {\k18}mo {\k38}ka{\k18}mi{\k18}wa{\k18}ke{\k19}te {\k15}i{\k44}ma
+Dialogue: 0,0:00:57.67,0:01:00.81,Default,,0,0,0,,{\pos(192,278)}Tasting all of the sweet, maybe even sour things
+Dialogue: 0,0:01:00.81,0:01:01.71,Top,,0,0,0,,{\k31}{\pos(192,10)}pa {\k39}pa {\k20}pa
+Dialogue: 0,0:01:00.81,0:01:01.71,Default,,0,0,0,,{\pos(192,278)}PA PA PA
+Dialogue: 0,0:01:01.71,0:01:03.24,Top,,0,0,0,,{\k20}{\pos(192,10)}ka{\k18}wa{\k15}ru {\k41}ji{\k33}da{\k26}i
+Dialogue: 0,0:01:01.71,0:01:03.24,Default,,0,0,0,,{\pos(192,278)}I’m changing up, believe
+Dialogue: 0,0:01:03.24,0:01:03.98,Top,,0,0,0,,{\k15}{\pos(192,10)}wa{\k21}ru{\k16}i {\k10}ko{\k12}to {\k1}bakari janai deshou
+Dialogue: 0,0:01:03.24,0:01:03.98,Default,,0,0,0,,{\pos(192,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:03.98,0:01:04.11,Top,,0,0,0,,{\pos(192,10)\4c&HFFFFB4&}warui koto bakari janai desho{\c&HFEFEFE&}u
+Dialogue: 0,0:01:03.98,0:01:04.11,Default,,0,0,0,,{\pos(192,278)\3c&HDFFAFE&}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:04.11,0:01:04.81,Top,,0,0,0,,{\k0}{\pos(192,10)}warui koto {\k30}ba{\k27}ka{\k13}ri {\k1}janai deshou
+Dialogue: 0,0:01:04.11,0:01:04.81,Default,,0,0,0,,{\pos(192,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:04.81,0:01:04.98,Top,,0,0,0,,{\pos(192,10)\4c&HFFFFB8&}warui koto bakari janai desho{\c&HFEFEFE&}u
+Dialogue: 0,0:01:04.81,0:01:04.98,Default,,0,0,0,,{\pos(192,278)\3c&HDAF6FF&}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:04.98,0:01:05.34,Top,,0,0,0,,{\k0}{\pos(192,10)}warui koto bakari ja{\k36}nai{\k1} deshou
+Dialogue: 0,0:01:04.98,0:01:05.34,Default,,0,0,0,,{\pos(192,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.34,0:01:05.41,Top,,0,0,0,,{\k0}{\pos(190,10)}warui koto bakari ja{\k7}nai{\k1} deshou
+Dialogue: 0,0:01:05.34,0:01:05.41,Default,,0,0,0,,{\pos(190,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.41,0:01:05.48,Top,,0,0,0,,{\k0}{\pos(192,10)}warui koto bakari ja{\k7}nai{\k1} deshou
+Dialogue: 0,0:01:05.41,0:01:05.48,Default,,0,0,0,,{\pos(192,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.48,0:01:05.54,Top,,0,0,0,,{\k0}{\pos(194,10)}warui koto bakari ja{\k6}nai{\k1} deshou
+Dialogue: 0,0:01:05.48,0:01:05.54,Default,,0,0,0,,{\pos(194,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.54,0:01:05.61,Top,,0,0,0,,{\k0}{\pos(192,10)}warui koto bakari ja{\k7}nai{\k1} deshou
+Dialogue: 0,0:01:05.54,0:01:05.61,Default,,0,0,0,,{\pos(192,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.61,0:01:05.68,Top,,0,0,0,,{\k0}{\pos(194,10)}warui koto bakari ja{\k7}nai{\k1} deshou
+Dialogue: 0,0:01:05.61,0:01:05.68,Default,,0,0,0,,{\pos(194,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.68,0:01:05.74,Top,,0,0,0,,{\k0}{\pos(192,10)}warui koto bakari janai {\k6}de{\k1}shou
+Dialogue: 0,0:01:05.68,0:01:05.74,Default,,0,0,0,,{\pos(192,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.74,0:01:05.81,Top,,0,0,0,,{\k0}{\pos(190,10)}warui koto bakari janai de{\k7}shou
+Dialogue: 0,0:01:05.74,0:01:05.81,Default,,0,0,0,,{\pos(190,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.81,0:01:05.88,Top,,0,0,0,,{\k0}{\pos(194,11)}warui koto bakari janai de{\k7}shou
+Dialogue: 0,0:01:05.81,0:01:05.88,Default,,0,0,0,,{\pos(194,277)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.88,0:01:05.94,Top,,0,0,0,,{\k0}{\pos(190,9)}warui koto bakari janai de{\k6}shou
+Dialogue: 0,0:01:05.88,0:01:05.94,Default,,0,0,0,,{\pos(190,279)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:05.94,0:01:06.01,Top,,0,0,0,,{\k0}{\pos(194,9)}warui koto bakari janai de{\k7}shou
+Dialogue: 0,0:01:05.94,0:01:06.01,Default,,0,0,0,,{\pos(194,278)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:06.01,0:01:06.24,Top,,0,0,0,,{\k0}{\pos(190,10)}warui koto bakari janai de{\k12}shou
+Dialogue: 0,0:01:06.01,0:01:06.24,Default,,0,0,0,,{\pos(190,277)}In every word that I say cuz it’s coming from me
+Dialogue: 0,0:01:06.24,0:01:09.12,Top,,0,0,0,,{\k13}{\pos(192,10)}ka{\k17}ko {\k43}mo, {\k16}tsu{\k19}mi {\k37}mo, {\k13}ba{\k16}tsu {\k38}mo, {\k20}su{\k21}be{\k35}te
+Dialogue: 0,0:01:06.24,0:01:09.12,Default,,0,0,0,,{\pos(192,278)}All the past, all the sin, all the pain I was in
+Dialogue: 0,0:01:09.12,0:01:13.50,Top,,0,0,0,,{\k27}{\pos(192,10)}su{\k18}de {\k43}de, {\k16}a{\k15}i {\k42}de, {\k14}i{\k16}ki{\k35}nui{\k23}te {\k20}ya{\k18}ri{\k17}ka{\k16}e{\k25}su {\k93}wa
+Dialogue: 0,0:01:09.12,0:01:13.50,Default,,0,0,0,,{\pos(192,278)}Make it through with my hands, with the love surviving all that I can
+Dialogue: 0,0:01:19.08,0:01:21.73,Top,,0,0,0,,{\k42}{\pos(192,10)}yeah, {\k30}chou{\k49}hatsu {\k10}a{\k11}tashi-{\k13}ta{\k20}chi {\k19}wa {\k30}no {\k41}doubt
+Dialogue: 0,0:01:19.08,0:01:21.73,Default,,0,0,0,,{\pos(192,278)}Yeah, we out, making you crazy NO DOUBT
+Dialogue: 0,0:01:21.73,0:01:23.61,Top,,0,0,0,,{\k11}{\pos(192,10)}mi{\k11}do{\k17}ri {\k5}no {\k13}ai{\k12}tsu {\k11}ni {\k16}bak{\k10}ka {\k8}ka{\k18}mat{\k19}ten{\k37}ne
+Dialogue: 0,0:01:21.73,0:01:23.61,Default,,0,0,0,,{\pos(192,278)}Don’t be talkin bout that green ho with no flow again
+Dialogue: 0,0:01:24.96,0:01:27.73,Top,,0,0,0,,{\k55}{\pos(192,10)}saa {\k33}burn {\k18}up {\k3}i{\k15}tsu {\k9}ni {\k14}nat{\k10}ta{\k8}ra {\k12}mo{\k18}rae{\k9}ru {\k30}gou{\k43}kaku
+Dialogue: 0,0:01:24.96,0:01:27.73,Default,,0,0,0,,{\pos(192,278)}Yeah, so BURN UP as I pass in the rearview, so what?
+Dialogue: 0,0:01:27.73,0:01:30.08,Top,,0,0,0,,{\k11}{\pos(192,10)}a{\k10}ka {\k22}pen {\k9}i{\k8}re{\k8}te {\k10}yo {\k20}do{\k8}ko {\k9}ga {\k19}da{\k18}me {\k21}nan {\k17}de{\k19}su {\k26}ka
+Dialogue: 0,0:01:27.73,0:01:30.08,Default,,0,0,0,,{\pos(192,278)}Need a pen? Any red? Bet I get a hundred and ten like I said
+Dialogue: 0,0:01:30.08,0:01:33.17,Top,,0,0,0,,{\k24}{\pos(192,10)}sa{\k28}ke {\k17}on{\k14}na {\k25}ka{\k14}ne {\k43}XXX {\k15}yac{\k13}chat{\k18}te {\k44}kon{\k17}pu{\k37}ra
+Dialogue: 0,0:01:30.08,0:01:33.17,Default,,0,0,0,,{\pos(192,278)}Girls, liquor, money, and XXX, you know they gonna say yes
+Dialogue: 0,0:01:33.17,0:01:36.86,Top,,0,0,0,,{\k23}{\pos(192,10)}chi{\k20}ru{\k19}tte {\k37}a{\k125}iight… {\k21}jou{\k19}dan {\k19}jan {\k38}black {\k48}joke
+Dialogue: 0,0:01:33.17,0:01:36.86,Default,,0,0,0,,{\pos(192,278)}Chill out, it’s AIGHT... Just makin’ mean jokes
+Dialogue: 0,0:01:36.94,0:01:38.48,Top,,0,0,0,,{\k6}{\pos(192,10)}na{\k7}ka{\k15}yu{\k11}bi {\k13}ta{\k6}te {\k8}ta{\k9}ku{\k11}na{\k12}ru {\k14}you{\k16}na {\k12}ji{\k18}jou
+Dialogue: 0,0:01:36.94,0:01:38.48,Default,,0,0,0,,{\pos(192,278)}If I gotta raise a middle finger up again
+Dialogue: 0,0:01:38.48,0:01:40.31,Top,,0,0,0,,{\k7}{\pos(192,10)}a{\k7}ri{\k8}su{\k14}gi{\k8}te {\k11}yu{\k6}bi {\k11}ga {\k11}ta{\k9}ri{\k20}nee {\k8}ka{\k10}ra {\k18}hands {\k35}up
+Dialogue: 0,0:01:38.48,0:01:40.31,Default,,0,0,0,,{\pos(192,278)}Gonna put em all above my head and throw both my HANDS UP
+Dialogue: 0,0:01:40.31,0:01:41.48,Top,,0,0,0,,{\k18}{\pos(192,10)}and {\k21}what’s {\k39}up {\k15}sai{\k24}tei?
+Dialogue: 0,0:01:40.31,0:01:41.48,Default,,0,0,0,,{\pos(192,278)}Hey wassap, ya dick?
+Dialogue: 0,0:01:41.48,0:01:42.71,Top,,0,0,0,,{\k6}{\pos(192,10)}mo{\k10}to{\k9}mo{\k10}to {\k11}da{\k15}ro {\k14}bring {\k23}it {\k25}on
+Dialogue: 0,0:01:41.48,0:01:42.71,Default,,0,0,0,,{\pos(192,278)}Gimme what you got now, BRING IT ON
+Dialogue: 0,0:01:42.71,0:01:45.14,Top,,0,0,0,,{\k44}{\pos(192,10)}“maa {\k55}maa” {\k39}nan{\k11}ka {\k9}i{\k24}ra{\k61}nai
+Dialogue: 0,0:01:42.71,0:01:45.14,Default,,0,0,0,,{\pos(192,278)}I’m done being a no one
+Dialogue: 0,0:01:45.14,0:01:47.69,Top,,0,0,0,,{\k18}{\pos(192,10)}ho{\k28}shi{\k17}ga{\k18}ri{\k13}ma{\k18}su {\k26}shi{\k20}nu {\k15}ma{\k21}de {\k61}wa
+Dialogue: 0,0:01:45.14,0:01:47.69,Default,,0,0,0,,{\pos(192,278)}Before I die, I’m gonna see something through
+Dialogue: 0,0:01:48.52,0:01:51.59,Top,,0,0,0,,{\k13}{\pos(192,10)}no{\k12}bi{\k10}ta {\k28}se{\k19}ta{\k10}ke {\k28}so{\k36}dat{\k19}ta {\k18}ma{\k20}chi {\k20}ni {\k16}na{\k20}ge{\k11}ki{\k27}su
+Dialogue: 0,0:01:48.52,0:01:51.59,Default,,0,0,0,,{\pos(192,278)}Standing tall, the place I grew up, I blow a kiss
+Dialogue: 0,0:01:51.59,0:01:54.73,Top,,0,0,0,,{\k8}{\pos(192,10)}mi{\k50}se{\k15}ba {\k21}wa {\k33}kok{\k23}ka{\k37}ra {\k14}ka{\k25}ku{\k8}go {\k24}shi{\k19}to{\k19}ke{\k18}yo
+Dialogue: 0,0:01:51.59,0:01:53.43,Default,,0,0,0,,{\pos(192,278)}Cuz soon they’ll see a “me” that they never knew!
+Dialogue: 0,0:01:53.43,0:01:54.73,Default,,0,0,0,,{\pos(192,278)}So are you ready for the
+Dialogue: 0,0:01:54.73,0:01:55.69,Top,,0,0,0,,{\k42}{\pos(192,10)}da {\k30}da {\k24}da
+Dialogue: 0,0:01:54.73,0:01:55.69,Default,,0,0,0,,{\pos(192,278)}DA DA DA
+Dialogue: 0,0:01:55.69,0:01:57.76,Top,,0,0,0,,{\k17}{\pos(192,10)}bo{\k24}ku{\k9}ra {\k48}o{\k35}to{\k21}na {\k19}ni {\k16}na{\k18}ru
+Dialogue: 0,0:01:55.69,0:01:57.76,Default,,0,0,0,,{\pos(192,278)}I’m growing up and aiming at the world
+Dialogue: 0,0:01:57.76,0:02:00.70,Top,,0,0,0,,{\k38}{\pos(192,10)}kaun{\k38}taa {\k22}ne{\k20}ra{\k10}i {\k44}sai{\k19}te{\k18}i {\k13}na {\k20}hi{\k20}bi {\k32}ni
+Dialogue: 0,0:01:57.76,0:02:00.70,Default,,0,0,0,,{\pos(192,278)}Counting down on the days, that I grew to really hate
+Dialogue: 0,0:02:00.70,0:02:03.20,Top,,0,0,0,,{\k42}{\pos(192,10)}tan{\k41}tan {\k17}to{\k20}ka {\k14}ma{\k15}su {\k7}i{\k39}chi{\k36}ge{\k9}ki
+Dialogue: 0,0:02:00.70,0:02:03.20,Default,,0,0,0,,{\pos(192,278)}TA TA TA Attack em all, turn down
+Dialogue: 0,0:02:03.20,0:02:03.77,Top,,0,0,0,,{\k13}{\pos(192,10)}da{\k25}re{\k11}mo {\k8}yo{\k1}menai saki mada aiko deshou
+Dialogue: 0,0:02:03.20,0:02:03.77,Default,,0,0,0,,{\pos(192,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:03.77,0:02:03.84,Top,,0,0,0,,{\k0}{\pos(192,12)}daremo {\k7}yo{\k1}menai saki mada aiko deshou
+Dialogue: 0,0:02:03.77,0:02:03.84,Default,,0,0,0,,{\pos(192,280)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:03.84,0:02:04.10,Top,,0,0,0,,{\k0}{\pos(192,10)}daremo {\k12}yo{\k14}me{\k1}nai saki mada aiko deshou
+Dialogue: 0,0:02:03.84,0:02:04.10,Default,,0,0,0,,{\pos(192,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:04.10,0:02:04.34,Top,,0,0,0,,{\pos(192,10)\4c&HF5FFF3&}daremo yomenai saki mada aiko desh{\c&HFEFEFE&}ou
+Dialogue: 0,0:02:04.10,0:02:04.34,Default,,0,0,0,,{\pos(192,278)\3c&HF5FFF3&}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:04.34,0:02:04.77,Top,,0,0,0,,{\k0}{\pos(192,10)}daremo yome{\k10}nai {\k13}sa{\k20}ki {\k1}mada aiko deshou
+Dialogue: 0,0:02:04.34,0:02:04.77,Default,,0,0,0,,{\pos(192,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:04.77,0:02:04.90,Top,,0,0,0,,{\pos(192,10)\4c&HF5FFF3&}daremo yomenai saki mada aiko desh{\c&HFEFEFE&}ou
+Dialogue: 0,0:02:04.77,0:02:04.90,Default,,0,0,0,,{\pos(192,278)\3c&HF5FFF3&}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:04.90,0:02:05.47,Top,,0,0,0,,{\k0}{\pos(192,10)}daremo yomenai saki {\k20}ma{\k37}da a{\k1}iko deshou
+Dialogue: 0,0:02:04.90,0:02:05.47,Default,,0,0,0,,{\pos(192,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.47,0:02:05.54,Top,,0,0,0,,{\k0}{\pos(190,10)}daremo yomenai saki mada a{\k7}i{\k1}ko deshou
+Dialogue: 0,0:02:05.47,0:02:05.54,Default,,0,0,0,,{\pos(194,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.54,0:02:05.60,Top,,0,0,0,,{\k0}{\pos(192,10)}daremo yomenai saki mada a{\k6}i{\k1}ko deshou
+Dialogue: 0,0:02:05.54,0:02:05.60,Default,,0,0,0,,{\pos(192,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.60,0:02:05.67,Top,,0,0,0,,{\k0}{\pos(194,10)}daremo yomenai saki mada ai{\k7}ko{\k1} deshou
+Dialogue: 0,0:02:05.60,0:02:05.67,Default,,0,0,0,,{\pos(190,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.67,0:02:05.74,Top,,0,0,0,,{\k0}{\pos(192,10)}daremo yomenai saki mada ai{\k7}ko{\k1} deshou
+Dialogue: 0,0:02:05.67,0:02:05.74,Default,,0,0,0,,{\pos(192,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.74,0:02:05.80,Top,,0,0,0,,{\k0}{\pos(190,9)}daremo yomenai saki mada ai{\k6}ko{\k1} deshou
+Dialogue: 0,0:02:05.74,0:02:05.80,Default,,0,0,0,,{\pos(194,278)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.80,0:02:05.87,Top,,0,0,0,,{\k0}{\pos(194,11)}daremo yomenai saki mada aiko {\k7}de{\k1}shou
+Dialogue: 0,0:02:05.80,0:02:05.87,Default,,0,0,0,,{\pos(190,279)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.87,0:02:05.94,Top,,0,0,0,,{\k0}{\pos(190,11)}daremo yomenai saki mada aiko {\k7}de{\k1}shou
+Dialogue: 0,0:02:05.87,0:02:05.94,Default,,0,0,0,,{\pos(194,281)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:05.94,0:02:06.00,Top,,0,0,0,,{\k0}{\pos(194,10)}daremo yomenai saki mada aiko de{\k6}shou
+Dialogue: 0,0:02:05.94,0:02:06.00,Default,,0,0,0,,{\pos(190,280)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:06.00,0:02:06.07,Top,,0,0,0,,{\k0}{\pos(190,11)}daremo yomenai saki mada aiko de{\k7}shou
+Dialogue: 0,0:02:06.00,0:02:06.07,Default,,0,0,0,,{\pos(192,279)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:06.07,0:02:06.16,Top,,0,0,0,,{\k0}{\pos(192,10)}daremo yomenai saki mada aiko de{\k9}shou
+Dialogue: 0,0:02:06.07,0:02:06.16,Default,,0,0,0,,{\pos(192,280)}They couldn’t read at all, it’s a draw, die another day
+Dialogue: 0,0:02:06.16,0:02:09.10,Top,,0,0,0,,{\k22}{\pos(192,10)}ba{\k23}gu {\k34}mo, {\k21}ro{\k12}su {\k40}mo, {\k19}zu{\k18}re {\k36}mo, {\k20}su{\k15}be{\k34}te
+Dialogue: 0,0:02:06.16,0:02:09.10,Default,,0,0,0,,{\pos(192,278)}All the bugs, all the loss, all the gaps and the cost
+Dialogue: 0,0:02:09.10,0:02:14.22,Top,,0,0,0,,{\k19}{\pos(192,10)}su{\k17}de {\k56}de, {\k11}i{\k16}ki{\k44}te! {\k9}i{\k19}ki{\k42}nui{\k21}te {\k17}ku{\k20}tsu{\k13}ga{\k18}e{\k23}su {\k167}yo
+Dialogue: 0,0:02:09.10,0:02:14.22,Default,,0,0,0,,{\pos(192,278)}We will live on our own, living on in spite of all that we know
+Dialogue: 0,0:02:27.73,0:02:28.73,Top,,0,0,0,,{\k38}{\pos(192,10)}da {\k41}da {\k11}da
+Dialogue: 0,0:02:27.73,0:02:28.73,Default,,0,0,0,,{\pos(192,278)}NA NA NA
+Dialogue: 0,0:02:28.73,0:02:33.12,Top,,0,0,0,,{\k17}{\pos(192,10)}ku{\k20}da{\k15}ra{\k112}nai {\k19}ko{\k19}to {\k36}bak{\k40}ka {\k21}ga {\k18}yu{\k18}zu{\k12}re{\k92}nai
+Dialogue: 0,0:02:28.73,0:02:33.12,Default,,0,0,0,,{\pos(192,278)}Not to stupid things I couldn’t choose
+Dialogue: 0,0:02:33.12,0:02:36.30,Top,,0,0,0,,{\k26}{\pos(192,10)}wa{\k23}ka{\k13}ru {\k44}ka? {\k31}a{\k14}ta{\k22}shi {\k21}no {\k16}bi{\k108}gaku
+Dialogue: 0,0:02:33.12,0:02:36.30,Default,,0,0,0,,{\pos(192,278)}But do you see the beauty that I need?
+Dialogue: 0,0:02:36.30,0:02:44.37,Top,,0,0,0,,{\k26}{\pos(192,10)}ko{\k18}no {\k58}ba{\k53}ka{\k60}shou{\k54}ji{\k41}ki {\k37}na {\k21}ko{\k31}bushi {\k21}hi{\k39}to{\k24}tsu {\k159}ga {\k22}ki{\k35}ri{\k21}fu{\k87}da
+Dialogue: 0,0:02:36.30,0:02:39.64,Default,,0,0,0,,{\pos(192,278)}With an honest fist for justice,
+Dialogue: 0,0:02:39.64,0:02:44.37,Default,,0,0,0,,{\pos(192,278)}stupid though it may seem, ace up my sleeve
+Dialogue: 0,0:02:45.70,0:02:52.35,Top,,0,0,0,,{\k29}{\pos(192,10)}ga{\k36}na{\k19}ru {\k32}ret{\k156}tou {\k31}i{\k55}chi {\k50}nu{\k65}ke{\k41}yo {\k53}sa{\k35}ra{\k40}ba!
+Dialogue: 0,0:02:45.70,0:02:48.38,Default,,0,0,0,,{\pos(192,278)}Weakly I shout above,
+Dialogue: 0,0:02:48.38,0:02:52.35,Default,,0,0,0,,{\pos(192,278)}my last goodbye cuz “I am done!”
+Dialogue: 0,0:03:11.38,0:03:12.77,Top,,0,0,0,,{\k44}{\pos(192,10)}kon{\k19}na {\k19}mon {\k14}ja{\k43}nai!
+Dialogue: 0,0:03:11.38,0:03:12.77,Default,,0,0,0,,{\pos(192,278)}I’m not giving up!
+Dialogue: 0,0:03:12.77,0:03:13.71,Top,,0,0,0,,{\k35}{\pos(192,10)}da {\k39}da {\k40}da
+Dialogue: 0,0:03:12.77,0:03:13.71,Default,,0,0,0,,{\pos(192,278)}DA DA DA
+Dialogue: 0,0:03:13.71,0:03:15.67,Top,,0,0,0,,{\k15}{\pos(192,10)}a{\k16}ta{\k26}shi {\k31}o{\k38}to{\k30}na {\k17}ni {\k16}na{\k7}ru
+Dialogue: 0,0:03:13.71,0:03:15.67,Default,,0,0,0,,{\pos(192,278)}I’m growing up and out into the world
+Dialogue: 0,0:03:15.67,0:03:18.57,Top,,0,0,0,,{\k48}{\pos(192,10)}su{\k27}i {\k12}mo {\k21}a{\k20}mai {\k12}mo {\k38}ka{\k20}mi{\k17}wa{\k16}ke{\k19}te {\k19}i{\k21}ma
+Dialogue: 0,0:03:15.67,0:03:18.57,Default,,0,0,0,,{\pos(192,278)}Tasting all of the sweet, maybe even sour things
+Dialogue: 0,0:03:18.57,0:03:21.18,Top,,0,0,0,,{\k45}{\pos(192,10)}san{\k47}san {\k17}ma{\k17}ji{\k27}wa{\k14}ru {\k39}mi{\k36}ra{\k19}i
+Dialogue: 0,0:03:18.57,0:03:21.18,Default,,0,0,0,,{\pos(192,278)}SA SUN shining when we meet again
+Dialogue: 0,0:03:21.18,0:03:22.05,Top,,0,0,0,,{\k33}{\pos(192,10)}mou {\k25}ko{\k18}do{\k11}mo {\k1}janai no wakaru deshou
+Dialogue: 0,0:03:21.18,0:03:22.05,Default,,0,0,0,,{\pos(192,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:22.05,0:03:22.25,Top,,0,0,0,,{\pos(192,10)\4c&HE2F1F0&}mou kodomo janai no wakaru desh{\c&HFEFEFE&}ou
+Dialogue: 0,0:03:22.05,0:03:22.25,Default,,0,0,0,,{\pos(192,278)\3c&HF1FAFB&}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:22.25,0:03:22.71,Top,,0,0,0,,{\k0}{\pos(192,10)}mou kodomo {\k26}ja{\k20}nai {\k1}no wakaru deshou
+Dialogue: 0,0:03:22.25,0:03:22.71,Default,,0,0,0,,{\pos(192,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:22.71,0:03:22.88,Top,,0,0,0,,{\pos(192,10)\4c&HF1FAFB&}mou kodomo janai no wakaru desh{\c&HFEFEFE&}ou
+Dialogue: 0,0:03:22.71,0:03:22.88,Default,,0,0,0,,{\pos(192,278)\3c&HE2F1F0&}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:22.88,0:03:23.45,Top,,0,0,0,,{\k0}{\pos(192,10)}mou kodomo janai {\k14}no {\k43}wa{\k1}karu deshou
+Dialogue: 0,0:03:22.88,0:03:23.45,Default,,0,0,0,,{\pos(192,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.45,0:03:23.52,Top,,0,0,0,,{\k0}{\pos(190,10)}mou kodomo janai no wa{\k7}ka{\k1}ru deshou
+Dialogue: 0,0:03:23.45,0:03:23.52,Default,,0,0,0,,{\pos(194,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.52,0:03:23.58,Top,,0,0,0,,{\k0}{\pos(192,10)}mou kodomo janai no wa{\k6}ka{\k1}ru deshou
+Dialogue: 0,0:03:23.52,0:03:23.58,Default,,0,0,0,,{\pos(192,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.58,0:03:23.65,Top,,0,0,0,,{\k0}{\pos(194,10)}mou kodomo janai no wa{\k7}ka{\k1}ru deshou
+Dialogue: 0,0:03:23.58,0:03:23.65,Default,,0,0,0,,{\pos(190,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.65,0:03:23.72,Top,,0,0,0,,{\k0}{\pos(192,10)}mou kodomo janai no waka{\k7}ru {\k1}deshou
+Dialogue: 0,0:03:23.65,0:03:23.72,Default,,0,0,0,,{\pos(192,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.72,0:03:23.78,Top,,0,0,0,,{\k0}{\pos(194,11)}mou kodomo janai no waka{\k6}ru{\k1} deshou
+Dialogue: 0,0:03:23.72,0:03:23.78,Default,,0,0,0,,{\pos(190,279)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.78,0:03:23.85,Top,,0,0,0,,{\k0}{\pos(190,9)}mou kodomo janai no wakaru {\k7}de{\k1}shou
+Dialogue: 0,0:03:23.78,0:03:23.85,Default,,0,0,0,,{\pos(194,277)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.85,0:03:23.92,Top,,0,0,0,,{\k0}{\pos(192,11)}mou kodomo janai no wakaru {\k7}de{\k1}shou
+Dialogue: 0,0:03:23.85,0:03:23.92,Default,,0,0,0,,{\pos(190,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.92,0:03:23.98,Top,,0,0,0,,{\k0}{\pos(194,9)}mou kodomo janai no wakaru de{\k6}shou
+Dialogue: 0,0:03:23.92,0:03:23.98,Default,,0,0,0,,{\pos(194,277)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:23.98,0:03:24.08,Top,,0,0,0,,{\k0}{\pos(192,10)}mou kodomo janai no wakaru de{\k10}shou
+Dialogue: 0,0:03:23.98,0:03:24.08,Default,,0,0,0,,{\pos(192,278)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:24.08,0:03:24.18,Top,,0,0,0,,{\k0}{\pos(190,11)}mou kodomo janai no wakaru de{\k10}shou
+Dialogue: 0,0:03:24.08,0:03:24.18,Default,,0,0,0,,{\pos(194,279)}And when you see me know, I’ll be grown, you better believe
+Dialogue: 0,0:03:24.18,0:03:27.09,Top,,0,0,0,,{\k21}{\pos(192,10)}ji{\k18}da{\k35}i {\k20}ki{\k14}ka{\k53}i {\k30}ma{\k34}tte {\k18}ku{\k19}re{\k29}nai
+Dialogue: 0,0:03:24.18,0:03:27.09,Default,,0,0,0,,{\pos(192,278)}Time will pass, like this chance, they don’t wait, better act
+Dialogue: 0,0:03:27.09,0:03:32.13,Top,,0,0,0,,{\k33}{\pos(192,10)}su{\k18}de {\k24}de, {\k18}su{\k15}te{\k16}mi {\k40}de, {\k16}i{\k21}ki{\k33}nui{\k20}te {\k35}jou{\k37}tou {\k20}da {\k158}wa
+Dialogue: 0,0:03:27.09,0:03:32.13,Default,,0,0,0,,{\pos(192,278)}On my own, bet my life, bring it on, I know that I’ll survive ahh
+Dialogue: 0,0:03:35.40,0:03:37.10,Top,,0,0,0,,{\k42}{\pos(192,10)}ai {\k16}a{\k41}ru {\k41}ji{\k30}dai
+Dialogue: 0,0:03:35.40,0:03:37.10,Default,,0,0,0,,{\pos(192,278)}Era of love alive
+Dialogue: 0,0:03:37.10,0:03:37.16,Top,,0,0,0,,{\pos(192,11)\4c&H3650F6&}ai aru jidai
+Dialogue: 0,0:03:37.10,0:03:37.16,Default,,0,0,0,,{\pos(192,279)\3c&H3650F6&}Era of love alive
+Dialogue: 0,0:03:37.16,0:03:37.23,Top,,0,0,0,,{\pos(192,12)\4c&H3650F6&}ai aru jidai
+Dialogue: 0,0:03:37.16,0:03:37.23,Default,,0,0,0,,{\pos(192,280)\3c&H3650F6&}Era of love alive
+Dialogue: 0,0:03:37.23,0:03:37.30,Top,,0,0,0,,{\4c&H3650F6&\pos(192,11)}ai aru jidai
+Dialogue: 0,0:03:37.23,0:03:37.30,Default,,0,0,0,,{\pos(192,279)\3c&H3650F6&}Era of love alive
+Dialogue: 0,0:03:37.30,0:03:37.36,Top,,0,0,0,,{\pos(192,9)\4c&H3650F6&}ai aru jidai
+Dialogue: 0,0:03:37.30,0:03:37.36,Default,,0,0,0,,{\pos(192,276)\3c&H3650F6&}Era of love alive
+Dialogue: 0,0:03:37.36,0:03:38.59,Top,,0,0,0,,{\pos(192,10)\4c&H3650F6&}ai aru jidai
+Dialogue: 0,0:03:37.36,0:03:38.59,Default,,0,0,0,,{\pos(192,278)\3c&H3650F6&}Era of love alive
+Dialogue: 0,0:03:45.61,0:03:49.04,Top,,0,0,0,,{\k37}{\pos(192,10)}so{\k18}re {\k18}de{\k17}wa {\k18}mi{\k11}na {\k26}sa{\k23}ma {\k8}o{\k27}sa{\k17}ki{\k11}ni {\k43}Bye, {\k69}Guys!
+Dialogue: 0,0:03:45.61,0:03:49.04,Default,,0,0,0,,{\pos(192,278)}Well ladies and gentlemen, we’ll see y’all later! Bye guys!
+Dialogue: 0,0:03:49.04,0:03:51.35,Top,,0,0,0,,{\k47}{\pos(192,10)}furoa {\k75}ga {\k12}wa{\k14}ki{\k9}a{\k12}ga{\k8}ri{\k10}ma{\k10}shi{\k34}ta{\c&HC374FF&}
+Dialogue: 0,0:03:49.04,0:03:51.35,Default,,0,0,0,,{\pos(192,278)}The floor is in an uproar

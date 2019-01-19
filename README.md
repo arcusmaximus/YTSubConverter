@@ -69,7 +69,7 @@ Unsupported tags are ignored.
 ## Examples
 The repository contains two sample .ass files:
 * [Color-coded dialogue sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=AvBxTdwCfzs))
-* [Karaoke sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=DdqEdO4EOuU))
+* [Karaoke sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=il4cAeVzZwI))
 
 ## Testing
 After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing - each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the “real” player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
