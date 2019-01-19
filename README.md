@@ -25,7 +25,7 @@ The program tries to approximate the look of the Aegisub subtitles as closely as
 
 ![Outlines](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/outlines.png)
 
-You'll notice that each .ass shadow can turn into one of three different YouTube shadow types: soft shadow, hard shadow and glow (same as outline). You can configure the shadow type in the conversion UI. This is also where you can configure current word highlighting for karaoke ([example](https://www.youtube.com/watch?v=mtb-qa8xvFU)).
+You'll notice that each .ass shadow can turn into one of three different YouTube shadow types: soft shadow, hard shadow and glow (same as outline). You can configure the shadow type in the conversion UI. This is also where you can configure current word highlighting for karaoke ([example](https://www.youtube.com/watch?v=il4cAeVzZwI)).
 
 ![Style options](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/style-options.png)
 
