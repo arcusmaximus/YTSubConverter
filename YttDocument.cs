@@ -12,6 +12,7 @@ namespace Arc.YTSubConverter
         public YttDocument(SubtitleDocument doc)
             : base(doc)
         {
+            Lines.RemoveAll(l => !l.Sections.Any(s => s.Text.Length > 0));
             Shift(new TimeSpan(0, 0, 0, 0, -60));
             CloseGaps();
         }
@@ -53,7 +54,8 @@ namespace Arc.YTSubConverter
         {
             for (int i = 0; i < Lines.Count; i++)
             {
-                PrepareForMultiColor(i);
+                PrepareForMultiForeground(i);
+                PrepareForMultiBackground(i);
                 
                 i += ExpandLineForHighAlpha(i) - 1;
                 i += ExpandLineForColoring(i) - 1;
@@ -87,7 +89,7 @@ namespace Arc.YTSubConverter
         ///                         |        +This is a multiline  |
         ///                         |                       +sub.  |
         /// </summary>
-        private void PrepareForMultiColor(int lineIndex)
+        private void PrepareForMultiForeground(int lineIndex)
         {
             Line line = Lines[lineIndex];
             AnchorPoint anchorPoint = line.AnchorPoint ?? AnchorPoint.BottomCenter;
@@ -109,6 +111,17 @@ namespace Arc.YTSubConverter
                     return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Text is typically opaque and can be overlaid without problems, but backgrounds are often
+        /// transparent -> split up lines with multiple background colors to avoid overlap
+        /// </summary>
+        private void PrepareForMultiBackground(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+            if (line.Sections.Select(s => s.BackColor).Distinct().Count() > 1)
+                SplitOnLineBreaks(lineIndex);
         }
 
         /// <summary>

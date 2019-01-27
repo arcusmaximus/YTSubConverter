@@ -10,9 +10,9 @@ namespace Arc.YTSubConverter
             List<string> result = new List<string>();
             int start = 0;
             int end;
-            while (start < str.Length)
+            while (start <= str.Length)
             {
-                if (maxItems == null || result.Count < maxItems.Value - 1)
+                if (start < str.Length && (maxItems == null || result.Count < maxItems.Value - 1))
                 {
                     end = str.IndexOf(separator, start);
                     if (end < 0)

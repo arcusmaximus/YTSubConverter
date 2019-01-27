@@ -30,7 +30,7 @@ namespace Arc.YTSubConverter
 
         public static SubtitleDocument Load(string filePath)
         {
-            switch (Path.GetExtension(filePath))
+            switch (Path.GetExtension(filePath)?.ToLower())
             {
                 case ".ass":
                     return new AssDocument(filePath);
