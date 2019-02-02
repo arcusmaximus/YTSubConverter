@@ -13,7 +13,7 @@ namespace Arc.YTSubConverter
                    x.ForeColor == y.ForeColor &&
                    x.BackColor == y.BackColor &&
                    x.ShadowColor == y.ShadowColor &&
-                   x.ShadowType == y.ShadowType;
+                   x.ShadowTypes == y.ShadowTypes;
         }
 
         public int GetHashCode(Section section)
@@ -25,7 +25,7 @@ namespace Arc.YTSubConverter
                    section.ForeColor.GetHashCode() ^
                    section.BackColor.GetHashCode() ^
                    section.ShadowColor.GetHashCode() ^
-                   section.ShadowType.GetHashCode();
+                   section.ShadowTypes.GetHashCode();
         }
     }
 }

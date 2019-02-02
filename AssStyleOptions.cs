@@ -15,11 +15,11 @@ namespace Arc.YTSubConverter
         {
             Name = style.Name;
             if (style.HasOutline && !style.HasOutlineBox)
-                ShadowType = ShadowType.Glow;
+                ShadowTypes = ShadowType.Glow;
             else if (style.HasShadow)
-                ShadowType = ShadowType.Glow;
+                ShadowTypes = ShadowType.Glow;
             else
-                ShadowType = ShadowType.None;
+                ShadowTypes = ShadowType.None;
         }
 
         public string Name
@@ -28,7 +28,8 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public ShadowType ShadowType
+        [XmlElement("ShadowType")]
+        public ShadowType ShadowTypes
         {
             get;
             set;

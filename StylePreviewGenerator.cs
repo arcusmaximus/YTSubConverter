@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Text;
@@ -32,7 +33,7 @@ namespace Arc.YTSubConverter
 
             if (options != null)
             {
-                GenerateCss(html, "#regular", style, style.PrimaryColor, style.ShadowColor, options.ShadowType);
+                GenerateCss(html, "#regular", style, style.PrimaryColor, style.ShadowColor, options.ShadowTypes);
                 if (options.IsKaraoke)
                 {
                     GenerateCss(
@@ -41,9 +42,9 @@ namespace Arc.YTSubConverter
                         style,
                         !options.CurrentWordTextColor.IsEmpty ? options.CurrentWordTextColor : style.PrimaryColor,
                         !options.CurrentWordShadowColor.IsEmpty ? options.CurrentWordShadowColor : style.ShadowColor,
-                        options.ShadowType
+                        options.ShadowTypes
                     );
-                    GenerateCss(html, "#unsung", style, style.SecondaryColor, style.ShadowColor, options.ShadowType);
+                    GenerateCss(html, "#unsung", style, style.SecondaryColor, style.ShadowColor, options.ShadowTypes);
                 }
             }
 
@@ -70,13 +71,13 @@ namespace Arc.YTSubConverter
             return html.ToString();
         }
 
-        private static void GenerateCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color shadowColor, ShadowType shadowType)
+        private static void GenerateCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color shadowColor, ShadowType shadowTypes)
         {
             html.Append($@"
                 {selector}
                 {{
                     padding: 3px;
-                    font-size: 12pt;
+                    font-size: 32px;
             ");
 
             if (style.Bold)
@@ -105,20 +106,18 @@ namespace Arc.YTSubConverter
 
             if (style.HasShadow && (!style.HasOutline || style.OutlineIsBox))
             {
-                switch (shadowType)
-                {
-                    case ShadowType.Glow:
-                        html.Append($"text-shadow: 0 0 3px {ToHex(shadowColor)};");
-                        break;
+                List<string> shadows = new List<string>();
+                if ((shadowTypes & ShadowType.Glow) != 0)
+                    shadows.Add($"0 0 2px {ToHex(shadowColor)}, 0 0 2px {ToHex(shadowColor)}, 0 0 3px {ToHex(shadowColor)}, 0 0 4px {ToHex(shadowColor)}");
 
-                    case ShadowType.SoftShadow:
-                        html.Append($"text-shadow: 2px 2px 3px {ToHex(shadowColor)};");
-                        break;
+                if ((shadowTypes & ShadowType.SoftShadow) != 0)
+                    shadows.Add($"2px 2px 3px {ToHex(shadowColor)}, 2px 2px 4px {ToHex(shadowColor)}, 2px 2px 5px {ToHex(shadowColor)}");
 
-                    case ShadowType.HardShadow:
-                        html.Append($"text-shadow: 1px 1px 0 {ToHex(shadowColor)};");
-                        break;
-                }
+                if ((shadowTypes & ShadowType.HardShadow) != 0)
+                    shadows.Add($"1px 1px 0 {ToHex(shadowColor)}, 2px 2px 0 {ToHex(shadowColor)}, 3px 3px 0 {ToHex(shadowColor)}");
+
+                if (shadows.Count > 0)
+                    html.Append($"text-shadow: {string.Join(", ", shadows)};");
             }
 
             html.AppendLine(@"

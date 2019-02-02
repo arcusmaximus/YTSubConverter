@@ -31,6 +31,7 @@ namespace Arc.YTSubConverter.Ass
                               { "3a", HandleOutlineAlphaTag },
                               { "4a", HandleShadowAlphaTag },
                               { "pos", HandlePositionTag },
+                              { "an", HandleAlignmentTag },
                               { "k", HandleDurationTag },
                               { "r", HandleResetTag },
                               { "fad", HandleSimpleFadeTag },
@@ -93,7 +94,7 @@ namespace Arc.YTSubConverter.Ass
                         continue;
                     }
 
-                    Match match = Regex.Match(line, @"(\w+):(.+)");
+                    Match match = Regex.Match(line, @"(\w+):\s*(.+)");
                     if (!match.Success)
                         throw new InvalidDataException($"Unrecognized line in .ass: {line}");
 
@@ -101,13 +102,13 @@ namespace Arc.YTSubConverter.Ass
                         throw new InvalidDataException($"Line {line} is not inside a section");
 
                     string type = match.Groups[1].Value;
-                    List<string> values = match.Groups[2].Value.Split(",", currentSection.Format?.Count, s => s.Trim());
+                    List<string> values = match.Groups[2].Value.Split(",", currentSection.Format?.Count);
                     if (type == "Format")
                     {
                         if (currentSection.Format != null)
                             throw new InvalidDataException("Section has multiple Format items");
 
-                        currentSection.SetFormat(values);
+                        currentSection.SetFormat(values.Select(v => v.Trim()).ToList());
                     }
                     else
                     {
@@ -264,6 +265,14 @@ namespace Arc.YTSubConverter.Ass
             context.Line.Position = new PointF(coords[0], coords[1]);
         }
 
+        private static void HandleAlignmentTag(TagContext context, string arg)
+        {
+            if (!int.TryParse(arg, out int alignment))
+                return;
+
+            context.Line.AnchorPoint = GetAnchorPointFromAlignment(alignment);
+        }
+
         private static void HandleDurationTag(TagContext context, string arg)
         {
             int centiSeconds = int.Parse(arg);
@@ -334,7 +343,7 @@ namespace Arc.YTSubConverter.Ass
 
             section.BackColor = Color.Empty;
             section.ShadowColor = Color.Empty;
-            section.ShadowType = ShadowType.None;
+            section.ShadowTypes = ShadowType.None;
 
             if (style.HasOutline)
             {
@@ -345,14 +354,14 @@ namespace Arc.YTSubConverter.Ass
                 else
                 {
                     section.ShadowColor = style.OutlineColor;
-                    section.ShadowType = ShadowType.Glow;
+                    section.ShadowTypes = ShadowType.Glow;
                 }
             }
 
             if (style.HasShadow && section.ShadowColor.IsEmpty)
             {
                 section.ShadowColor = style.ShadowColor;
-                section.ShadowType = options?.ShadowType ?? ShadowType.SoftShadow;
+                section.ShadowTypes = options?.ShadowTypes ?? ShadowType.SoftShadow;
             }
         }
 
@@ -393,7 +402,7 @@ namespace Arc.YTSubConverter.Ass
                 {
                     section.ForeColor = section.SecondaryColor;
                     if (section.ForeColor.A == 0)
-                        section.ShadowType = ShadowType.None;
+                        section.ShadowTypes = ShadowType.None;
                 }
 
                 ExtendedSection singingSection = (ExtendedSection)stepLine.Sections[numVisibleSections - 1];
@@ -556,6 +565,42 @@ namespace Arc.YTSubConverter.Ass
                 {
                     i++;
                 }
+            }
+        }
+
+        internal static AnchorPoint GetAnchorPointFromAlignment(int alignment)
+        {
+            switch (alignment)
+            {
+                case 1:
+                    return AnchorPoint.BottomLeft;
+
+                case 2:
+                    return AnchorPoint.BottomCenter;
+
+                case 3:
+                    return AnchorPoint.BottomRight;
+
+                case 4:
+                    return AnchorPoint.MiddleLeft;
+
+                case 5:
+                    return AnchorPoint.Center;
+
+                case 6:
+                    return AnchorPoint.MiddleRight;
+
+                case 7:
+                    return AnchorPoint.TopLeft;
+
+                case 8:
+                    return AnchorPoint.TopCenter;
+
+                case 9:
+                    return AnchorPoint.TopRight;
+
+                default:
+                    throw new ArgumentException($"{alignment} is not a valid alignment");
             }
         }
 

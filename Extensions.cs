@@ -5,7 +5,7 @@ namespace Arc.YTSubConverter
 {
     internal static class Extensions
     {
-        public static List<string> Split(this string str, string separator, int? maxItems = null, Func<string, string> selector = null)
+        public static List<string> Split(this string str, string separator, int? maxItems = null)
         {
             List<string> result = new List<string>();
             int start = 0;
@@ -23,12 +23,7 @@ namespace Arc.YTSubConverter
                     end = str.Length;
                 }
 
-                string item = str.Substring(start, end - start);
-                if (selector != null)
-                    item = selector(item);
-
-                result.Add(item);
-
+                result.Add(str.Substring(start, end - start));
                 start = end + separator.Length;
             }
             return result;

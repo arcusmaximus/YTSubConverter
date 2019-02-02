@@ -58,7 +58,7 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public ShadowType ShadowType
+        public ShadowType ShadowTypes
         {
             get;
             set;
@@ -86,7 +86,7 @@ namespace Arc.YTSubConverter
             ForeColor = section.ForeColor;
             BackColor = section.BackColor;
             ShadowColor = section.ShadowColor;
-            ShadowType = section.ShadowType;
+            ShadowTypes = section.ShadowTypes;
         }
     }
 }

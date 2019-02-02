@@ -1,4 +1,6 @@
-﻿namespace Arc.YTSubConverter
+﻿using System;
+
+namespace Arc.YTSubConverter
 {
     public enum AnchorPoint
     {
@@ -13,11 +15,12 @@
         BottomRight
     }
 
+    [Flags]
     public enum ShadowType
     {
-        None,
-        Glow,
-        HardShadow,
-        SoftShadow
+        None = 0,
+        Glow = 1,
+        HardShadow = 2,
+        SoftShadow = 4
     }
 }

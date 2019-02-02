@@ -33,16 +33,6 @@
             this._grpStyleOptions = new System.Windows.Forms.GroupBox();
             this._spltStyleOptions = new System.Windows.Forms.SplitContainer();
             this._lstStyles = new System.Windows.Forms.ListBox();
-            this._pnlShadowType = new System.Windows.Forms.Panel();
-            this._lblShadowType = new System.Windows.Forms.Label();
-            this._radGlow = new System.Windows.Forms.RadioButton();
-            this._radSoftShadow = new System.Windows.Forms.RadioButton();
-            this._radHardShadow = new System.Windows.Forms.RadioButton();
-            this._dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
-            this._chkStyleOptions = new System.Windows.Forms.CheckBox();
-            this._btnConvert = new System.Windows.Forms.Button();
-            this._lblConversionSuccess = new System.Windows.Forms.Label();
-            this._btnBrowse = new System.Windows.Forms.Button();
             this._pnlOptions = new System.Windows.Forms.Panel();
             this._pnlKaraokeType = new System.Windows.Forms.Panel();
             this._txtCurrentWordGlowColor = new System.Windows.Forms.TextBox();
@@ -51,14 +41,24 @@
             this._lblCurrentWordTextColor = new System.Windows.Forms.Label();
             this._chkHighlightCurrentWord = new System.Windows.Forms.CheckBox();
             this._chkKaraoke = new System.Windows.Forms.CheckBox();
+            this._pnlShadowType = new System.Windows.Forms.Panel();
+            this._chkHardShadow = new System.Windows.Forms.CheckBox();
+            this._chkSoftShadow = new System.Windows.Forms.CheckBox();
+            this._chkGlow = new System.Windows.Forms.CheckBox();
+            this._lblShadowType = new System.Windows.Forms.Label();
+            this._dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
+            this._chkStyleOptions = new System.Windows.Forms.CheckBox();
+            this._btnConvert = new System.Windows.Forms.Button();
+            this._lblConversionSuccess = new System.Windows.Forms.Label();
+            this._btnBrowse = new System.Windows.Forms.Button();
             this._grpStyleOptions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._spltStyleOptions)).BeginInit();
             this._spltStyleOptions.Panel1.SuspendLayout();
             this._spltStyleOptions.Panel2.SuspendLayout();
             this._spltStyleOptions.SuspendLayout();
-            this._pnlShadowType.SuspendLayout();
             this._pnlOptions.SuspendLayout();
             this._pnlKaraokeType.SuspendLayout();
+            this._pnlShadowType.SuspendLayout();
             this.SuspendLayout();
             // 
             // _brwPreview
@@ -121,113 +121,6 @@
             this._lstStyles.Size = new System.Drawing.Size(291, 331);
             this._lstStyles.TabIndex = 2;
             this._lstStyles.SelectedIndexChanged += new System.EventHandler(this._lstStyles_SelectedIndexChanged);
-            // 
-            // _pnlShadowType
-            // 
-            this._pnlShadowType.Controls.Add(this._lblShadowType);
-            this._pnlShadowType.Controls.Add(this._radGlow);
-            this._pnlShadowType.Controls.Add(this._radSoftShadow);
-            this._pnlShadowType.Controls.Add(this._radHardShadow);
-            this._pnlShadowType.Dock = System.Windows.Forms.DockStyle.Left;
-            this._pnlShadowType.Location = new System.Drawing.Point(0, 0);
-            this._pnlShadowType.Name = "_pnlShadowType";
-            this._pnlShadowType.Size = new System.Drawing.Size(198, 92);
-            this._pnlShadowType.TabIndex = 5;
-            // 
-            // _lblShadowType
-            // 
-            this._lblShadowType.AutoSize = true;
-            this._lblShadowType.Location = new System.Drawing.Point(8, 9);
-            this._lblShadowType.Name = "_lblShadowType";
-            this._lblShadowType.Size = new System.Drawing.Size(72, 13);
-            this._lblShadowType.TabIndex = 3;
-            this._lblShadowType.Text = "Shadow type:";
-            // 
-            // _radGlow
-            // 
-            this._radGlow.AutoSize = true;
-            this._radGlow.Location = new System.Drawing.Point(26, 25);
-            this._radGlow.Name = "_radGlow";
-            this._radGlow.Size = new System.Drawing.Size(49, 17);
-            this._radGlow.TabIndex = 4;
-            this._radGlow.TabStop = true;
-            this._radGlow.Text = "Glow";
-            this._radGlow.UseVisualStyleBackColor = true;
-            this._radGlow.CheckedChanged += new System.EventHandler(this._radGlow_CheckedChanged);
-            // 
-            // _radSoftShadow
-            // 
-            this._radSoftShadow.AutoSize = true;
-            this._radSoftShadow.Location = new System.Drawing.Point(26, 48);
-            this._radSoftShadow.Name = "_radSoftShadow";
-            this._radSoftShadow.Size = new System.Drawing.Size(84, 17);
-            this._radSoftShadow.TabIndex = 4;
-            this._radSoftShadow.TabStop = true;
-            this._radSoftShadow.Text = "Soft shadow";
-            this._radSoftShadow.UseVisualStyleBackColor = true;
-            this._radSoftShadow.CheckedChanged += new System.EventHandler(this._radSoftShadow_CheckedChanged);
-            // 
-            // _radHardShadow
-            // 
-            this._radHardShadow.AutoSize = true;
-            this._radHardShadow.Location = new System.Drawing.Point(26, 70);
-            this._radHardShadow.Name = "_radHardShadow";
-            this._radHardShadow.Size = new System.Drawing.Size(88, 17);
-            this._radHardShadow.TabIndex = 4;
-            this._radHardShadow.TabStop = true;
-            this._radHardShadow.Text = "Hard shadow";
-            this._radHardShadow.UseVisualStyleBackColor = true;
-            this._radHardShadow.CheckedChanged += new System.EventHandler(this._radHardShadow_CheckedChanged);
-            // 
-            // _dlgOpenFile
-            // 
-            this._dlgOpenFile.Filter = "Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv";
-            // 
-            // _chkStyleOptions
-            // 
-            this._chkStyleOptions.Appearance = System.Windows.Forms.Appearance.Button;
-            this._chkStyleOptions.AutoSize = true;
-            this._chkStyleOptions.Location = new System.Drawing.Point(24, 29);
-            this._chkStyleOptions.Name = "_chkStyleOptions";
-            this._chkStyleOptions.Size = new System.Drawing.Size(77, 23);
-            this._chkStyleOptions.TabIndex = 1;
-            this._chkStyleOptions.Text = "Style options";
-            this._chkStyleOptions.UseVisualStyleBackColor = true;
-            this._chkStyleOptions.CheckedChanged += new System.EventHandler(this._chkStyleOptions_CheckedChanged);
-            // 
-            // _btnConvert
-            // 
-            this._btnConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._btnConvert.Location = new System.Drawing.Point(659, 397);
-            this._btnConvert.Name = "_btnConvert";
-            this._btnConvert.Size = new System.Drawing.Size(129, 41);
-            this._btnConvert.TabIndex = 5;
-            this._btnConvert.Text = "Convert";
-            this._btnConvert.UseVisualStyleBackColor = true;
-            this._btnConvert.Click += new System.EventHandler(this._btnConvert_Click);
-            // 
-            // _lblConversionSuccess
-            // 
-            this._lblConversionSuccess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._lblConversionSuccess.ForeColor = System.Drawing.Color.Green;
-            this._lblConversionSuccess.Location = new System.Drawing.Point(326, 411);
-            this._lblConversionSuccess.Name = "_lblConversionSuccess";
-            this._lblConversionSuccess.Size = new System.Drawing.Size(327, 13);
-            this._lblConversionSuccess.TabIndex = 6;
-            this._lblConversionSuccess.Text = "Conversion successful!";
-            this._lblConversionSuccess.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this._lblConversionSuccess.Visible = false;
-            // 
-            // _btnBrowse
-            // 
-            this._btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._btnBrowse.Location = new System.Drawing.Point(744, 6);
-            this._btnBrowse.Name = "_btnBrowse";
-            this._btnBrowse.Size = new System.Drawing.Size(44, 20);
-            this._btnBrowse.TabIndex = 0;
-            this._btnBrowse.Text = "...";
-            this._btnBrowse.UseVisualStyleBackColor = true;
-            this._btnBrowse.Click += new System.EventHandler(this._btnBrowse_Click);
             // 
             // _pnlOptions
             // 
@@ -312,6 +205,110 @@
             this._chkKaraoke.UseVisualStyleBackColor = true;
             this._chkKaraoke.CheckedChanged += new System.EventHandler(this._chkKaraoke_CheckedChanged);
             // 
+            // _pnlShadowType
+            // 
+            this._pnlShadowType.Controls.Add(this._chkHardShadow);
+            this._pnlShadowType.Controls.Add(this._chkSoftShadow);
+            this._pnlShadowType.Controls.Add(this._chkGlow);
+            this._pnlShadowType.Controls.Add(this._lblShadowType);
+            this._pnlShadowType.Dock = System.Windows.Forms.DockStyle.Left;
+            this._pnlShadowType.Location = new System.Drawing.Point(0, 0);
+            this._pnlShadowType.Name = "_pnlShadowType";
+            this._pnlShadowType.Size = new System.Drawing.Size(198, 92);
+            this._pnlShadowType.TabIndex = 5;
+            // 
+            // _chkHardShadow
+            // 
+            this._chkHardShadow.AutoSize = true;
+            this._chkHardShadow.Location = new System.Drawing.Point(26, 65);
+            this._chkHardShadow.Name = "_chkHardShadow";
+            this._chkHardShadow.Size = new System.Drawing.Size(89, 17);
+            this._chkHardShadow.TabIndex = 4;
+            this._chkHardShadow.Text = "Hard shadow";
+            this._chkHardShadow.UseVisualStyleBackColor = true;
+            this._chkHardShadow.CheckedChanged += new System.EventHandler(this._radHardShadow_CheckedChanged);
+            // 
+            // _chkSoftShadow
+            // 
+            this._chkSoftShadow.AutoSize = true;
+            this._chkSoftShadow.Location = new System.Drawing.Point(26, 48);
+            this._chkSoftShadow.Name = "_chkSoftShadow";
+            this._chkSoftShadow.Size = new System.Drawing.Size(85, 17);
+            this._chkSoftShadow.TabIndex = 4;
+            this._chkSoftShadow.Text = "Soft shadow";
+            this._chkSoftShadow.UseVisualStyleBackColor = true;
+            this._chkSoftShadow.CheckedChanged += new System.EventHandler(this._radSoftShadow_CheckedChanged);
+            // 
+            // _chkGlow
+            // 
+            this._chkGlow.AutoSize = true;
+            this._chkGlow.Location = new System.Drawing.Point(26, 31);
+            this._chkGlow.Name = "_chkGlow";
+            this._chkGlow.Size = new System.Drawing.Size(50, 17);
+            this._chkGlow.TabIndex = 4;
+            this._chkGlow.Text = "Glow";
+            this._chkGlow.UseVisualStyleBackColor = true;
+            this._chkGlow.CheckedChanged += new System.EventHandler(this._chkGlow_CheckedChanged);
+            // 
+            // _lblShadowType
+            // 
+            this._lblShadowType.AutoSize = true;
+            this._lblShadowType.Location = new System.Drawing.Point(8, 9);
+            this._lblShadowType.Name = "_lblShadowType";
+            this._lblShadowType.Size = new System.Drawing.Size(77, 13);
+            this._lblShadowType.TabIndex = 3;
+            this._lblShadowType.Text = "Shadow types:";
+            // 
+            // _dlgOpenFile
+            // 
+            this._dlgOpenFile.Filter = "Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv";
+            // 
+            // _chkStyleOptions
+            // 
+            this._chkStyleOptions.Appearance = System.Windows.Forms.Appearance.Button;
+            this._chkStyleOptions.AutoSize = true;
+            this._chkStyleOptions.Location = new System.Drawing.Point(24, 29);
+            this._chkStyleOptions.Name = "_chkStyleOptions";
+            this._chkStyleOptions.Size = new System.Drawing.Size(77, 23);
+            this._chkStyleOptions.TabIndex = 1;
+            this._chkStyleOptions.Text = "Style options";
+            this._chkStyleOptions.UseVisualStyleBackColor = true;
+            this._chkStyleOptions.CheckedChanged += new System.EventHandler(this._chkStyleOptions_CheckedChanged);
+            // 
+            // _btnConvert
+            // 
+            this._btnConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._btnConvert.Location = new System.Drawing.Point(659, 397);
+            this._btnConvert.Name = "_btnConvert";
+            this._btnConvert.Size = new System.Drawing.Size(129, 41);
+            this._btnConvert.TabIndex = 5;
+            this._btnConvert.Text = "Convert";
+            this._btnConvert.UseVisualStyleBackColor = true;
+            this._btnConvert.Click += new System.EventHandler(this._btnConvert_Click);
+            // 
+            // _lblConversionSuccess
+            // 
+            this._lblConversionSuccess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._lblConversionSuccess.ForeColor = System.Drawing.Color.Green;
+            this._lblConversionSuccess.Location = new System.Drawing.Point(326, 411);
+            this._lblConversionSuccess.Name = "_lblConversionSuccess";
+            this._lblConversionSuccess.Size = new System.Drawing.Size(327, 13);
+            this._lblConversionSuccess.TabIndex = 6;
+            this._lblConversionSuccess.Text = "Conversion successful!";
+            this._lblConversionSuccess.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this._lblConversionSuccess.Visible = false;
+            // 
+            // _btnBrowse
+            // 
+            this._btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._btnBrowse.Location = new System.Drawing.Point(744, 6);
+            this._btnBrowse.Name = "_btnBrowse";
+            this._btnBrowse.Size = new System.Drawing.Size(44, 20);
+            this._btnBrowse.TabIndex = 0;
+            this._btnBrowse.Text = "...";
+            this._btnBrowse.UseVisualStyleBackColor = true;
+            this._btnBrowse.Click += new System.EventHandler(this._btnBrowse_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -336,11 +333,11 @@
             this._spltStyleOptions.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._spltStyleOptions)).EndInit();
             this._spltStyleOptions.ResumeLayout(false);
-            this._pnlShadowType.ResumeLayout(false);
-            this._pnlShadowType.PerformLayout();
             this._pnlOptions.ResumeLayout(false);
             this._pnlKaraokeType.ResumeLayout(false);
             this._pnlKaraokeType.PerformLayout();
+            this._pnlShadowType.ResumeLayout(false);
+            this._pnlShadowType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,9 +353,6 @@
         private System.Windows.Forms.OpenFileDialog _dlgOpenFile;
         private System.Windows.Forms.SplitContainer _spltStyleOptions;
         private System.Windows.Forms.Label _lblShadowType;
-        private System.Windows.Forms.RadioButton _radSoftShadow;
-        private System.Windows.Forms.RadioButton _radHardShadow;
-        private System.Windows.Forms.RadioButton _radGlow;
         private System.Windows.Forms.Button _btnConvert;
         private System.Windows.Forms.Label _lblConversionSuccess;
         private System.Windows.Forms.Panel _pnlShadowType;
@@ -371,5 +365,8 @@
         private System.Windows.Forms.Label _lblCurrentWordTextColor;
         private System.Windows.Forms.CheckBox _chkHighlightCurrentWord;
         private System.Windows.Forms.CheckBox _chkKaraoke;
+        private System.Windows.Forms.CheckBox _chkHardShadow;
+        private System.Windows.Forms.CheckBox _chkSoftShadow;
+        private System.Windows.Forms.CheckBox _chkGlow;
     }
 }

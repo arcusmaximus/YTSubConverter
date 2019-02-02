@@ -115,9 +115,9 @@ namespace Arc.YTSubConverter
 
             _spltStyleOptions.Panel2.Enabled = true;
             _pnlShadowType.Enabled = style.HasShadow && (!style.HasOutline || style.HasOutlineBox);
-            _radGlow.Checked = options.ShadowType == ShadowType.Glow;
-            _radSoftShadow.Checked = options.ShadowType == ShadowType.SoftShadow;
-            _radHardShadow.Checked = options.ShadowType == ShadowType.HardShadow;
+            _chkGlow.Checked = (options.ShadowTypes & ShadowType.Glow) != 0;
+            _chkSoftShadow.Checked = (options.ShadowTypes & ShadowType.SoftShadow) != 0;
+            _chkHardShadow.Checked = (options.ShadowTypes & ShadowType.HardShadow) != 0;
 
             Color currentWordTextColor = options.CurrentWordTextColor;
             Color currentWordShadowColor = options.CurrentWordShadowColor;
@@ -129,30 +129,21 @@ namespace Arc.YTSubConverter
             UpdateStylePreview();
         }
 
-        private void _radGlow_CheckedChanged(object sender, EventArgs e)
+        private void _chkGlow_CheckedChanged(object sender, EventArgs e)
         {
-            if (!_radGlow.Checked)
-                return;
-
-            SelectedStyleOptions.ShadowType = ShadowType.Glow;
+            SelectedStyleOptions.ShadowTypes = EnableShadowType(SelectedStyleOptions.ShadowTypes, ShadowType.Glow, _chkGlow.Checked);
             UpdateStylePreview();
         }
 
         private void _radSoftShadow_CheckedChanged(object sender, EventArgs e)
         {
-            if (!_radSoftShadow.Checked)
-                return;
-
-            SelectedStyleOptions.ShadowType = ShadowType.SoftShadow;
+            SelectedStyleOptions.ShadowTypes = EnableShadowType(SelectedStyleOptions.ShadowTypes, ShadowType.SoftShadow, _chkSoftShadow.Checked);
             UpdateStylePreview();
         }
 
         private void _radHardShadow_CheckedChanged(object sender, EventArgs e)
         {
-            if (!_radHardShadow.Checked)
-                return;
-
-            SelectedStyleOptions.ShadowType = ShadowType.HardShadow;
+            SelectedStyleOptions.ShadowTypes = EnableShadowType(SelectedStyleOptions.ShadowTypes, ShadowType.HardShadow, _chkHardShadow.Checked);
             UpdateStylePreview();
         }
 
@@ -255,6 +246,16 @@ namespace Arc.YTSubConverter
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             AssStyleOptionsList.Save(_styleOptions.Values);
+        }
+
+        private static ShadowType EnableShadowType(ShadowType types, ShadowType typeToChange, bool enable)
+        {
+            if (enable)
+                types |= typeToChange;
+            else
+                types &= ~typeToChange;
+
+            return types;
         }
     }
 }

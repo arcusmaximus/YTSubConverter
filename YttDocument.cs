@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Arc.YTSubConverter.Util;
 
@@ -9,11 +10,33 @@ namespace Arc.YTSubConverter
 {
     internal class YttDocument : SubtitleDocument
     {
+        /// <summary>
+        /// Defines the (approximate) delay between the specified subtitle appearance time and the time it actually appears.
+        /// </summary>
+        private const int SubtitleDelayMs = 60;
+
+        public YttDocument(string filePath)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filePath);
+            foreach (XmlElement parElem in doc.SelectNodes("/timedtext/body/p"))
+            {
+                int startMs = int.Parse(parElem.GetAttribute("t")) + SubtitleDelayMs;
+                int durationMs = int.Parse(parElem.GetAttribute("d"));
+
+                DateTime start = TimeBase.AddMilliseconds(startMs);
+                DateTime end = start.AddMilliseconds(durationMs);
+                Line line = new Line(start, end, parElem.InnerText);
+                Lines.Add(line);
+            }
+        }
+
         public YttDocument(SubtitleDocument doc)
             : base(doc)
         {
             Lines.RemoveAll(l => !l.Sections.Any(s => s.Text.Length > 0));
-            Shift(new TimeSpan(0, 0, 0, 0, -60));
+
+            // A gap of even one millisecond can cause flickering
             CloseGaps();
         }
 
@@ -54,11 +77,25 @@ namespace Arc.YTSubConverter
         {
             for (int i = 0; i < Lines.Count; i++)
             {
+                HardenSpaces(i);
                 PrepareForMultiForeground(i);
-                PrepareForMultiBackground(i);
+                PrepareForMultiNonForeground(i);
                 
                 i += ExpandLineForHighAlpha(i) - 1;
+                i += ExpandLineForMultiShadows(i) - 1;
                 i += ExpandLineForColoring(i) - 1;
+            }
+        }
+
+        /// <summary>
+        /// Sequences of multiple spaces get collapsed into a single space in browsers -> replace by non-breaking spaces.
+        /// (Useful for expanding the background box to cover up on-screen text)
+        /// </summary>
+        private void HardenSpaces(int lineIndex)
+        {
+            foreach (Section section in Lines[lineIndex].Sections)
+            {
+                section.Text = Regex.Replace(section.Text, @"  +", m => new string(' ', m.Value.Length));
             }
         }
 
@@ -114,14 +151,19 @@ namespace Arc.YTSubConverter
         }
 
         /// <summary>
-        /// Text is typically opaque and can be overlaid without problems, but backgrounds are often
-        /// transparent -> split up lines with multiple background colors to avoid overlap
+        /// Text is typically opaque and can be overlaid without problems (no line splitting required).
+        /// For other attributes line background color and bold/italic/underline, however, we can't do this.
         /// </summary>
-        private void PrepareForMultiBackground(int lineIndex)
+        private void PrepareForMultiNonForeground(int lineIndex)
         {
             Line line = Lines[lineIndex];
-            if (line.Sections.Select(s => s.BackColor).Distinct().Count() > 1)
+            if (line.Sections.Select(s => s.BackColor).Distinct().Count() > 1 ||
+                line.Sections.Select(s => s.Bold).Distinct().Count() > 1 ||
+                line.Sections.Select(s => s.Italic).Distinct().Count() > 1 ||
+                line.Sections.Select(s => s.Underline).Distinct().Count() > 1)
+            {
                 SplitOnLineBreaks(lineIndex);
+            }
         }
 
         /// <summary>
@@ -233,7 +275,7 @@ namespace Arc.YTSubConverter
 
         /// <summary>
         /// For reasons only YouTube's developers understand, background opacity is capped to a maximum of 75% on PC
-        /// (even though it's locked to 100% on mobile). So, if the subtitle file wants a higher opacity, we stack
+        /// (even though it's locked to 100% on Android). So, if the subtitle file wants a higher opacity, we stack
         /// lines on top of each other until we reach that goal.
         /// </summary>
         private int ExpandLineForHighAlpha(int lineIndex)
@@ -267,7 +309,7 @@ namespace Arc.YTSubConverter
                     line.Sections.RemoveRange(1, line.Sections.Count - 1);
                 }
                 line.Sections[0].ForeColor = ColorUtil.ChangeColorAlpha(line.Sections[0].ForeColor, 0);
-                line.Sections[0].ShadowType = ShadowType.None;
+                line.Sections[0].ShadowTypes = ShadowType.None;
                 line.Sections[0].BackColor = ColorUtil.ChangeColorAlpha(line.Sections[0].BackColor, stepAlpha);
 
                 reachedAlpha += (int)((255 - reachedAlpha) * stepFraction);
@@ -275,6 +317,43 @@ namespace Arc.YTSubConverter
                 numReplacementLines++;
             }
             return numReplacementLines;
+        }
+
+        /// <summary>
+        /// YTSubConverter feature: one line with multiple shadows
+        /// </summary>
+        private int ExpandLineForMultiShadows(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+            List<ShadowType> shadowTypes = new List<ShadowType>();
+            foreach (ShadowType shadowType in new[] { ShadowType.SoftShadow, ShadowType.HardShadow, ShadowType.Glow })
+            {
+                if (line.Sections.Any(s => (s.ShadowTypes & shadowType) != 0))
+                    shadowTypes.Add(shadowType);
+            }
+
+            if (shadowTypes.Count <= 1)
+                return 1;
+
+            Lines.RemoveAt(lineIndex);
+            for (int i = 0; i < shadowTypes.Count; i++)
+            {
+                Line shadowLine = (Line)line.Clone();
+                foreach (Section section in shadowLine.Sections)
+                {
+                    section.ShadowTypes &= shadowTypes[i];
+
+                    if (i > 0)
+                        section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, 0);
+
+                    if (i < shadowTypes.Count - 1)
+                        section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 0);
+                }
+
+                Lines.Insert(lineIndex + i, shadowLine);
+            }
+
+            return shadowTypes.Count;
         }
 
         /// <summary>
@@ -365,7 +444,7 @@ namespace Arc.YTSubConverter
                     if (newSection.BackColor == prevSection.BackColor)
                         newSection.BackColor = ColorUtil.ChangeColorAlpha(newSection.BackColor, 0);
 
-                    // Same for the shadow
+                    // Same for the shadow (disabled because additional shadows help cover up the visual artifacts from overlapping text)
                     //if (newSection.ShadowType == prevSection.ShadowType && newSection.ShadowColor == prevSection.ShadowColor)
                     //    newSection.ShadowType = ShadowType.None;
                 }
@@ -392,7 +471,7 @@ namespace Arc.YTSubConverter
 
             newSection.BackColor = ColorUtil.ChangeColorAlpha(newSection.BackColor, 0);
             newSection.ForeColor = ColorUtil.ChangeColorAlpha(newSection.ForeColor, 0);
-            newSection.ShadowType = ShadowType.None; // Edges don't follow foreground opacity, so explicitly disable
+            newSection.ShadowTypes = ShadowType.None; // Edges don't follow foreground opacity, so explicitly disable
 
             PadSectionForColoring(newSection, originalLine, subLines, subLineIdx);
 
@@ -405,10 +484,12 @@ namespace Arc.YTSubConverter
         private void PadSectionForColoring(Section newSection, Line originalLine, List<List<Section>> subLines, int subLineIdx)
         {
             bool topAligned = AnchorPointUtil.IsTopAligned(originalLine.AnchorPoint ?? AnchorPoint.BottomCenter);
-            if (newSection.BackColor.A == 0)
+            if (newSection.BackColor.A == 0 && !originalLine.Sections.SelectMany(s => s.Text).Any(c => c > (char)0xFF))
             {
                 // If the background color is empty, we can just add a bunch of line breaks to get the line in place
-                // (and a non-breaking space to prevent those line breaks from getting trimmed on mobile)
+                // (and a non-breaking space to prevent those line breaks from getting trimmed on mobile).
+                // Exception: non-ascii characters (like Chinese or Korean) trigger an unnecessary increase in
+                // line spacing on PC, in which case using line breaks would cause misalignment.
                 if (topAligned)
                 {
                     if (subLineIdx > 0)
@@ -534,9 +615,9 @@ namespace Arc.YTSubConverter
                 writer.WriteAttributeString("bo", "0");
             }
 
-            if (format.ShadowType != ShadowType.None && format.ShadowColor.A > 0)
+            if (format.ShadowTypes != ShadowType.None && format.ShadowColor.A > 0)
             {
-                writer.WriteAttributeString("et", GetEdgeType(format.ShadowType).ToString());
+                writer.WriteAttributeString("et", GetEdgeType(format.ShadowTypes).ToString());
                 writer.WriteAttributeString("ec", ColorUtil.ToHtml(format.ShadowColor));
             }
 
@@ -560,9 +641,9 @@ namespace Arc.YTSubConverter
 
             writer.WriteStartElement("p");
 
-            // The mobile player does not respect the positioning of, and sometimes does not display,
+            // The Android app does not respect the positioning of, and sometimes does not display,
             // subtitles that start at 0ms. Use 1ms instead.
-            writer.WriteAttributeString("t", Math.Max((int)(line.Start - TimeBase).TotalMilliseconds, 1).ToString());
+            writer.WriteAttributeString("t", Math.Max((int)(line.Start - TimeBase).TotalMilliseconds - SubtitleDelayMs, 1).ToString());
 
             writer.WriteAttributeString("d", ((int)(line.End - line.Start).TotalMilliseconds).ToString());
             if (line.Sections.Count == 1)

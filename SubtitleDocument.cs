@@ -41,6 +41,9 @@ namespace Arc.YTSubConverter
                 case ".srt":
                     return new SrtDocument(filePath);
 
+                case ".ytt":
+                    return new YttDocument(filePath);
+
                 default:
                     throw new NotSupportedException();
             }
