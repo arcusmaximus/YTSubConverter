@@ -76,7 +76,8 @@ namespace Arc.YTSubConverter
             html.Append($@"
                 {selector}
                 {{
-                    padding: 3px;
+                    padding: 3px 5px;
+                    border-radius: 3px;
                     font-size: 32px;
             ");
 
