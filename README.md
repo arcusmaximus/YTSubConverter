@@ -17,7 +17,7 @@ YouTube's built-in subtitle editor doesn't support styling of any kind. If you w
 YTSubConverter can produce this file format for you.
 
 ## Usage
-At its core, YTSubConverter is an .ass -> .ytt converter. You can create .ass subtitles using e.g. [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the styling before uploading.
+YTSubConverter is an .ass -> .ytt converter. You can create .ass subtitles using e.g. [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the styling before uploading.
 
 Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe. In both cases, you'll get a .ytt file that's ready for upload.
 
@@ -72,8 +72,8 @@ The repository contains two sample .ass files:
 * [Color-coded dialogue sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=AvBxTdwCfzs))
 * [Karaoke sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=il4cAeVzZwI))
 
-## Testing
-After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing - each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the “real” player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
+## Testing on PC
+After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the “real” player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
 
 Fortunately, there's an easier way to test your subtitles - one which doesn't require you to upload them at all. It works by using Fiddler, a program which can intercept web requests from your browser and send back a file from your hard drive (rather than one from YouTube's servers). By redirecting your browser's request for subtitles to your local .ytt file, you can see those local subtitles in your browser *as though* you uploaded them. Since you're not *actually* uploading them, you can test your changes much more quickly.
 
@@ -83,7 +83,6 @@ While this approach can save you a lot of time, it does require some initial set
 * Open the menu Tools → Options.
   * On the “HTTPS” tab, enable “Capture HTTPS CONNECTs” as well as “Decrypt HTTPS traffic.”
   * Allow the program to install the security certificate. (Note: if you're using Firefox, some [additional steps](https://docs.telerik.com/fiddler/Configure-Fiddler/Tasks/FirefoxHTTPS) are needed)
-  * Change the dropdown that says “...from all processes” to “...from browsers only.”
   * Click OK.
 * In the toolbar, change “Keep: All sessions” to “Keep: 100 sessions.” (This is to keep the request log from growing too much if you leave the program open for a long time)
 * Switch to the “AutoResponder” tab in the right hand panel.
@@ -99,6 +98,25 @@ Once this initial setup is done, you only need to do the following whenever you 
 * Click “Save.”
 
 As long as Fiddler is running (and “Capture Traffic” is enabled in the “File” menu), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it; simply disable and re-enable subtitles in the video, which will cause the YouTube player to “redownload” them.
+
+## Testing on Android
+Each variant of the YouTube player (web, Android, iOS...) displays subtitles in its own unique way. For this reason, it can be useful to test your subtitles in more places than one; after all, subs that look fine on PC might overlap on mobile (because of the bigger font size). This section describes how to test your subtitles in the Android app, again without actually having to upload them - or owning an Android device.
+
+Initial setup is as follows:
+* Install and configure Fiddler as described above.
+* Go to Tools -> Options.
+  * On the “HTTPS” tab, click Actions -> Export Root Certificate to Desktop.
+  * On the “Connections” tab, enable “Allow remote computers to connect.”
+* Restart Fiddler.
+* Install an Android emulator. Plenty of free ones are available; the steps below are based on [KOPLAYER](http://www.koplayer.com/).
+* Launch the emulator.
+  * Click “Shared Folder” in the left-hand toolbar and select your Desktop. This will open a file explorer in the emulator.
+  * Longpress “FiddlerRoot.cer”, click “Move”, navigate to /sdcard/Download and click “Move here” in the top menu.
+  * Go to the Home screen and click System tool -> Settings -> Security. From there, click “Install from SD card”, navigate to Internal storage -> Download and click the FiddlerRoot.cer to install it. Give it a name (e.g. “Fiddler”) and leave “Credential use” at “VPN and apps.”
+  * Click System tool -> Settings -> Wi-Fi, longpress the network and click “Modify network.” Expand the Advanced Options, set the proxy type to Manual, enter your PC's host name (or IP) in “Proxy hostname” and the number 8888 in “Proxy port.”
+  * Install the YouTube app from the Play Store.
+
+From then on, the YouTube app in the emulator will be subject to the same .ytt redirecting as the YouTube player in your browser. Just like with the browser player, loading a changed file into the app is as simple as turning subtitles off and on again.
 
 ## Uploading
 Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles for it.
