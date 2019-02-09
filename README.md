@@ -113,10 +113,12 @@ Initial setup is as follows:
   * Click “Shared Folder” in the left-hand toolbar and select your Desktop. This will open a file explorer in the emulator.
   * Longpress “FiddlerRoot.cer”, click “Move”, navigate to /sdcard/Download and click “Move here” in the top menu.
   * Go to the Home screen and click System tool -> Settings -> Security. From there, click “Install from SD card”, navigate to Internal storage -> Download and click the FiddlerRoot.cer to install it. Give it a name (e.g. “Fiddler”) and leave “Credential use” at “VPN and apps.”
-  * Click System tool -> Settings -> Wi-Fi, longpress the network and click “Modify network.” Expand the Advanced Options, set the proxy type to Manual, enter your PC's host name (or IP) in “Proxy hostname” and the number 8888 in “Proxy port.”
+  * Click System tool -> Settings -> Wi-Fi, longpress the network and click “Modify network.” Expand the Advanced Options, set the proxy type to Manual, enter your PC's host name in “Proxy hostname” and the number 8888 in “Proxy port.” If you don't know your PC's host name, you can find it out by pressing Windows key + Pause and noting the “PC name.”
   * Install the YouTube app from the Play Store.
 
 From then on, the YouTube app in the emulator will be subject to the same .ytt redirecting as the YouTube player in your browser. Just like with the browser player, loading a changed file into the app is as simple as turning subtitles off and on again.
+
+Another useful trick to know is that you can enter video ID's (the string of letters and numbers after “watch?v=”) in the app's search field. This allows you view, say, unlisted videos.
 
 ## Uploading
 Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles for it.
