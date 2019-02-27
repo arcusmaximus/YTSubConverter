@@ -517,8 +517,8 @@ namespace Arc.YTSubConverter.Formats.Ass
             if (args == null)
                 return false;
 
-            if (args.Count >= 5 && !int.TryParse(args[args.Count - 5], out alpha))
-                return false;
+            if (args.Count >= 5)
+                alpha = ParseHex(args[args.Count - 5]);
 
             if (args.Count >= 4 && !int.TryParse(args[args.Count - 4], out maxOffsetX))
                 return false;
