@@ -46,7 +46,7 @@ YTSubConverter supports the following .ass style features:
 * Alignment
 * Outline and shadow thickness (only checking whether the value is 0 or greater than 0)
 
-It also supports the following override tags:
+It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_Tags/):
 * `{\b}` - bold
 * `{\i}` - italic
 * `{\u}` - underline
@@ -64,6 +64,19 @@ It also supports the following override tags:
 * `{\r}` - reset to current style
 * `{\fad}` - simple fade
 * `{\fade}` - complex fade
+* `{\move}` - move from one point to another
+* `{\t}` - animate colors and transparencies
+* `{\ytshake}` - YTSubConverter-specific tag which makes the subtitle randomly jump around.
+  * `{\ytshake}`: shake for the duration of the subtitle, staying within 20px of the original position.
+  * `{\ytshake(radius)}`: stay within `radius` pixels of the original position.
+  * `\ytshake(radiusX, radiusY)`: stay within `radiusX` pixels of the original position on the X axis and `radiusY` pixels on the Y axis.
+  * `{\ytshake(radius, t1, t2)}`: start shaking at `t1` and stop at `t2` (both numbers are in milliseconds relative to the subtitle start time).
+  * `{\ytshake(radiusX, radiusY, t1, t2)}`
+* `{\ytchroma}` - YTSubConverter-specific tag which adds a chromatic abberation effect. At the start, a red, a green and a blue copy of the subtitle come together and merge into the regular subtitle. At the end, the subtitle splits up into its three copies again which then disperse.
+  * `{\ytchroma}` - copies start at a distance of 20px and converge/disperse over 270ms.
+  * `{\ytchroma(intime, outtime)}` - copies converge over `intime` milliseconds at the start and disperse over `outtime` milliseconds at the end.
+  * `{\ytchroma(offsetX, offsetY, intime, outtime)}` - the first copy starts at `offsetX` pixels to the left of and `offsetY` pixels above the subtitle position. (The last copy starts at the same distance in the opposite direction.) Both offsets can be negative.
+  * `{\ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)}` - replace the default red/green/blue by any number of custom colors. Both the colors and the alpha value should be specified in hexadecimal (`&H...&`).
 
 Unsupported tags are ignored.
 
@@ -148,3 +161,9 @@ YouTube has some bugs and limitations when it comes to styled subtitles. Please 
 * Save the subtitles as an .ass file.
 * Convert the .ass to .ytt using YTSubConverter.
 * Upload the .ytt to YouTube.
+
+## Credits
+Thanks to the following people for providing the UI translations:
+* Mali (@mali_5157) - Chinese
+* tototo (@vvto33) - Japanese
+* Kasaka (@kasaka_117) - Korean
