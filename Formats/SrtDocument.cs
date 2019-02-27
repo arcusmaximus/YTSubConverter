@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Arc.YTSubConverter
+namespace Arc.YTSubConverter.Formats
 {
     internal class SrtDocument : SubtitleDocument
     {

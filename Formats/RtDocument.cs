@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Xml;
 
-namespace Arc.YTSubConverter
+namespace Arc.YTSubConverter.Formats
 {
     internal class RtDocument : SubtitleDocument
     {

@@ -61,12 +61,237 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
+        ///   Can&apos;t left-align text with line breaks ({0}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CantLeftAlignTextWithLineBreaks0 {
+            get {
+                return ResourceManager.GetString("CantLeftAlignTextWithLineBreaks0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Centered or right-aligned text can have at most one line break ({0}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0 {
+            get {
+                return ResourceManager.GetString("CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Centered or right-aligned text with line breaks must be top- or bottom-aligned ({0}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0 {
+            get {
+                return ResourceManager.GetString("CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
         internal static byte[] Checkers {
             get {
                 object obj = ResourceManager.GetObject("Checkers", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Convert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Convert {
+            get {
+                return ResourceManager.GetString("Convert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Drag&amp;drop .ass/.sbv file or click the &quot;...&quot; button に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DragNDropTip {
+            get {
+                return ResourceManager.GetString("DragNDropTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Failed to load file: {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FailedToLoadFile0 {
+            get {
+                return ResourceManager.GetString("FailedToLoadFile0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string FileFilter {
+            get {
+                return ResourceManager.GetString("FileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Glow に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Glow {
+            get {
+                return ResourceManager.GetString("Glow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hard shadow に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HardShadow {
+            get {
+                return ResourceManager.GetString("HardShadow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Highlight current word に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HighlightCurrentWord {
+            get {
+                return ResourceManager.GetString("HighlightCurrentWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} is not a valid color に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string IsNotAValidColor {
+            get {
+                return ResourceManager.GetString("IsNotAValidColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} is not a valid timestamp に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string IsNotAValidTimestamp {
+            get {
+                return ResourceManager.GetString("IsNotAValidTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Glow color: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string KaraokeGlowColor {
+            get {
+                return ResourceManager.GetString("KaraokeGlowColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Text color: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string KaraokeTextColor {
+            get {
+                return ResourceManager.GetString("KaraokeTextColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   This is a  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PreviewSampleKaraoke1 {
+            get {
+                return ResourceManager.GetString("PreviewSampleKaraoke1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   sample  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PreviewSampleKaraoke2 {
+            get {
+                return ResourceManager.GetString("PreviewSampleKaraoke2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   text に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PreviewSampleKaraoke3 {
+            get {
+                return ResourceManager.GetString("PreviewSampleKaraoke3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sample text に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string PreviewSampleRegular {
+            get {
+                return ResourceManager.GetString("PreviewSampleRegular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shadow types: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ShadowTypes {
+            get {
+                return ResourceManager.GetString("ShadowTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Soft shadow に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SoftShadow {
+            get {
+                return ResourceManager.GetString("SoftShadow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Style options に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string StyleOptions {
+            get {
+                return ResourceManager.GetString("StyleOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Successfully created {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SuccessfullyCreated0 {
+            get {
+                return ResourceManager.GetString("SuccessfullyCreated0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use for karaoke に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UseForKaraoke {
+            get {
+                return ResourceManager.GetString("UseForKaraoke", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Vertically centered lines with multiple styles can&apos;t have line breaks ({0}) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0 {
+            get {
+                return ResourceManager.GetString("VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0", resourceCulture);
             }
         }
     }

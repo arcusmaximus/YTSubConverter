@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\ILMerge.3.0.21\build\ILMerge.props" Condition="Exists('packages\ILMerge.3.0.21\build\ILMerge.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,6 +14,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,18 +53,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Animations\Animation.cs" />
+    <Compile Include="Animations\Animator.cs" />
+    <Compile Include="Animations\BackColorAnimation.cs" />
+    <Compile Include="Animations\ColorAnimation.cs" />
+    <Compile Include="Animations\FadeAnimation.cs" />
+    <Compile Include="Animations\ForeColorAnimation.cs" />
+    <Compile Include="Animations\MoveAnimation.cs" />
+    <Compile Include="Animations\SecondaryColorAnimation.cs" />
+    <Compile Include="Animations\ShadowColorAnimation.cs" />
+    <Compile Include="Animations\ShakeAnimation.cs" />
+    <Compile Include="Formats\Ass\AssDialogue.cs" />
+    <Compile Include="Formats\Ass\AssDocument.cs" />
+    <Compile Include="Formats\Ass\AssDocument.ExtendedLine.cs" />
+    <Compile Include="Formats\Ass\AssDocument.ExtendedSection.cs" />
+    <Compile Include="Formats\Ass\AssItem.cs" />
+    <Compile Include="Formats\Ass\AssSection.cs" />
+    <Compile Include="Formats\Ass\AssStyle.cs" />
+    <Compile Include="Formats\RtDocument.cs" />
+    <Compile Include="Formats\SbvDocument.cs" />
+    <Compile Include="Formats\SrtDocument.cs" />
+    <Compile Include="Formats\SubtitleDocument.cs" />
+    <Compile Include="Formats\YttDocument.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="SectionFormatComparer.cs" />
+    <Compile Include="Animations\TimeRange.cs" />
     <Compile Include="Util\AnchorPointUtil.cs" />
     <Compile Include="AssStyleOptions.cs" />
     <Compile Include="AssStyleOptionsList.cs" />
-    <Compile Include="Ass\AssDialogue.cs" />
-    <Compile Include="Ass\AssDocument.cs" />
-    <Compile Include="Ass\AssDocument.ExtendedLine.cs" />
-    <Compile Include="Ass\AssDocument.ExtendedSection.cs" />
-    <Compile Include="Ass\AssItem.cs" />
-    <Compile Include="Ass\AssSection.cs" />
-    <Compile Include="Ass\AssStyle.cs" />
     <Compile Include="Util\ColorUtil.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -76,29 +95,47 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StylePreviewGenerator.cs" />
+    <Compile Include="Util\TimeUtil.cs" />
+    <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\TextUtil.cs" />
-    <Compile Include="YttDocument.cs" />
-    <Compile Include="RtDocument.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SbvDocument.cs" />
-    <Compile Include="SrtDocument.cs" />
     <Compile Include="Line.cs" />
-    <Compile Include="SubtitleDocument.cs" />
-    <Compile Include="Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.ja.resx" />
+    <EmbeddedResource Include="Resources.ko.resx" />
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources.zh-Hans.resx" />
+    <EmbeddedResource Include="Resources.zh-Hant.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="checkers.png_" />
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\ILMerge.3.0.21\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ILMerge.3.0.21\build\ILMerge.props'))" />
+  </Target>
+  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp1.exe&quot; &quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)ja\YTSubConverter.resources.dll&quot;" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp2.exe&quot; &quot;$(TargetDir)YTSubConverter-temp1.exe&quot; &quot;$(TargetDir)ko\YTSubConverter.resources.dll&quot;" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)YTSubConverter-temp2.exe&quot; &quot;$(TargetDir)zh-Hans\YTSubConverter.resources.dll&quot;" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-merged.exe&quot; &quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)zh-Hant\YTSubConverter.resources.dll&quot;" />
+    <Delete Files="$(TargetDir)YTSubConverter.exe;$(TargetDir)YTSubConverter-temp1.exe;$(TargetDir)YTSubConverter-temp2.exe;$(TargetDir)YTSubConverter-temp3.exe" />
+    <RemoveDir Directories="$(TargetDir)ja;$(TargetDir)ko;$(TargetDir)zh-Hans;$(TargetDir)zh-Hant" />
+    <Move SourceFiles="$(TargetDir)YTSubConverter-merged.exe" DestinationFiles="$(TargetDir)YTSubConverter.exe" />
+  </Target>
 </Project>

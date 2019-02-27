@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Arc.YTSubConverter
+namespace Arc.YTSubConverter.Util
 {
     internal static class Extensions
     {

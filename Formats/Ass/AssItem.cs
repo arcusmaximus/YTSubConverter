@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Arc.YTSubConverter.Ass
+namespace Arc.YTSubConverter.Formats.Ass
 {
     internal struct AssItem
     {
@@ -54,10 +54,10 @@ namespace Arc.YTSubConverter.Ass
         {
             string value = GetString(field);
             if (value.Length != 10 || !value.StartsWith("&H"))
-                throw new FormatException($"{value} is not a valid color");
+                throw new FormatException(string.Format(Resources.IsNotAValidColor, value));
 
-            if (!uint.TryParse(value.Substring(2), System.Globalization.NumberStyles.AllowHexSpecifier, null, out uint abgr))
-                throw new FormatException($"{value} is not a valid color");
+            if (!uint.TryParse(value.Substring(2), NumberStyles.AllowHexSpecifier, null, out uint abgr))
+                throw new FormatException(string.Format(Resources.IsNotAValidColor, value));
 
             byte a = (byte)(255 - (abgr >> 24));
             byte r = (byte)abgr;
@@ -71,7 +71,7 @@ namespace Arc.YTSubConverter.Ass
             string value = GetString(field);
             Match match = Regex.Match(value, @"^(\d+):(\d\d):(\d\d)\.(\d\d)$");
             if (!match.Success)
-                throw new FormatException($"{value} is not a valid timestamp");
+                throw new FormatException(string.Format(Resources.IsNotAValidTimestamp, value));
 
             return new DateTime(
                 SubtitleDocument.TimeBase.Year,

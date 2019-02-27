@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Arc.YTSubConverter.Ass
+namespace Arc.YTSubConverter.Formats.Ass
 {
     internal class AssDialogue
     {

@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Xml.Serialization;
-using Arc.YTSubConverter.Ass;
+using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter

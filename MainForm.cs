@@ -6,7 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Arc.YTSubConverter.Ass;
+using Arc.YTSubConverter.Formats;
+using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter
@@ -20,12 +21,29 @@ namespace Arc.YTSubConverter
         {
             InitializeComponent();
 
-            Version version = Assembly.GetEntryAssembly().GetName().Version;
-            Text += $" {version.Major}.{version.Minor}.{version.Build}";
+            LocalizeUI();
 
             _styleOptions = AssStyleOptionsList.Load().ToDictionary(o => o.Name);
             ExpandCollapseStyleOptions();
             ClearUi();
+        }
+
+        private void LocalizeUI()
+        {
+            Version version = Assembly.GetEntryAssembly().GetName().Version;
+            Text = $"YTSubConverter {version.Major}.{version.Minor}.{version.Build}";
+
+            _chkStyleOptions.Text = Resources.StyleOptions;
+            _lblShadowTypes.Text = Resources.ShadowTypes;
+            _chkGlow.Text = Resources.Glow;
+            _chkSoftShadow.Text = Resources.SoftShadow;
+            _chkHardShadow.Text = Resources.HardShadow;
+            _chkKaraoke.Text = Resources.UseForKaraoke;
+            _chkHighlightCurrentWord.Text = Resources.HighlightCurrentWord;
+            _lblCurrentWordTextColor.Text = Resources.KaraokeTextColor;
+            _lblCurrentWordGlowColor.Text = Resources.KaraokeGlowColor;
+            _btnConvert.Text = Resources.Convert;
+            _dlgOpenFile.Filter = Resources.FileFilter;
         }
 
         private AssStyleOptions SelectedStyleOptions
@@ -62,7 +80,7 @@ namespace Arc.YTSubConverter
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to load file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(string.Format(Resources.FailedToLoadFile0, ex.Message), Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -94,7 +112,7 @@ namespace Arc.YTSubConverter
         {
             _styles = null;
 
-            _txtInputFile.Text = "Drag&drop .ass/.sbv file or click the \"...\" button";
+            _txtInputFile.Text = Resources.DragNDropTip;
             _grpStyleOptions.Enabled = false;
             _lstStyles.DataSource = null;
             UpdateStylePreview();
@@ -189,7 +207,7 @@ namespace Arc.YTSubConverter
             try
             {
                 string outputFilePath;
-                if (Path.GetExtension(_txtInputFile.Text) == ".ass")
+                if (Path.GetExtension(_txtInputFile.Text).Equals(".ass", StringComparison.InvariantCultureIgnoreCase))
                 {
                     AssDocument inputDoc = new AssDocument(_txtInputFile.Text, (List<AssStyleOptions>)_lstStyles.DataSource);
                     YttDocument outputDoc = new YttDocument(inputDoc);
@@ -204,14 +222,14 @@ namespace Arc.YTSubConverter
                     outputDoc.Save(outputFilePath);
                 }
 
-                _lblConversionSuccess.Text = $"Successfully created {Path.GetFileName(outputFilePath)}";
+                _lblConversionSuccess.Text = string.Format(Resources.SuccessfullyCreated0, Path.GetFileName(outputFilePath));
                 _lblConversionSuccess.Visible = true;
                 await Task.Delay(4000);
                 _lblConversionSuccess.Visible = false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(ex.Message, Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -236,8 +254,8 @@ namespace Arc.YTSubConverter
                 return null;
 
             string filePath = filePaths[0];
-            string extension = Path.GetExtension(filePath);
-            if (extension != ".ass" && extension != ".sbv")
+            string extension = Path.GetExtension(filePath) ?? string.Empty;
+            if (!extension.Equals(".ass", StringComparison.InvariantCultureIgnoreCase) && !extension.Equals(".sbv", StringComparison.InvariantCultureIgnoreCase))
                 return null;
 
             return filePath;

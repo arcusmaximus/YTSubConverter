@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Text;
-using Arc.YTSubConverter.Ass;
+using Arc.YTSubConverter.Formats.Ass;
 
 namespace Arc.YTSubConverter
 {
@@ -33,10 +33,11 @@ namespace Arc.YTSubConverter
 
             if (options != null)
             {
-                GenerateCss(html, "#regular", style, style.PrimaryColor, style.ShadowColor, options.ShadowTypes);
+                GenerateBackgroundCss(html, "#background", style);
+                GenerateForegroundCss(html, "#regular", style, style.PrimaryColor, style.ShadowColor, options.ShadowTypes);
                 if (options.IsKaraoke)
                 {
-                    GenerateCss(
+                    GenerateForegroundCss(
                         html,
                         "#singing",
                         style,
@@ -44,7 +45,7 @@ namespace Arc.YTSubConverter
                         !options.CurrentWordShadowColor.IsEmpty ? options.CurrentWordShadowColor : style.ShadowColor,
                         options.ShadowTypes
                     );
-                    GenerateCss(html, "#unsung", style, style.SecondaryColor, style.ShadowColor, options.ShadowTypes);
+                    GenerateForegroundCss(html, "#unsung", style, style.SecondaryColor, style.ShadowColor, options.ShadowTypes);
                 }
             }
 
@@ -57,10 +58,20 @@ namespace Arc.YTSubConverter
 
             if (options != null)
             {
+                html.Append(@"<span id=""background"">");
+
                 if (options.IsKaraoke)
-                    html.Append(@"<span id=""regular"">This is a</span><span id=""singing"">sample</span><span id=""unsung"">text</span>");
+                {
+                    html.Append($@"<span id=""regular"">{Resources.PreviewSampleKaraoke1}</span>");
+                    html.Append($@"<span id=""singing"">{Resources.PreviewSampleKaraoke2}</span>");
+                    html.Append($@"<span id=""unsung"">{Resources.PreviewSampleKaraoke3}</span>");
+                }
                 else
-                    html.Append(@"<span id=""regular"">Sample text</span>");
+                {
+                    html.Append($@"<span id=""regular"">{Resources.PreviewSampleRegular}</span>");
+                }
+
+                html.Append(@"</span>");
             }
 
             html.Append(@"
@@ -71,7 +82,7 @@ namespace Arc.YTSubConverter
             return html.ToString();
         }
 
-        private static void GenerateCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color shadowColor, ShadowType shadowTypes)
+        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style)
         {
             html.Append($@"
                 {selector}
@@ -79,6 +90,21 @@ namespace Arc.YTSubConverter
                     padding: 3px 5px;
                     border-radius: 3px;
                     font-size: 32px;
+            ");
+
+            if (style.HasOutline && style.OutlineIsBox)
+                html.Append($"background-color: {ToRgba(style.OutlineColor)};");
+
+            html.Append(@"
+                }
+            ");
+        }
+
+        private static void GenerateForegroundCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color shadowColor, ShadowType shadowTypes)
+        {
+            html.Append($@"
+                {selector}
+                {{
             ");
 
             if (style.Bold)
@@ -97,15 +123,11 @@ namespace Arc.YTSubConverter
 
             html.Append($"color: {ToRgba(foreColor)};");
 
-            if (style.HasOutline)
+            if (style.HasOutline && !style.OutlineIsBox)
             {
-                if (style.OutlineIsBox)
-                    html.Append($"background-color: {ToRgba(style.OutlineColor)};");
-                else
-                    html.Append($"text-shadow: 0 0 3px {ToHex(style.OutlineColor)}");
+                html.Append($"text-shadow: 0 0 2px {ToHex(style.OutlineColor)}, 0 0 2px {ToHex(style.OutlineColor)}, 0 0 3px {ToHex(style.OutlineColor)}, 0 0 4px {ToHex(style.OutlineColor)};");
             }
-
-            if (style.HasShadow && (!style.HasOutline || style.OutlineIsBox))
+            else if (style.HasShadow)
             {
                 List<string> shadows = new List<string>();
                 if ((shadowTypes & ShadowType.Glow) != 0)

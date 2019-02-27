@@ -118,82 +118,78 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CantLeftAlignTextWithLineBreaks0" xml:space="preserve">
-    <value>Can't left-align text with line breaks ({0})</value>
+    <value>자막 왼쪽 정렬과 줄바꿈을 같이 할 수 없습니다 ({0})</value>
   </data>
   <data name="CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0" xml:space="preserve">
-    <value>Centered or right-aligned text can have at most one line break ({0})</value>
+    <value>중앙 또는 오른쪽 정렬 된 자막은 둘 중 하나만 가능합니다 ({0})</value>
   </data>
   <data name="CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0" xml:space="preserve">
-    <value>Centered or right-aligned text with line breaks must be top- or bottom-aligned ({0})</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Checkers" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>checkers.png_;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>중앙 또는 오른쪽 정렬 된 자막인 경우 상단 또는 하단으로 배치하여야 합니다 ({0})</value>
   </data>
   <data name="Convert" xml:space="preserve">
-    <value>Convert</value>
+    <value>변환</value>
   </data>
   <data name="DragNDropTip" xml:space="preserve">
-    <value>Drag&amp;drop .ass/.sbv file or click the "..." button</value>
+    <value>.ass/.sbv 파일을 드래그 하거나 "..."버튼을 클릭하여 주세요</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>오류</value>
   </data>
   <data name="FailedToLoadFile0" xml:space="preserve">
-    <value>Failed to load file: {0}</value>
+    <value>불러오기 실패하였습니다{0}</value>
   </data>
   <data name="FileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv</value>
+    <value>Advanced SubStation Alpha|*.ass|YouTube 자막|*.sbv</value>
   </data>
   <data name="Glow" xml:space="preserve">
-    <value>Glow</value>
+    <value>윤곽</value>
   </data>
   <data name="HardShadow" xml:space="preserve">
-    <value>Hard shadow</value>
+    <value>짙은 그림자</value>
   </data>
   <data name="HighlightCurrentWord" xml:space="preserve">
-    <value>Highlight current word</value>
+    <value>현재 문자 강조</value>
   </data>
   <data name="IsNotAValidColor" xml:space="preserve">
-    <value>{0} is not a valid color</value>
+    <value>{0} 유효한 색이 아닙니다</value>
   </data>
   <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>{0} is not a valid timestamp</value>
+    <value>{0} 유효한 시간대가 아닙니다</value>
   </data>
   <data name="KaraokeGlowColor" xml:space="preserve">
-    <value>Glow color:</value>
+    <value>윤곽 색</value>
   </data>
   <data name="KaraokeTextColor" xml:space="preserve">
-    <value>Text color:</value>
+    <value>글자 색</value>
   </data>
   <data name="PreviewSampleKaraoke1" xml:space="preserve">
-    <value>This is a </value>
+    <value>이것은 </value>
   </data>
   <data name="PreviewSampleKaraoke2" xml:space="preserve">
-    <value>sample </value>
+    <value>샘플 </value>
   </data>
   <data name="PreviewSampleKaraoke3" xml:space="preserve">
-    <value>text</value>
+    <value>문자입니다</value>
   </data>
   <data name="PreviewSampleRegular" xml:space="preserve">
-    <value>Sample text</value>
+    <value>이것은 예시 문자 입니다</value>
   </data>
   <data name="ShadowTypes" xml:space="preserve">
-    <value>Shadow types:</value>
+    <value>그림자 종류</value>
   </data>
   <data name="SoftShadow" xml:space="preserve">
-    <value>Soft shadow</value>
+    <value>옅은 그림자</value>
   </data>
   <data name="StyleOptions" xml:space="preserve">
-    <value>Style options</value>
+    <value>스타일 옵션</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
-    <value>Successfully created {0}</value>
+    <value>생성 완료{0}</value>
   </data>
   <data name="UseForKaraoke" xml:space="preserve">
-    <value>Use for karaoke</value>
+    <value>노래방 기능</value>
   </data>
   <data name="VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0" xml:space="preserve">
-    <value>Vertically centered lines with multiple styles can't have line breaks ({0})</value>
+    <value>줄바꿈 포함 "상 중 하"로 정렬된 자막은 복수의 서식으로 지정할 수  없습니다.({0})</value>
   </data>
 </root>

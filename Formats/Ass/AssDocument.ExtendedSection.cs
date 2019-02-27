@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using Arc.YTSubConverter.Animations;
 
-namespace Arc.YTSubConverter.Ass
+namespace Arc.YTSubConverter.Formats.Ass
 {
     internal partial class AssDocument
     {
-        private class ExtendedSection : Section
+        public class ExtendedSection : Section
         {
             public ExtendedSection(string text)
                 : base(text)
@@ -36,6 +38,8 @@ namespace Arc.YTSubConverter.Ass
                 set;
             }
 
+            public List<Animation> Animations { get; } = new List<Animation>();
+
             public override object Clone()
             {
                 ExtendedSection newSection = new ExtendedSection(Text);
@@ -46,11 +50,14 @@ namespace Arc.YTSubConverter.Ass
             protected override void Assign(Section section)
             {
                 base.Assign(section);
+
                 ExtendedSection extendedSection = (ExtendedSection)section;
                 SecondaryColor = extendedSection.SecondaryColor;
                 CurrentWordTextColor = extendedSection.CurrentWordTextColor;
                 CurrentWordShadowColor = extendedSection.CurrentWordShadowColor;
                 Duration = extendedSection.Duration;
+                Animations.Clear();
+                Animations.AddRange(extendedSection.Animations);
             }
         }
     }

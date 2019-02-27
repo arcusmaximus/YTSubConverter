@@ -118,82 +118,78 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CantLeftAlignTextWithLineBreaks0" xml:space="preserve">
-    <value>Can't left-align text with line breaks ({0})</value>
+    <value>包含換行字元的字幕無法靠左對齊。({0})</value>
   </data>
   <data name="CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0" xml:space="preserve">
-    <value>Centered or right-aligned text can have at most one line break ({0})</value>
+    <value>置中或靠右對齊的字幕至多只能使用一個換行字元。({0})</value>
   </data>
   <data name="CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0" xml:space="preserve">
-    <value>Centered or right-aligned text with line breaks must be top- or bottom-aligned ({0})</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Checkers" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>checkers.png_;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>置中或靠右對齊的字幕若換行，則必須靠上或靠下對齊。({0})</value>
   </data>
   <data name="Convert" xml:space="preserve">
-    <value>Convert</value>
+    <value>轉換</value>
   </data>
   <data name="DragNDropTip" xml:space="preserve">
-    <value>Drag&amp;drop .ass/.sbv file or click the "..." button</value>
+    <value>拖曳字幕檔案(.ass,.sbv)，或點擊「…」按鈕。</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>錯誤</value>
   </data>
   <data name="FailedToLoadFile0" xml:space="preserve">
-    <value>Failed to load file: {0}</value>
+    <value>無法載入檔案。{0}</value>
   </data>
   <data name="FileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv</value>
+    <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv</value>
   </data>
   <data name="Glow" xml:space="preserve">
-    <value>Glow</value>
+    <value>輪廓</value>
   </data>
   <data name="HardShadow" xml:space="preserve">
-    <value>Hard shadow</value>
+    <value>清晰陰影</value>
   </data>
   <data name="HighlightCurrentWord" xml:space="preserve">
-    <value>Highlight current word</value>
+    <value>使目前文字發光</value>
   </data>
   <data name="IsNotAValidColor" xml:space="preserve">
-    <value>{0} is not a valid color</value>
+    <value>{0}不是有效的顏色代碼。</value>
   </data>
   <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>{0} is not a valid timestamp</value>
+    <value>{0}不是有效的時間代碼。</value>
   </data>
   <data name="KaraokeGlowColor" xml:space="preserve">
-    <value>Glow color:</value>
+    <value>輪廓顏色</value>
   </data>
   <data name="KaraokeTextColor" xml:space="preserve">
-    <value>Text color:</value>
+    <value>文字顏色</value>
   </data>
   <data name="PreviewSampleKaraoke1" xml:space="preserve">
-    <value>This is a </value>
+    <value>這是</value>
   </data>
   <data name="PreviewSampleKaraoke2" xml:space="preserve">
-    <value>sample </value>
+    <value>範例</value>
   </data>
   <data name="PreviewSampleKaraoke3" xml:space="preserve">
-    <value>text</value>
+    <value>文字</value>
   </data>
   <data name="PreviewSampleRegular" xml:space="preserve">
-    <value>Sample text</value>
+    <value>範例文字</value>
   </data>
   <data name="ShadowTypes" xml:space="preserve">
-    <value>Shadow types:</value>
+    <value>陰影</value>
   </data>
   <data name="SoftShadow" xml:space="preserve">
-    <value>Soft shadow</value>
+    <value>柔和陰影</value>
   </data>
   <data name="StyleOptions" xml:space="preserve">
-    <value>Style options</value>
+    <value>樣式選項</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
-    <value>Successfully created {0}</value>
+    <value>{0}轉換成功。</value>
   </data>
   <data name="UseForKaraoke" xml:space="preserve">
-    <value>Use for karaoke</value>
+    <value>卡啦OK用</value>
   </data>
   <data name="VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0" xml:space="preserve">
-    <value>Vertically centered lines with multiple styles can't have line breaks ({0})</value>
+    <value>包含換行字元的字幕若靠上、中、下對齊，則無法指定複數樣式。 ({0})</value>
   </data>
 </root>

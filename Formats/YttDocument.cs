@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Arc.YTSubConverter.Util;
 
-namespace Arc.YTSubConverter
+namespace Arc.YTSubConverter.Formats
 {
     internal class YttDocument : SubtitleDocument
     {
@@ -177,7 +177,7 @@ namespace Arc.YTSubConverter
                 return 1;
 
             if (subLines.Count > 2)
-                throw new NotSupportedException($"Centered or right-aligned text can have at most one line break ({originalLine.Text})");
+                throw new NotSupportedException(string.Format(Resources.CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0, originalLine.Text));
 
             List<Line> newLines = new List<Line>();
             foreach (List<Section> sections in subLines)
@@ -205,7 +205,7 @@ namespace Arc.YTSubConverter
             }
             else
             {
-                throw new NotSupportedException($"Centered or right-aligned text with line breaks must be top- or bottom-aligned ({originalLine.Text})");
+                throw new NotSupportedException(string.Format(Resources.CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0, originalLine.Text));
             }
 
             Lines.RemoveAt(lineIndex);
@@ -259,7 +259,7 @@ namespace Arc.YTSubConverter
                 return;
 
             if (line.Sections.Any(s => s.Text.Contains("\r\n")))
-                throw new NotSupportedException($"Can't left-align text with line breaks ({line.Text})");
+                throw new NotSupportedException(string.Format(Resources.CantLeftAlignTextWithLineBreaks0, line.Text));
 
             line.AnchorPoint = AnchorPointUtil.AlignLeft(anchorPoint);
 
@@ -386,7 +386,7 @@ namespace Arc.YTSubConverter
 
             AnchorPoint anchorPoint = originalLine.AnchorPoint ?? AnchorPoint.BottomCenter;
             if (AnchorPointUtil.IsMiddleAligned(anchorPoint) && originalLine.Sections.Any(s => s.Text.Contains("\r\n")))
-                throw new NotSupportedException($"Vertically centered lines with multiple styles can't have line breaks ({originalLine.Text})");
+                throw new NotSupportedException(string.Format(Resources.VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0, originalLine.Text));
 
             Lines.RemoveAt(lineIndex);
             int numReplacementLines = 0;
@@ -484,41 +484,20 @@ namespace Arc.YTSubConverter
         private void PadSectionForColoring(Section newSection, Line originalLine, List<List<Section>> subLines, int subLineIdx)
         {
             bool topAligned = AnchorPointUtil.IsTopAligned(originalLine.AnchorPoint ?? AnchorPoint.BottomCenter);
-            if (newSection.BackColor.A == 0 && !originalLine.Sections.SelectMany(s => s.Text).Any(c => c > (char)0xFF))
+            if (topAligned)
             {
-                // If the background color is empty, we can just add a bunch of line breaks to get the line in place
-                // (and a non-breaking space to prevent those line breaks from getting trimmed on mobile).
-                // Exception: non-ascii characters (like Chinese or Korean) trigger an unnecessary increase in
-                // line spacing on PC, in which case using line breaks would cause misalignment.
-                if (topAligned)
+                if (subLineIdx > 0)
                 {
-                    if (subLineIdx > 0)
-                        newSection.Text = " " + "\r\n".Repeat(subLineIdx) + newSection.Text;
-                }
-                else
-                {
-                    if (subLineIdx < subLines.Count - 1)
-                        newSection.Text += "\r\n".Repeat(subLines.Count - 1 - subLineIdx) + " ";
+                    IEnumerable<string> remainingSubLines = subLines.Take(subLineIdx).Select(l => string.Join("", l.Select(s => s.Text)));
+                    newSection.Text = string.Join("\r\n", remainingSubLines) + "\r\n" + newSection.Text;
                 }
             }
             else
             {
-                // Otherwise, we need to repeat the whole text
-                if (topAligned)
+                if (subLineIdx < subLines.Count - 1)
                 {
-                    if (subLineIdx > 0)
-                    {
-                        IEnumerable<string> remainingSubLines = subLines.Take(subLineIdx).Select(l => string.Join("", l.Select(s => s.Text)));
-                        newSection.Text = string.Join("\r\n", remainingSubLines) + "\r\n" + newSection.Text;
-                    }
-                }
-                else
-                {
-                    if (subLineIdx < subLines.Count - 1)
-                    {
-                        IEnumerable<string> remainingSubLines = subLines.Skip(subLineIdx + 1).Select(l => string.Join("", l.Select(s => s.Text)));
-                        newSection.Text = newSection.Text + "\r\n" + string.Join("\r\n", remainingSubLines);
-                    }
+                    IEnumerable<string> remainingSubLines = subLines.Skip(subLineIdx + 1).Select(l => string.Join("", l.Select(s => s.Text)));
+                    newSection.Text = newSection.Text + "\r\n" + string.Join("\r\n", remainingSubLines);
                 }
             }
         }

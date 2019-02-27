@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using Arc.YTSubConverter.Ass;
+using Arc.YTSubConverter.Formats.Ass;
 
-namespace Arc.YTSubConverter
+namespace Arc.YTSubConverter.Formats
 {
     internal abstract class SubtitleDocument
     {

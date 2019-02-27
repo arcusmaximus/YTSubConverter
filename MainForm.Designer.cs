@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this._brwPreview = new System.Windows.Forms.WebBrowser();
-            this._txtInputFile = new System.Windows.Forms.TextBox();
-            this._grpStyleOptions = new System.Windows.Forms.GroupBox();
             this._spltStyleOptions = new System.Windows.Forms.SplitContainer();
             this._lstStyles = new System.Windows.Forms.ListBox();
+            this._brwPreview = new System.Windows.Forms.WebBrowser();
             this._pnlOptions = new System.Windows.Forms.Panel();
             this._pnlKaraokeType = new System.Windows.Forms.Panel();
             this._txtCurrentWordGlowColor = new System.Windows.Forms.TextBox();
@@ -45,13 +43,14 @@
             this._chkHardShadow = new System.Windows.Forms.CheckBox();
             this._chkSoftShadow = new System.Windows.Forms.CheckBox();
             this._chkGlow = new System.Windows.Forms.CheckBox();
-            this._lblShadowType = new System.Windows.Forms.Label();
+            this._lblShadowTypes = new System.Windows.Forms.Label();
+            this._txtInputFile = new System.Windows.Forms.TextBox();
+            this._grpStyleOptions = new System.Windows.Forms.GroupBox();
             this._dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
-            this._chkStyleOptions = new System.Windows.Forms.CheckBox();
             this._btnConvert = new System.Windows.Forms.Button();
             this._lblConversionSuccess = new System.Windows.Forms.Label();
             this._btnBrowse = new System.Windows.Forms.Button();
-            this._grpStyleOptions.SuspendLayout();
+            this._chkStyleOptions = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this._spltStyleOptions)).BeginInit();
             this._spltStyleOptions.Panel1.SuspendLayout();
             this._spltStyleOptions.Panel2.SuspendLayout();
@@ -59,39 +58,8 @@
             this._pnlOptions.SuspendLayout();
             this._pnlKaraokeType.SuspendLayout();
             this._pnlShadowType.SuspendLayout();
+            this._grpStyleOptions.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // _brwPreview
-            // 
-            this._brwPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._brwPreview.Location = new System.Drawing.Point(0, 92);
-            this._brwPreview.MinimumSize = new System.Drawing.Size(20, 20);
-            this._brwPreview.Name = "_brwPreview";
-            this._brwPreview.Size = new System.Drawing.Size(468, 239);
-            this._brwPreview.TabIndex = 0;
-            // 
-            // _txtInputFile
-            // 
-            this._txtInputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this._txtInputFile.Location = new System.Drawing.Point(20, 6);
-            this._txtInputFile.Name = "_txtInputFile";
-            this._txtInputFile.ReadOnly = true;
-            this._txtInputFile.Size = new System.Drawing.Size(721, 20);
-            this._txtInputFile.TabIndex = 2;
-            // 
-            // _grpStyleOptions
-            // 
-            this._grpStyleOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this._grpStyleOptions.Controls.Add(this._spltStyleOptions);
-            this._grpStyleOptions.Location = new System.Drawing.Point(15, 32);
-            this._grpStyleOptions.Name = "_grpStyleOptions";
-            this._grpStyleOptions.Padding = new System.Windows.Forms.Padding(5, 10, 5, 5);
-            this._grpStyleOptions.Size = new System.Drawing.Size(773, 359);
-            this._grpStyleOptions.TabIndex = 4;
-            this._grpStyleOptions.TabStop = false;
             // 
             // _spltStyleOptions
             // 
@@ -121,6 +89,15 @@
             this._lstStyles.Size = new System.Drawing.Size(291, 331);
             this._lstStyles.TabIndex = 2;
             this._lstStyles.SelectedIndexChanged += new System.EventHandler(this._lstStyles_SelectedIndexChanged);
+            // 
+            // _brwPreview
+            // 
+            this._brwPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._brwPreview.Location = new System.Drawing.Point(0, 92);
+            this._brwPreview.MinimumSize = new System.Drawing.Size(20, 20);
+            this._brwPreview.Name = "_brwPreview";
+            this._brwPreview.Size = new System.Drawing.Size(468, 239);
+            this._brwPreview.TabIndex = 0;
             // 
             // _pnlOptions
             // 
@@ -210,7 +187,7 @@
             this._pnlShadowType.Controls.Add(this._chkHardShadow);
             this._pnlShadowType.Controls.Add(this._chkSoftShadow);
             this._pnlShadowType.Controls.Add(this._chkGlow);
-            this._pnlShadowType.Controls.Add(this._lblShadowType);
+            this._pnlShadowType.Controls.Add(this._lblShadowTypes);
             this._pnlShadowType.Dock = System.Windows.Forms.DockStyle.Left;
             this._pnlShadowType.Location = new System.Drawing.Point(0, 0);
             this._pnlShadowType.Name = "_pnlShadowType";
@@ -250,30 +227,41 @@
             this._chkGlow.UseVisualStyleBackColor = true;
             this._chkGlow.CheckedChanged += new System.EventHandler(this._chkGlow_CheckedChanged);
             // 
-            // _lblShadowType
+            // _lblShadowTypes
             // 
-            this._lblShadowType.AutoSize = true;
-            this._lblShadowType.Location = new System.Drawing.Point(8, 9);
-            this._lblShadowType.Name = "_lblShadowType";
-            this._lblShadowType.Size = new System.Drawing.Size(77, 13);
-            this._lblShadowType.TabIndex = 3;
-            this._lblShadowType.Text = "Shadow types:";
+            this._lblShadowTypes.AutoSize = true;
+            this._lblShadowTypes.Location = new System.Drawing.Point(8, 9);
+            this._lblShadowTypes.Name = "_lblShadowTypes";
+            this._lblShadowTypes.Size = new System.Drawing.Size(77, 13);
+            this._lblShadowTypes.TabIndex = 3;
+            this._lblShadowTypes.Text = "Shadow types:";
+            // 
+            // _txtInputFile
+            // 
+            this._txtInputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._txtInputFile.Location = new System.Drawing.Point(20, 6);
+            this._txtInputFile.Name = "_txtInputFile";
+            this._txtInputFile.ReadOnly = true;
+            this._txtInputFile.Size = new System.Drawing.Size(721, 20);
+            this._txtInputFile.TabIndex = 2;
+            // 
+            // _grpStyleOptions
+            // 
+            this._grpStyleOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._grpStyleOptions.Controls.Add(this._spltStyleOptions);
+            this._grpStyleOptions.Location = new System.Drawing.Point(15, 32);
+            this._grpStyleOptions.Name = "_grpStyleOptions";
+            this._grpStyleOptions.Padding = new System.Windows.Forms.Padding(5, 10, 5, 5);
+            this._grpStyleOptions.Size = new System.Drawing.Size(773, 359);
+            this._grpStyleOptions.TabIndex = 4;
+            this._grpStyleOptions.TabStop = false;
             // 
             // _dlgOpenFile
             // 
             this._dlgOpenFile.Filter = "Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv";
-            // 
-            // _chkStyleOptions
-            // 
-            this._chkStyleOptions.Appearance = System.Windows.Forms.Appearance.Button;
-            this._chkStyleOptions.AutoSize = true;
-            this._chkStyleOptions.Location = new System.Drawing.Point(24, 29);
-            this._chkStyleOptions.Name = "_chkStyleOptions";
-            this._chkStyleOptions.Size = new System.Drawing.Size(77, 23);
-            this._chkStyleOptions.TabIndex = 1;
-            this._chkStyleOptions.Text = "Style options";
-            this._chkStyleOptions.UseVisualStyleBackColor = true;
-            this._chkStyleOptions.CheckedChanged += new System.EventHandler(this._chkStyleOptions_CheckedChanged);
             // 
             // _btnConvert
             // 
@@ -294,7 +282,7 @@
             this._lblConversionSuccess.Name = "_lblConversionSuccess";
             this._lblConversionSuccess.Size = new System.Drawing.Size(327, 13);
             this._lblConversionSuccess.TabIndex = 6;
-            this._lblConversionSuccess.Text = "Conversion successful!";
+            this._lblConversionSuccess.Text = "Status label";
             this._lblConversionSuccess.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this._lblConversionSuccess.Visible = false;
             // 
@@ -308,6 +296,18 @@
             this._btnBrowse.Text = "...";
             this._btnBrowse.UseVisualStyleBackColor = true;
             this._btnBrowse.Click += new System.EventHandler(this._btnBrowse_Click);
+            // 
+            // _chkStyleOptions
+            // 
+            this._chkStyleOptions.Appearance = System.Windows.Forms.Appearance.Button;
+            this._chkStyleOptions.AutoSize = true;
+            this._chkStyleOptions.Location = new System.Drawing.Point(24, 29);
+            this._chkStyleOptions.Name = "_chkStyleOptions";
+            this._chkStyleOptions.Size = new System.Drawing.Size(77, 23);
+            this._chkStyleOptions.TabIndex = 1;
+            this._chkStyleOptions.Text = "Style options";
+            this._chkStyleOptions.UseVisualStyleBackColor = true;
+            this._chkStyleOptions.CheckedChanged += new System.EventHandler(this._chkStyleOptions_CheckedChanged);
             // 
             // MainForm
             // 
@@ -324,11 +324,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "YouTube Styled Subtitle Converter";
+            this.Text = "YTSubConverter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
-            this._grpStyleOptions.ResumeLayout(false);
             this._spltStyleOptions.Panel1.ResumeLayout(false);
             this._spltStyleOptions.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._spltStyleOptions)).EndInit();
@@ -338,6 +337,7 @@
             this._pnlKaraokeType.PerformLayout();
             this._pnlShadowType.ResumeLayout(false);
             this._pnlShadowType.PerformLayout();
+            this._grpStyleOptions.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -349,10 +349,9 @@
         private System.Windows.Forms.TextBox _txtInputFile;
         private System.Windows.Forms.GroupBox _grpStyleOptions;
         private System.Windows.Forms.ListBox _lstStyles;
-        private System.Windows.Forms.CheckBox _chkStyleOptions;
         private System.Windows.Forms.OpenFileDialog _dlgOpenFile;
         private System.Windows.Forms.SplitContainer _spltStyleOptions;
-        private System.Windows.Forms.Label _lblShadowType;
+        private System.Windows.Forms.Label _lblShadowTypes;
         private System.Windows.Forms.Button _btnConvert;
         private System.Windows.Forms.Label _lblConversionSuccess;
         private System.Windows.Forms.Panel _pnlShadowType;
@@ -368,5 +367,6 @@
         private System.Windows.Forms.CheckBox _chkHardShadow;
         private System.Windows.Forms.CheckBox _chkSoftShadow;
         private System.Windows.Forms.CheckBox _chkGlow;
+        private System.Windows.Forms.CheckBox _chkStyleOptions;
     }
 }
