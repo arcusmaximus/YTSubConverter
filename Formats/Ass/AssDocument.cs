@@ -550,7 +550,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                 if (colors[i].A == 0)
                     continue;
 
-                ExtendedLine chromaLine = new ExtendedLine(originalLine.Start, originalLine.End);
+                ExtendedLine chromaLine = new ExtendedLine(originalLine.Start, originalLine.End) { AnchorPoint = originalLine.AnchorPoint };
                 chromaLine.Sections.Add(
                     new ExtendedSection(originalLine.Text)
                     {

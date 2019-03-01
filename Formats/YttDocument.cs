@@ -325,10 +325,13 @@ namespace Arc.YTSubConverter.Formats
         private int ExpandLineForMultiShadows(int lineIndex)
         {
             Line line = Lines[lineIndex];
+            if (line.Sections.Count == 0)
+                return 1;
+
             List<ShadowType> shadowTypes = new List<ShadowType>();
             foreach (ShadowType shadowType in new[] { ShadowType.SoftShadow, ShadowType.HardShadow, ShadowType.Glow })
             {
-                if (line.Sections.Any(s => (s.ShadowTypes & shadowType) != 0))
+                if ((line.Sections[0].ShadowTypes & shadowType) != 0)
                     shadowTypes.Add(shadowType);
             }
 
@@ -339,15 +342,28 @@ namespace Arc.YTSubConverter.Formats
             for (int i = 0; i < shadowTypes.Count; i++)
             {
                 Line shadowLine = (Line)line.Clone();
-                foreach (Section section in shadowLine.Sections)
+
+                if (i < shadowTypes.Count - 1)
                 {
-                    section.ShadowTypes &= shadowTypes[i];
+                    shadowLine.Sections.Clear();
 
-                    if (i > 0)
-                        section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, 0);
-
-                    if (i < shadowTypes.Count - 1)
-                        section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 0);
+                    Section section =
+                        new Section(line.Text)
+                        {
+                            ForeColor = ColorUtil.ChangeColorAlpha(line.Sections[0].ForeColor, 0),
+                            BackColor = i == 0 ? line.Sections[0].BackColor : Color.Empty,
+                            ShadowTypes = shadowTypes[i],
+                            ShadowColor = line.Sections[0].ShadowColor
+                        };
+                    shadowLine.Sections.Add(section);
+                }
+                else
+                {
+                    foreach (Section section in shadowLine.Sections)
+                    {
+                        section.BackColor = Color.Empty;
+                        section.ShadowTypes = shadowTypes[i];
+                    }
                 }
 
                 Lines.Insert(lineIndex + i, shadowLine);
