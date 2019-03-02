@@ -22,6 +22,11 @@ namespace Arc.YTSubConverter.Animations
             get;
         }
 
+        public abstract bool AffectsPast
+        {
+            get;
+        }
+
         public abstract void Apply(AssDocument.ExtendedLine line, AssDocument.ExtendedSection section, float t);
 
         protected static int Interpolate(int from, int to, float t)

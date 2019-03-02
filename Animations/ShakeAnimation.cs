@@ -27,6 +27,8 @@ namespace Arc.YTSubConverter.Animations
             get;
         }
 
+        public override bool AffectsPast => false;
+
         public override void Apply(AssDocument.ExtendedLine line, AssDocument.ExtendedSection section, float t)
         {
             if (t > 0 && t < 1)

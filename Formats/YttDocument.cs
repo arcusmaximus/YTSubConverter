@@ -101,36 +101,36 @@ namespace Arc.YTSubConverter.Formats
 
         /// <summary>
         /// Once you read how the multicolor workaround works (see <see cref="ExpandLineForColoring"/>),
-        /// you'll notice that it doesn't work in a specific scenario: text that is centered or right-aligned
-        /// and has a section boundary (= style change) between two line breaks. For example, if we
-        /// have the right-aligned text "Red Green" (where each word has its respective color),
+        /// you'll notice that it doesn't work in a specific scenario: text that is centered and
+        /// has a section boundary (= style change) between two line breaks. For example, if we
+        /// have the centered text "Red Green" (where each word has its respective color),
         /// <see cref="ExpandLineForColoring"/> would produce the following (+ indicates the subtitle's anchor point):
-        ///       Layer 1 (#00FF00): |        Red Green+ |
-        ///       Layer 2 (#FF0000): |              Red+ |
+        ///       Layer 1 (#00FF00): |   Red+Green   |
+        ///       Layer 2 (#FF0000): |     R+d       |
         ///
         /// This is of course not what we want - the two "Red"s should overlap. We have to make
         /// the text left-aligned (and change the position to compensate).
-        ///      Layer 1 (#00FF00): |        +Red Green  |
-        ///      Layer 2 (#FF0000): |        +Red        |
+        ///       Layer 1 (#00FF00): |  +Red Green   |
+        ///       Layer 2 (#FF0000): |  +Red         |
         ///
         /// In the case of text with line breaks, we have an additional complication: only the longest
         /// line of text would keep its position while the others would shift.
         ///
-        ///      Original:          |         This is a multiline+ |
-        ///                         |                        sub.  |
+        ///      Original:          |   This is a+multiline   |
+        ///                         |           sub.          |
         ///
-        ///      Adjusted:          |        +This is a multiline  |
-        ///                         |         sub.                 |
+        ///      Adjusted:          |  +This is a multiline   |
+        ///                         |   sub.                  |
         ///
         /// To work around *this*, we need to split the line so each line of text can be positioned individually:
-        ///                         |        +This is a multiline  |
-        ///                         |                       +sub.  |
+        ///                         |  +This is a multiline   |
+        ///                         |          +sub.          |
         /// </summary>
         private void PrepareForMultiForeground(int lineIndex)
         {
             Line line = Lines[lineIndex];
             AnchorPoint anchorPoint = line.AnchorPoint ?? AnchorPoint.BottomCenter;
-            if (AnchorPointUtil.IsLeftAligned(anchorPoint) || !HasSectionBorderBetweenLineBreaks(line))
+            if (!AnchorPointUtil.IsCenterAligned(anchorPoint) || !HasSectionBorderBetweenLineBreaks(line))
                 return;
 
             int numLines = SplitOnLineBreaks(lineIndex);
@@ -152,7 +152,7 @@ namespace Arc.YTSubConverter.Formats
 
         /// <summary>
         /// Text is typically opaque and can be overlaid without problems (no line splitting required).
-        /// For other attributes line background color and bold/italic/underline, however, we can't do this.
+        /// For other attributes like background color and bold/italic/underline, however, we can't do this.
         /// </summary>
         private void PrepareForMultiNonForeground(int lineIndex)
         {
@@ -392,6 +392,8 @@ namespace Arc.YTSubConverter.Formats
         /// we can't change the background color on mobile, so dark text on a bright background will be
         /// displayed as dark text on a black background there - unreadable. By adding an invisible layer,
         /// we can make the text bright on mobile only: not the intended color scheme, but at least readable.
+        ///
+        /// Note that the extra layer doesn't work on iOS - it doesn't get displayed there.
         /// </summary>
         private int ExpandLineForColoring(int lineIndex)
         {
@@ -451,8 +453,20 @@ namespace Arc.YTSubConverter.Formats
             List<Section> subLineSections = subLines[subLineIdx];
             for (int numSections = subLineSections.Count; numSections >= 1; numSections--)
             {
-                Section newSection = (Section)subLineSections[numSections - 1].Clone();
-                newSection.Text = string.Join("", subLineSections.Take(numSections).Select(s => s.Text));
+                int sectionIndex;
+                Section newSection;
+                if (AnchorPointUtil.IsLeftAligned(originalLine.AnchorPoint ?? AnchorPoint.BottomCenter))
+                {
+                    sectionIndex = numSections - 1;
+                    newSection = (Section)subLineSections[sectionIndex].Clone();
+                    newSection.Text = string.Join("", subLineSections.Take(numSections).Select(s => s.Text));
+                }
+                else
+                {
+                    sectionIndex = subLineSections.Count - numSections;
+                    newSection = (Section)subLineSections[sectionIndex].Clone();
+                    newSection.Text = string.Join("", subLineSections.Skip(sectionIndex).Take(numSections).Select(s => s.Text));
+                }
 
                 if (prevSection != null)
                 {
@@ -472,7 +486,7 @@ namespace Arc.YTSubConverter.Formats
                 newLine.Sections.Add(newSection);
                 newLines.Add(newLine);
 
-                prevSection = subLineSections[numSections - 1];
+                prevSection = subLineSections[sectionIndex];
             }
             return newLines;
         }

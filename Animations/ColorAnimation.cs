@@ -24,6 +24,8 @@ namespace Arc.YTSubConverter.Animations
             set;
         }
 
+        public override bool AffectsPast => false;
+
         protected Color GetColor(float t)
         {
             return Interpolate(StartColor, EndColor, t);

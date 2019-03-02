@@ -22,6 +22,8 @@ namespace Arc.YTSubConverter.Animations
             get;
         }
 
+        public override bool AffectsPast => true;
+
         public override void Apply(AssDocument.ExtendedLine line, AssDocument.ExtendedSection section, float t)
         {
             int alpha = Interpolate(StartAlpha, EndAlpha, t);

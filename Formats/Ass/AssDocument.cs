@@ -816,10 +816,15 @@ namespace Arc.YTSubConverter.Formats.Ass
                 stepLine.Start = start;
                 stepLine.End = end;
 
+                foreach (ExtendedSection section in stepLine.Sections.Take(numVisibleSections))
+                {
+                    section.Animations.RemoveAll(a => a is SecondaryColorAnimation);
+                }
+
                 foreach (ExtendedSection section in stepLine.Sections.Skip(numVisibleSections))
                 {
                     section.ForeColor = section.SecondaryColor;
-                    if (section.ForeColor.A == 0)
+                    if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
                         section.ShadowTypes = ShadowType.None;
 
                     foreach (SecondaryColorAnimation anim in section.Animations.OfType<SecondaryColorAnimation>().ToList())
