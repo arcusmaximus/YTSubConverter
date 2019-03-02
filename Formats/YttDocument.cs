@@ -638,9 +638,17 @@ namespace Arc.YTSubConverter.Formats
 
             // The Android app does not respect the positioning of, and sometimes does not display,
             // subtitles that start at 0ms. Use 1ms instead.
-            writer.WriteAttributeString("t", Math.Max((int)(line.Start - TimeBase).TotalMilliseconds - SubtitleDelayMs, 1).ToString());
+            int lineStartMs = (int)(line.Start - TimeBase).TotalMilliseconds;
+            writer.WriteAttributeString("t", Math.Max(lineStartMs - SubtitleDelayMs, 1).ToString());
 
-            writer.WriteAttributeString("d", ((int)(line.End - line.Start).TotalMilliseconds).ToString());
+            // Both the line's start and end time need to be compensated for YouTube's delay. Normally it's enough to
+            // move up the start time and keep the duration constant, but if we can't move the start time far enough,
+            // we also need to lessen the duration.
+            int lineDuration = (int)(line.End - line.Start).TotalMilliseconds;
+            if (lineStartMs < SubtitleDelayMs)
+                lineDuration -= SubtitleDelayMs - lineStartMs + 1;
+
+            writer.WriteAttributeString("d", lineDuration.ToString());
             if (line.Sections.Count == 1)
                 writer.WriteAttributeString("p", penIds[line.Sections[0]].ToString());
 

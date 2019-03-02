@@ -27,6 +27,7 @@ namespace Arc.YTSubConverter.Animations
                 List<AnimationWithSectionIndex> clusterAnims = animClusters.Values[i];
                 foreach (AssDocument.ExtendedLine frameLine in CreateFrameLines(lastLine, clusterRange, clusterAnims))
                 {
+                    lastLine.End = frameLine.Start;
                     yield return lastLine = frameLine;
                 }
 
