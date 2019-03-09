@@ -824,14 +824,16 @@ namespace Arc.YTSubConverter.Formats.Ass
                 foreach (ExtendedSection section in stepLine.Sections.Skip(numVisibleSections))
                 {
                     section.ForeColor = section.SecondaryColor;
-                    if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
-                        section.ShadowTypes = ShadowType.None;
+                    section.Animations.RemoveAll(a => a is ForeColorAnimation);
 
                     foreach (SecondaryColorAnimation anim in section.Animations.OfType<SecondaryColorAnimation>().ToList())
                     {
                         section.Animations.Remove(anim);
                         section.Animations.Add(new ForeColorAnimation(anim.StartTime, anim.StartColor, anim.EndTime, anim.EndColor));
                     }
+
+                    if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
+                        section.ShadowTypes = ShadowType.None;
                 }
 
                 ExtendedSection singingSection = (ExtendedSection)stepLine.Sections[numVisibleSections - 1];
@@ -959,6 +961,9 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         private static List<string> ParseStringList(string arg)
         {
+            if (string.IsNullOrWhiteSpace(arg))
+                return new List<string>();
+
             Match match = Regex.Match(arg, @"^\s*\((?:\s*,?\s*([^,\(\)]+))+\)\s*$");
             if (!match.Success)
                 return null;

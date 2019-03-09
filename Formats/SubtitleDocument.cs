@@ -58,21 +58,6 @@ namespace Arc.YTSubConverter.Formats
             }
         }
 
-        public void Shift(TimeSpan offset)
-        {
-            foreach (Line line in Lines)
-            {
-                line.Start = Shift(line.Start, offset);
-                line.End = Shift(line.End, offset);
-            }
-        }
-
-        private static DateTime Shift(DateTime time, TimeSpan offset)
-        {
-            time += offset;
-            return time < TimeBase ? TimeBase : time;
-        }
-
         public virtual void Save(string filePath)
         {
             throw new NotImplementedException();
