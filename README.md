@@ -1,6 +1,6 @@
 # YTSubConverter
 A tool for creating styled YouTube subtitles.
-
+ 
 ![Sample image](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/sample.png)
 
 ## About this tool
