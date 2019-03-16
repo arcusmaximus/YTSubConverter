@@ -11,7 +11,7 @@ namespace Arc.YTSubConverter.Animations
         {
         }
 
-        public override void Apply(AssDocument.ExtendedLine line, AssDocument.ExtendedSection section, float t)
+        public override void Apply(AssLine line, AssSection section, float t)
         {
             section.BackColor = GetColor(t);
         }

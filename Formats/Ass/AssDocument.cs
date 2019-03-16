@@ -81,11 +81,11 @@ namespace Arc.YTSubConverter.Formats.Ass
                 AssStyle style = styleLookup.GetOrDefault(dialogue.Style);
                 AssStyleOptions options = styleOptionsLookup?.GetOrDefault(dialogue.Style);
 
-                List<ExtendedLine> lines = ParseLine(dialogue, style, options);
+                List<AssLine> lines = ParseLine(dialogue, style, options);
                 Lines.AddRange(lines.SelectMany(ExpandLine));
             }
 
-            foreach (ExtendedLine line in Lines)
+            foreach (AssLine line in Lines)
             {
                 MergeIdenticallyFormattedSections(line);
                 line.NormalizeAlpha();
@@ -143,11 +143,11 @@ namespace Arc.YTSubConverter.Formats.Ass
             return sections;
         }
 
-        private List<ExtendedLine> ParseLine(AssDialogue dialogue, AssStyle style, AssStyleOptions styleOptions)
+        private List<AssLine> ParseLine(AssDialogue dialogue, AssStyle style, AssStyleOptions styleOptions)
         {
             DateTime startTime = TimeUtil.SnapTimeToFrame(dialogue.Start.AddMilliseconds(32));
             DateTime endTime = TimeUtil.SnapTimeToFrame(dialogue.End).AddMilliseconds(32);
-            ExtendedLine line = new ExtendedLine(startTime, endTime) { AnchorPoint = style.AnchorPoint };
+            AssLine line = new AssLine(startTime, endTime) { AnchorPoint = style.AnchorPoint };
 
             TagContext context = new TagContext
                                  {
@@ -156,7 +156,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                                      Style = style,
                                      StyleOptions = styleOptions,
                                      Line = line,
-                                     Section = new ExtendedSection(null)
+                                     Section = new AssSection(null)
                                  };
 
             ApplyStyle(context.Section, style, styleOptions);
@@ -172,7 +172,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                     context.Section.Text = text.Substring(start, end - start).Replace("\\N", "\r\n");
                     line.Sections.Add(context.Section);
 
-                    context.Section = (ExtendedSection)context.Section.Clone();
+                    context.Section = (AssSection)context.Section.Clone();
                     context.Section.Text = null;
                     context.Section.Duration = TimeSpan.Zero;
                 }
@@ -194,10 +194,10 @@ namespace Arc.YTSubConverter.Formats.Ass
                 line.Sections.Add(context.Section);
             }
 
-            List<ExtendedLine> lines = new List<ExtendedLine> { line };
+            List<AssLine> lines = new List<AssLine> { line };
             foreach (TagContext.PostProcessor postProcessor in context.PostProcessors)
             {
-                List<ExtendedLine> extraLines = postProcessor();
+                List<AssLine> extraLines = postProcessor();
                 if (extraLines != null)
                     lines.AddRange(extraLines);
             }
@@ -340,7 +340,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             if (times == null || times.Count != 2)
                 return;
 
-            ExtendedLine line = context.Line;
+            AssLine line = context.Line;
             DateTime fadeInStartTime = line.Start;
             DateTime fadeInEndTime = line.Start.AddMilliseconds(times[0]);
             DateTime fadeOutStartTime = line.End.AddMilliseconds(-times[1]);
@@ -359,7 +359,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             if (args == null || args.Count != 7)
                 return;
 
-            ExtendedLine line = context.Line;
+            AssLine line = context.Line;
 
             int initialAlpha = 255 - (int)args[0];
             int midAlpha = 255 - (int)args[1];
@@ -383,7 +383,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             if (args == null || args.Count < 4)
                 return;
 
-            ExtendedLine line = context.Line;
+            AssLine line = context.Line;
             PointF startPos = new PointF(args[0], args[1]);
             PointF endPos = new PointF(args[2], args[3]);
 
@@ -473,11 +473,11 @@ namespace Arc.YTSubConverter.Formats.Ass
             context.PostProcessors.Add(
                 () =>
                 {
-                    ExtendedLine originalLine = context.Line;
+                    AssLine originalLine = context.Line;
                     if (originalLine.Position == null)
                         return null;
 
-                    List<ExtendedLine> chromaLines = new List<ExtendedLine>();
+                    List<AssLine> chromaLines = new List<AssLine>();
 
                     if (colors.Count == 0)
                     {
@@ -540,7 +540,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             return true;
         }
 
-        private static IEnumerable<ExtendedLine> CreateChromaLines(ExtendedLine originalLine, List<Color> colors, int maxOffsetX, int maxOffsetY, int durationMs, bool moveIn)
+        private static IEnumerable<AssLine> CreateChromaLines(AssLine originalLine, List<Color> colors, int maxOffsetX, int maxOffsetY, int durationMs, bool moveIn)
         {
             if (originalLine.Sections.Count == 0)
                 yield break;
@@ -550,9 +550,9 @@ namespace Arc.YTSubConverter.Formats.Ass
                 if (colors[i].A == 0)
                     continue;
 
-                ExtendedLine chromaLine = new ExtendedLine(originalLine.Start, originalLine.End) { AnchorPoint = originalLine.AnchorPoint };
+                AssLine chromaLine = new AssLine(originalLine.Start, originalLine.End) { AnchorPoint = originalLine.AnchorPoint };
                 chromaLine.Sections.Add(
-                    new ExtendedSection(originalLine.Text)
+                    new AssSection(originalLine.Text)
                     {
                         ForeColor = colors[i],
                         Bold = originalLine.Sections[0].Bold,
@@ -722,12 +722,12 @@ namespace Arc.YTSubConverter.Formats.Ass
             TagContext context,
             DateTime startTime,
             DateTime endTime,
-            Func<ExtendedSection, Color> getSectionColor,
+            Func<AssSection, Color> getSectionColor,
             Func<DateTime, DateTime, Color, T> createAnim
         )
             where T : ColorAnimation
         {
-            ExtendedSection section = context.Section;
+            AssSection section = context.Section;
             T anim = section.Animations.OfType<T>().FirstOrDefault(a => a.StartTime == startTime && a.EndTime == endTime);
             if (anim == null)
             {
@@ -739,7 +739,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             return anim;
         }
 
-        private static void ApplyStyle(ExtendedSection section, AssStyle style, AssStyleOptions options)
+        private static void ApplyStyle(AssSection section, AssStyle style, AssStyleOptions options)
         {
             section.Font = style.Font;
             section.Bold = style.Bold;
@@ -782,14 +782,14 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
         }
 
-        private static IEnumerable<ExtendedLine> ExpandLine(ExtendedLine line)
+        private static IEnumerable<AssLine> ExpandLine(AssLine line)
         {
             return ExpandLineForKaraoke(line).SelectMany(Animator.Expand);
         }
 
-        private static IEnumerable<ExtendedLine> ExpandLineForKaraoke(ExtendedLine line)
+        private static IEnumerable<AssLine> ExpandLineForKaraoke(AssLine line)
         {
-            if (line.Sections.Cast<ExtendedSection>().All(s => s.Duration == TimeSpan.Zero))
+            if (line.Sections.Cast<AssSection>().All(s => s.Duration == TimeSpan.Zero))
             {
                 yield return line;
                 yield break;
@@ -812,16 +812,16 @@ namespace Arc.YTSubConverter.Formats.Ass
                 else
                     end = line.End;
 
-                ExtendedLine stepLine = (ExtendedLine)line.Clone();
+                AssLine stepLine = (AssLine)line.Clone();
                 stepLine.Start = start;
                 stepLine.End = end;
 
-                foreach (ExtendedSection section in stepLine.Sections.Take(numVisibleSections))
+                foreach (AssSection section in stepLine.Sections.Take(numVisibleSections))
                 {
                     section.Animations.RemoveAll(a => a is SecondaryColorAnimation);
                 }
 
-                foreach (ExtendedSection section in stepLine.Sections.Skip(numVisibleSections))
+                foreach (AssSection section in stepLine.Sections.Skip(numVisibleSections))
                 {
                     section.ForeColor = section.SecondaryColor;
                     section.Animations.RemoveAll(a => a is ForeColorAnimation);
@@ -836,7 +836,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                         section.ShadowTypes = ShadowType.None;
                 }
 
-                ExtendedSection singingSection = (ExtendedSection)stepLine.Sections[numVisibleSections - 1];
+                AssSection singingSection = (AssSection)stepLine.Sections[numVisibleSections - 1];
                 if (!singingSection.CurrentWordTextColor.IsEmpty)
                     singingSection.ForeColor = singingSection.CurrentWordTextColor;
 
@@ -845,18 +845,18 @@ namespace Arc.YTSubConverter.Formats.Ass
 
                 // Hack: make sure YttDocument will also recognize the final (single-color) step as a karaoke line
                 // so it gets the exact same position as the previous steps
-                stepLine.Sections.Add(new ExtendedSection(string.Empty));
+                stepLine.Sections.Add(new AssSection(string.Empty));
 
                 yield return stepLine;
             }
         }
 
-        private static SortedList<TimeSpan, int> GetKaraokeSteps(ExtendedLine line)
+        private static SortedList<TimeSpan, int> GetKaraokeSteps(AssLine line)
         {
             SortedList<TimeSpan, int> visibleSectionsPerStep = new SortedList<TimeSpan, int>();
             TimeSpan currentTimeOffset = TimeSpan.Zero;
             int currentVisibleSections = 0;
-            foreach (ExtendedSection section in line.Sections)
+            foreach (AssSection section in line.Sections)
             {
                 currentVisibleSections++;
                 if (section.Duration > TimeSpan.Zero)
@@ -980,10 +980,10 @@ namespace Arc.YTSubConverter.Formats.Ass
             public AssDialogue Dialogue;
             public AssStyle Style;
             public AssStyleOptions StyleOptions;
-            public ExtendedLine Line;
-            public ExtendedSection Section;
+            public AssLine Line;
+            public AssSection Section;
 
-            public delegate List<ExtendedLine> PostProcessor();
+            public delegate List<AssLine> PostProcessor();
 
             public readonly List<PostProcessor> PostProcessors = new List<PostProcessor>();
         }

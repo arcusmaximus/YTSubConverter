@@ -8,7 +8,7 @@ namespace Arc.YTSubConverter.Animations
 {
     internal static class Animator
     {
-        public static IEnumerable<AssDocument.ExtendedLine> Expand(AssDocument.ExtendedLine originalLine)
+        public static IEnumerable<AssLine> Expand(AssLine originalLine)
         {
             List<AnimationWithSectionIndex> anims = GetAnimationsWithSectionIndex(originalLine);
             if (anims.Count == 0)
@@ -18,7 +18,7 @@ namespace Arc.YTSubConverter.Animations
             }
 
             SortedList<TimeRange, List<AnimationWithSectionIndex>> animClusters = ClusterAnimations(originalLine, anims);
-            AssDocument.ExtendedLine lastLine = CreateInitialLine(originalLine, anims);
+            AssLine lastLine = CreateInitialLine(originalLine, anims);
             if (animClusters.Count == 0 || animClusters.Keys[0].Start > lastLine.Start)
                 yield return lastLine;
 
@@ -26,7 +26,7 @@ namespace Arc.YTSubConverter.Animations
             {
                 TimeRange clusterRange = animClusters.Keys[i];
                 List<AnimationWithSectionIndex> clusterAnims = animClusters.Values[i];
-                foreach (AssDocument.ExtendedLine frameLine in CreateFrameLines(lastLine, clusterRange, clusterAnims))
+                foreach (AssLine frameLine in CreateFrameLines(lastLine, clusterRange, clusterAnims))
                 {
                     lastLine.End = frameLine.Start;
                     yield return lastLine = frameLine;
@@ -41,7 +41,7 @@ namespace Arc.YTSubConverter.Animations
             lastLine.End = originalLine.End;
         }
 
-        private static List<AnimationWithSectionIndex> GetAnimationsWithSectionIndex(AssDocument.ExtendedLine line)
+        private static List<AnimationWithSectionIndex> GetAnimationsWithSectionIndex(AssLine line)
         {
             List<AnimationWithSectionIndex> animations = new List<AnimationWithSectionIndex>();
 
@@ -52,7 +52,7 @@ namespace Arc.YTSubConverter.Animations
 
             for (int i = 0; i < line.Sections.Count; i++)
             {
-                AssDocument.ExtendedSection section = (AssDocument.ExtendedSection)line.Sections[i];
+                AssSection section = (AssSection)line.Sections[i];
                 foreach (Animation anim in section.Animations)
                 {
                     animations.Add(new AnimationWithSectionIndex(anim, i));
@@ -62,7 +62,7 @@ namespace Arc.YTSubConverter.Animations
             return animations;
         }
 
-        private static SortedList<TimeRange, List<AnimationWithSectionIndex>> ClusterAnimations(AssDocument.ExtendedLine line, List<AnimationWithSectionIndex> allAnims)
+        private static SortedList<TimeRange, List<AnimationWithSectionIndex>> ClusterAnimations(AssLine line, List<AnimationWithSectionIndex> allAnims)
         {
             List<TimeRange> clusterRanges = GetAnimationClusterTimeRanges(allAnims.Select(a => a.Animation));
 
@@ -107,9 +107,9 @@ namespace Arc.YTSubConverter.Animations
             return clusterRanges;
         }
 
-        private static AssDocument.ExtendedLine CreateInitialLine(AssDocument.ExtendedLine originalLine, List<AnimationWithSectionIndex> anims)
+        private static AssLine CreateInitialLine(AssLine originalLine, List<AnimationWithSectionIndex> anims)
         {
-            AssDocument.ExtendedLine newLine = (AssDocument.ExtendedLine)originalLine.Clone();
+            AssLine newLine = (AssLine)originalLine.Clone();
 
             foreach (AnimationWithSectionIndex anim in anims.Where(a => a.Animation.EndTime < originalLine.Start)
                                                             .OrderBy(a => a.Animation.EndTime))
@@ -126,9 +126,9 @@ namespace Arc.YTSubConverter.Animations
             return newLine;
         }
 
-        private static AssDocument.ExtendedLine CreatePostAnimationClusterLine(AssDocument.ExtendedLine originalLine, DateTime start, DateTime end, List<AnimationWithSectionIndex> animsWithSection)
+        private static AssLine CreatePostAnimationClusterLine(AssLine originalLine, DateTime start, DateTime end, List<AnimationWithSectionIndex> animsWithSection)
         {
-            AssDocument.ExtendedLine newLine = (AssDocument.ExtendedLine)originalLine.Clone();
+            AssLine newLine = (AssLine)originalLine.Clone();
             newLine.Start = start;
             newLine.End = end;
             foreach (AnimationWithSectionIndex animWithSection in animsWithSection.OrderBy(a => a.Animation.EndTime))
@@ -138,7 +138,7 @@ namespace Arc.YTSubConverter.Animations
             return newLine;
         }
 
-        private static IEnumerable<AssDocument.ExtendedLine> CreateFrameLines(AssDocument.ExtendedLine originalLine, TimeRange timeRange, List<AnimationWithSectionIndex> animations)
+        private static IEnumerable<AssLine> CreateFrameLines(AssLine originalLine, TimeRange timeRange, List<AnimationWithSectionIndex> animations)
         {
             int rangeStartFrame = TimeUtil.TimeToFrame(timeRange.Start);
             int rangeEndFrame = TimeUtil.TimeToFrame(timeRange.End);
@@ -148,10 +148,10 @@ namespace Arc.YTSubConverter.Animations
             if (lastIterationFrame == rangeStartFrame)
                 yield break;
 
-            AssDocument.ExtendedLine frameLine = originalLine;
+            AssLine frameLine = originalLine;
             for (int frame = rangeStartFrame; frame <= lastIterationFrame; frame += frameStepSize)
             {
-                frameLine = (AssDocument.ExtendedLine)frameLine.Clone();
+                frameLine = (AssLine)frameLine.Clone();
                 frameLine.Start = TimeUtil.FrameToTime(frame);
                 frameLine.End = TimeUtil.FrameToTime(Math.Min(frame + frameStepSize, rangeEndFrame));
 
@@ -175,9 +175,9 @@ namespace Arc.YTSubConverter.Animations
             }
         }
 
-        private static void ApplyAnimation(AssDocument.ExtendedLine line, AnimationWithSectionIndex animWithSectionIdx, float t)
+        private static void ApplyAnimation(AssLine line, AnimationWithSectionIndex animWithSectionIdx, float t)
         {
-            animWithSectionIdx.Animation.Apply(line, animWithSectionIdx.SectionIndex >= 0 ? (AssDocument.ExtendedSection)line.Sections[animWithSectionIdx.SectionIndex] : null, t);
+            animWithSectionIdx.Animation.Apply(line, animWithSectionIdx.SectionIndex >= 0 ? (AssSection)line.Sections[animWithSectionIdx.SectionIndex] : null, t);
         }
 
         private struct AnimationWithSectionIndex
