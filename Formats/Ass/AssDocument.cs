@@ -63,9 +63,9 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         public AssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
         {
-            Dictionary<string, AssSection> fileSections = ReadDocument(filePath);
+            Dictionary<string, AssDocumentSection> fileSections = ReadDocument(filePath);
 
-            AssSection infoSection = fileSections["Script Info"];
+            AssDocumentSection infoSection = fileSections["Script Info"];
             VideoDimensions = new Size(infoSection.GetItemInt("PlayResX", 384), infoSection.GetItemInt("PlayResY", 288));
 
             Styles = fileSections["V4+ Styles"].MapItems("Style", i => new AssStyle(i))
@@ -97,10 +97,10 @@ namespace Arc.YTSubConverter.Formats.Ass
             get;
         }
 
-        private Dictionary<string, AssSection> ReadDocument(string filePath)
+        private Dictionary<string, AssDocumentSection> ReadDocument(string filePath)
         {
-            Dictionary<string, AssSection> sections = new Dictionary<string, AssSection>();
-            AssSection currentSection = null;
+            Dictionary<string, AssDocumentSection> sections = new Dictionary<string, AssDocumentSection>();
+            AssDocumentSection currentSection = null;
 
             using (StreamReader reader = new StreamReader(filePath))
             {
@@ -112,7 +112,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 
                     if (line.StartsWith("[") && line.EndsWith("]"))
                     {
-                        currentSection = new AssSection();
+                        currentSection = new AssDocumentSection();
                         sections.Add(line.Substring(1, line.Length - 2), currentSection);
                         continue;
                     }

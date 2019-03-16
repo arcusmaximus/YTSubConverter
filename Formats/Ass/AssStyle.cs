@@ -4,7 +4,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 {
     internal class AssStyle
     {
-        public AssStyle(AssItem item)
+        public AssStyle(AssDocumentItem item)
         {
             Name = item.GetString("Name");
             Font = item.GetString("Fontname");

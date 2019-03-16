@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Arc.YTSubConverter.Formats.Ass
 {
-    internal class AssSection
+    internal class AssDocumentSection
     {
         public Dictionary<string, int> Format
         {
@@ -13,7 +13,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             set;
         }
 
-        public List<AssItem> Items { get; } = new List<AssItem>();
+        public List<AssDocumentItem> Items { get; } = new List<AssDocumentItem>();
 
         public void SetFormat(List<string> format)
         {
@@ -26,7 +26,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         public void AddItem(string type, List<string> values)
         {
-            Items.Add(new AssItem(this, type, values));
+            Items.Add(new AssDocumentItem(this, type, values));
         }
 
         public string GetItemString(string type)
@@ -49,7 +49,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             return Convert.ToBoolean(GetItemInt(type, Convert.ToInt32(defaultValue)));
         }
 
-        public IEnumerable<T> MapItems<T>(string type, Func<AssItem, T> selector)
+        public IEnumerable<T> MapItems<T>(string type, Func<AssDocumentItem, T> selector)
         {
             return Items.Where(i => i.Type == type).Select(selector);
         }

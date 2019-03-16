@@ -67,8 +67,8 @@
     <Compile Include="Formats\Ass\AssDocument.cs" />
     <Compile Include="Formats\Ass\AssDocument.ExtendedLine.cs" />
     <Compile Include="Formats\Ass\AssDocument.ExtendedSection.cs" />
-    <Compile Include="Formats\Ass\AssItem.cs" />
-    <Compile Include="Formats\Ass\AssSection.cs" />
+    <Compile Include="Formats\Ass\AssDocumentItem.cs" />
+    <Compile Include="Formats\Ass\AssFileSection.cs" />
     <Compile Include="Formats\Ass\AssStyle.cs" />
     <Compile Include="Formats\RtDocument.cs" />
     <Compile Include="Formats\SbvDocument.cs" />

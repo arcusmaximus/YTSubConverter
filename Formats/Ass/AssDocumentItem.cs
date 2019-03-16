@@ -6,16 +6,16 @@ using System.Text.RegularExpressions;
 
 namespace Arc.YTSubConverter.Formats.Ass
 {
-    internal struct AssItem
+    internal struct AssDocumentItem
     {
-        public AssItem(AssSection section, string type, List<string> values)
+        public AssDocumentItem(AssDocumentSection section, string type, List<string> values)
         {
             Section = section;
             Type = type;
             Values = values;
         }
 
-        public AssSection Section
+        public AssDocumentSection Section
         {
             get;
         }

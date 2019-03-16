@@ -451,6 +451,18 @@ namespace Arc.YTSubConverter.Formats
         {
             List<Line> newLines = new List<Line>();
             List<Section> subLineSections = subLines[subLineIdx];
+
+            // Sections with certain special characters may get rendered a few pixels lower than sections without,
+            // meaning that if a line has a mix of these, the multicolor workaround will result in visual artifacts.
+            // For example, if you have the text "itsudemo i love you❤" where the text is white and the
+            // heart is pink, the multicolor workaround will generate a pink "itsudemo i love you❤"
+            // overlapped by a white "itsudemo i love you", but because the pink subtitle is displayed
+            // slightly lower than the white one, the white text ends up having pink pixels at the bottom.
+            // The workaround is to give *all* subtitles a character that triggers the pushdown.
+            // (We use a full-width space which triggers it on both Firefox and Chrome)
+            bool needPushdownWorkaround = originalLine.Sections.SelectMany(s => s.Text).Any(c => c < 0x100) &&
+                                          originalLine.Sections.SelectMany(s => s.Text).Any(c => c > 0x100);
+
             for (int numSections = subLineSections.Count; numSections >= 1; numSections--)
             {
                 int sectionIndex;
@@ -460,12 +472,16 @@ namespace Arc.YTSubConverter.Formats
                     sectionIndex = numSections - 1;
                     newSection = (Section)subLineSections[sectionIndex].Clone();
                     newSection.Text = string.Join("", subLineSections.Take(numSections).Select(s => s.Text));
+                    if (needPushdownWorkaround)
+                        newSection.Text += "　";
                 }
                 else
                 {
                     sectionIndex = subLineSections.Count - numSections;
                     newSection = (Section)subLineSections[sectionIndex].Clone();
                     newSection.Text = string.Join("", subLineSections.Skip(sectionIndex).Take(numSections).Select(s => s.Text));
+                    if (needPushdownWorkaround)
+                        newSection.Text = "　" + newSection.Text;
                 }
 
                 if (prevSection != null)

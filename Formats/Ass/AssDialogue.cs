@@ -4,7 +4,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 {
     internal class AssDialogue
     {
-        public AssDialogue(AssItem item)
+        public AssDialogue(AssDocumentItem item)
         {
             Start = item.GetTimestamp("Start");
             End = item.GetTimestamp("End");
