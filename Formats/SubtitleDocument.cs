@@ -49,8 +49,10 @@ namespace Arc.YTSubConverter.Formats
             }
         }
 
-        public void CloseGaps()
+        public void Compact()
         {
+
+
             for (int i = 0; i < Lines.Count - 1; i++)
             {
                 if (Math.Abs((Lines[i + 1].Start - Lines[i].End).TotalMilliseconds) < 50)

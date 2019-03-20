@@ -37,7 +37,7 @@ namespace Arc.YTSubConverter.Formats
             Lines.RemoveAll(l => !l.Sections.Any(s => s.Text.Length > 0));
 
             // A gap of even one millisecond can cause flickering
-            CloseGaps();
+            Compact();
         }
 
         public override void Save(string filePath)

@@ -23,4 +23,11 @@ namespace Arc.YTSubConverter
         HardShadow = 2,
         SoftShadow = 4
     }
+
+    public enum KaraokeType
+    {
+        Simple,
+        Fade,
+        Glitch
+    }
 }

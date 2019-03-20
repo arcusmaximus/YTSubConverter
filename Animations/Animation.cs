@@ -27,6 +27,8 @@ namespace Arc.YTSubConverter.Animations
             get;
         }
 
+        public virtual bool AffectsText => false;
+
         public abstract void Apply(AssLine line, AssSection section, float t);
 
         protected static int Interpolate(int from, int to, float t)

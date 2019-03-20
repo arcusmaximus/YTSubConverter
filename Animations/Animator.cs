@@ -35,7 +35,7 @@ namespace Arc.YTSubConverter.Animations
                 DateTime interAnimStart = TimeUtil.FrameToTime(TimeUtil.TimeToFrame(clusterRange.End) + 1);
                 DateTime interAnimEnd = i < animClusters.Count - 1 ? animClusters.Keys[i + 1].Start : originalLine.End;
                 if (interAnimEnd > interAnimStart)
-                    yield return lastLine = CreatePostAnimationClusterLine(lastLine, interAnimStart, interAnimEnd, clusterAnims);
+                    yield return lastLine = CreatePostAnimationClusterLine(originalLine, lastLine, interAnimStart, interAnimEnd, clusterAnims);
             }
 
             lastLine.End = originalLine.End;
@@ -126,13 +126,16 @@ namespace Arc.YTSubConverter.Animations
             return newLine;
         }
 
-        private static AssLine CreatePostAnimationClusterLine(AssLine originalLine, DateTime start, DateTime end, List<AnimationWithSectionIndex> animsWithSection)
+        private static AssLine CreatePostAnimationClusterLine(AssLine originalLine, AssLine lastLine, DateTime start, DateTime end, List<AnimationWithSectionIndex> animsWithSection)
         {
-            AssLine newLine = (AssLine)originalLine.Clone();
+            AssLine newLine = (AssLine)lastLine.Clone();
             newLine.Start = start;
             newLine.End = end;
             foreach (AnimationWithSectionIndex animWithSection in animsWithSection.OrderBy(a => a.Animation.EndTime))
             {
+                if (animWithSection.Animation.AffectsText)
+                    ResetText(newLine, originalLine);
+
                 ApplyAnimation(newLine, animWithSection, 1);
             }
             return newLine;
@@ -148,12 +151,16 @@ namespace Arc.YTSubConverter.Animations
             if (lastIterationFrame == rangeStartFrame)
                 yield break;
 
+            bool needTextReset = animations.Any(a => a.Animation.AffectsText);
+
             AssLine frameLine = originalLine;
             for (int frame = rangeStartFrame; frame <= lastIterationFrame; frame += frameStepSize)
             {
                 frameLine = (AssLine)frameLine.Clone();
                 frameLine.Start = TimeUtil.FrameToTime(frame);
                 frameLine.End = TimeUtil.FrameToTime(Math.Min(frame + frameStepSize, rangeEndFrame));
+                if (needTextReset)
+                    ResetText(frameLine, originalLine);
 
                 int interpFrame = frame + frameStepSize / 2;
 
@@ -178,6 +185,14 @@ namespace Arc.YTSubConverter.Animations
         private static void ApplyAnimation(AssLine line, AnimationWithSectionIndex animWithSectionIdx, float t)
         {
             animWithSectionIdx.Animation.Apply(line, animWithSectionIdx.SectionIndex >= 0 ? (AssSection)line.Sections[animWithSectionIdx.SectionIndex] : null, t);
+        }
+
+        private static void ResetText(AssLine frameLine, AssLine originalLine)
+        {
+            for (int i = 0; i < frameLine.Sections.Count; i++)
+            {
+                frameLine.Sections[i].Text = originalLine.Sections[i].Text;
+            }
         }
 
         private struct AnimationWithSectionIndex

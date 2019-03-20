@@ -21,6 +21,12 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         public List<Animation> Animations { get; } = new List<Animation>();
 
+        public KaraokeType KaraokeType
+        {
+            get;
+            set;
+        }
+
         public void NormalizeAlpha()
         {
             if (Alpha == 255)
@@ -55,10 +61,11 @@ namespace Arc.YTSubConverter.Formats.Ass
         {
             base.Assign(line);
 
-            AssLine extendedLine = (AssLine)line;
-            Alpha = extendedLine.Alpha;
+            AssLine assLine = (AssLine)line;
+            Alpha = assLine.Alpha;
             Animations.Clear();
-            Animations.AddRange(extendedLine.Animations);
+            Animations.AddRange(assLine.Animations);
+            KaraokeType = assLine.KaraokeType;
         }
     }
 }

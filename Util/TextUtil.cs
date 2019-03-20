@@ -1,32 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Arc.YTSubConverter.Util
 {
-    public static class TextUtil
+    internal static class TextUtil
     {
         private static readonly Dictionary<string, Measurer> Measurers = new Dictionary<string, Measurer>();
 
-        public static string Repeat(this string str, int times)
-        {
-            if (times < 0)
-                throw new ArgumentOutOfRangeException(nameof(times));
-
-            if (times == 0)
-                return string.Empty;
-
-            if (times == 1)
-                return str;
-
-            StringBuilder result = new StringBuilder();
-            for (int i = 0; i < times; i++)
-            {
-                result.Append(str);
-            }
-            return result.ToString();
-        }
+        public static readonly CharacterRange HiraganaRange = new CharacterRange((char)0x3041, (char)0x3097);
+        public static readonly CharacterRange KatakanaRange = new CharacterRange((char)0x30A0, (char)0x3100);
+        public static readonly CharacterRange IdeographExtensionRange = new CharacterRange((char)0x3400, (char)0x4DB6);
+        public static readonly CharacterRange IdeographRange = new CharacterRange((char)0x4E00, (char)0x9FCC);
+        public static readonly CharacterRange IdeographCompatibilityRange = new CharacterRange((char)0xF900, (char)0xFA6B);
+        public static readonly CharacterRange HangulRange = new CharacterRange((char)0xAC00, (char)0xD7A4);
 
         public static int MeasureWidth(string text, string font, int pointSize, bool bold, bool italic, int pitch)
         {

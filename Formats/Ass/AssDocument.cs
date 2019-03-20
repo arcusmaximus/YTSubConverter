@@ -1,68 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Arc.YTSubConverter.Animations;
+using Arc.YTSubConverter.Formats.Ass.Tags;
 using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter.Formats.Ass
 {
-    internal partial class AssDocument : SubtitleDocument
+    internal class AssDocument : SubtitleDocument
     {
-        private delegate void TagHandler(TagContext context, string arg);
-        private delegate void TransformTagHandler(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg);
-
-        private static readonly Dictionary<string, TagHandler> TagHandlers;
-        private static readonly Dictionary<string, TransformTagHandler> TransformTagHandlers;
-
-        static AssDocument()
-        {
-            TagHandlers = new Dictionary<string, TagHandler>
-                          {
-                              { "b", HandleBoldTag },
-                              { "i", HandleItalicTag },
-                              { "u", HandleUnderlineTag },
-                              { "fn", HandleFontTag },
-                              { "c", HandleForeColorTag },
-                              { "1c", HandleForeColorTag },
-                              { "2c", HandleSecondaryColorTag },
-                              { "3c", HandleOutlineColorTag },
-                              { "4c", HandleShadowColorTag },
-                              { "1a", HandleForeColorAlphaTag },
-                              { "2a", HandleSecondaryColorAlphaTag },
-                              { "3a", HandleOutlineAlphaTag },
-                              { "4a", HandleShadowAlphaTag },
-                              { "pos", HandlePositionTag },
-                              { "an", HandleAlignmentTag },
-                              { "k", HandleDurationTag },
-                              { "r", HandleResetTag },
-                              { "fad", HandleSimpleFadeTag },
-                              { "fade", HandleComplexFadeTag },
-                              { "move", HandleMoveTag },
-                              { "ytshake", HandleShakeTag },
-                              { "ytchroma", HandleChromaTag },
-                              { "t", HandleTransformTag }
-                          };
-
-            TransformTagHandlers = new Dictionary<string, TransformTagHandler>
-                                   {
-                                       { "c", HandleTransformForeColorTag },
-                                       { "1c", HandleTransformForeColorTag },
-                                       { "2c", HandleTransformSecondaryColorTag },
-                                       { "3c", HandleTransformOutlineColorTag },
-                                       { "4c", HandleTransformShadowColorTag },
-                                       { "1a", HandleTransformForeColorAlphaTag },
-                                       { "2a", HandleTransformSecondaryColorAlphaTag },
-                                       { "3a", HandleTransformOutlineAlphaTag },
-                                       { "4a", HandleTransformShadowAlphaTag }
-                                   };
-        }
+        private readonly Dictionary<string, AssTagHandlerBase> _tagHandlers = new Dictionary<string, AssTagHandlerBase>();
 
         public AssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
         {
+            RegisterTagHandlers();
+
             Dictionary<string, AssDocumentSection> fileSections = ReadDocument(filePath);
 
             AssDocumentSection infoSection = fileSections["Script Info"];
@@ -95,6 +50,39 @@ namespace Arc.YTSubConverter.Formats.Ass
         public List<AssStyle> Styles
         {
             get;
+        }
+
+        private void RegisterTagHandlers()
+        {
+            RegisterTagHandler(new AssAlignmentTagHandler());
+            RegisterTagHandler(new AssBoldTagHandler());
+            RegisterTagHandler(new AssChromaTagHandler());
+            RegisterTagHandler(new AssComplexFadeTagHandler());
+            RegisterTagHandler(new AssFontTagHandler());
+            RegisterTagHandler(new AssForeAlphaTagHandler());
+            RegisterTagHandler(new AssForeColorTagHandler("c"));
+            RegisterTagHandler(new AssForeColorTagHandler("1c"));
+            RegisterTagHandler(new AssItalicTagHandler());
+            RegisterTagHandler(new AssKaraokeTagHandler());
+            RegisterTagHandler(new AssKaraokeTypeTagHandler());
+            RegisterTagHandler(new AssMoveTagHandler());
+            RegisterTagHandler(new AssOutlineAlphaTagHandler());
+            RegisterTagHandler(new AssOutlineColorTagHandler());
+            RegisterTagHandler(new AssPositionTagHandler());
+            RegisterTagHandler(new AssResetTagHandler());
+            RegisterTagHandler(new AssSecondaryAlphaTagHandler());
+            RegisterTagHandler(new AssSecondaryColorTagHandler());
+            RegisterTagHandler(new AssShadowAlphaTagHandler());
+            RegisterTagHandler(new AssShadowColorTagHandler());
+            RegisterTagHandler(new AssShakeTagHandler());
+            RegisterTagHandler(new AssSimpleFadeTagHandler());
+            RegisterTagHandler(new AssTransformTagHandler());
+            RegisterTagHandler(new AssUnderlineTagHandler());
+        }
+
+        private void RegisterTagHandler(AssTagHandlerBase handler)
+        {
+            _tagHandlers.Add(handler.Tag, handler);
         }
 
         private Dictionary<string, AssDocumentSection> ReadDocument(string filePath)
@@ -149,7 +137,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             DateTime endTime = TimeUtil.SnapTimeToFrame(dialogue.End).AddMilliseconds(32);
             AssLine line = new AssLine(startTime, endTime) { AnchorPoint = style.AnchorPoint };
 
-            TagContext context = new TagContext
+            AssTagContext context = new AssTagContext
                                  {
                                      Document = this,
                                      Dialogue = dialogue,
@@ -181,8 +169,8 @@ namespace Arc.YTSubConverter.Formats.Ass
                 CaptureCollection arguments = match.Groups["arg"].Captures;
                 for (int i = 0; i < tags.Count; i++)
                 {
-                    if (TagHandlers.TryGetValue(tags[i].Value, out TagHandler handler))
-                        handler(context, arguments[i].Value);
+                    if (_tagHandlers.TryGetValue(tags[i].Value, out AssTagHandlerBase handler))
+                        handler.Handle(context, arguments[i].Value);
                 }
 
                 start = match.Index + match.Length;
@@ -195,7 +183,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
 
             List<AssLine> lines = new List<AssLine> { line };
-            foreach (TagContext.PostProcessor postProcessor in context.PostProcessors)
+            foreach (AssTagContext.PostProcessor postProcessor in context.PostProcessors)
             {
                 List<AssLine> extraLines = postProcessor();
                 if (extraLines != null)
@@ -205,541 +193,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             return lines;
         }
 
-        private static void HandleBoldTag(TagContext context, string arg)
-        {
-            context.Section.Bold = arg != "0";
-        }
-
-        private static void HandleItalicTag(TagContext context, string arg)
-        {
-            context.Section.Italic = arg != "0";
-        }
-
-        private static void HandleUnderlineTag(TagContext context, string arg)
-        {
-            context.Section.Underline = arg != "0";
-        }
-
-        private static void HandleFontTag(TagContext context, string arg)
-        {
-            context.Section.Font = arg;
-        }
-
-        private static void HandleForeColorTag(TagContext context, string arg)
-        {
-            context.Section.ForeColor = ParseColor(arg, context.Section.ForeColor.A);
-            context.Section.Animations.RemoveAll(a => a is ForeColorAnimation);
-        }
-
-        private static void HandleSecondaryColorTag(TagContext context, string arg)
-        {
-            context.Section.SecondaryColor = ParseColor(arg, context.Section.SecondaryColor.A);
-            context.Section.Animations.RemoveAll(a => a is SecondaryColorAnimation);
-        }
-
-        private static void HandleOutlineColorTag(TagContext context, string arg)
-        {
-            if (!context.Style.HasOutline)
-                return;
-
-            if (context.Style.OutlineIsBox)
-            {
-                context.Section.BackColor = ParseColor(arg, context.Section.BackColor.A);
-                context.Section.Animations.RemoveAll(a => a is BackColorAnimation);
-            }
-            else
-            {
-                context.Section.ShadowColor = ParseColor(arg, context.Section.ShadowColor.A);
-                context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
-            }
-        }
-
-        private static void HandleShadowColorTag(TagContext context, string arg)
-        {
-            if (!context.Style.HasShadow)
-                return;
-
-            context.Section.ShadowColor = ParseColor(arg, context.Section.ShadowColor.A);
-            context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
-        }
-
-        private static void HandleForeColorAlphaTag(TagContext context, string arg)
-        {
-            int alpha = 255 - ParseHex(arg);
-            context.Section.ForeColor = ColorUtil.ChangeColorAlpha(context.Section.ForeColor, alpha);
-            context.Section.Animations.RemoveAll(a => a is ForeColorAnimation);
-        }
-
-        private static void HandleSecondaryColorAlphaTag(TagContext context, string arg)
-        {
-            int alpha = 255 - ParseHex(arg);
-            context.Section.SecondaryColor = ColorUtil.ChangeColorAlpha(context.Section.SecondaryColor, alpha);
-            context.Section.Animations.RemoveAll(a => a is SecondaryColorAnimation);
-        }
-
-        private static void HandleOutlineAlphaTag(TagContext context, string arg)
-        {
-            if (!context.Style.HasOutline)
-                return;
-
-            int alpha = 255 - ParseHex(arg);
-
-            if (context.Style.OutlineIsBox)
-            {
-                context.Section.BackColor = ColorUtil.ChangeColorAlpha(context.Section.BackColor, alpha);
-                context.Section.Animations.RemoveAll(a => a is BackColorAnimation);
-            }
-            else
-            {
-                context.Section.ShadowColor = ColorUtil.ChangeColorAlpha(context.Section.ShadowColor, alpha);
-                context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
-            }
-        }
-
-        private static void HandleShadowAlphaTag(TagContext context, string arg)
-        {
-            if (!context.Style.HasShadow)
-                return;
-
-            int alpha = 255 - ParseHex(arg);
-            context.Section.ShadowColor = ColorUtil.ChangeColorAlpha(context.Section.ShadowColor, alpha);
-            context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
-        }
-
-        private static void HandlePositionTag(TagContext context, string arg)
-        {
-            List<float> coords = ParseNumberList(arg);
-            if (coords == null || coords.Count != 2 || context.Line.Position != null)
-                return;
-
-            context.Line.Position = new PointF(coords[0], coords[1]);
-        }
-
-        private static void HandleAlignmentTag(TagContext context, string arg)
-        {
-            if (!int.TryParse(arg, out int alignment))
-                return;
-
-            context.Line.AnchorPoint = GetAnchorPointFromAlignment(alignment);
-        }
-
-        private static void HandleDurationTag(TagContext context, string arg)
-        {
-            int centiSeconds = int.Parse(arg);
-            context.Section.Duration = TimeSpan.FromMilliseconds(centiSeconds * 10);
-        }
-
-        private static void HandleResetTag(TagContext context, string arg)
-        {
-            ApplyStyle(context.Section, context.Style, context.StyleOptions);
-        }
-
-        private static void HandleSimpleFadeTag(TagContext context, string arg)
-        {
-            List<float> times = ParseNumberList(arg);
-            if (times == null || times.Count != 2)
-                return;
-
-            AssLine line = context.Line;
-            DateTime fadeInStartTime = line.Start;
-            DateTime fadeInEndTime = line.Start.AddMilliseconds(times[0]);
-            DateTime fadeOutStartTime = line.End.AddMilliseconds(-times[1]);
-            DateTime fadeOutEndTime = line.End;
-
-            if (fadeInEndTime > fadeInStartTime)
-                line.Animations.Add(new FadeAnimation(fadeInStartTime, 0, fadeInEndTime, 255));
-
-            if (fadeOutEndTime > fadeOutStartTime)
-                line.Animations.Add(new FadeAnimation(fadeOutStartTime, 255, fadeOutEndTime, 0));
-        }
-
-        private static void HandleComplexFadeTag(TagContext context, string arg)
-        {
-            List<float> args = ParseNumberList(arg);
-            if (args == null || args.Count != 7)
-                return;
-
-            AssLine line = context.Line;
-
-            int initialAlpha = 255 - (int)args[0];
-            int midAlpha = 255 - (int)args[1];
-            int finalAlpha = 255 - (int)args[2];
-
-            DateTime fadeInStartTime = line.Start.AddMilliseconds(args[3]);
-            DateTime fadeInEndTime = line.Start.AddMilliseconds(args[4]);
-            DateTime fadeOutStartTime = line.Start.AddMilliseconds(args[5]);
-            DateTime fadeOutEndTime = line.Start.AddMilliseconds(args[6]);
-
-            if (fadeInEndTime > fadeInStartTime)
-                line.Animations.Add(new FadeAnimation(fadeInStartTime, initialAlpha, fadeInEndTime, midAlpha));
-
-            if (fadeOutEndTime > fadeOutStartTime)
-                line.Animations.Add(new FadeAnimation(fadeOutStartTime, midAlpha, fadeOutEndTime, finalAlpha));
-        }
-
-        private static void HandleMoveTag(TagContext context, string arg)
-        {
-            List<float> args = ParseNumberList(arg);
-            if (args == null || args.Count < 4)
-                return;
-
-            AssLine line = context.Line;
-            PointF startPos = new PointF(args[0], args[1]);
-            PointF endPos = new PointF(args[2], args[3]);
-
-            DateTime startTime = line.Start;
-            DateTime endTime = line.End;
-            if (args.Count >= 6)
-            {
-                startTime = line.Start.AddMilliseconds(args[4]);
-                endTime = line.Start.AddMilliseconds(args[5]);
-            }
-
-            if (endTime > startTime)
-                line.Animations.Add(new MoveAnimation(startTime, startPos, endTime, endPos));
-        }
-
-        /// <summary>
-        /// Nonstandard tag: \ytshake, \ytshake(radius), \ytshake(radiusX, radiusY), \ytshake(radius, t1, t2), \ytshake(radiusX, radiusY, t1, t2)
-        /// </summary>
-        private static void HandleShakeTag(TagContext context, string arg)
-        {
-            if (!TryParseShakeArgs(context, arg, out SizeF radius, out DateTime startTime, out DateTime endTime))
-                return;
-
-            context.PostProcessors.Add(
-                () =>
-                {
-                    if (context.Line.Position != null)
-                        context.Line.Animations.Add(new ShakeAnimation(startTime, endTime, context.Line.Position.Value, radius));
-
-                    return null;
-                }
-            );
-        }
-
-        private static bool TryParseShakeArgs(TagContext context, string arg, out SizeF radius, out DateTime startTime, out DateTime endTime)
-        {
-            int defaultRadius = 20;
-            radius = new SizeF(defaultRadius, defaultRadius);
-            startTime = context.Line.Start;
-            endTime = context.Line.End;
-
-            if (string.IsNullOrWhiteSpace(arg))
-                return true;
-
-            List<float> args = ParseNumberList(arg);
-            if (args == null)
-                return false;
-
-            switch (args.Count)
-            {
-                case 0:
-                    return true;
-
-                case 1:
-                    radius = new SizeF(args[0], args[0]);
-                    return true;
-
-                case 2:
-                    radius = new SizeF(args[0], args[1]);
-                    return true;
-
-                case 3:
-                    radius = new SizeF(args[0], args[0]);
-                    startTime = context.Line.Start.AddMilliseconds(args[1]);
-                    endTime = context.Line.Start.AddMilliseconds(args[2]);
-                    return true;
-
-                case 4:
-                    radius = new SizeF(args[0], args[1]);
-                    startTime = context.Line.Start.AddMilliseconds(args[2]);
-                    endTime = context.Line.Start.AddMilliseconds(args[3]);
-                    return true;
-
-                default:
-                    return false;
-            }
-        }
-
-        /// <summary>
-        /// Nonstandard tag: \ytchroma(intime, outtime), \ytchroma(offsetX, offsetY, intime, outtime), \ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)
-        /// </summary>
-        private static void HandleChromaTag(TagContext context, string arg)
-        {
-            if (!TryParseChromaArgs(arg, out List<Color> colors, out int alpha, out int maxOffsetX, out int maxOffsetY, out int chromaInMs, out int chromeOutMs))
-                return;
-
-            context.PostProcessors.Add(
-                () =>
-                {
-                    AssLine originalLine = context.Line;
-                    if (originalLine.Position == null)
-                        return null;
-
-                    List<AssLine> chromaLines = new List<AssLine>();
-
-                    if (colors.Count == 0)
-                    {
-                        Color baseColor = context.Line.Sections.Count > 0 ? context.Line.Sections[0].ForeColor : Color.White;
-                        colors.Add(Color.FromArgb((int)(baseColor.R * alpha / 255.0f), 255, 0, 0));
-                        colors.Add(Color.FromArgb((int)(baseColor.G * alpha / 255.0f), 0, 255, 0));
-                        colors.Add(Color.FromArgb((int)(baseColor.B * alpha / 255.0f), 0, 0, 255));
-                    }
-
-                    if (chromaInMs > 0)
-                    {
-                        chromaLines.AddRange(CreateChromaLines(originalLine, colors, maxOffsetX, maxOffsetY, chromaInMs, true));
-                        originalLine.Start = TimeUtil.SnapTimeToFrame(originalLine.Start.AddMilliseconds(chromaInMs));
-                    }
-
-                    if (chromeOutMs > 0)
-                    {
-                        chromaLines.AddRange(CreateChromaLines(originalLine, colors, maxOffsetX, maxOffsetY, chromeOutMs, false));
-                        originalLine.End = TimeUtil.SnapTimeToFrame(originalLine.End.AddMilliseconds(-chromeOutMs));
-                    }
-
-                    return chromaLines;
-                }
-            );
-        }
-
-        private static bool TryParseChromaArgs(string arg, out List<Color> colors, out int alpha, out int maxOffsetX, out int maxOffsetY, out int chromaInMs, out int chromaOutMs)
-        {
-            colors = new List<Color>();
-            alpha = 128;
-            maxOffsetX = 20;
-            maxOffsetY = 0;
-            chromaInMs = 270;
-            chromaOutMs = 270;
-
-            List<string> args = ParseStringList(arg);
-            if (args == null)
-                return false;
-
-            if (args.Count >= 5)
-                alpha = ParseHex(args[args.Count - 5]);
-
-            if (args.Count >= 4 && !int.TryParse(args[args.Count - 4], out maxOffsetX))
-                return false;
-
-            if (args.Count >= 3 && !int.TryParse(args[args.Count - 3], out maxOffsetY))
-                return false;
-
-            if (args.Count >= 2 && !int.TryParse(args[args.Count - 2], out chromaInMs))
-                return false;
-
-            if (args.Count >= 1 && !int.TryParse(args[args.Count - 1], out chromaOutMs))
-                return false;
-
-            alpha = 255 - alpha;
-            for (int i = 0; i < args.Count - 5; i++)
-            {
-                colors.Add(ParseColor(args[i], alpha));
-            }
-            return true;
-        }
-
-        private static IEnumerable<AssLine> CreateChromaLines(AssLine originalLine, List<Color> colors, int maxOffsetX, int maxOffsetY, int durationMs, bool moveIn)
-        {
-            if (originalLine.Sections.Count == 0)
-                yield break;
-
-            for (int i = 0; i < colors.Count; i++)
-            {
-                if (colors[i].A == 0)
-                    continue;
-
-                AssLine chromaLine = new AssLine(originalLine.Start, originalLine.End) { AnchorPoint = originalLine.AnchorPoint };
-                chromaLine.Sections.Add(
-                    new AssSection(originalLine.Text)
-                    {
-                        ForeColor = colors[i],
-                        Bold = originalLine.Sections[0].Bold,
-                        Italic = originalLine.Sections[0].Italic,
-                        Underline = originalLine.Sections[0].Underline
-                    }
-                );
-
-                float offsetFactor = colors.Count > 1 ? (float)i / (colors.Count - 1) : 0.5f;
-                float offsetX = offsetFactor * (-maxOffsetX * 2) + maxOffsetX;
-                float offsetY = offsetFactor * (-maxOffsetY * 2) + maxOffsetY;
-                PointF farPosition = new PointF(originalLine.Position.Value.X + offsetX, originalLine.Position.Value.Y + offsetY);
-                PointF nearPosition = new PointF(originalLine.Position.Value.X + offsetX / 5, originalLine.Position.Value.Y + offsetY / 5);
-                if (moveIn)
-                {
-                    chromaLine.End = TimeUtil.SnapTimeToFrame(originalLine.Start.AddMilliseconds(durationMs)).AddMilliseconds(32);
-                    chromaLine.Animations.Add(new MoveAnimation(chromaLine.Start, farPosition, chromaLine.End, nearPosition));
-                }
-                else
-                {
-                    chromaLine.Start = TimeUtil.SnapTimeToFrame(originalLine.End.AddMilliseconds(-durationMs));
-                    chromaLine.Animations.Add(new MoveAnimation(chromaLine.Start, nearPosition, chromaLine.End, farPosition));
-                }
-                yield return chromaLine;
-            }
-        }
-
-        private static void HandleTransformTag(TagContext context, string arg)
-        {
-            if (!TryParseTransformArgs(context, arg, out DateTime startTime, out DateTime endTime, out int accel, out string modifiers))
-                return;
-
-            foreach (Match match in Regex.Matches(modifiers, @"\\(?<tag>\d?[a-z]+)(?<arg>[^\\]*)"))
-            {
-                if (TransformTagHandlers.TryGetValue(match.Groups["tag"].Value, out TransformTagHandler handler))
-                    handler(context, startTime, endTime, accel, match.Groups["arg"].Value);
-            }
-        }
-
-        private static bool TryParseTransformArgs(TagContext context, string arg, out DateTime startTime, out DateTime endTime, out int accel, out string modifiers)
-        {
-            startTime = context.Line.Start;
-            endTime = context.Line.End;
-            accel = 1;
-            modifiers = null;
-
-            List<string> args = ParseStringList(arg);
-            if (args == null)
-                return false;
-
-            switch (args.Count)
-            {
-                case 1:
-                {
-                    modifiers = args[0];
-                    return true;
-                }
-
-                case 2:
-                {
-                    if (!int.TryParse(args[0], out accel))
-                        return false;
-
-                    modifiers = args[1];
-                    return true;
-                }
-
-                case 3:
-                {
-                    if (!int.TryParse(args[0], out int t1) ||
-                        !int.TryParse(args[1], out int t2))
-                        return false;
-
-                    startTime = context.Line.Start.AddMilliseconds(t1);
-                    endTime = context.Line.Start.AddMilliseconds(t2);
-                    modifiers = args[2];
-                    return true;
-                }
-
-                case 4:
-                {
-                    if (!int.TryParse(args[0], out int t1) ||
-                        !int.TryParse(args[1], out int t2) ||
-                        !int.TryParse(args[2], out accel))
-                        return false;
-
-                    startTime = context.Line.Start.AddMilliseconds(t1);
-                    endTime = context.Line.Start.AddMilliseconds(t2);
-                    modifiers = args[3];
-                    return true;
-                }
-
-                default:
-                    return false;
-            }
-        }
-
-        private static void HandleTransformForeColorTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c));
-            anim.EndColor = ParseColor(arg, anim.EndColor.A);
-        }
-
-        private static void HandleTransformSecondaryColorTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c));
-            anim.EndColor = ParseColor(arg, anim.EndColor.A);
-        }
-
-        private static void HandleTransformOutlineColorTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            if (!context.Style.HasOutline)
-                return;
-
-            if (context.Style.OutlineIsBox)
-            {
-                BackColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.BackColor, (s, e, c) => new BackColorAnimation(s, c, e, c));
-                anim.EndColor = ParseColor(arg, anim.EndColor.A);
-            }
-            else
-            {
-                HandleTransformShadowColorTag(context, startTime, endTime, accel, arg);
-            }
-        }
-
-        private static void HandleTransformShadowColorTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            ShadowColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ShadowColor, (s, e, c) => new ShadowColorAnimation(s, c, e, c));
-            anim.EndColor = ParseColor(arg, anim.EndColor.A);
-        }
-
-        private static void HandleTransformForeColorAlphaTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c));
-            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
-        }
-
-        private static void HandleTransformSecondaryColorAlphaTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c));
-            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
-        }
-
-        private static void HandleTransformOutlineAlphaTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            if (!context.Style.HasOutline)
-                return;
-
-            if (context.Style.OutlineIsBox)
-            {
-                BackColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.BackColor, (s, e, c) => new BackColorAnimation(s, c, e, c));
-                anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
-            }
-            else
-            {
-                HandleTransformShadowAlphaTag(context, startTime, endTime, accel, arg);
-            }
-        }
-
-        private static void HandleTransformShadowAlphaTag(TagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
-        {
-            ShadowColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ShadowColor, (s, e, c) => new ShadowColorAnimation(s, c, e, c));
-            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
-        }
-
-        private static T FetchColorAnimation<T>(
-            TagContext context,
-            DateTime startTime,
-            DateTime endTime,
-            Func<AssSection, Color> getSectionColor,
-            Func<DateTime, DateTime, Color, T> createAnim
-        )
-            where T : ColorAnimation
-        {
-            AssSection section = context.Section;
-            T anim = section.Animations.OfType<T>().FirstOrDefault(a => a.StartTime == startTime && a.EndTime == endTime);
-            if (anim == null)
-            {
-                T prevAnim = section.Animations.OfType<T>().LastOrDefault();
-                anim = createAnim(startTime, endTime, prevAnim?.EndColor ?? getSectionColor(section));
-                section.Animations.Add(anim);
-            }
-
-            return anim;
-        }
-
-        private static void ApplyStyle(AssSection section, AssStyle style, AssStyleOptions options)
+        internal static void ApplyStyle(AssSection section, AssStyle style, AssStyleOptions options)
         {
             section.Font = style.Font;
             section.Bold = style.Bold;
@@ -749,12 +203,12 @@ namespace Arc.YTSubConverter.Formats.Ass
             section.SecondaryColor = style.SecondaryColor;
             if (options?.IsKaraoke ?? false)
             {
-                section.CurrentWordTextColor = options.CurrentWordTextColor;
+                section.CurrentWordForeColor = options.CurrentWordTextColor;
                 section.CurrentWordShadowColor = options.CurrentWordShadowColor;
             }
             else
             {
-                section.CurrentWordTextColor = Color.Empty;
+                section.CurrentWordForeColor = Color.Empty;
                 section.CurrentWordShadowColor = Color.Empty;
             }
 
@@ -795,82 +249,165 @@ namespace Arc.YTSubConverter.Formats.Ass
                 yield break;
             }
 
-            SortedList<TimeSpan, int> visibleSectionsPerStep = GetKaraokeSteps(line);
-
-            for (int stepIdx = 0; stepIdx < visibleSectionsPerStep.Count; stepIdx++)
+            SortedList<TimeSpan, int> activeSectionsPerStep = GetKaraokeSteps(line);
+            for (int stepIdx = 0; stepIdx < activeSectionsPerStep.Count; stepIdx++)
             {
-                TimeSpan timeOffset = visibleSectionsPerStep.Keys[stepIdx];
-                int numVisibleSections = visibleSectionsPerStep.Values[stepIdx];
-
-                DateTime start = TimeUtil.SnapTimeToFrame((line.Start + timeOffset).AddMilliseconds(20));
-                if (start >= line.End)
-                    continue;
-
-                DateTime end;
-                if (stepIdx < visibleSectionsPerStep.Count - 1)
-                    end = TimeUtil.SnapTimeToFrame((line.Start + visibleSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20));
-                else
-                    end = line.End;
-
-                AssLine stepLine = (AssLine)line.Clone();
-                stepLine.Start = start;
-                stepLine.End = end;
-
-                foreach (AssSection section in stepLine.Sections.Take(numVisibleSections))
-                {
-                    section.Animations.RemoveAll(a => a is SecondaryColorAnimation);
-                }
-
-                foreach (AssSection section in stepLine.Sections.Skip(numVisibleSections))
-                {
-                    section.ForeColor = section.SecondaryColor;
-                    section.Animations.RemoveAll(a => a is ForeColorAnimation);
-
-                    foreach (SecondaryColorAnimation anim in section.Animations.OfType<SecondaryColorAnimation>().ToList())
-                    {
-                        section.Animations.Remove(anim);
-                        section.Animations.Add(new ForeColorAnimation(anim.StartTime, anim.StartColor, anim.EndTime, anim.EndColor));
-                    }
-
-                    if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
-                        section.ShadowTypes = ShadowType.None;
-                }
-
-                AssSection singingSection = (AssSection)stepLine.Sections[numVisibleSections - 1];
-                if (!singingSection.CurrentWordTextColor.IsEmpty)
-                    singingSection.ForeColor = singingSection.CurrentWordTextColor;
-
-                if (!singingSection.CurrentWordShadowColor.IsEmpty)
-                    singingSection.ShadowColor = singingSection.CurrentWordShadowColor;
-
-                // Hack: make sure YttDocument will also recognize the final (single-color) step as a karaoke line
-                // so it gets the exact same position as the previous steps
-                stepLine.Sections.Add(new AssSection(string.Empty));
-
-                yield return stepLine;
+                yield return CreateKaraokeStepLine(line, activeSectionsPerStep, stepIdx);
             }
         }
 
         private static SortedList<TimeSpan, int> GetKaraokeSteps(AssLine line)
         {
-            SortedList<TimeSpan, int> visibleSectionsPerStep = new SortedList<TimeSpan, int>();
-            TimeSpan currentTimeOffset = TimeSpan.Zero;
-            int currentVisibleSections = 0;
+            SortedList<TimeSpan, int> activeSectionsPerStep = new SortedList<TimeSpan, int>();
+            TimeSpan timeOffset = TimeSpan.Zero;
+            int numActiveSections = 0;
             foreach (AssSection section in line.Sections)
             {
-                currentVisibleSections++;
+                numActiveSections++;
                 if (section.Duration > TimeSpan.Zero)
                 {
-                    visibleSectionsPerStep[currentTimeOffset] = currentVisibleSections;
-                    currentTimeOffset += section.Duration;
+                    activeSectionsPerStep[timeOffset] = numActiveSections;
+                    timeOffset += section.Duration;
                 }
                 else
                 {
-                    TimeSpan prevTimeOffset = visibleSectionsPerStep.Count > 0 ? visibleSectionsPerStep.Keys.Last() : TimeSpan.Zero;
-                    visibleSectionsPerStep[prevTimeOffset] = currentVisibleSections;
+                    TimeSpan prevTimeOffset = activeSectionsPerStep.Count > 0 ? activeSectionsPerStep.Keys.Last() : TimeSpan.Zero;
+                    activeSectionsPerStep[prevTimeOffset] = numActiveSections;
                 }
             }
-            return visibleSectionsPerStep;
+            return activeSectionsPerStep;
+        }
+
+        private static AssLine CreateKaraokeStepLine(AssLine originalLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
+        {
+            TimeSpan timeOffset = activeSectionsPerStep.Keys[stepIdx];
+            int numActiveSections = activeSectionsPerStep.Values[stepIdx];
+
+            DateTime startTime = TimeUtil.SnapTimeToFrame((originalLine.Start + timeOffset).AddMilliseconds(20));
+            if (startTime >= originalLine.End)
+                return null;
+
+            DateTime endTime;
+            if (stepIdx < activeSectionsPerStep.Count - 1)
+                endTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20));
+            else
+                endTime = originalLine.End;
+
+            AssLine stepLine = (AssLine)originalLine.Clone();
+            stepLine.Start = startTime;
+            stepLine.End = endTime;
+
+            foreach (AssSection section in stepLine.Sections.Take(numActiveSections))
+            {
+                section.Animations.RemoveAll(a => a is SecondaryColorAnimation);
+            }
+
+            foreach (AssSection section in stepLine.Sections.Skip(numActiveSections))
+            {
+                section.ForeColor = section.SecondaryColor;
+
+                section.Animations.RemoveAll(a => a is ForeColorAnimation);
+                foreach (SecondaryColorAnimation anim in section.Animations.OfType<SecondaryColorAnimation>().ToList())
+                {
+                    section.Animations.Remove(anim);
+                    section.Animations.Add(new ForeColorAnimation(anim.StartTime, anim.StartColor, anim.EndTime, anim.EndColor));
+                }
+
+                if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
+                    section.ShadowTypes = ShadowType.None;
+            }
+
+            // Hack: make sure YttDocument will also recognize the final (single-color) step as a karaoke line
+            // so it gets the exact same position as the previous steps
+            stepLine.Sections.Add(new AssSection(string.Empty));
+
+            AddKaraokeEffects(originalLine, stepLine, activeSectionsPerStep, stepIdx);
+            return stepLine;
+        }
+
+        private static void AddKaraokeEffects(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
+        {
+            int numActiveSections = activeSectionsPerStep.Values[stepIdx];
+            AssSection singingSection = (AssSection)stepLine.Sections[numActiveSections - 1];
+
+            switch (stepLine.KaraokeType)
+            {
+                case KaraokeType.Simple:
+                    ApplySimpleKaraokeEffects(singingSection);
+                    break;
+
+                case KaraokeType.Fade:
+                    ApplyFadeKaraokeEffect(originalLine, stepLine, activeSectionsPerStep, stepIdx);
+                    break;
+
+                case KaraokeType.Glitch:
+                    ApplyGlitchKaraokeEffect(stepLine, singingSection);
+                    break;
+            }
+        }
+
+        private static void ApplySimpleKaraokeEffects(AssSection singingSection)
+        {
+            if (!singingSection.CurrentWordForeColor.IsEmpty)
+                singingSection.ForeColor = singingSection.CurrentWordForeColor;
+
+            if (!singingSection.CurrentWordShadowColor.IsEmpty)
+                singingSection.ShadowColor = singingSection.CurrentWordShadowColor;
+        }
+
+        private static void ApplyFadeKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
+        {
+            int numActiveSections = activeSectionsPerStep.Values[stepIdx];
+            AssSection singingSection = (AssSection)stepLine.Sections[numActiveSections - 1];
+            ApplyFadeInKaraokeEffect(stepLine, singingSection);
+            ApplyFadeOutKaraokeEffect(originalLine, stepLine, activeSectionsPerStep, stepIdx);
+        }
+
+        private static void ApplyFadeInKaraokeEffect(AssLine stepLine, AssSection singingSection)
+        {
+            DateTime fadeEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(500), stepLine.End);
+
+            if (singingSection.CurrentWordForeColor.IsEmpty)
+            {
+                if (singingSection.ForeColor != singingSection.SecondaryColor)
+                    singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.ForeColor));
+            }
+            else
+            {
+                if (singingSection.CurrentWordForeColor != singingSection.SecondaryColor)
+                    singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.CurrentWordForeColor));
+            }
+
+            if (!singingSection.CurrentWordShadowColor.IsEmpty && singingSection.CurrentWordShadowColor != singingSection.ShadowColor)
+                singingSection.Animations.Add(new ShadowColorAnimation(stepLine.Start, singingSection.ShadowColor, fadeEndTime, singingSection.CurrentWordShadowColor));
+        }
+
+        private static void ApplyFadeOutKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
+        {
+            int stepFirstSectionIdx = 0;
+            for (int prevStepIdx = 0; prevStepIdx < stepIdx; prevStepIdx++)
+            {
+                DateTime fadeStartTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[prevStepIdx + 1]).AddMilliseconds(20));
+                DateTime fadeEndTime = fadeStartTime.AddMilliseconds(1000);
+                int stepLastSectionIdx = activeSectionsPerStep.Values[prevStepIdx] - 1;
+                for (int sectionIdx = stepFirstSectionIdx; sectionIdx <= stepLastSectionIdx; sectionIdx++)
+                {
+                    AssSection section = (AssSection)stepLine.Sections[sectionIdx];
+                    if (!section.CurrentWordForeColor.IsEmpty && section.CurrentWordForeColor != section.ForeColor)
+                        section.Animations.Add(new ForeColorAnimation(fadeStartTime, section.CurrentWordForeColor, fadeEndTime, section.ForeColor));
+
+                    if (!section.CurrentWordShadowColor.IsEmpty & section.CurrentWordShadowColor != section.ShadowColor)
+                        section.Animations.Add(new ShadowColorAnimation(fadeStartTime, section.CurrentWordShadowColor, fadeEndTime, section.ShadowColor));
+                }
+
+                stepFirstSectionIdx = stepLastSectionIdx + 1;
+            }
+        }
+
+        private static void ApplyGlitchKaraokeEffect(AssLine stepLine, AssSection singingSection)
+        {
+            DateTime glitchEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(70), stepLine.End);
+            singingSection.Animations.Add(new GlitchingCharAnimation(stepLine.Start, glitchEndTime, new Util.CharacterRange('a', 'z'), new Util.CharacterRange('A', 'Z')));
         }
 
         private static void MergeIdenticallyFormattedSections(Line line)
@@ -925,67 +462,6 @@ namespace Arc.YTSubConverter.Formats.Ass
                 default:
                     throw new ArgumentException($"{alignment} is not a valid alignment");
             }
-        }
-
-        private static int ParseHex(string arg)
-        {
-            if (!arg.StartsWith("&H") || !arg.EndsWith("&"))
-                return 0;
-
-            int.TryParse(arg.Substring(2, arg.Length - 3), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);
-            return value;
-        }
-
-        private static Color ParseColor(string arg, int alpha)
-        {
-            int bgr = ParseHex(arg);
-            byte r = (byte)bgr;
-            byte g = (byte)(bgr >> 8);
-            byte b = (byte)(bgr >> 16);
-            return Color.FromArgb(alpha, r, g, b);
-        }
-
-        private static List<float> ParseNumberList(string arg)
-        {
-            Match match = Regex.Match(arg, @"^\s*\((?:\s*,?\s*([\d\.]+))+\s*\)\s*$");
-            if (!match.Success)
-                return null;
-
-            List<float> list = new List<float>();
-            foreach (Capture capture in match.Groups[1].Captures)
-            {
-                list.Add(float.Parse(capture.Value, CultureInfo.InvariantCulture));
-            }
-            return list;
-        }
-
-        private static List<string> ParseStringList(string arg)
-        {
-            if (string.IsNullOrWhiteSpace(arg))
-                return new List<string>();
-
-            Match match = Regex.Match(arg, @"^\s*\((?:\s*,?\s*([^,\(\)]+))+\)\s*$");
-            if (!match.Success)
-                return null;
-
-            return match.Groups[1].Captures
-                                  .Cast<Capture>()
-                                  .Select(c => c.Value.Trim())
-                                  .ToList();
-        }
-
-        private class TagContext
-        {
-            public AssDocument Document;
-            public AssDialogue Dialogue;
-            public AssStyle Style;
-            public AssStyleOptions StyleOptions;
-            public AssLine Line;
-            public AssSection Section;
-
-            public delegate List<AssLine> PostProcessor();
-
-            public readonly List<PostProcessor> PostProcessors = new List<PostProcessor>();
         }
     }
 }

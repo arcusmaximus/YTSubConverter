@@ -18,7 +18,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             set;
         }
 
-        public Color CurrentWordTextColor
+        public Color CurrentWordForeColor
         {
             get;
             set;
@@ -49,13 +49,13 @@ namespace Arc.YTSubConverter.Formats.Ass
         {
             base.Assign(section);
 
-            AssSection extendedSection = (AssSection)section;
-            SecondaryColor = extendedSection.SecondaryColor;
-            CurrentWordTextColor = extendedSection.CurrentWordTextColor;
-            CurrentWordShadowColor = extendedSection.CurrentWordShadowColor;
-            Duration = extendedSection.Duration;
+            AssSection assSection = (AssSection)section;
+            SecondaryColor = assSection.SecondaryColor;
+            CurrentWordForeColor = assSection.CurrentWordForeColor;
+            CurrentWordShadowColor = assSection.CurrentWordShadowColor;
+            Duration = assSection.Duration;
             Animations.Clear();
-            Animations.AddRange(extendedSection.Animations);
+            Animations.AddRange(assSection.Animations);
         }
     }
 }

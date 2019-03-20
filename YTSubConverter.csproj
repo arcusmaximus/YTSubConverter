@@ -59,6 +59,7 @@
     <Compile Include="Animations\ColorAnimation.cs" />
     <Compile Include="Animations\FadeAnimation.cs" />
     <Compile Include="Animations\ForeColorAnimation.cs" />
+    <Compile Include="Animations\GlitchingCharAnimation.cs" />
     <Compile Include="Animations\MoveAnimation.cs" />
     <Compile Include="Animations\SecondaryColorAnimation.cs" />
     <Compile Include="Animations\ShadowColorAnimation.cs" />
@@ -70,6 +71,31 @@
     <Compile Include="Formats\Ass\AssLine.cs" />
     <Compile Include="Formats\Ass\AssSection.cs" />
     <Compile Include="Formats\Ass\AssStyle.cs" />
+    <Compile Include="Formats\Ass\AssTagContext.cs" />
+    <Compile Include="Formats\Ass\Tags\AssAlignmentTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssBoldTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssChromaTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssComplexFadeTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssFontTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssForeAlphaTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssForeColorTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssItalicTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssKaraokeTypeTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssKaraokeTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssMoveTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssOutlineAlphaTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssOutlineColorTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssPositionTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssResetTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssSecondaryAlphaTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssSecondaryColorTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssShadowAlphaTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssShadowColorTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssShakeTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssSimpleFadeTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssTagHandlerBase.cs" />
+    <Compile Include="Formats\Ass\Tags\AssTransformTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssUnderlineTagHandler.cs" />
     <Compile Include="Formats\RtDocument.cs" />
     <Compile Include="Formats\SbvDocument.cs" />
     <Compile Include="Formats\SrtDocument.cs" />
@@ -77,10 +103,10 @@
     <Compile Include="Formats\YttDocument.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="SectionFormatComparer.cs" />
-    <Compile Include="Animations\TimeRange.cs" />
     <Compile Include="Util\AnchorPointUtil.cs" />
     <Compile Include="AssStyleOptions.cs" />
     <Compile Include="AssStyleOptionsList.cs" />
+    <Compile Include="Util\CharacterRange.cs" />
     <Compile Include="Util\ColorUtil.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -95,6 +121,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StylePreviewGenerator.cs" />
+    <Compile Include="Util\Range.cs" />
+    <Compile Include="Util\TimeRange.cs" />
     <Compile Include="Util\TimeUtil.cs" />
     <Compile Include="Util\Extensions.cs" />
     <Compile Include="Util\TextUtil.cs" />
