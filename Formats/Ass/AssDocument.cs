@@ -289,7 +289,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 
             DateTime endTime;
             if (stepIdx < activeSectionsPerStep.Count - 1)
-                endTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20));
+                endTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20)).AddMilliseconds(-1);
             else
                 endTime = originalLine.End;
 

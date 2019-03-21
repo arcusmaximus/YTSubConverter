@@ -148,8 +148,6 @@ namespace Arc.YTSubConverter.Animations
 
             const int frameStepSize = 2;
             int lastIterationFrame = rangeStartFrame + (rangeEndFrame - 1 - rangeStartFrame) / frameStepSize * frameStepSize;
-            if (lastIterationFrame == rangeStartFrame)
-                yield break;
 
             bool needTextReset = animations.Any(a => a.Animation.AffectsText);
 
@@ -158,7 +156,7 @@ namespace Arc.YTSubConverter.Animations
             {
                 frameLine = (AssLine)frameLine.Clone();
                 frameLine.Start = TimeUtil.FrameToTime(frame);
-                frameLine.End = TimeUtil.FrameToTime(Math.Min(frame + frameStepSize, rangeEndFrame));
+                frameLine.End = frame < lastIterationFrame ? TimeUtil.FrameToTime(frame + frameStepSize) : timeRange.End;
                 if (needTextReset)
                     ResetText(frameLine, originalLine);
 

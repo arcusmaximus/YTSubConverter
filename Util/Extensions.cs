@@ -55,6 +55,26 @@ namespace Arc.YTSubConverter.Util
             return -1;
         }
 
+        public static int BinarySearchIndexAtOrAfter<T>(this IList<T> items, T searchItem)
+        {
+            int startIdx = 0;
+            int endIdx = items.Count;
+            while (endIdx > startIdx)
+            {
+                int pivotIdx = (startIdx + endIdx) / 2;
+                T pivotItem = items[pivotIdx];
+                int comparison = Comparer<T>.Default.Compare(searchItem, pivotItem);
+                if (comparison == 0)
+                    return pivotIdx;
+
+                if (comparison < 0)
+                    endIdx = pivotIdx;
+                else
+                    startIdx = pivotIdx + 1;
+            }
+            return startIdx;
+        }
+
         public static TValue GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
         {
             dict.TryGetValue(key, out TValue value);

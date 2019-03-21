@@ -35,14 +35,12 @@ namespace Arc.YTSubConverter.Formats
             : base(doc)
         {
             Lines.RemoveAll(l => !l.Sections.Any(s => s.Text.Length > 0));
-
-            // A gap of even one millisecond can cause flickering
-            Compact();
         }
 
         public override void Save(string filePath)
         {
             ApplyWorkarounds();
+            Compact();
 
             ExtractAttributes(
                 Lines,
@@ -665,17 +663,18 @@ namespace Arc.YTSubConverter.Formats
                 return;
 
             // Compensate for the subtitle delay (YouTube displaying the subtitle too late) by moving the start time up.
-            // Also, because the Android app does not respect the positioning of (and sometimes does not display)
-            // subtitles that start at 0ms, use 1ms in that case.
-            int lineStartMs = (int)(line.Start - TimeBase).TotalMilliseconds;
-            lineStartMs = Math.Max(lineStartMs - SubtitleDelayMs, 1);
-
-            // Both the line's start and end time need to be compensated for YouTube's delay. Normally it's enough to
-            // move up the start time and keep the duration constant, but if we can't move the start time far enough,
-            // we also need to lessen the duration.
+            int lineStartMs = (int)(line.Start - TimeBase).TotalMilliseconds - SubtitleDelayMs;
             int lineDurationMs = (int)(line.End - line.Start).TotalMilliseconds;
-            if (lineStartMs < SubtitleDelayMs)
-                lineDurationMs -= SubtitleDelayMs - lineStartMs + 1;
+
+            // If subtracting the subtitle delay brought us into negative time (because the original starting time was less than
+            // the delay), set the starting time to 1ms and reduce the duration instead.
+            // (The reason for using 1ms is that the Android app does not respect the positioning of, and sometimes does not display,
+            // subtitles that start at 0ms)
+            if (lineStartMs <= 0)
+            {
+                lineDurationMs -= -lineStartMs + 1;
+                lineStartMs = 1;
+            }
 
             if (lineDurationMs <= 0)
                 return;
@@ -695,7 +694,7 @@ namespace Arc.YTSubConverter.Formats
             }
             else
             {
-                throw new NotSupportedException($"YouTube's support for multiple sections in a line is currently broken on PC ({line.Text})");
+                throw new NotSupportedException($"YouTube's support for multiple sections in a line is currently broken ({line.Text})");
                 
                 foreach (Section section in line.Sections)
                 {

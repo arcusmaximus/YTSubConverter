@@ -25,7 +25,7 @@ namespace Arc.YTSubConverter.Util
             if (frame == 0)
                 return SubtitleDocument.TimeBase;
 
-            int ms = (int)(frame * 33.36666666666667);
+            int ms = (int)(frame * 33.36666666666667) + 1;
             return SubtitleDocument.TimeBase + TimeSpan.FromMilliseconds(ms);
         }
 
