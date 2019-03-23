@@ -78,8 +78,8 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
   * `{\ytchroma(offsetX, offsetY, intime, outtime)}` - the first copy starts at `offsetX` pixels to the left of and `offsetY` pixels above the subtitle position. (The last copy starts at the same distance in the opposite direction.) Both offsets can be negative.
   * `{\ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)}` - replace the default red/green/blue by any number of custom colors. Both the colors and the alpha value should be specified in hexadecimal (`&H...&`).
 * `{\ytkt}` - YTSubConverter-specific tag for enabling advanced Karaoke Types. Warning: using these will result in large files that may require multiple upload attempts before YouTube will accept them.
-  * `{\ytktFade}` - Configure the subtitle to use fading karaoke ([example video](https://www.youtube.com/watch?v=nLMRAKeoif0)).
-  * `{\ytktGlitch}` - Configure the subtitle to use karaoke with glitching text ([example video](https://www.youtube.com/watch?v=9_IKgqsnfco)). Detects Latin, Chinese, Japanese and Korean characters in the subtitle and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
+  * `{\ytktFade}` - Configure the line to use fading karaoke ([example video](https://www.youtube.com/watch?v=nLMRAKeoif0)).
+  * `{\ytktGlitch}` - Configure the line to use karaoke with glitching text ([example video](https://www.youtube.com/watch?v=9_IKgqsnfco)). Looks for Latin, Chinese, Japanese and Korean characters in each syllable and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
 
 Unsupported tags are ignored.
 
