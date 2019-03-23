@@ -169,4 +169,4 @@ YouTube has some bugs and limitations when it comes to styled subtitles. Please 
 Thanks to the following people for providing the UI translations:
 * Mali (@mali_5157) - Chinese
 * tototo (@vvto33) - Japanese
-* Kasaka (@kasaka_117) - Korean
+* Kasaka-117 (@kasaka_117) - Korean
