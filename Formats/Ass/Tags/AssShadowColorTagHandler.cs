@@ -1,4 +1,7 @@
-﻿using Arc.YTSubConverter.Animations;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using Arc.YTSubConverter.Animations;
 
 namespace Arc.YTSubConverter.Formats.Ass.Tags
 {
@@ -11,7 +14,12 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             if (!context.Style.HasShadow)
                 return;
 
-            context.Section.ShadowColor = ParseColor(arg, context.Section.ShadowColor.A);
+            foreach (KeyValuePair<ShadowType, Color> shadowColor in context.Section.ShadowColors.ToList())
+            {
+                if (shadowColor.Key != ShadowType.Glow || context.Style.HasOutlineBox)
+                    context.Section.ShadowColors[shadowColor.Key] = ParseColor(arg, shadowColor.Value.A);
+            }
+
             context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
         }
     }

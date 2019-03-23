@@ -40,7 +40,7 @@ namespace Arc.YTSubConverter.Formats
         public override void Save(string filePath)
         {
             ApplyWorkarounds();
-            Compact();
+            CloseGaps();
 
             ExtractAttributes(
                 Lines,
@@ -307,8 +307,8 @@ namespace Arc.YTSubConverter.Formats
                     line.Sections.RemoveRange(1, line.Sections.Count - 1);
                 }
                 line.Sections[0].ForeColor = ColorUtil.ChangeColorAlpha(line.Sections[0].ForeColor, 0);
-                line.Sections[0].ShadowTypes = ShadowType.None;
                 line.Sections[0].BackColor = ColorUtil.ChangeColorAlpha(line.Sections[0].BackColor, stepAlpha);
+                line.Sections[0].ShadowColors.Clear();
 
                 reachedAlpha += (int)((255 - reachedAlpha) * stepFraction);
                 Lines.Insert(lineIndex, line);
@@ -317,9 +317,6 @@ namespace Arc.YTSubConverter.Formats
             return numReplacementLines;
         }
 
-        /// <summary>
-        /// YTSubConverter feature: one line with multiple shadows
-        /// </summary>
         private int ExpandLineForMultiShadows(int lineIndex)
         {
             Line line = Lines[lineIndex];
@@ -329,7 +326,7 @@ namespace Arc.YTSubConverter.Formats
             List<ShadowType> shadowTypes = new List<ShadowType>();
             foreach (ShadowType shadowType in new[] { ShadowType.SoftShadow, ShadowType.HardShadow, ShadowType.Glow })
             {
-                if ((line.Sections[0].ShadowTypes & shadowType) != 0)
+                if (line.Sections[0].ShadowColors.ContainsKey(shadowType))
                     shadowTypes.Add(shadowType);
             }
 
@@ -340,34 +337,34 @@ namespace Arc.YTSubConverter.Formats
             for (int i = 0; i < shadowTypes.Count; i++)
             {
                 Line shadowLine = (Line)line.Clone();
+                ShadowType shadowType = shadowTypes[i];
 
                 if (i < shadowTypes.Count - 1)
                 {
                     shadowLine.Sections.Clear();
-
-                    Section section =
-                        new Section(line.Text)
-                        {
-                            ForeColor = ColorUtil.ChangeColorAlpha(line.Sections[0].ForeColor, 0),
-                            BackColor = i == 0 ? line.Sections[0].BackColor : Color.Empty,
-                            ShadowTypes = shadowTypes[i],
-                            ShadowColor = line.Sections[0].ShadowColor
-                        };
-                    shadowLine.Sections.Add(section);
+                    foreach (IGrouping<Color, Section> sectionGroup in line.Sections.GroupByContiguous(s => s.ShadowColors.GetOrDefault(shadowType)))
+                    {
+                        Section shadowSection = (Section)sectionGroup.First().Clone();
+                        shadowSection.Text = string.Join("", sectionGroup.Select(s => s.Text));
+                        shadowSection.ForeColor = ColorUtil.ChangeColorAlpha(shadowSection.ForeColor, 0);
+                        shadowSection.BackColor = i == 0 ? shadowSection.BackColor : Color.Empty;
+                        shadowSection.ShadowColors.RemoveAll(t => t != shadowType);
+                        shadowLine.Sections.Add(shadowSection);
+                    }
                 }
                 else
                 {
                     foreach (Section section in shadowLine.Sections)
                     {
                         section.BackColor = Color.Empty;
-                        section.ShadowTypes = shadowTypes[i];
+                        section.ShadowColors.RemoveAll(t => t != shadowTypes[i]);
                     }
                 }
 
                 Lines.Insert(lineIndex + i, shadowLine);
             }
 
-            return shadowTypes.Count;
+            return 1;
         }
 
         /// <summary>
@@ -515,7 +512,7 @@ namespace Arc.YTSubConverter.Formats
 
             newSection.BackColor = ColorUtil.ChangeColorAlpha(newSection.BackColor, 0);
             newSection.ForeColor = ColorUtil.ChangeColorAlpha(newSection.ForeColor, 0);
-            newSection.ShadowTypes = ShadowType.None; // Edges don't follow foreground opacity, so explicitly disable
+            newSection.ShadowColors.Clear();        // Edges don't follow foreground opacity, so explicitly disable
 
             PadSectionForColoring(newSection, originalLine, subLines, subLineIdx);
 
@@ -638,10 +635,17 @@ namespace Arc.YTSubConverter.Formats
                 writer.WriteAttributeString("bo", "0");
             }
 
-            if (format.ShadowTypes != ShadowType.None && format.ShadowColor.A > 0)
+            if (format.ShadowColors.Count > 0)
             {
-                writer.WriteAttributeString("et", GetEdgeType(format.ShadowTypes).ToString());
-                writer.WriteAttributeString("ec", ColorUtil.ToHtml(format.ShadowColor));
+                if (format.ShadowColors.Count > 1)
+                    throw new NotSupportedException("YTT lines must be reduced to one shadow color before saving");
+
+                KeyValuePair<ShadowType, Color> shadowColor = format.ShadowColors.First();
+                if (shadowColor.Value.A > 0)
+                {
+                    writer.WriteAttributeString("et", GetEdgeType(shadowColor.Key).ToString());
+                    writer.WriteAttributeString("ec", ColorUtil.ToHtml(shadowColor.Value));
+                }
             }
 
             writer.WriteEndElement();

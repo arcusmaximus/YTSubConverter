@@ -41,7 +41,8 @@ namespace Arc.YTSubConverter
             _chkKaraoke.Text = Resources.UseForKaraoke;
             _chkHighlightCurrentWord.Text = Resources.HighlightCurrentWord;
             _lblCurrentWordTextColor.Text = Resources.KaraokeTextColor;
-            _lblCurrentWordGlowColor.Text = Resources.KaraokeGlowColor;
+            _lblCurrentWordOutlineColor.Text = Resources.KaraokeOutlineColor;
+            _lblCurrentWordShadowColor.Text = Resources.KaraokeShadowColor;
             _btnConvert.Text = Resources.Convert;
             _dlgOpenFile.Filter = Resources.FileFilter;
         }
@@ -132,36 +133,59 @@ namespace Arc.YTSubConverter
             AssStyle style = _styles[options.Name];
 
             _spltStyleOptions.Panel2.Enabled = true;
-            _pnlShadowType.Enabled = style.HasShadow && (!style.HasOutline || style.HasOutlineBox);
-            _chkGlow.Checked = (options.ShadowTypes & ShadowType.Glow) != 0;
-            _chkSoftShadow.Checked = (options.ShadowTypes & ShadowType.SoftShadow) != 0;
-            _chkHardShadow.Checked = (options.ShadowTypes & ShadowType.HardShadow) != 0;
+            _pnlShadowType.Enabled = style.HasShadow;
+
+            if (style.HasOutline && !style.HasOutlineBox)
+            {
+                _chkGlow.Checked = true;
+                _chkGlow.Enabled = false;
+            }
+            else
+            {
+                _chkGlow.Checked = options.ShadowTypes.Contains(ShadowType.Glow);
+                _chkGlow.Enabled = true;
+            }
+
+            _chkSoftShadow.Checked = options.ShadowTypes.Contains(ShadowType.SoftShadow);
+            _chkHardShadow.Checked = options.ShadowTypes.Contains(ShadowType.HardShadow);
 
             Color currentWordTextColor = options.CurrentWordTextColor;
+            Color currentWordOutlineColor = options.CurrentWordOutlineColor;
             Color currentWordShadowColor = options.CurrentWordShadowColor;
 
             _chkKaraoke.Checked = options.IsKaraoke;
-            _chkHighlightCurrentWord.Checked = !currentWordShadowColor.IsEmpty;
-            _txtCurrentWordTextColor.Text = ColorUtil.ToHtml(currentWordTextColor);
-            _txtCurrentWordGlowColor.Text = ColorUtil.ToHtml(currentWordShadowColor);
+            _chkHighlightCurrentWord.Checked = !currentWordTextColor.IsEmpty;
+
+            _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
+            _txtCurrentWordTextColor.Text = _txtCurrentWordTextColor.Enabled ? ColorUtil.ToHtml(currentWordTextColor) : string.Empty;
+            _btnPickTextColor.Enabled = _txtCurrentWordTextColor.Enabled;
+
+            _txtCurrentWordOutlineColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasOutline && !style.HasOutlineBox;
+            _txtCurrentWordOutlineColor.Text = _txtCurrentWordOutlineColor.Enabled ? ColorUtil.ToHtml(currentWordOutlineColor) : string.Empty;
+            _btnPickOutlineColor.Enabled = _txtCurrentWordOutlineColor.Enabled;
+
+            _txtCurrentWordShadowColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasShadow;
+            _txtCurrentWordShadowColor.Text = _txtCurrentWordShadowColor.Enabled ? ColorUtil.ToHtml(currentWordShadowColor) : string.Empty;
+            _btnPickShadowColor.Enabled = _txtCurrentWordShadowColor.Enabled;
+
             UpdateStylePreview();
         }
 
         private void _chkGlow_CheckedChanged(object sender, EventArgs e)
         {
-            SelectedStyleOptions.ShadowTypes = EnableShadowType(SelectedStyleOptions.ShadowTypes, ShadowType.Glow, _chkGlow.Checked);
+            SelectedStyleOptions.SetShadowTypeEnabled(ShadowType.Glow, _chkGlow.Checked);
             UpdateStylePreview();
         }
 
         private void _radSoftShadow_CheckedChanged(object sender, EventArgs e)
         {
-            SelectedStyleOptions.ShadowTypes = EnableShadowType(SelectedStyleOptions.ShadowTypes, ShadowType.SoftShadow, _chkSoftShadow.Checked);
+            SelectedStyleOptions.SetShadowTypeEnabled(ShadowType.SoftShadow, _chkSoftShadow.Checked);
             UpdateStylePreview();
         }
 
         private void _radHardShadow_CheckedChanged(object sender, EventArgs e)
         {
-            SelectedStyleOptions.ShadowTypes = EnableShadowType(SelectedStyleOptions.ShadowTypes, ShadowType.HardShadow, _chkHardShadow.Checked);
+            SelectedStyleOptions.SetShadowTypeEnabled(ShadowType.HardShadow, _chkHardShadow.Checked);
             UpdateStylePreview();
         }
 
@@ -175,11 +199,19 @@ namespace Arc.YTSubConverter
 
         private void _chkHighlightCurrentWord_CheckedChanged(object sender, EventArgs e)
         {
-            _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
-            _txtCurrentWordTextColor.Text = ColorUtil.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].PrimaryColor : Color.Empty);
+            AssStyle style = _styles?[SelectedStyleOptions.Name];
 
-            _txtCurrentWordGlowColor.Enabled = _chkHighlightCurrentWord.Checked;
-            _txtCurrentWordGlowColor.Text = ColorUtil.ToHtml(_chkHighlightCurrentWord.Checked ? _styles[SelectedStyleOptions.Name].ShadowColor : Color.Empty);
+            _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
+            _txtCurrentWordTextColor.Text = _txtCurrentWordTextColor.Enabled ? ColorUtil.ToHtml(style.PrimaryColor) : string.Empty;
+            _btnPickTextColor.Enabled = _txtCurrentWordTextColor.Enabled;
+
+            _txtCurrentWordOutlineColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasOutline && !style.HasOutlineBox;
+            _txtCurrentWordOutlineColor.Text = _txtCurrentWordOutlineColor.Enabled ? ColorUtil.ToHtml(style.OutlineColor) : string.Empty;
+            _btnPickOutlineColor.Enabled = _txtCurrentWordOutlineColor.Enabled;
+
+            _txtCurrentWordShadowColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasShadow;
+            _txtCurrentWordShadowColor.Text = _txtCurrentWordShadowColor.Enabled ? ColorUtil.ToHtml(style.ShadowColor) : string.Empty;
+            _btnPickShadowColor.Enabled = _txtCurrentWordShadowColor.Enabled;
 
             UpdateStylePreview();
         }
@@ -190,10 +222,37 @@ namespace Arc.YTSubConverter
             UpdateStylePreview();
         }
 
-        private void _txtCurrentWordGlowColor_TextChanged(object sender, EventArgs e)
+        private void _btnPickTextColor_Click(object sender, EventArgs e)
         {
-            SelectedStyleOptions.CurrentWordShadowColor = ColorUtil.FromHtml(_txtCurrentWordGlowColor.Text);
+            _dlgColor.Color = ColorUtil.FromHtml(_txtCurrentWordTextColor.Text);
+            if (_dlgColor.ShowDialog() == DialogResult.OK)
+                _txtCurrentWordTextColor.Text = ColorUtil.ToHtml(_dlgColor.Color);
+        }
+
+        private void _txtCurrentWordOutlineColor_TextChanged(object sender, EventArgs e)
+        {
+            SelectedStyleOptions.CurrentWordOutlineColor = ColorUtil.FromHtml(_txtCurrentWordOutlineColor.Text);
             UpdateStylePreview();
+        }
+
+        private void _btnPickOutlineColor_Click(object sender, EventArgs e)
+        {
+            _dlgColor.Color = ColorUtil.FromHtml(_txtCurrentWordOutlineColor.Text);
+            if (_dlgColor.ShowDialog() == DialogResult.OK)
+                _txtCurrentWordOutlineColor.Text = ColorUtil.ToHtml(_dlgColor.Color);
+        }
+
+        private void _txtCurrentWordShadowColor_TextChanged(object sender, EventArgs e)
+        {
+            SelectedStyleOptions.CurrentWordShadowColor = ColorUtil.FromHtml(_txtCurrentWordShadowColor.Text);
+            UpdateStylePreview();
+        }
+
+        private void _btnPickShadowColor_Click(object sender, EventArgs e)
+        {
+            _dlgColor.Color = ColorUtil.FromHtml(_txtCurrentWordShadowColor.Text);
+            if (_dlgColor.ShowDialog() == DialogResult.OK)
+                _txtCurrentWordShadowColor.Text = ColorUtil.ToHtml(_dlgColor.Color);
         }
 
         private void UpdateStylePreview()
@@ -264,16 +323,6 @@ namespace Arc.YTSubConverter
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             AssStyleOptionsList.Save(_styleOptions.Values);
-        }
-
-        private static ShadowType EnableShadowType(ShadowType types, ShadowType typeToChange, bool enable)
-        {
-            if (enable)
-                types |= typeToChange;
-            else
-                types &= ~typeToChange;
-
-            return types;
         }
     }
 }

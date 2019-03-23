@@ -21,7 +21,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
             else
             {
-                context.Section.ShadowColor = ColorUtil.ChangeColorAlpha(context.Section.ShadowColor, alpha);
+                context.Section.ShadowColors[ShadowType.Glow] = ColorUtil.ChangeColorAlpha(context.Section.ShadowColors[ShadowType.Glow], alpha);
                 context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
             }
         }

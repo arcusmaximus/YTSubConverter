@@ -24,6 +24,12 @@ namespace Arc.YTSubConverter.Formats.Ass
             set;
         }
 
+        public Color CurrentWordOutlineColor
+        {
+            get;
+            set;
+        }
+
         public Color CurrentWordShadowColor
         {
             get;
@@ -52,6 +58,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             AssSection assSection = (AssSection)section;
             SecondaryColor = assSection.SecondaryColor;
             CurrentWordForeColor = assSection.CurrentWordForeColor;
+            CurrentWordOutlineColor = assSection.CurrentWordOutlineColor;
             CurrentWordShadowColor = assSection.CurrentWordShadowColor;
             Duration = assSection.Duration;
             Animations.Clear();

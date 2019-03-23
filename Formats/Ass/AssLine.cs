@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Arc.YTSubConverter.Animations;
 using Arc.YTSubConverter.Util;
 
@@ -37,7 +38,10 @@ namespace Arc.YTSubConverter.Formats.Ass
             {
                 section.ForeColor = MultiplyColorAlpha(section.ForeColor, factor);
                 section.BackColor = MultiplyColorAlpha(section.BackColor, factor);
-                section.ShadowColor = MultiplyColorAlpha(section.ShadowColor, factor);
+                foreach (KeyValuePair<ShadowType, Color> shadowColor in section.ShadowColors.ToList())
+                {
+                    section.ShadowColors[shadowColor.Key] = MultiplyColorAlpha(shadowColor.Value, factor);
+                }
             }
             Alpha = 255;
         }

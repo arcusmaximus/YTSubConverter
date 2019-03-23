@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Arc.YTSubConverter
 {
@@ -6,14 +7,24 @@ namespace Arc.YTSubConverter
     {
         public bool Equals(Section x, Section y)
         {
-            return x.Bold == y.Bold &&
-                   x.Italic == y.Italic &&
-                   x.Underline == y.Underline &&
-                   x.Font == y.Font &&
-                   x.ForeColor == y.ForeColor &&
-                   x.BackColor == y.BackColor &&
-                   x.ShadowColor == y.ShadowColor &&
-                   x.ShadowTypes == y.ShadowTypes;
+            if (x.Bold != y.Bold ||
+                x.Italic != y.Italic ||
+                x.Underline != y.Underline ||
+                x.Font != y.Font ||
+                x.ForeColor != y.ForeColor ||
+                x.BackColor != y.BackColor ||
+                x.ShadowColors.Count != y.ShadowColors.Count)
+            {
+                return false;
+            }
+
+            foreach (KeyValuePair<ShadowType, Color> xShadowColor in x.ShadowColors)
+            {
+                if (!y.ShadowColors.TryGetValue(xShadowColor.Key, out Color yShadowColor) || xShadowColor.Value != yShadowColor)
+                    return false;
+            }
+
+            return true;
         }
 
         public int GetHashCode(Section section)
@@ -23,9 +34,7 @@ namespace Arc.YTSubConverter
                    section.Underline.GetHashCode() ^
                    (section.Font?.GetHashCode() ?? 0) ^
                    section.ForeColor.GetHashCode() ^
-                   section.BackColor.GetHashCode() ^
-                   section.ShadowColor.GetHashCode() ^
-                   section.ShadowTypes.GetHashCode();
+                   section.BackColor.GetHashCode();
         }
     }
 }

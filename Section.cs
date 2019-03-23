@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter
 {
@@ -52,17 +54,7 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public Color ShadowColor
-        {
-            get;
-            set;
-        }
-
-        public ShadowType ShadowTypes
-        {
-            get;
-            set;
-        }
+        public Dictionary<ShadowType, Color> ShadowColors { get; } = new Dictionary<ShadowType, Color>();
 
         public override string ToString()
         {
@@ -85,8 +77,8 @@ namespace Arc.YTSubConverter
             Underline = section.Underline;
             ForeColor = section.ForeColor;
             BackColor = section.BackColor;
-            ShadowColor = section.ShadowColor;
-            ShadowTypes = section.ShadowTypes;
+            ShadowColors.Clear();
+            ShadowColors.AddRange(section.ShadowColors);
         }
     }
 }

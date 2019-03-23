@@ -34,7 +34,7 @@ namespace Arc.YTSubConverter
             if (options != null)
             {
                 GenerateBackgroundCss(html, "#background", style);
-                GenerateForegroundCss(html, "#regular", style, style.PrimaryColor, style.ShadowColor, options.ShadowTypes);
+                GenerateForegroundCss(html, "#regular", style, style.PrimaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
                 if (options.IsKaraoke)
                 {
                     GenerateForegroundCss(
@@ -42,10 +42,11 @@ namespace Arc.YTSubConverter
                         "#singing",
                         style,
                         !options.CurrentWordTextColor.IsEmpty ? options.CurrentWordTextColor : style.PrimaryColor,
+                        !options.CurrentWordOutlineColor.IsEmpty ? options.CurrentWordOutlineColor : style.OutlineColor,
                         !options.CurrentWordShadowColor.IsEmpty ? options.CurrentWordShadowColor : style.ShadowColor,
                         options.ShadowTypes
                     );
-                    GenerateForegroundCss(html, "#unsung", style, style.SecondaryColor, style.ShadowColor, options.ShadowTypes);
+                    GenerateForegroundCss(html, "#unsung", style, style.SecondaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
                 }
             }
 
@@ -100,7 +101,7 @@ namespace Arc.YTSubConverter
             ");
         }
 
-        private static void GenerateForegroundCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color shadowColor, ShadowType shadowTypes)
+        private static void GenerateForegroundCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color outlineColor, Color shadowColor, List<ShadowType> shadowTypes)
         {
             html.Append($@"
                 {selector}
@@ -123,25 +124,25 @@ namespace Arc.YTSubConverter
 
             html.Append($"color: {ToRgba(foreColor)};");
 
+            List<string> shadows = new List<string>();
+
             if (style.HasOutline && !style.OutlineIsBox)
+                shadows.Add($"0 0 2px {ToHex(outlineColor)}, 0 0 2px {ToHex(outlineColor)}, 0 0 3px {ToHex(outlineColor)}, 0 0 4px {ToHex(outlineColor)}");
+
+            if (style.HasShadow)
             {
-                html.Append($"text-shadow: 0 0 2px {ToHex(style.OutlineColor)}, 0 0 2px {ToHex(style.OutlineColor)}, 0 0 3px {ToHex(style.OutlineColor)}, 0 0 4px {ToHex(style.OutlineColor)};");
-            }
-            else if (style.HasShadow)
-            {
-                List<string> shadows = new List<string>();
-                if ((shadowTypes & ShadowType.Glow) != 0)
+                if (shadowTypes.Contains(ShadowType.Glow) && !(style.HasOutline && !style.HasOutlineBox))
                     shadows.Add($"0 0 2px {ToHex(shadowColor)}, 0 0 2px {ToHex(shadowColor)}, 0 0 3px {ToHex(shadowColor)}, 0 0 4px {ToHex(shadowColor)}");
 
-                if ((shadowTypes & ShadowType.SoftShadow) != 0)
+                if (shadowTypes.Contains(ShadowType.SoftShadow))
                     shadows.Add($"2px 2px 3px {ToHex(shadowColor)}, 2px 2px 4px {ToHex(shadowColor)}, 2px 2px 5px {ToHex(shadowColor)}");
 
-                if ((shadowTypes & ShadowType.HardShadow) != 0)
+                if (shadowTypes.Contains(ShadowType.HardShadow))
                     shadows.Add($"1px 1px 0 {ToHex(shadowColor)}, 2px 2px 0 {ToHex(shadowColor)}, 3px 3px 0 {ToHex(shadowColor)}");
-
-                if (shadows.Count > 0)
-                    html.Append($"text-shadow: {string.Join(", ", shadows)};");
             }
+
+            if (shadows.Count > 0)
+                html.Append($"text-shadow: {string.Join(", ", shadows)};");
 
             html.AppendLine(@"
                 }

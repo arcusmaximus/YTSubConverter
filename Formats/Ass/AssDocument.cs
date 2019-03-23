@@ -204,35 +204,33 @@ namespace Arc.YTSubConverter.Formats.Ass
             if (options?.IsKaraoke ?? false)
             {
                 section.CurrentWordForeColor = options.CurrentWordTextColor;
+                section.CurrentWordOutlineColor = options.CurrentWordOutlineColor;
                 section.CurrentWordShadowColor = options.CurrentWordShadowColor;
             }
             else
             {
                 section.CurrentWordForeColor = Color.Empty;
+                section.CurrentWordOutlineColor = Color.Empty;
                 section.CurrentWordShadowColor = Color.Empty;
             }
 
             section.BackColor = Color.Empty;
-            section.ShadowColor = Color.Empty;
-            section.ShadowTypes = ShadowType.None;
+            section.ShadowColors.Clear();
+
+            if (style.HasShadow)
+            {
+                foreach (ShadowType shadowType in options?.ShadowTypes ?? new List<ShadowType> { ShadowType.SoftShadow })
+                {
+                    section.ShadowColors[shadowType] = style.ShadowColor;
+                }
+            }
 
             if (style.HasOutline)
             {
                 if (style.OutlineIsBox)
-                {
                     section.BackColor = style.OutlineColor;
-                }
                 else
-                {
-                    section.ShadowColor = style.OutlineColor;
-                    section.ShadowTypes = ShadowType.Glow;
-                }
-            }
-
-            if (style.HasShadow && section.ShadowColor.IsEmpty)
-            {
-                section.ShadowColor = style.ShadowColor;
-                section.ShadowTypes = options?.ShadowTypes ?? ShadowType.SoftShadow;
+                    section.ShadowColors[ShadowType.Glow] = style.OutlineColor;
             }
         }
 
@@ -314,7 +312,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                 }
 
                 if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
-                    section.ShadowTypes = ShadowType.None;
+                    section.ShadowColors.Clear();
             }
 
             // Hack: make sure YttDocument will also recognize the final (single-color) step as a karaoke line
@@ -333,7 +331,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             switch (stepLine.KaraokeType)
             {
                 case KaraokeType.Simple:
-                    ApplySimpleKaraokeEffects(singingSection);
+                    ApplySimpleKaraokeEffect(singingSection);
                     break;
 
                 case KaraokeType.Fade:
@@ -346,13 +344,21 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
         }
 
-        private static void ApplySimpleKaraokeEffects(AssSection singingSection)
+        private static void ApplySimpleKaraokeEffect(AssSection singingSection)
         {
             if (!singingSection.CurrentWordForeColor.IsEmpty)
                 singingSection.ForeColor = singingSection.CurrentWordForeColor;
 
             if (!singingSection.CurrentWordShadowColor.IsEmpty)
-                singingSection.ShadowColor = singingSection.CurrentWordShadowColor;
+            {
+                foreach (ShadowType shadowType in singingSection.ShadowColors.Keys.ToList())
+                {
+                    singingSection.ShadowColors[shadowType] = singingSection.CurrentWordShadowColor;
+                }
+            }
+
+            if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.ShadowColors.ContainsKey(ShadowType.Glow))
+                singingSection.ShadowColors[ShadowType.Glow] = singingSection.CurrentWordOutlineColor;
         }
 
         private static void ApplyFadeKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
@@ -378,8 +384,20 @@ namespace Arc.YTSubConverter.Formats.Ass
                     singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.CurrentWordForeColor));
             }
 
-            if (!singingSection.CurrentWordShadowColor.IsEmpty && singingSection.CurrentWordShadowColor != singingSection.ShadowColor)
-                singingSection.Animations.Add(new ShadowColorAnimation(stepLine.Start, singingSection.ShadowColor, fadeEndTime, singingSection.CurrentWordShadowColor));
+            if (!singingSection.CurrentWordShadowColor.IsEmpty)
+            {
+                foreach (KeyValuePair<ShadowType, Color> shadowColor in singingSection.ShadowColors)
+                {
+                    if (singingSection.CurrentWordShadowColor != shadowColor.Value)
+                        singingSection.Animations.Add(new ShadowColorAnimation(shadowColor.Key, stepLine.Start, shadowColor.Value, fadeEndTime, singingSection.CurrentWordShadowColor));
+                }
+            }
+
+            if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.CurrentWordOutlineColor != singingSection.ShadowColors.GetOrDefault(ShadowType.Glow))
+            {
+                singingSection.Animations.Add(new ShadowColorAnimation(
+                    ShadowType.Glow, stepLine.Start, singingSection.ShadowColors[ShadowType.Glow], fadeEndTime, singingSection.CurrentWordOutlineColor));
+            }
         }
 
         private static void ApplyFadeOutKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
@@ -396,8 +414,17 @@ namespace Arc.YTSubConverter.Formats.Ass
                     if (!section.CurrentWordForeColor.IsEmpty && section.CurrentWordForeColor != section.ForeColor)
                         section.Animations.Add(new ForeColorAnimation(fadeStartTime, section.CurrentWordForeColor, fadeEndTime, section.ForeColor));
 
-                    if (!section.CurrentWordShadowColor.IsEmpty & section.CurrentWordShadowColor != section.ShadowColor)
-                        section.Animations.Add(new ShadowColorAnimation(fadeStartTime, section.CurrentWordShadowColor, fadeEndTime, section.ShadowColor));
+                    if (!section.CurrentWordShadowColor.IsEmpty)
+                    {
+                        foreach (KeyValuePair<ShadowType, Color> shadowColor in section.ShadowColors)
+                        {
+                            if(section.CurrentWordShadowColor != shadowColor.Value)
+                                section.Animations.Add(new ShadowColorAnimation(shadowColor.Key, fadeStartTime, section.CurrentWordShadowColor, fadeEndTime, shadowColor.Value));
+                        }
+                    }
+
+                    if (!section.CurrentWordOutlineColor.IsEmpty && section.CurrentWordOutlineColor != section.ShadowColors.GetOrDefault(ShadowType.Glow))
+                        section.Animations.Add(new ShadowColorAnimation(ShadowType.Glow, fadeStartTime, section.CurrentWordOutlineColor, fadeEndTime, section.ShadowColors[ShadowType.Glow]));
                 }
 
                 stepFirstSectionIdx = stepLastSectionIdx + 1;
@@ -406,8 +433,36 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         private static void ApplyGlitchKaraokeEffect(AssLine stepLine, AssSection singingSection)
         {
+            if (singingSection.Text.Length == 0)
+                return;
+
             DateTime glitchEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(70), stepLine.End);
-            singingSection.Animations.Add(new GlitchingCharAnimation(stepLine.Start, glitchEndTime, new Util.CharacterRange('a', 'z'), new Util.CharacterRange('A', 'Z')));
+            Util.CharacterRange[] charRanges = GetGlitchKaraokeCharacterRanges(singingSection.Text[0]);
+            singingSection.Animations.Add(new GlitchingCharAnimation(stepLine.Start, glitchEndTime, charRanges));
+        }
+
+        private static Util.CharacterRange[] GetGlitchKaraokeCharacterRanges(char c)
+        {
+            Util.CharacterRange[][] availableRanges =
+                {
+                    new[] { new Util.CharacterRange('A', 'Z'), new Util.CharacterRange('a', 'z') },
+                    new[] { TextUtil.IdeographRange, TextUtil.IdeographExtensionRange, TextUtil.IdeographCompatibilityRange },
+                    new[] { TextUtil.HiraganaRange },
+                    new[] { TextUtil.KatakanaRange },
+                    new[] { TextUtil.HangulRange }
+                };
+
+            foreach (Util.CharacterRange[] ranges in availableRanges)
+            {
+                if (ranges.Any(r => r.Contains(c)))
+                    return ranges;
+            }
+
+            return new[]
+                   {
+                       new Util.CharacterRange('\x2300', '\x231A'),
+                       new Util.CharacterRange('\x231C', '\x23E1')
+                   };
         }
 
         private static void MergeIdenticallyFormattedSections(Line line)

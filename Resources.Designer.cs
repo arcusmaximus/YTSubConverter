@@ -188,11 +188,20 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
-        ///   Glow color: に類似しているローカライズされた文字列を検索します。
+        ///   Outline color: に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string KaraokeGlowColor {
+        internal static string KaraokeOutlineColor {
             get {
-                return ResourceManager.GetString("KaraokeGlowColor", resourceCulture);
+                return ResourceManager.GetString("KaraokeOutlineColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shadow color: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string KaraokeShadowColor {
+            get {
+                return ResourceManager.GetString("KaraokeShadowColor", resourceCulture);
             }
         }
         

@@ -18,7 +18,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
             else
             {
-                context.Section.ShadowColor = ParseColor(arg, context.Section.ShadowColor.A);
+                context.Section.ShadowColors[ShadowType.Glow] = ParseColor(arg, context.Section.ShadowColors[ShadowType.Glow].A);
                 context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
             }
         }

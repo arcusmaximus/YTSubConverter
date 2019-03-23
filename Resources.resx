@@ -160,8 +160,11 @@
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>{0} is not a valid timestamp</value>
   </data>
-  <data name="KaraokeGlowColor" xml:space="preserve">
-    <value>Glow color:</value>
+  <data name="KaraokeOutlineColor" xml:space="preserve">
+    <value>Outline color:</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>Shadow color:</value>
   </data>
   <data name="KaraokeTextColor" xml:space="preserve">
     <value>Text color:</value>

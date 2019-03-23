@@ -156,8 +156,11 @@
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>{0}は無効なタイムスタンプです。</value>
   </data>
-  <data name="KaraokeGlowColor" xml:space="preserve">
+  <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>輪郭色</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>影色</value>
   </data>
   <data name="KaraokeTextColor" xml:space="preserve">
     <value>文字色</value>

@@ -156,8 +156,11 @@
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>{0} 유효한 시간대가 아닙니다</value>
   </data>
-  <data name="KaraokeGlowColor" xml:space="preserve">
+  <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>윤곽 색</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>그림자 색</value>
   </data>
   <data name="KaraokeTextColor" xml:space="preserve">
     <value>글자 색</value>

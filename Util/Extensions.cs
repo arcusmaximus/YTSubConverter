@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Arc.YTSubConverter.Util
 {
@@ -75,6 +77,27 @@ namespace Arc.YTSubConverter.Util
             return startIdx;
         }
 
+        public static IEnumerable<IGrouping<TKey, TItem>> GroupByContiguous<TKey, TItem>(this IEnumerable<TItem> items, Func<TItem, TKey> keySelector)
+        {
+            Grouping<TKey, TItem> currentGroup = null;
+            foreach (TItem item in items)
+            {
+                TKey key = keySelector(item);
+                if (currentGroup != null && !EqualityComparer<TKey>.Default.Equals(key, currentGroup.Key))
+                {
+                    yield return currentGroup;
+                    currentGroup = null;
+                }
+
+                if (currentGroup == null)
+                    currentGroup = new Grouping<TKey, TItem>(key);
+
+                currentGroup.Items.Add(item);
+            }
+            if (currentGroup != null)
+                yield return currentGroup;
+        }
+
         public static TValue GetOrDefault<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
         {
             dict.TryGetValue(key, out TValue value);
@@ -89,6 +112,53 @@ namespace Arc.YTSubConverter.Util
                 dict.Add(key, value);
             }
             return value;
+        }
+
+        public static void AddRange<TKey, TValue>(this IDictionary<TKey, TValue> dict, IEnumerable<KeyValuePair<TKey, TValue>> pairs)
+        {
+            foreach (KeyValuePair<TKey, TValue> pair in pairs)
+            {
+                dict.Add(pair);
+            }
+        }
+
+        public static int RemoveAll<TKey, TValue>(this IDictionary<TKey, TValue> dict, Func<TKey, bool> predicate)
+        {
+            List<TKey> keys = dict.Keys.Where(predicate).ToList();
+            foreach (TKey key in keys)
+            {
+                dict.Remove(key);
+            }
+            return keys.Count;
+        }
+
+        private class Grouping<TKey, TItem> : IGrouping<TKey, TItem>
+        {
+            public Grouping(TKey key)
+            {
+                Key = key;
+                Items = new List<TItem>();
+            }
+
+            public TKey Key
+            {
+                get;
+            }
+
+            public List<TItem> Items
+            {
+                get;
+            }
+
+            public IEnumerator<TItem> GetEnumerator()
+            {
+                return Items.GetEnumerator();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
         }
     }
 }

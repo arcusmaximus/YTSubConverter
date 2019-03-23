@@ -156,8 +156,11 @@
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>({0})不是有效的时间代码。</value>
   </data>
-  <data name="KaraokeGlowColor" xml:space="preserve">
+  <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>轮廓颜色</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>阴影颜色</value>
   </data>
   <data name="KaraokeTextColor" xml:space="preserve">
     <value>文字颜色</value>

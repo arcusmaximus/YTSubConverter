@@ -23,8 +23,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                                        { "2c", HandleTransformSecondaryColorTag },
                                        { "3c", HandleTransformOutlineColorTag },
                                        { "4c", HandleTransformShadowColorTag },
-                                       { "1a", HandleTransformForeColorAlphaTag },
-                                       { "2a", HandleTransformSecondaryColorAlphaTag },
+                                       { "1a", HandleTransformForeAlphaTag },
+                                       { "2a", HandleTransformSecondaryAlphaTag },
                                        { "3a", HandleTransformOutlineAlphaTag },
                                        { "4a", HandleTransformShadowAlphaTag }
                                    };
@@ -126,23 +126,41 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
             else
             {
-                HandleTransformShadowColorTag(context, startTime, endTime, accel, arg);
+                HandleTransformShadowColorTag(context, ShadowType.Glow, startTime, endTime, accel, arg);
             }
         }
 
         private static void HandleTransformShadowColorTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
         {
-            ShadowColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ShadowColor, (s, e, c) => new ShadowColorAnimation(s, c, e, c));
+            foreach (ShadowType shadowType in context.Section.ShadowColors.Keys)
+            {
+                if (context.Style.HasOutline && !context.Style.HasOutlineBox && shadowType == ShadowType.Glow)
+                    continue;
+
+                HandleTransformShadowColorTag(context, shadowType, startTime, endTime, accel, arg);
+            }
+        }
+
+        private static void HandleTransformShadowColorTag(AssTagContext context, ShadowType shadowType, DateTime startTime, DateTime endTime, int accel, string arg)
+        {
+            ShadowColorAnimation anim = FetchColorAnimation(
+                context,
+                startTime,
+                endTime,
+                a => a.ShadowType == shadowType,
+                s => s.ShadowColors[shadowType],
+                (s, e, c) => new ShadowColorAnimation(shadowType, s, c, e, c)
+            );
             anim.EndColor = ParseColor(arg, anim.EndColor.A);
         }
 
-        private static void HandleTransformForeColorAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformForeAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
         {
             ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c));
             anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
         }
 
-        private static void HandleTransformSecondaryColorAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformSecondaryAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
         {
             SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c));
             anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
@@ -166,8 +184,21 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         private static void HandleTransformShadowAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
         {
-            ShadowColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ShadowColor, (s, e, c) => new ShadowColorAnimation(s, c, e, c));
-            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+            foreach (KeyValuePair<ShadowType, Color> shadowColor in context.Section.ShadowColors)
+            {
+                if (context.Style.HasOutline && !context.Style.HasOutlineBox && shadowColor.Key == ShadowType.Glow)
+                    continue;
+
+                ShadowColorAnimation anim = FetchColorAnimation(
+                    context,
+                    startTime,
+                    endTime,
+                    a => a.ShadowType == shadowColor.Key,
+                    s => s.ShadowColors[shadowColor.Key],
+                    (s, e, c) => new ShadowColorAnimation(shadowColor.Key, s, c, e, c)
+                );
+                anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+            }
         }
 
         private static T FetchColorAnimation<T>(
@@ -179,8 +210,25 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
         )
             where T : ColorAnimation
         {
+            return FetchColorAnimation(context, startTime, endTime, null, getSectionColor, createAnim);
+        }
+
+        private static T FetchColorAnimation<T>(
+            AssTagContext context,
+            DateTime startTime,
+            DateTime endTime,
+            Func<T, bool> predicate,
+            Func<AssSection, Color> getSectionColor,
+            Func<DateTime, DateTime, Color, T> createAnim
+        )
+            where T : ColorAnimation
+        {
             AssSection section = context.Section;
-            T anim = section.Animations.OfType<T>().FirstOrDefault(a => a.StartTime == startTime && a.EndTime == endTime);
+            IEnumerable<T> existingAnims = section.Animations.OfType<T>().Where(a => a.StartTime == startTime && a.EndTime == endTime);
+            if (predicate != null)
+                existingAnims = existingAnims.Where(predicate);
+
+            T anim = existingAnims.FirstOrDefault();
             if (anim == null)
             {
                 T prevAnim = section.Animations.OfType<T>().LastOrDefault();
