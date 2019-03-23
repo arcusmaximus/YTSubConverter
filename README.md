@@ -61,7 +61,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\pos}` - position
 * `{\an}` - alignment
 * `{\k}` - karaoke segment duration
-* `{\r}` - reset to current style
+* `{\r}` - reset to current or specified style
 * `{\fad}` - simple fade
 * `{\fade}` - complex fade
 * `{\move}` - move from one point to another
