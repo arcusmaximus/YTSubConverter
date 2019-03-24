@@ -250,7 +250,9 @@ namespace Arc.YTSubConverter.Formats.Ass
             SortedList<TimeSpan, int> activeSectionsPerStep = GetKaraokeSteps(line);
             for (int stepIdx = 0; stepIdx < activeSectionsPerStep.Count; stepIdx++)
             {
-                yield return CreateKaraokeStepLine(line, activeSectionsPerStep, stepIdx);
+                AssLine stepLine = CreateKaraokeStepLine(line, activeSectionsPerStep, stepIdx);
+                if (stepLine != null)
+                    yield return stepLine;
             }
         }
 
