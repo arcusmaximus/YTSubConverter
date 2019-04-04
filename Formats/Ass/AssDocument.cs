@@ -448,10 +448,10 @@ namespace Arc.YTSubConverter.Formats.Ass
             Util.CharacterRange[][] availableRanges =
                 {
                     new[] { new Util.CharacterRange('A', 'Z'), new Util.CharacterRange('a', 'z') },
-                    new[] { TextUtil.IdeographRange, TextUtil.IdeographExtensionRange, TextUtil.IdeographCompatibilityRange },
-                    new[] { TextUtil.HiraganaRange },
-                    new[] { TextUtil.KatakanaRange },
-                    new[] { TextUtil.HangulRange }
+                    new[] { Util.CharacterRange.IdeographRange, Util.CharacterRange.IdeographExtensionRange, Util.CharacterRange.IdeographCompatibilityRange },
+                    new[] { Util.CharacterRange.HiraganaRange },
+                    new[] { Util.CharacterRange.KatakanaRange },
+                    new[] { Util.CharacterRange.HangulRange }
                 };
 
             foreach (Util.CharacterRange[] ranges in availableRanges)

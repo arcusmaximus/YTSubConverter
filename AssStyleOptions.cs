@@ -40,6 +40,9 @@ namespace Arc.YTSubConverter
                 if (ShadowTypes.Contains(ShadowType.Glow))
                     shadowTypes |= XmlShadowTypes.Glow;
 
+                if (ShadowTypes.Contains(ShadowType.Bevel))
+                    shadowTypes |= XmlShadowTypes.Bevel;
+
                 if (ShadowTypes.Contains(ShadowType.SoftShadow))
                     shadowTypes |= XmlShadowTypes.SoftShadow;
 
@@ -53,6 +56,9 @@ namespace Arc.YTSubConverter
                 ShadowTypes.Clear();
                 if ((value & XmlShadowTypes.Glow) != 0)
                     ShadowTypes.Add(ShadowType.Glow);
+
+                if ((value & XmlShadowTypes.Bevel) != 0)
+                    ShadowTypes.Add(ShadowType.Bevel);
 
                 if ((value & XmlShadowTypes.SoftShadow) != 0)
                     ShadowTypes.Add(ShadowType.SoftShadow);
@@ -140,7 +146,8 @@ namespace Arc.YTSubConverter
             None = 0,
             Glow = 1,
             HardShadow = 2,
-            SoftShadow = 4
+            SoftShadow = 4,
+            Bevel = 8
         }
     }
 }

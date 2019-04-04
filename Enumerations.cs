@@ -16,6 +16,7 @@
     public enum ShadowType
     {
         Glow,
+        Bevel,
         HardShadow,
         SoftShadow
     }

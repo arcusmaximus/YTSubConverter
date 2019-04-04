@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Arc.YTSubConverter</RootNamespace>
     <AssemblyName>YTSubConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -125,7 +125,6 @@
     <Compile Include="Util\TimeRange.cs" />
     <Compile Include="Util\TimeUtil.cs" />
     <Compile Include="Util\Extensions.cs" />
-    <Compile Include="Util\TextUtil.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
