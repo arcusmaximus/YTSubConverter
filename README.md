@@ -51,6 +51,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\i}` - italic
 * `{\u}` - underline
 * `{\fn}` - font. (See above for list of allowed fonts)
+* `{\fs}` - font size. If you set it to e.g. twice the size defined in the style, the YouTube subtitle will be twice the default size.
 * `{\c}` or `{\1c}` - regular text color
 * `{\2c}` - unsung karaoke text color
 * `{\3c}` - outline color
@@ -65,19 +66,28 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\fad}` - simple fade
 * `{\fade}` - complex fade
 * `{\move}` - move from one point to another
-* `{\t}` - animate colors and transparencies
-* `{\ytshake}` - YTSubConverter-specific tag which makes the subtitle randomly jump around.
+* `{\t}` - animate colors, transparencies and font sizes.
+* `{\ytsub}` - start using subscript (only works on PC)
+* `{\ytsup}` - start using superscript (only works on PC)
+* `{\ytsur}` - switch back to regular script
+* `{\ytruby}` - enable ruby text. `{\ytruby}これは[漢/かん][字/じ]です` will result in a 漢 with a かん above it, followed by a 字 with a じ above it. You can change the position of the ruby text: `{\ytruby8}` will display it above the line (default), while `{\ytruby2}` will display it below. This tag only works on PC; mobile apps will display “漢(かん)字(じ)” instead.
+* `{\ytvert}` - enable vertical text (only works on PC):
+  * `{\ytvert9}` - characters are placed vertically in columns, with those columns going from right to left.
+  * `{\ytvert7}` - characters are placed vertically in columns, with those columns going from left to right.
+  * `{\ytvert1}` - the whole subtitle is rotated 90° counter-clockwise so that the lines that used to go from top to bottom now go from left to right.
+  * `{\ytvert3}` - the whole subtitle is rotated 90° counter-clockwise and the order of the lines is inverted so they go from right to left.
+* `{\ytshake}` - make the subtitle randomly jump around.
   * `{\ytshake}` - shake for the duration of the subtitle, staying within 20px of the original position.
   * `{\ytshake(radius)}` - stay within `radius` pixels of the original position.
   * `\ytshake(radiusX, radiusY)` - stay within `radiusX` pixels of the original position on the X axis and `radiusY` pixels on the Y axis.
   * `{\ytshake(radius, t1, t2)}` - start shaking at `t1` and stop at `t2` (both numbers are in milliseconds relative to the subtitle start time).
   * `{\ytshake(radiusX, radiusY, t1, t2)}`
-* `{\ytchroma}` - YTSubConverter-specific tag which adds a chromatic abberation effect. At the start, a red, a green and a blue copy of the subtitle come together and merge into the regular subtitle. At the end, the subtitle splits up into its three copies again which then disperse.
+* `{\ytchroma}` - adds a chromatic abberation effect. At the start, a red, a green and a blue copy of the subtitle come together and merge into the regular subtitle. At the end, the subtitle splits up into its three copies again which then disperse.
   * `{\ytchroma}` - copies start at a distance of 20px and converge/disperse over 270ms.
   * `{\ytchroma(intime, outtime)}` - copies converge over `intime` milliseconds at the start and disperse over `outtime` milliseconds at the end.
   * `{\ytchroma(offsetX, offsetY, intime, outtime)}` - the first copy starts at `offsetX` pixels to the left of and `offsetY` pixels above the subtitle position. (The last copy starts at the same distance in the opposite direction.) Both offsets can be negative.
   * `{\ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)}` - replace the default red/green/blue by any number of custom colors. Both the colors and the alpha value should be specified in hexadecimal (`&H...&`).
-* `{\ytkt}` - YTSubConverter-specific tag for enabling advanced Karaoke Types. Warning: using these will result in large files that may require multiple upload attempts before YouTube will accept them.
+* `{\ytkt}` - enables advanced Karaoke Types. Warning: using these will result in large files that may require multiple upload attempts before YouTube will accept them.
   * `{\ytktFade}` - Configure the line to use fading karaoke ([example video](https://www.youtube.com/watch?v=nLMRAKeoif0)).
   * `{\ytktGlitch}` - Configure the line to use karaoke with glitching text ([example video](https://www.youtube.com/watch?v=9_IKgqsnfco)). Looks for Latin, Chinese, Japanese and Korean characters in each syllable and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
 
@@ -147,8 +157,6 @@ Once the upload is complete, click “Submit contribution” while making sure n
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
-* In general, you can only use one style per line of text. For example, while you can make an entire line bold or italic, you can't do this for a single word within a line. In other words, this works: `What's happening?\N{\b1}Nononono!` (only the second line is bold), but this doesn't: `I {\b1}told{\b0} you not to go there!` (nothing will be bold).
-  * As an exception to the above, multiple colors within a line *are* possible, but only on PC. For example, the “MAAAN” in `Devil{\c&H0000FF&}MAAAN{\r}!` will be red on PC; on mobile, however, it'll have the same color as the rest of the line.
 * Subtitles positioned off-center will move out towards the sides in theater mode, possibly even hanging out of the video frame.
 * The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
   * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
