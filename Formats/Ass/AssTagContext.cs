@@ -8,6 +8,8 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         public AssDocument Document;
         public AssDialogue Dialogue;
+        public AssStyle InitialStyle;
+        public AssStyleOptions InitialStyleOptions;
         public AssStyle Style;
         public AssStyleOptions StyleOptions;
         public AssLine Line;

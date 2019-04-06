@@ -117,7 +117,7 @@ namespace Arc.YTSubConverter.Animations
                 ApplyAnimation(newLine, anim, 1);
             }
 
-            foreach (AnimationWithSectionIndex anim in anims.Where(a => a.Animation.AffectsPast && a.Animation.StartTime > originalLine.End)
+            foreach (AnimationWithSectionIndex anim in anims.Where(a => a.Animation.AffectsPast && a.Animation.StartTime >= originalLine.Start)
                                                             .OrderByDescending(a => a.Animation.StartTime))
             {
                 ApplyAnimation(newLine, anim, 0);

@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantLeftAlignTextWithLineBreaks0" xml:space="preserve">
-    <value>改行のある字幕は左寄せできません。({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0" xml:space="preserve">
-    <value>中央寄せまたは右寄せの字幕には一つの改行しか使えません。({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0" xml:space="preserve">
-    <value>中央寄せまたは右寄せの字幕に改行を含まれる場合、上揃えか下揃えにする必要があります。({0})</value>
+  <data name="Bevel" xml:space="preserve">
+    <value>ベベル</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>変換</value>
@@ -191,8 +185,5 @@
   </data>
   <data name="UseForKaraoke" xml:space="preserve">
     <value>カラオケ用</value>
-  </data>
-  <data name="VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0" xml:space="preserve">
-    <value>改行を含む字幕を上下中央揃えにする場合、複数の書式を指定することはできません。({0})</value>
   </data>
 </root>

@@ -24,6 +24,18 @@ namespace Arc.YTSubConverter
             set;
         }
 
+        public float Scale
+        {
+            get;
+            set;
+        } = 1;
+
+        public OffsetType Offset
+        {
+            get;
+            set;
+        }
+
         public bool Bold
         {
             get;
@@ -56,6 +68,12 @@ namespace Arc.YTSubConverter
 
         public Dictionary<ShadowType, Color> ShadowColors { get; } = new Dictionary<ShadowType, Color>();
 
+        public RubyPart RubyPart
+        {
+            get;
+            set;
+        }
+
         public override string ToString()
         {
             return Text;
@@ -72,6 +90,8 @@ namespace Arc.YTSubConverter
         {
             Text = section.Text;
             Font = section.Font;
+            Scale = section.Scale;
+            Offset = section.Offset;
             Bold = section.Bold;
             Italic = section.Italic;
             Underline = section.Underline;
@@ -79,6 +99,7 @@ namespace Arc.YTSubConverter
             BackColor = section.BackColor;
             ShadowColors.Clear();
             ShadowColors.AddRange(section.ShadowColors);
+            RubyPart = section.RubyPart;
         }
     }
 }

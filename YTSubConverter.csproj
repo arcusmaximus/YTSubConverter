@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Arc.YTSubConverter</RootNamespace>
     <AssemblyName>YTSubConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -61,6 +61,7 @@
     <Compile Include="Animations\ForeColorAnimation.cs" />
     <Compile Include="Animations\GlitchingCharAnimation.cs" />
     <Compile Include="Animations\MoveAnimation.cs" />
+    <Compile Include="Animations\ScaleAnimation.cs" />
     <Compile Include="Animations\SecondaryColorAnimation.cs" />
     <Compile Include="Animations\ShadowColorAnimation.cs" />
     <Compile Include="Animations\ShakeAnimation.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Formats\Ass\Tags\AssBoldTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssChromaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssComplexFadeTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssFontSizeTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssFontTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssForeAlphaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssForeColorTagHandler.cs" />
@@ -86,17 +88,21 @@
     <Compile Include="Formats\Ass\Tags\AssOutlineAlphaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssOutlineColorTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssPositionTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssRegularScriptTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssResetTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssRubyTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssSecondaryAlphaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssSecondaryColorTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssShadowAlphaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssShadowColorTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssShakeTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssSimpleFadeTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssSubscriptTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssSuperscriptTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssTagHandlerBase.cs" />
     <Compile Include="Formats\Ass\Tags\AssTransformTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssUnderlineTagHandler.cs" />
-    <Compile Include="Formats\RtDocument.cs" />
+    <Compile Include="Formats\Ass\Tags\AssVerticalTypeTagHandler.cs" />
     <Compile Include="Formats\SbvDocument.cs" />
     <Compile Include="Formats\SrtDocument.cs" />
     <Compile Include="Formats\SubtitleDocument.cs" />

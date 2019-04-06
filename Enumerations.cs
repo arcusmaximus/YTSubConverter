@@ -21,6 +21,38 @@
         SoftShadow
     }
 
+    public enum OffsetType
+    {
+        Regular,
+        Subscript,
+        Superscript
+    }
+
+    public enum RubyPosition
+    {
+        None,
+        Above,
+        Below
+    }
+
+    public enum RubyPart
+    {
+        None,
+        Text,
+        Parenthesis,
+        RubyAbove,
+        RubyBelow
+    }
+
+    public enum VerticalTextType
+    {
+        None,
+        VerticalRtl,
+        VerticalLtr,
+        RotatedLtr,
+        RotatedRtl
+    }
+
     public enum KaraokeType
     {
         Simple,

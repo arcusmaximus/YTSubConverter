@@ -26,7 +26,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                                        { "1a", HandleTransformForeAlphaTag },
                                        { "2a", HandleTransformSecondaryAlphaTag },
                                        { "3a", HandleTransformOutlineAlphaTag },
-                                       { "4a", HandleTransformShadowAlphaTag }
+                                       { "4a", HandleTransformShadowAlphaTag },
+                                       { "fs", HandleTransformFontSizeTag }
                                    };
         }
 
@@ -134,10 +135,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
         {
             foreach (ShadowType shadowType in context.Section.ShadowColors.Keys)
             {
-                if (context.Style.HasOutline && !context.Style.HasOutlineBox && shadowType == ShadowType.Glow)
-                    continue;
-
-                HandleTransformShadowColorTag(context, shadowType, startTime, endTime, accel, arg);
+                if (shadowType != ShadowType.Glow || !context.Style.HasOutline || context.Style.HasOutlineBox)
+                    HandleTransformShadowColorTag(context, shadowType, startTime, endTime, accel, arg);
             }
         }
 
@@ -178,7 +177,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
             else
             {
-                HandleTransformShadowAlphaTag(context, startTime, endTime, accel, arg);
+                HandleTransformShadowAlphaTag(context, ShadowType.Glow, startTime, endTime, accel, arg);
             }
         }
 
@@ -186,19 +185,34 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
         {
             foreach (KeyValuePair<ShadowType, Color> shadowColor in context.Section.ShadowColors)
             {
-                if (context.Style.HasOutline && !context.Style.HasOutlineBox && shadowColor.Key == ShadowType.Glow)
-                    continue;
-
-                ShadowColorAnimation anim = FetchColorAnimation(
-                    context,
-                    startTime,
-                    endTime,
-                    a => a.ShadowType == shadowColor.Key,
-                    s => s.ShadowColors[shadowColor.Key],
-                    (s, e, c) => new ShadowColorAnimation(shadowColor.Key, s, c, e, c)
-                );
-                anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+                if (shadowColor.Key != ShadowType.Glow || !context.Style.HasOutline || context.Style.HasOutlineBox)
+                    HandleTransformShadowAlphaTag(context, shadowColor.Key, startTime, endTime, accel, arg);
             }
+        }
+
+        private static void HandleTransformShadowAlphaTag(AssTagContext context, ShadowType shadowType, DateTime startTime, DateTime endTime, int accel, string arg)
+        {
+            ShadowColorAnimation anim = FetchColorAnimation(
+                context,
+                startTime,
+                endTime,
+                a => a.ShadowType == shadowType,
+                s => s.ShadowColors[shadowType],
+                (s, e, c) => new ShadowColorAnimation(shadowType, s, c, e, c)
+            );
+            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+        }
+
+        private static void HandleTransformFontSizeTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        {
+            if (!int.TryParse(arg, out int size))
+                return;
+
+            AssSection section = context.Section;
+            ScaleAnimation prevAnim = section.Animations.OfType<ScaleAnimation>().LastOrDefault();
+            float startScale = prevAnim?.EndScale ?? context.Section.Scale;
+            float endScale = (float)size / context.Style.FontSize;
+            context.Section.Animations.Add(new ScaleAnimation(startTime, startScale, endTime, endScale));
         }
 
         private static T FetchColorAnimation<T>(
@@ -231,7 +245,11 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             T anim = existingAnims.FirstOrDefault();
             if (anim == null)
             {
-                T prevAnim = section.Animations.OfType<T>().LastOrDefault();
+                IEnumerable<T> prevAnims = section.Animations.OfType<T>();
+                if (predicate != null)
+                    prevAnims = prevAnims.Where(predicate);
+
+                T prevAnim = prevAnims.LastOrDefault();
                 anim = createAnim(startTime, endTime, prevAnim?.EndColor ?? getSectionColor(section));
                 section.Animations.Add(anim);
             }

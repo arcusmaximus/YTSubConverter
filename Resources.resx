@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantLeftAlignTextWithLineBreaks0" xml:space="preserve">
-    <value>Can't left-align text with line breaks ({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0" xml:space="preserve">
-    <value>Centered or right-aligned text can have at most one line break ({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0" xml:space="preserve">
-    <value>Centered or right-aligned text with line breaks must be top- or bottom-aligned ({0})</value>
+  <data name="Bevel" xml:space="preserve">
+    <value>Bevel</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Checkers" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -195,8 +189,5 @@
   </data>
   <data name="UseForKaraoke" xml:space="preserve">
     <value>Use for karaoke</value>
-  </data>
-  <data name="VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0" xml:space="preserve">
-    <value>Vertically centered lines with multiple styles can't have line breaks ({0})</value>
   </data>
 </root>

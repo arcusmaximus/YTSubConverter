@@ -13,6 +13,8 @@ namespace Arc.YTSubConverter.Formats.Ass
     internal class AssDocument : SubtitleDocument
     {
         private readonly Dictionary<string, AssTagHandlerBase> _tagHandlers = new Dictionary<string, AssTagHandlerBase>();
+        private readonly Dictionary<string, AssStyle> _styles;
+        private readonly Dictionary<string, AssStyleOptions> _styleOptions;
 
         public AssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
         {
@@ -23,18 +25,19 @@ namespace Arc.YTSubConverter.Formats.Ass
             AssDocumentSection infoSection = fileSections["Script Info"];
             VideoDimensions = new Size(infoSection.GetItemInt("PlayResX", 384), infoSection.GetItemInt("PlayResY", 288));
 
-            Styles = fileSections["V4+ Styles"].MapItems("Style", i => new AssStyle(i))
-                                               .ToList();
+            _styles = fileSections["V4+ Styles"].MapItems("Style", i => new AssStyle(i))
+                                                .ToDictionary(s => s.Name);
 
-            Dictionary<string, AssStyle> styleLookup = Styles.ToDictionary(s => s.Name);
-            Dictionary<string, AssStyleOptions> styleOptionsLookup = null;
             if (styleOptions != null)
-                styleOptionsLookup = styleOptions.ToDictionary(o => o.Name);
+                _styleOptions = styleOptions.ToDictionary(o => o.Name);
 
             foreach (AssDialogue dialogue in fileSections["Events"].MapItems("Dialogue", i => new AssDialogue(i)))
             {
-                AssStyle style = styleLookup.GetOrDefault(dialogue.Style);
-                AssStyleOptions options = styleOptionsLookup?.GetOrDefault(dialogue.Style);
+                AssStyle style = GetStyle(dialogue.Style);
+                if (style == null)
+                    throw new Exception($"Line \"{dialogue.Text}\" refers to style \"{dialogue.Style}\" which doesn't exist.");
+
+                AssStyleOptions options = GetStyleOptions(dialogue.Style);
 
                 List<AssLine> lines = ParseLine(dialogue, style, options);
                 Lines.AddRange(lines.SelectMany(ExpandLine));
@@ -47,9 +50,19 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
         }
 
-        public List<AssStyle> Styles
+        public IEnumerable<AssStyle> Styles
         {
-            get;
+            get { return _styles.Values; }
+        }
+
+        public AssStyle GetStyle(string name)
+        {
+            return _styles.GetOrDefault(name);
+        }
+
+        public AssStyleOptions GetStyleOptions(string name)
+        {
+            return _styleOptions?.GetOrDefault(name);
         }
 
         private void RegisterTagHandlers()
@@ -58,6 +71,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             RegisterTagHandler(new AssBoldTagHandler());
             RegisterTagHandler(new AssChromaTagHandler());
             RegisterTagHandler(new AssComplexFadeTagHandler());
+            RegisterTagHandler(new AssFontSizeTagHandler());
             RegisterTagHandler(new AssFontTagHandler());
             RegisterTagHandler(new AssForeAlphaTagHandler());
             RegisterTagHandler(new AssForeColorTagHandler("c"));
@@ -69,15 +83,20 @@ namespace Arc.YTSubConverter.Formats.Ass
             RegisterTagHandler(new AssOutlineAlphaTagHandler());
             RegisterTagHandler(new AssOutlineColorTagHandler());
             RegisterTagHandler(new AssPositionTagHandler());
+            RegisterTagHandler(new AssRegularScriptTagHandler());
             RegisterTagHandler(new AssResetTagHandler());
+            RegisterTagHandler(new AssRubyTagHandler());
             RegisterTagHandler(new AssSecondaryAlphaTagHandler());
             RegisterTagHandler(new AssSecondaryColorTagHandler());
             RegisterTagHandler(new AssShadowAlphaTagHandler());
             RegisterTagHandler(new AssShadowColorTagHandler());
             RegisterTagHandler(new AssShakeTagHandler());
             RegisterTagHandler(new AssSimpleFadeTagHandler());
+            RegisterTagHandler(new AssSubscriptTagHandler());
+            RegisterTagHandler(new AssSuperscriptTagHandler());
             RegisterTagHandler(new AssTransformTagHandler());
             RegisterTagHandler(new AssUnderlineTagHandler());
+            RegisterTagHandler(new AssVerticalTypeTagHandler());
         }
 
         private void RegisterTagHandler(AssTagHandlerBase handler)
@@ -141,6 +160,8 @@ namespace Arc.YTSubConverter.Formats.Ass
                                  {
                                      Document = this,
                                      Dialogue = dialogue,
+                                     InitialStyle = style,
+                                     InitialStyleOptions = styleOptions,
                                      Style = style,
                                      StyleOptions = styleOptions,
                                      Line = line,
@@ -181,6 +202,9 @@ namespace Arc.YTSubConverter.Formats.Ass
                 context.Section.Text = text.Substring(start, text.Length - start).Replace("\\N", "\r\n");
                 line.Sections.Add(context.Section);
             }
+
+            if (line.RubyPosition != RubyPosition.None)
+                CreateRubySections(line);
 
             List<AssLine> lines = new List<AssLine> { line };
             foreach (AssTagContext.PostProcessor postProcessor in context.PostProcessors)
@@ -232,6 +256,51 @@ namespace Arc.YTSubConverter.Formats.Ass
                 else
                     section.ShadowColors[ShadowType.Glow] = style.OutlineColor;
             }
+        }
+
+        private static void CreateRubySections(AssLine line)
+        {
+            for (int sectionIdx = line.Sections.Count - 1; sectionIdx >= 0; sectionIdx--)
+            {
+                Section section = line.Sections[sectionIdx];
+                MatchCollection matches = Regex.Matches(section.Text, @"\[(?<text>.+?)/(?<ruby>.+?)\]");
+                if (matches.Count == 0)
+                    continue;
+
+                line.Sections.RemoveAt(sectionIdx);
+
+                int interStartPos = 0;
+                int numSubSections = 0;
+                foreach (Match match in matches)
+                {
+                    if (match.Index > interStartPos)
+                        InsertRubySection(line, section, section.Text.Substring(interStartPos, match.Index - interStartPos), RubyPart.None, sectionIdx, ref numSubSections);
+                    else if (sectionIdx == 0 && match.Index == 0)
+                        // Hack: YttDocument inserts a zero-width space after the first section of each line (because YouTube will remove its "p" attribute otherwise),
+                        // but if that first section is the start of a ruby group, we'd be splicing the space into the middle of the group and break it.
+                        // As a workaround, we add a dummy section (with another ZW space) to be the first section instead.
+                        InsertRubySection(line, section, "​", RubyPart.None, sectionIdx, ref numSubSections);
+
+                    InsertRubySection(line, section, match.Groups["text"].Value, RubyPart.Text, sectionIdx, ref numSubSections);
+                    InsertRubySection(line, section, "(", RubyPart.Parenthesis, sectionIdx, ref numSubSections);
+                    InsertRubySection(line, section, match.Groups["ruby"].Value, line.RubyPosition == RubyPosition.Below ? RubyPart.RubyBelow : RubyPart.RubyAbove, sectionIdx, ref numSubSections);
+                    InsertRubySection(line, section, ")", RubyPart.Parenthesis, sectionIdx, ref numSubSections);
+
+                    interStartPos = match.Index + match.Length;
+                }
+
+                if (interStartPos < section.Text.Length)
+                    InsertRubySection(line, section, section.Text.Substring(interStartPos), RubyPart.None, sectionIdx, ref numSubSections);
+            }
+        }
+
+        private static void InsertRubySection(AssLine line, Section format, string text, RubyPart rubyPart, int sectionIndex, ref int numSubSections)
+        {
+            Section section = (Section)format.Clone();
+            section.Text = text;
+            section.RubyPart = rubyPart;
+            line.Sections.Insert(sectionIndex + numSubSections, section);
+            numSubSections++;
         }
 
         private static IEnumerable<AssLine> ExpandLine(AssLine line)
@@ -289,9 +358,15 @@ namespace Arc.YTSubConverter.Formats.Ass
 
             DateTime endTime;
             if (stepIdx < activeSectionsPerStep.Count - 1)
+            {
                 endTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20)).AddMilliseconds(-1);
+                if (endTime > originalLine.End)
+                    endTime = originalLine.End;
+            }
             else
+            {
                 endTime = originalLine.End;
+            }
 
             AssLine stepLine = (AssLine)originalLine.Clone();
             stepLine.Start = startTime;
@@ -316,10 +391,6 @@ namespace Arc.YTSubConverter.Formats.Ass
                 if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
                     section.ShadowColors.Clear();
             }
-
-            // Hack: make sure YttDocument will also recognize the final (single-color) step as a karaoke line
-            // so it gets the exact same position as the previous steps
-            stepLine.Sections.Add(new AssSection(string.Empty));
 
             AddKaraokeEffects(originalLine, stepLine, activeSectionsPerStep, stepIdx);
             return stepLine;
@@ -438,6 +509,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             if (singingSection.Text.Length == 0)
                 return;
 
+            ApplySimpleKaraokeEffect(singingSection);
             DateTime glitchEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(70), stepLine.End);
             Util.CharacterRange[] charRanges = GetGlitchKaraokeCharacterRanges(singingSection.Text[0]);
             singingSection.Animations.Add(new GlitchingCharAnimation(stepLine.Start, glitchEndTime, charRanges));

@@ -1,0 +1,12 @@
+﻿namespace Arc.YTSubConverter.Formats.Ass.Tags
+{
+    internal class AssSuperscriptTagHandler : AssTagHandlerBase
+    {
+        public override string Tag => "ytsup";
+
+        public override void Handle(AssTagContext context, string arg)
+        {
+            context.Section.Offset = OffsetType.Superscript;
+        }
+    }
+}

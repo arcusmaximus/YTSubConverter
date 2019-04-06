@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantLeftAlignTextWithLineBreaks0" xml:space="preserve">
-    <value>包含換行字元的字幕無法靠左對齊。({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0" xml:space="preserve">
-    <value>置中或靠右對齊的字幕至多只能使用一個換行字元。({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0" xml:space="preserve">
-    <value>置中或靠右對齊的字幕若換行，則必須靠上或靠下對齊。({0})</value>
+  <data name="Bevel" xml:space="preserve">
+    <value>斜面</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>轉換</value>
@@ -191,8 +185,5 @@
   </data>
   <data name="UseForKaraoke" xml:space="preserve">
     <value>卡啦OK用</value>
-  </data>
-  <data name="VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0" xml:space="preserve">
-    <value>包含換行字元的字幕若靠上、中、下對齊，則無法指定複數樣式。 ({0})</value>
   </data>
 </root>

@@ -20,9 +20,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             context.PostProcessors.Add(
                 () =>
                 {
-                    if (context.Line.Position != null)
-                        context.Line.Animations.Add(new ShakeAnimation(startTime, endTime, context.Line.Position.Value, radius));
-
+                    PointF center = context.Line.Position ?? context.Document.GetDefaultPosition(context.Line.AnchorPoint);
+                    context.Line.Animations.Add(new ShakeAnimation(startTime, endTime, center, radius));
                     return null;
                 }
             );

@@ -17,10 +17,11 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         protected static int ParseHex(string arg)
         {
-            if (!arg.StartsWith("&H") || !arg.EndsWith("&"))
+            if (!arg.StartsWith("&H"))
                 return 0;
 
-            int.TryParse(arg.Substring(2, arg.Length - 3), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);
+            string hex = arg.Substring(2, arg.Length - (arg.EndsWith("&") ? 3 : 2));
+            int.TryParse(hex, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);
             return value;
         }
 

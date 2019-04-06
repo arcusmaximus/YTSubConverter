@@ -36,6 +36,7 @@ namespace Arc.YTSubConverter
             _chkStyleOptions.Text = Resources.StyleOptions;
             _lblShadowTypes.Text = Resources.ShadowTypes;
             _chkGlow.Text = Resources.Glow;
+            _chkBevel.Text = Resources.Bevel;
             _chkSoftShadow.Text = Resources.SoftShadow;
             _chkHardShadow.Text = Resources.HardShadow;
             _chkKaraoke.Text = Resources.UseForKaraoke;
@@ -146,6 +147,7 @@ namespace Arc.YTSubConverter
                 _chkGlow.Enabled = true;
             }
 
+            _chkBevel.Checked = options.ShadowTypes.Contains(ShadowType.Bevel);
             _chkSoftShadow.Checked = options.ShadowTypes.Contains(ShadowType.SoftShadow);
             _chkHardShadow.Checked = options.ShadowTypes.Contains(ShadowType.HardShadow);
 
@@ -177,13 +179,19 @@ namespace Arc.YTSubConverter
             UpdateStylePreview();
         }
 
-        private void _radSoftShadow_CheckedChanged(object sender, EventArgs e)
+        private void _chkBevel_CheckedChanged(object sender, EventArgs e)
+        {
+            SelectedStyleOptions.SetShadowTypeEnabled(ShadowType.Bevel, _chkBevel.Checked);
+            UpdateStylePreview();
+        }
+
+        private void _chkSoftShadow_CheckedChanged(object sender, EventArgs e)
         {
             SelectedStyleOptions.SetShadowTypeEnabled(ShadowType.SoftShadow, _chkSoftShadow.Checked);
             UpdateStylePreview();
         }
 
-        private void _radHardShadow_CheckedChanged(object sender, EventArgs e)
+        private void _chkHardShadow_CheckedChanged(object sender, EventArgs e)
         {
             SelectedStyleOptions.SetShadowTypeEnabled(ShadowType.HardShadow, _chkHardShadow.Checked);
             UpdateStylePreview();

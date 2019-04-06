@@ -21,9 +21,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 () =>
                 {
                     AssLine originalLine = context.Line;
-                    if (originalLine.Position == null)
-                        return null;
-
+                    PointF center = originalLine.Position ?? context.Document.GetDefaultPosition(originalLine.AnchorPoint);
                     List<AssLine> chromaLines = new List<AssLine>();
 
                     if (colors.Count == 0)
@@ -36,13 +34,13 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
                     if (chromaInMs > 0)
                     {
-                        chromaLines.AddRange(CreateChromaLines(originalLine, colors, maxOffsetX, maxOffsetY, chromaInMs, true));
+                        chromaLines.AddRange(CreateChromaLines(originalLine, colors, center, maxOffsetX, maxOffsetY, chromaInMs, true));
                         originalLine.Start = TimeUtil.SnapTimeToFrame(originalLine.Start.AddMilliseconds(chromaInMs));
                     }
 
                     if (chromeOutMs > 0)
                     {
-                        chromaLines.AddRange(CreateChromaLines(originalLine, colors, maxOffsetX, maxOffsetY, chromeOutMs, false));
+                        chromaLines.AddRange(CreateChromaLines(originalLine, colors, center, maxOffsetX, maxOffsetY, chromeOutMs, false));
                         originalLine.End = TimeUtil.SnapTimeToFrame(originalLine.End.AddMilliseconds(-chromeOutMs));
                     }
 
@@ -87,7 +85,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             return true;
         }
 
-        private static IEnumerable<AssLine> CreateChromaLines(AssLine originalLine, List<Color> colors, int maxOffsetX, int maxOffsetY, int durationMs, bool moveIn)
+        private static IEnumerable<AssLine> CreateChromaLines(AssLine originalLine, List<Color> colors, PointF center, int maxOffsetX, int maxOffsetY, int durationMs, bool moveIn)
         {
             if (originalLine.Sections.Count == 0)
                 yield break;
@@ -111,8 +109,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 float offsetFactor = colors.Count > 1 ? (float)i / (colors.Count - 1) : 0.5f;
                 float offsetX = offsetFactor * (-maxOffsetX * 2) + maxOffsetX;
                 float offsetY = offsetFactor * (-maxOffsetY * 2) + maxOffsetY;
-                PointF farPosition = new PointF(originalLine.Position.Value.X + offsetX, originalLine.Position.Value.Y + offsetY);
-                PointF nearPosition = new PointF(originalLine.Position.Value.X + offsetX / 5, originalLine.Position.Value.Y + offsetY / 5);
+                PointF farPosition = new PointF(center.X + offsetX, center.Y + offsetY);
+                PointF nearPosition = new PointF(center.X + offsetX / 5, center.Y + offsetY / 5);
                 if (moveIn)
                 {
                     chromaLine.End = TimeUtil.SnapTimeToFrame(originalLine.Start.AddMilliseconds(durationMs)).AddMilliseconds(32);

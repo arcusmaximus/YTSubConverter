@@ -11,8 +11,11 @@ namespace Arc.YTSubConverter
                 x.Italic != y.Italic ||
                 x.Underline != y.Underline ||
                 x.Font != y.Font ||
+                x.Scale != y.Scale ||
+                x.Offset != y.Offset ||
                 x.ForeColor != y.ForeColor ||
                 x.BackColor != y.BackColor ||
+                x.RubyPart != y.RubyPart ||
                 x.ShadowColors.Count != y.ShadowColors.Count)
             {
                 return false;
@@ -33,8 +36,11 @@ namespace Arc.YTSubConverter
                    section.Italic.GetHashCode() ^
                    section.Underline.GetHashCode() ^
                    (section.Font?.GetHashCode() ?? 0) ^
+                   section.Scale.GetHashCode() ^
+                   section.Offset.GetHashCode() ^
                    section.ForeColor.GetHashCode() ^
-                   section.BackColor.GetHashCode();
+                   section.BackColor.GetHashCode() ^
+                   section.RubyPart.GetHashCode();
         }
     }
 }

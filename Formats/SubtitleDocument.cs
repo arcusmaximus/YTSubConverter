@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 
@@ -74,6 +73,50 @@ namespace Arc.YTSubConverter.Formats
                     continue;
 
                 line.End = linesByStartTime.Keys[endTimeIdx];
+            }
+        }
+
+        public PointF GetDefaultPosition(AnchorPoint anchorPoint)
+        {
+            float left = VideoDimensions.Width * 0.02f;
+            float center = VideoDimensions.Width / 2.0f;
+            float right = VideoDimensions.Width * 0.98f;
+
+            float top = VideoDimensions.Height * 0.02f;
+            float middle = VideoDimensions.Height / 2.0f;
+            float bottom = VideoDimensions.Height * 0.98f;
+
+            switch (anchorPoint)
+            {
+                case AnchorPoint.TopLeft:
+                    return new PointF(left, top);
+
+                case AnchorPoint.TopCenter:
+                    return new PointF(center, top);
+
+                case AnchorPoint.TopRight:
+                    return new PointF(right, top);
+
+                case AnchorPoint.MiddleLeft:
+                    return new PointF(left, middle);
+
+                case AnchorPoint.Center:
+                    return new PointF(center, middle);
+
+                case AnchorPoint.MiddleRight:
+                    return new PointF(right, middle);
+
+                case AnchorPoint.BottomLeft:
+                    return new PointF(left, bottom);
+
+                case AnchorPoint.BottomCenter:
+                    return new PointF(center, bottom);
+
+                case AnchorPoint.BottomRight:
+                    return new PointF(right, bottom);
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

@@ -45,6 +45,7 @@
             this._chkHighlightCurrentWord = new System.Windows.Forms.CheckBox();
             this._chkKaraoke = new System.Windows.Forms.CheckBox();
             this._pnlShadowType = new System.Windows.Forms.Panel();
+            this._chkBevel = new System.Windows.Forms.CheckBox();
             this._chkHardShadow = new System.Windows.Forms.CheckBox();
             this._chkSoftShadow = new System.Windows.Forms.CheckBox();
             this._chkGlow = new System.Windows.Forms.CheckBox();
@@ -93,7 +94,7 @@
             this._lstStyles.Location = new System.Drawing.Point(0, 0);
             this._lstStyles.Name = "_lstStyles";
             this._lstStyles.Size = new System.Drawing.Size(291, 331);
-            this._lstStyles.TabIndex = 2;
+            this._lstStyles.TabIndex = 0;
             this._lstStyles.SelectedIndexChanged += new System.EventHandler(this._lstStyles_SelectedIndexChanged);
             // 
             // _brwPreview
@@ -139,7 +140,7 @@
             this._btnPickShadowColor.Location = new System.Drawing.Point(182, 89);
             this._btnPickShadowColor.Name = "_btnPickShadowColor";
             this._btnPickShadowColor.Size = new System.Drawing.Size(35, 20);
-            this._btnPickShadowColor.TabIndex = 16;
+            this._btnPickShadowColor.TabIndex = 10;
             this._btnPickShadowColor.Text = "...";
             this._btnPickShadowColor.UseVisualStyleBackColor = true;
             this._btnPickShadowColor.Click += new System.EventHandler(this._btnPickShadowColor_Click);
@@ -149,7 +150,7 @@
             this._btnPickOutlineColor.Location = new System.Drawing.Point(182, 68);
             this._btnPickOutlineColor.Name = "_btnPickOutlineColor";
             this._btnPickOutlineColor.Size = new System.Drawing.Size(35, 20);
-            this._btnPickOutlineColor.TabIndex = 16;
+            this._btnPickOutlineColor.TabIndex = 8;
             this._btnPickOutlineColor.Text = "...";
             this._btnPickOutlineColor.UseVisualStyleBackColor = true;
             this._btnPickOutlineColor.Click += new System.EventHandler(this._btnPickOutlineColor_Click);
@@ -159,7 +160,7 @@
             this._btnPickTextColor.Location = new System.Drawing.Point(182, 47);
             this._btnPickTextColor.Name = "_btnPickTextColor";
             this._btnPickTextColor.Size = new System.Drawing.Size(35, 20);
-            this._btnPickTextColor.TabIndex = 16;
+            this._btnPickTextColor.TabIndex = 6;
             this._btnPickTextColor.Text = "...";
             this._btnPickTextColor.UseVisualStyleBackColor = true;
             this._btnPickTextColor.Click += new System.EventHandler(this._btnPickTextColor_Click);
@@ -170,7 +171,7 @@
             this._txtCurrentWordShadowColor.Location = new System.Drawing.Point(111, 89);
             this._txtCurrentWordShadowColor.Name = "_txtCurrentWordShadowColor";
             this._txtCurrentWordShadowColor.Size = new System.Drawing.Size(65, 20);
-            this._txtCurrentWordShadowColor.TabIndex = 14;
+            this._txtCurrentWordShadowColor.TabIndex = 9;
             this._txtCurrentWordShadowColor.TextChanged += new System.EventHandler(this._txtCurrentWordShadowColor_TextChanged);
             // 
             // _txtCurrentWordOutlineColor
@@ -179,7 +180,7 @@
             this._txtCurrentWordOutlineColor.Location = new System.Drawing.Point(111, 68);
             this._txtCurrentWordOutlineColor.Name = "_txtCurrentWordOutlineColor";
             this._txtCurrentWordOutlineColor.Size = new System.Drawing.Size(65, 20);
-            this._txtCurrentWordOutlineColor.TabIndex = 14;
+            this._txtCurrentWordOutlineColor.TabIndex = 7;
             this._txtCurrentWordOutlineColor.TextChanged += new System.EventHandler(this._txtCurrentWordOutlineColor_TextChanged);
             // 
             // _txtCurrentWordTextColor
@@ -188,7 +189,7 @@
             this._txtCurrentWordTextColor.Location = new System.Drawing.Point(111, 47);
             this._txtCurrentWordTextColor.Name = "_txtCurrentWordTextColor";
             this._txtCurrentWordTextColor.Size = new System.Drawing.Size(65, 20);
-            this._txtCurrentWordTextColor.TabIndex = 15;
+            this._txtCurrentWordTextColor.TabIndex = 5;
             this._txtCurrentWordTextColor.TextChanged += new System.EventHandler(this._txtCurrentWordTextColor_TextChanged);
             // 
             // _lblCurrentWordShadowColor
@@ -197,7 +198,7 @@
             this._lblCurrentWordShadowColor.Location = new System.Drawing.Point(31, 92);
             this._lblCurrentWordShadowColor.Name = "_lblCurrentWordShadowColor";
             this._lblCurrentWordShadowColor.Size = new System.Drawing.Size(75, 13);
-            this._lblCurrentWordShadowColor.TabIndex = 13;
+            this._lblCurrentWordShadowColor.TabIndex = 4;
             this._lblCurrentWordShadowColor.Text = "Shadow color:";
             // 
             // _lblCurrentWordOutlineColor
@@ -206,7 +207,7 @@
             this._lblCurrentWordOutlineColor.Location = new System.Drawing.Point(31, 71);
             this._lblCurrentWordOutlineColor.Name = "_lblCurrentWordOutlineColor";
             this._lblCurrentWordOutlineColor.Size = new System.Drawing.Size(69, 13);
-            this._lblCurrentWordOutlineColor.TabIndex = 13;
+            this._lblCurrentWordOutlineColor.TabIndex = 3;
             this._lblCurrentWordOutlineColor.Text = "Outline color:";
             // 
             // _lblCurrentWordTextColor
@@ -215,7 +216,7 @@
             this._lblCurrentWordTextColor.Location = new System.Drawing.Point(31, 52);
             this._lblCurrentWordTextColor.Name = "_lblCurrentWordTextColor";
             this._lblCurrentWordTextColor.Size = new System.Drawing.Size(57, 13);
-            this._lblCurrentWordTextColor.TabIndex = 12;
+            this._lblCurrentWordTextColor.TabIndex = 2;
             this._lblCurrentWordTextColor.Text = "Text color:";
             // 
             // _chkHighlightCurrentWord
@@ -225,7 +226,7 @@
             this._chkHighlightCurrentWord.Location = new System.Drawing.Point(6, 31);
             this._chkHighlightCurrentWord.Name = "_chkHighlightCurrentWord";
             this._chkHighlightCurrentWord.Size = new System.Drawing.Size(129, 17);
-            this._chkHighlightCurrentWord.TabIndex = 11;
+            this._chkHighlightCurrentWord.TabIndex = 1;
             this._chkHighlightCurrentWord.Text = "Highlight current word";
             this._chkHighlightCurrentWord.UseVisualStyleBackColor = true;
             this._chkHighlightCurrentWord.CheckedChanged += new System.EventHandler(this._chkHighlightCurrentWord_CheckedChanged);
@@ -236,13 +237,14 @@
             this._chkKaraoke.Location = new System.Drawing.Point(6, 8);
             this._chkKaraoke.Name = "_chkKaraoke";
             this._chkKaraoke.Size = new System.Drawing.Size(102, 17);
-            this._chkKaraoke.TabIndex = 10;
+            this._chkKaraoke.TabIndex = 0;
             this._chkKaraoke.Text = "Use for karaoke";
             this._chkKaraoke.UseVisualStyleBackColor = true;
             this._chkKaraoke.CheckedChanged += new System.EventHandler(this._chkKaraoke_CheckedChanged);
             // 
             // _pnlShadowType
             // 
+            this._pnlShadowType.Controls.Add(this._chkBevel);
             this._pnlShadowType.Controls.Add(this._chkHardShadow);
             this._pnlShadowType.Controls.Add(this._chkSoftShadow);
             this._pnlShadowType.Controls.Add(this._chkGlow);
@@ -253,35 +255,46 @@
             this._pnlShadowType.Size = new System.Drawing.Size(198, 119);
             this._pnlShadowType.TabIndex = 5;
             // 
+            // _chkBevel
+            // 
+            this._chkBevel.AutoSize = true;
+            this._chkBevel.Location = new System.Drawing.Point(26, 48);
+            this._chkBevel.Name = "_chkBevel";
+            this._chkBevel.Size = new System.Drawing.Size(53, 17);
+            this._chkBevel.TabIndex = 1;
+            this._chkBevel.Text = "Bevel";
+            this._chkBevel.UseVisualStyleBackColor = true;
+            this._chkBevel.CheckedChanged += new System.EventHandler(this._chkBevel_CheckedChanged);
+            // 
             // _chkHardShadow
             // 
             this._chkHardShadow.AutoSize = true;
-            this._chkHardShadow.Location = new System.Drawing.Point(26, 65);
+            this._chkHardShadow.Location = new System.Drawing.Point(26, 80);
             this._chkHardShadow.Name = "_chkHardShadow";
             this._chkHardShadow.Size = new System.Drawing.Size(89, 17);
-            this._chkHardShadow.TabIndex = 4;
+            this._chkHardShadow.TabIndex = 3;
             this._chkHardShadow.Text = "Hard shadow";
             this._chkHardShadow.UseVisualStyleBackColor = true;
-            this._chkHardShadow.CheckedChanged += new System.EventHandler(this._radHardShadow_CheckedChanged);
+            this._chkHardShadow.CheckedChanged += new System.EventHandler(this._chkHardShadow_CheckedChanged);
             // 
             // _chkSoftShadow
             // 
             this._chkSoftShadow.AutoSize = true;
-            this._chkSoftShadow.Location = new System.Drawing.Point(26, 48);
+            this._chkSoftShadow.Location = new System.Drawing.Point(26, 64);
             this._chkSoftShadow.Name = "_chkSoftShadow";
             this._chkSoftShadow.Size = new System.Drawing.Size(85, 17);
-            this._chkSoftShadow.TabIndex = 4;
+            this._chkSoftShadow.TabIndex = 2;
             this._chkSoftShadow.Text = "Soft shadow";
             this._chkSoftShadow.UseVisualStyleBackColor = true;
-            this._chkSoftShadow.CheckedChanged += new System.EventHandler(this._radSoftShadow_CheckedChanged);
+            this._chkSoftShadow.CheckedChanged += new System.EventHandler(this._chkSoftShadow_CheckedChanged);
             // 
             // _chkGlow
             // 
             this._chkGlow.AutoSize = true;
-            this._chkGlow.Location = new System.Drawing.Point(26, 31);
+            this._chkGlow.Location = new System.Drawing.Point(26, 32);
             this._chkGlow.Name = "_chkGlow";
             this._chkGlow.Size = new System.Drawing.Size(50, 17);
-            this._chkGlow.TabIndex = 4;
+            this._chkGlow.TabIndex = 0;
             this._chkGlow.Text = "Glow";
             this._chkGlow.UseVisualStyleBackColor = true;
             this._chkGlow.CheckedChanged += new System.EventHandler(this._chkGlow_CheckedChanged);
@@ -363,7 +376,7 @@
             this._chkStyleOptions.Location = new System.Drawing.Point(24, 29);
             this._chkStyleOptions.Name = "_chkStyleOptions";
             this._chkStyleOptions.Size = new System.Drawing.Size(77, 23);
-            this._chkStyleOptions.TabIndex = 1;
+            this._chkStyleOptions.TabIndex = 0;
             this._chkStyleOptions.Text = "Style options";
             this._chkStyleOptions.UseVisualStyleBackColor = true;
             this._chkStyleOptions.CheckedChanged += new System.EventHandler(this._chkStyleOptions_CheckedChanged);
@@ -433,5 +446,6 @@
         private System.Windows.Forms.Button _btnPickOutlineColor;
         private System.Windows.Forms.Button _btnPickTextColor;
         private System.Windows.Forms.ColorDialog _dlgColor;
+        private System.Windows.Forms.CheckBox _chkBevel;
     }
 }

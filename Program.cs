@@ -62,6 +62,9 @@ namespace Arc.YTSubConverter
             }
         }
 
+        /// <summary>
+        /// Manually load the resources available in the .exe so the ILMerged release build doesn't need satellite assemblies anymore
+        /// </summary>
         private static void PreloadResources()
         {
             Assembly assembly = Assembly.GetEntryAssembly();

@@ -18,7 +18,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             int alpha = 255 - ParseHex(arg);
             foreach (KeyValuePair<ShadowType, Color> shadowColor in context.Section.ShadowColors.ToList())
             {
-                if (shadowColor.Key != ShadowType.Glow || !context.Style.HasOutlineBox)
+                if (shadowColor.Key != ShadowType.Glow || !context.Style.HasOutline || context.Style.HasOutlineBox)
                     context.Section.ShadowColors[shadowColor.Key] = ColorUtil.ChangeColorAlpha(shadowColor.Value, alpha);
             }
             context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);

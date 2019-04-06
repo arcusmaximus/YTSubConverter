@@ -50,6 +50,13 @@ namespace Arc.YTSubConverter.Formats
             );
 
             ExtractAttributes(
+                Lines,
+                new LineAlignmentComparer(),
+                out Dictionary<Line, int> windowStyleIds,
+                out List<Line> windowStyles
+            );
+
+            ExtractAttributes(
                 Lines.SelectMany(l => l.Sections),
                 new SectionFormatComparer(),
                 out Dictionary<Section, int> penIds,
@@ -61,8 +68,8 @@ namespace Arc.YTSubConverter.Formats
                 writer.WriteStartElement("timedtext");
                 writer.WriteAttributeString("format", "3");
 
-                WriteHead(writer, positions, pens);
-                WriteBody(writer, positionIds, penIds);
+                WriteHead(writer, positions, windowStyles, pens);
+                WriteBody(writer, positionIds, windowStyleIds, penIds);
 
                 writer.WriteEndElement();
             }
@@ -74,6 +81,7 @@ namespace Arc.YTSubConverter.Formats
             {
                 HardenSpaces(i);
                 i += ExpandLineForMultiShadows(i) - 1;
+                i += ExpandLineForDarkText(i) - 1;
             }
         }
 
@@ -89,60 +97,86 @@ namespace Arc.YTSubConverter.Formats
             }
         }
 
+        /// <summary>
+        /// YTSubConverter supports multiple shadow types (and colors) on one subtitle by duplicating it as necessary
+        /// </summary>
         private int ExpandLineForMultiShadows(int lineIndex)
         {
             Line line = Lines[lineIndex];
-            if (line.Sections.Count == 0)
+            int maxNumShadows = line.Sections.Max(s => s.ShadowColors.Count);
+            if (maxNumShadows <= 1)
                 return 1;
 
-            HashSet<ShadowType> shadowTypes = new HashSet<ShadowType>();
+            List<List<ShadowType>> lineLayerShadowTypes = new List<List<ShadowType>>();
+            ShadowType[] orderedShadowTypes = { ShadowType.SoftShadow, ShadowType.HardShadow, ShadowType.Bevel, ShadowType.Glow };
             foreach (Section section in line.Sections)
             {
-                shadowTypes.UnionWith(section.ShadowColors.Keys);
+                List<ShadowType> sectionLayerShadowTypes = new List<ShadowType>();
+                foreach (ShadowType shadowType in orderedShadowTypes)
+                {
+                    if (section.ShadowColors.ContainsKey(shadowType))
+                        sectionLayerShadowTypes.Add(shadowType);
+                }
+                lineLayerShadowTypes.Add(sectionLayerShadowTypes);
             }
-
-            if (shadowTypes.Count <= 1)
-                return 1;
 
             Lines.RemoveAt(lineIndex);
 
-            int layerIdx = 0;
-            foreach (ShadowType shadowType in new[] { ShadowType.SoftShadow, ShadowType.HardShadow, ShadowType.Glow })
+            for (int layerIdx = 0; layerIdx < maxNumShadows; layerIdx++)
             {
-                if (!shadowTypes.Contains(shadowType))
-                    continue;
-
                 Line shadowLine = (Line)line.Clone();
-                if (layerIdx < shadowTypes.Count - 1)
+                for (int sectionIdx = 0; sectionIdx < shadowLine.Sections.Count; sectionIdx++)
                 {
-                    shadowLine.Sections.Clear();
-                    foreach (IGrouping<Color, Section> sectionGroup in line.Sections.GroupByContiguous(s => s.ShadowColors.GetOrDefault(shadowType)))
-                    {
-                        Section section = (Section)sectionGroup.First().Clone();
-                        section.Text = string.Join("", sectionGroup.Select(s => s.Text));
-                        section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 0);
-                        section.BackColor = layerIdx == 0 ? section.BackColor : Color.Empty;
-                        section.ShadowColors.RemoveAll(t => t != shadowType);
-                        shadowLine.Sections.Add(section);
-                    }
-                }
-                else
-                {
-                    foreach (Section section in shadowLine.Sections)
-                    {
-                        section.BackColor = Color.Empty;
-                        section.ShadowColors.RemoveAll(t => t != shadowType);
-                    }
-                }
+                    Section section = shadowLine.Sections[sectionIdx];
+                    List<ShadowType> sectionLayerShadowTypes = lineLayerShadowTypes[sectionIdx];
 
+                    if (layerIdx > 0)
+                        section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, 0);
+
+                    if (layerIdx < maxNumShadows - 1)
+                        section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 0);
+
+                    if (layerIdx < sectionLayerShadowTypes.Count)
+                        section.ShadowColors.RemoveAll(t => t != sectionLayerShadowTypes[layerIdx]);
+                    else
+                        section.ShadowColors.Clear();
+                }
                 Lines.Insert(lineIndex + layerIdx, shadowLine);
-                layerIdx++;
             }
 
-            return layerIdx;
+            return maxNumShadows;
         }
 
-        private void WriteHead(XmlWriter writer, List<Line> positions, List<Section> pens)
+        /// <summary>
+        /// The mobile apps have an unchangeable black background, meaning dark text is unreadable there.
+        /// As a workaround, we overlap the dark subtitle with an invisible bright one: this way, we
+        /// get the custom background and dark text on PC, and a black background and bright text
+        /// on Android (because the Android app doesn't support transparency).
+        /// Sadly, this trick doesn't work for iOS: that one supports (only) text transparency,
+        /// meaning our bright yet invisible subtitle doesn't show up there.
+        /// </summary>
+        private int ExpandLineForDarkText(int lineIdx)
+        {
+            Line line = Lines[lineIdx];
+            if (!line.Sections.Any(s => ColorUtil.IsDark(s.ForeColor)))
+                return 1;
+
+            Line brightLine = (Line)line.Clone();
+            foreach (Section section in brightLine.Sections)
+            {
+                if (ColorUtil.IsDark(section.ForeColor))
+                    section.ForeColor = ColorUtil.Brighten(section.ForeColor);
+
+                section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 0);
+                section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, 0);
+                section.ShadowColors.Clear();
+            }
+
+            Lines.Insert(lineIdx + 1, brightLine);
+            return 2;
+        }
+
+        private void WriteHead(XmlWriter writer, List<Line> positions, List<Line> windowStyles, List<Section> pens)
         {
             writer.WriteStartElement("head");
 
@@ -151,9 +185,9 @@ namespace Arc.YTSubConverter.Formats
                 WriteWindowPosition(writer, i, positions[i]);
             }
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < windowStyles.Count; i++)
             {
-                WriteWindowStyle(writer, i, i);
+                WriteWindowStyle(writer, i, windowStyles[i]);
             }
 
             for (int i = 0; i < pens.Count; i++)
@@ -166,15 +200,12 @@ namespace Arc.YTSubConverter.Formats
 
         private void WriteWindowPosition(XmlWriter writer, int positionId, Line position)
         {
-            AnchorPoint anchorPoint = position.AnchorPoint ?? AnchorPoint.BottomCenter;
-            int anchorPointId = GetAnchorPointId(anchorPoint);
-
-            PointF pixelCoords = position.Position ?? GetDefaultPosition(anchorPoint);
+            PointF pixelCoords = position.Position ?? GetDefaultPosition(position.AnchorPoint);
             PointF percentCoords = new PointF(pixelCoords.X / VideoDimensions.Width * 100, pixelCoords.Y / VideoDimensions.Height * 100);
 
             writer.WriteStartElement("wp");
             writer.WriteAttributeString("id", positionId.ToString());
-            writer.WriteAttributeString("ap", anchorPointId.ToString());
+            writer.WriteAttributeString("ap", GetAnchorPointId(position.AnchorPoint).ToString());
             writer.WriteAttributeString("ah", ((int)CounteractYouTubePositionScaling(percentCoords.X)).ToString());
             writer.WriteAttributeString("av", ((int)CounteractYouTubePositionScaling(percentCoords.Y)).ToString());
             writer.WriteEndElement();
@@ -182,9 +213,10 @@ namespace Arc.YTSubConverter.Formats
 
         /// <summary>
         /// YouTube decided to be helpful by moving your subtitles slightly towards the center so they'll never sit at the video's edge.
-        /// However, it doesn't just impose a cap on each coordinate - it moves your sub regardless of where it is. You doesn't just
-        /// get your X = 0% changed to a 2%, but also your 10% to an 11.6%, for example.
+        /// However, it doesn't just impose a cap on each coordinate - it moves your sub regardless of where it is. For example,
+        /// you doesn't just get your X = 0% changed to a 2%, but also your 10% to an 11.6%.
         /// We counteract this cleverness so our subs actually get displayed where we said they should be.
+        /// (Or at least as close as possible because the server doesn't allow floating point coordinates for whatever reason)
         /// </summary>
         private static float CounteractYouTubePositionScaling(float percentage)
         {
@@ -194,11 +226,13 @@ namespace Arc.YTSubConverter.Formats
             return percentage;
         }
 
-        private void WriteWindowStyle(XmlWriter writer, int styleId, int justify)
+        private void WriteWindowStyle(XmlWriter writer, int styleId, Line style)
         {
             writer.WriteStartElement("ws");
             writer.WriteAttributeString("id", styleId.ToString());
-            writer.WriteAttributeString("ju", justify.ToString());
+            writer.WriteAttributeString("ju", GetJustificationId(style.AnchorPoint).ToString());
+            writer.WriteAttributeString("pd", GetTextDirectionId(style.VerticalTextType).ToString());
+            writer.WriteAttributeString("sd", IsLineFlowInverted(style.VerticalTextType) ? "1" : "0");
             writer.WriteEndElement();
         }
 
@@ -207,9 +241,15 @@ namespace Arc.YTSubConverter.Formats
             writer.WriteStartElement("pen");
             writer.WriteAttributeString("id", penId.ToString());
 
-            int fontId = GetFontId(format.Font);
-            if (fontId != 0)
-                writer.WriteAttributeString("fs", fontId.ToString());
+            int fontStyleId = GetFontStyleId(format.Font);
+            if (fontStyleId != 0)
+                writer.WriteAttributeString("fs", fontStyleId.ToString());
+
+            if (format.Scale != 1)
+                writer.WriteAttributeString("sz", ((int)(format.Scale * 100)).ToString());
+
+            if (format.Offset != OffsetType.Regular)
+                writer.WriteAttributeString("of", GetOffsetTypeId(format.Offset).ToString());
 
             if (format.Bold)
                 writer.WriteAttributeString("b", "1");
@@ -244,25 +284,28 @@ namespace Arc.YTSubConverter.Formats
                 KeyValuePair<ShadowType, Color> shadowColor = format.ShadowColors.First();
                 if (shadowColor.Value.A > 0)
                 {
-                    writer.WriteAttributeString("et", GetEdgeType(shadowColor.Key).ToString());
+                    writer.WriteAttributeString("et", GetEdgeTypeId(shadowColor.Key).ToString());
                     writer.WriteAttributeString("ec", ColorUtil.ToHtml(shadowColor.Value));
                 }
             }
 
+            if (format.RubyPart != RubyPart.None)
+                writer.WriteAttributeString("rb", GetRubyPartId(format.RubyPart).ToString());
+
             writer.WriteEndElement();
         }
 
-        private void WriteBody(XmlWriter writer, Dictionary<Line, int> positionIds, Dictionary<Section, int> penIds)
+        private void WriteBody(XmlWriter writer, Dictionary<Line, int> positionIds, Dictionary<Line, int> windowStyleIds, Dictionary<Section, int> penIds)
         {
             writer.WriteStartElement("body");
             foreach (Line line in Lines)
             {
-                WriteLine(writer, line, positionIds, penIds);
+                WriteLine(writer, line, positionIds, windowStyleIds, penIds);
             }
             writer.WriteEndElement();
         }
 
-        private void WriteLine(XmlWriter writer, Line line, Dictionary<Line, int> positionIds, Dictionary<Section, int> penIds)
+        private void WriteLine(XmlWriter writer, Line line, Dictionary<Line, int> positionIds, Dictionary<Line, int> windowStyleIds, Dictionary<Section, int> penIds)
         {
             if (line.Sections.Count == 0)
                 return;
@@ -291,11 +334,15 @@ namespace Arc.YTSubConverter.Formats
                 writer.WriteAttributeString("p", penIds[line.Sections[0]].ToString());
 
             writer.WriteAttributeString("wp", positionIds[line].ToString());
-            writer.WriteAttributeString("ws", GetWindowStyleId(line.AnchorPoint ?? AnchorPoint.BottomCenter).ToString());
+            writer.WriteAttributeString("ws", windowStyleIds[line].ToString());
 
             if (line.Sections.Count == 1)
             {
                 writer.WriteValue(line.Sections[0].Text);
+
+                // Because the zero-width space added in the below workaround slightly pushes multi-section subtitles downwards,
+                // add one to single-section subtitles as well to get consistent positioning
+                writer.WriteCharEntity((char)8203);
             }
             else
             {
@@ -381,51 +428,7 @@ namespace Arc.YTSubConverter.Formats
             }
         }
 
-        private PointF GetDefaultPosition(AnchorPoint anchorPoint)
-        {
-            float left = VideoDimensions.Width * 0.02f;
-            float center = VideoDimensions.Width / 2.0f;
-            float right = VideoDimensions.Width * 0.98f;
-
-            float top = VideoDimensions.Height * 0.02f;
-            float middle = VideoDimensions.Height / 2.0f;
-            float bottom = VideoDimensions.Height * 0.98f;
-            
-            switch (anchorPoint)
-            {
-                case AnchorPoint.TopLeft:
-                    return new PointF(left, top);
-
-                case AnchorPoint.TopCenter:
-                    return new PointF(center, top);
-
-                case AnchorPoint.TopRight:
-                    return new PointF(right, top);
-
-                case AnchorPoint.MiddleLeft:
-                    return new PointF(left, middle);
-
-                case AnchorPoint.Center:
-                    return new PointF(center, middle);
-
-                case AnchorPoint.MiddleRight:
-                    return new PointF(right, middle);
-
-                case AnchorPoint.BottomLeft:
-                    return new PointF(left, bottom);
-
-                case AnchorPoint.BottomCenter:
-                    return new PointF(center, bottom);
-
-                case AnchorPoint.BottomRight:
-                    return new PointF(right, bottom);
-
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private static int GetWindowStyleId(AnchorPoint anchorPoint)
+        private static int GetJustificationId(AnchorPoint anchorPoint)
         {
             switch (anchorPoint)
             {
@@ -449,25 +452,93 @@ namespace Arc.YTSubConverter.Formats
             }
         }
 
-        private static int GetEdgeType(ShadowType type)
+        private static int GetTextDirectionId(VerticalTextType type)
+        {
+            switch (type)
+            {
+                case VerticalTextType.VerticalRtl:
+                case VerticalTextType.VerticalLtr:
+                    return 2;
+
+                case VerticalTextType.RotatedLtr:
+                case VerticalTextType.RotatedRtl:
+                    return 3;
+
+                default:
+                    return 0;
+            }
+        }
+
+        private static bool IsLineFlowInverted(VerticalTextType type)
+        {
+            return type == VerticalTextType.VerticalLtr ||
+                   type == VerticalTextType.RotatedRtl;
+        }
+
+        private static int GetEdgeTypeId(ShadowType type)
         {
             switch (type)
             {
                 case ShadowType.HardShadow:
                     return 1;
 
-                case ShadowType.SoftShadow:
-                    return 4;
+                case ShadowType.Bevel:
+                    return 2;
 
                 case ShadowType.Glow:
                     return 3;
+
+                case ShadowType.SoftShadow:
+                    return 4;
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private static int GetFontId(string font)
+        private static int GetOffsetTypeId(OffsetType type)
+        {
+            switch (type)
+            {
+                case OffsetType.Subscript:
+                    return 0;
+
+                case OffsetType.Regular:
+                    return 1;
+
+                case OffsetType.Superscript:
+                    return 2;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private static int GetRubyPartId(RubyPart part)
+        {
+            switch (part)
+            {
+                case RubyPart.None:
+                    return 0;
+
+                case RubyPart.Text:
+                    return 1;
+
+                case RubyPart.Parenthesis:
+                    return 2;
+
+                case RubyPart.RubyAbove:
+                    return 4;
+
+                case RubyPart.RubyBelow:
+                    return 5;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private static int GetFontStyleId(string font)
         {
             switch (font)
             {
@@ -530,8 +601,23 @@ namespace Arc.YTSubConverter.Formats
 
             public int GetHashCode(Line line)
             {
-                return (line.AnchorPoint?.GetHashCode() ?? 0) ^
+                return line.AnchorPoint.GetHashCode() ^
                        (line.Position?.GetHashCode() ?? 0);
+            }
+        }
+
+        private struct LineAlignmentComparer : IEqualityComparer<Line>
+        {
+            public bool Equals(Line x, Line y)
+            {
+                return GetJustificationId(x.AnchorPoint) == GetJustificationId(y.AnchorPoint) &&
+                       x.VerticalTextType == y.VerticalTextType;
+            }
+
+            public int GetHashCode(Line line)
+            {
+                return GetJustificationId(line.AnchorPoint) ^
+                       line.VerticalTextType.GetHashCode();
             }
         }
     }

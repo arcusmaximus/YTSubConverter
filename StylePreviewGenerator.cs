@@ -134,6 +134,9 @@ namespace Arc.YTSubConverter
                 if (shadowTypes.Contains(ShadowType.Glow) && !(style.HasOutline && !style.HasOutlineBox))
                     shadows.Add($"0 0 2px {ToHex(shadowColor)}, 0 0 2px {ToHex(shadowColor)}, 0 0 3px {ToHex(shadowColor)}, 0 0 4px {ToHex(shadowColor)}");
 
+                if (shadowTypes.Contains(ShadowType.Bevel))
+                    shadows.Add($"2px 2px 0 {ToHex(shadowColor)}, -2px -2px 0 {ToHex(shadowColor)}");
+
                 if (shadowTypes.Contains(ShadowType.SoftShadow))
                     shadows.Add($"2px 2px 3px {ToHex(shadowColor)}, 2px 2px 4px {ToHex(shadowColor)}, 2px 2px 5px {ToHex(shadowColor)}");
 

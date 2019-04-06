@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantLeftAlignTextWithLineBreaks0" xml:space="preserve">
-    <value>자막 왼쪽 정렬과 줄바꿈을 같이 할 수 없습니다 ({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextCanHaveAtMostOneLineBreak0" xml:space="preserve">
-    <value>중앙 또는 오른쪽 정렬 된 자막은 둘 중 하나만 가능합니다 ({0})</value>
-  </data>
-  <data name="CenteredOrRightAlignedTextWithLineBreaksMustBeTopOrBottomAligned0" xml:space="preserve">
-    <value>중앙 또는 오른쪽 정렬 된 자막인 경우 상단 또는 하단으로 배치하여야 합니다 ({0})</value>
+  <data name="Bevel" xml:space="preserve">
+    <value>양각효과</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>변환</value>
@@ -191,8 +185,5 @@
   </data>
   <data name="UseForKaraoke" xml:space="preserve">
     <value>노래방 기능</value>
-  </data>
-  <data name="VerticallyCenteredLinesWithMultipleStylesCantHaveLineBreaks0" xml:space="preserve">
-    <value>줄바꿈 포함 "상 중 하"로 정렬된 자막은 복수의 서식으로 지정할 수  없습니다.({0})</value>
   </data>
 </root>

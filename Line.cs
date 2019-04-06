@@ -46,13 +46,25 @@ namespace Arc.YTSubConverter
             get { return string.Join("", Sections.Select(s => s.Text)); }
         }
 
-        public AnchorPoint? AnchorPoint
+        public AnchorPoint AnchorPoint
+        {
+            get;
+            set;
+        } = AnchorPoint.BottomCenter;
+
+        public PointF? Position
         {
             get;
             set;
         }
 
-        public PointF? Position
+        public VerticalTextType VerticalTextType
+        {
+            get;
+            set;
+        }
+
+        public RubyPosition RubyPosition
         {
             get;
             set;
@@ -76,6 +88,8 @@ namespace Arc.YTSubConverter
             End = line.End;
             AnchorPoint = line.AnchorPoint;
             Position = line.Position;
+            VerticalTextType = line.VerticalTextType;
+            RubyPosition = line.RubyPosition;
 
             Sections.Clear();
             foreach (Section section in line.Sections)
