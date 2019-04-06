@@ -42,7 +42,7 @@ YTSubConverter supports the following .ass style features:
   * Times New Roman
   * Roboto (YouTube default; the tool will automatically pick this if the specified font is not allowed)
 * Bold, italic, underline
-* Primary, outline and shadow color
+* Primary, secondary, outline and shadow color
 * Alignment
 * Outline and shadow thickness (only checking whether the value is 0 or greater than 0)
 
