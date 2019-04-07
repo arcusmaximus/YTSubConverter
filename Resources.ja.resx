@@ -163,13 +163,13 @@
     <value>これは</value>
   </data>
   <data name="PreviewSampleKaraoke2" xml:space="preserve">
-    <value>例</value>
+    <value>サンプル</value>
   </data>
   <data name="PreviewSampleKaraoke3" xml:space="preserve">
     <value>です</value>
   </data>
   <data name="PreviewSampleRegular" xml:space="preserve">
-    <value>これは例です</value>
+    <value>これはサンプルです</value>
   </data>
   <data name="ShadowTypes" xml:space="preserve">
     <value>影</value>

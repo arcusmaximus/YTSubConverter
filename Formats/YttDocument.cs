@@ -377,7 +377,7 @@ namespace Arc.YTSubConverter.Formats
                     WriteSection(writer, section, penIds);
                     if (!multiSectionWorkaroundWritten)
                     {
-                        writer.WriteCharEntity((char)0x180E);
+                        writer.WriteCharEntity((char)0x200B);
                         multiSectionWorkaroundWritten = true;
                     }
                 }
@@ -393,7 +393,7 @@ namespace Arc.YTSubConverter.Formats
 
             // Surround line breaks by Mongolian vowel separators just in case one of those breaks lies at
             // a section border (which would cause the rounded corners on that side to get cut off)
-            writer.WriteValue(section.Text.Replace("\r\n", "\x180E\r\n\x180E"));
+            writer.WriteValue(section.Text.Replace("\r\n", "\x200B\r\n\x200B"));
 
             writer.WriteEndElement();
         }
