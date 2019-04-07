@@ -275,11 +275,6 @@ namespace Arc.YTSubConverter.Formats.Ass
                 {
                     if (match.Index > interStartPos)
                         InsertRubySection(line, section, section.Text.Substring(interStartPos, match.Index - interStartPos), RubyPart.None, sectionIdx, ref numSubSections);
-                    else if (sectionIdx == 0 && match.Index == 0)
-                        // Hack: YttDocument inserts a zero-width space after the first section of each line (because YouTube will remove its "p" attribute otherwise),
-                        // but if that first section is the start of a ruby group, we'd be splicing the space into the middle of the group and break it.
-                        // As a workaround, we add a dummy section (with another ZW space) to be the first section instead.
-                        InsertRubySection(line, section, "​", RubyPart.None, sectionIdx, ref numSubSections);
 
                     InsertRubySection(line, section, match.Groups["text"].Value, RubyPart.Text, sectionIdx, ref numSubSections);
                     InsertRubySection(line, section, "(", RubyPart.Parenthesis, sectionIdx, ref numSubSections);

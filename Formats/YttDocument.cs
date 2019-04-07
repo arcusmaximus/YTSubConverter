@@ -80,6 +80,7 @@ namespace Arc.YTSubConverter.Formats
             for (int i = 0; i < Lines.Count; i++)
             {
                 HardenSpaces(i);
+                AddRubySafetySection(i);
                 i += ExpandLineForMultiShadows(i) - 1;
                 i += ExpandLineForDarkText(i) - 1;
             }
@@ -95,6 +96,24 @@ namespace Arc.YTSubConverter.Formats
             {
                 section.Text = Regex.Replace(section.Text, @"  +", m => new string(' ', m.Value.Length));
             }
+        }
+
+        /// <summary>
+        /// To ensure the first section of a multisection line doesn't lose its "p" attribute, we add a Mongolian
+        /// vowel separator after it (<see cref="WriteLine"/>). However, this workaround also breaks any ruby groups that
+        /// are right at the start of the line (because the separator is spliced into the group). To prevent this,
+        /// we prepend a dummy section so the separator will appear before the ruby group inside of inside it.
+        /// </summary>
+        private void AddRubySafetySection(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+            if (line.Sections.Count == 0 || line.Sections[0].RubyPart != RubyPart.Text)
+                return;
+
+            Section dummySection = (Section)line.Sections[0].Clone();
+            dummySection.Text = "\x180E";
+            dummySection.RubyPart = RubyPart.None;
+            line.Sections.Insert(0, dummySection);
         }
 
         /// <summary>
@@ -246,7 +265,14 @@ namespace Arc.YTSubConverter.Formats
                 writer.WriteAttributeString("fs", fontStyleId.ToString());
 
             if (format.Scale != 1)
-                writer.WriteAttributeString("sz", ((int)(format.Scale * 100)).ToString());
+            {
+                // Similar to window positions, YouTube refuses to simply take the specified size percentage and apply it.
+                // Instead, they do actualScale = 1 + (specifiedScale - 1) / 4, meaning that specifying a 200% size
+                // results in only 125% and that you can't go lower than an actual scale of 75% (specifiedScale = 0).
+                // Maybe they do this to allow for more granularity? But then why not simply allow floating point numbers? Who knows...
+                float yttScale = Math.Max(1 + (format.Scale - 1) * 4, 0);
+                writer.WriteAttributeString("sz", ((int)(yttScale * 100)).ToString());
+            }
 
             if (format.Offset != OffsetType.Regular)
                 writer.WriteAttributeString("of", GetOffsetTypeId(format.Offset).ToString());
@@ -339,22 +365,19 @@ namespace Arc.YTSubConverter.Formats
             if (line.Sections.Count == 1)
             {
                 writer.WriteValue(line.Sections[0].Text);
-
-                // Because the zero-width space added in the below workaround slightly pushes multi-section subtitles downwards,
-                // add one to single-section subtitles as well to get consistent positioning
-                writer.WriteCharEntity((char)8203);
             }
             else
             {
                 // The server will remove the "p" (pen ID) attribute of the first section unless the line has text that's not part of any section.
-                // We use a zero-width space after the first section to avoid visual impact.
+                // We use a Mongolian vowel separator after the first section to avoid visual impact. This is like a zero-width space,
+                // except it doesn't increase the line height.
                 bool multiSectionWorkaroundWritten = false;
                 foreach (Section section in line.Sections)
                 {
                     WriteSection(writer, section, penIds);
                     if (!multiSectionWorkaroundWritten)
                     {
-                        writer.WriteCharEntity((char)8203);
+                        writer.WriteCharEntity((char)0x180E);
                         multiSectionWorkaroundWritten = true;
                     }
                 }
@@ -367,7 +390,11 @@ namespace Arc.YTSubConverter.Formats
         {
             writer.WriteStartElement("s");
             writer.WriteAttributeString("p", penIds[section].ToString());
-            writer.WriteValue(section.Text);
+
+            // Surround line breaks by Mongolian vowel separators just in case one of those breaks lies at
+            // a section border (which would cause the rounded corners on that side to get cut off)
+            writer.WriteValue(section.Text.Replace("\r\n", "\x180E\r\n\x180E"));
+
             writer.WriteEndElement();
         }
 
