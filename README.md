@@ -51,7 +51,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\i}` - italic
 * `{\u}` - underline
 * `{\fn}` - font. (See above for list of allowed fonts)
-* `{\fs}` - font size. If you set it to e.g. twice the size defined in the style, the YouTube subtitle will be twice the default size. Note that you can't go lower than 75% and that this tag only works on PC.
+* `{\fs}` - font size. If you set it to e.g. twice the size defined in the style, the YouTube subtitle will be twice the default size. Note that you can't go lower than 75% and that this tag has no effect on Android.
 * `{\c}` or `{\1c}` - regular text color
 * `{\2c}` - unsung karaoke text color
 * `{\3c}` - outline color
