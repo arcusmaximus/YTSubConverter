@@ -44,27 +44,6 @@
                    anchorPoint == AnchorPoint.BottomRight;
         }
 
-        public static AnchorPoint AlignLeft(AnchorPoint anchorPoint)
-        {
-            switch (anchorPoint)
-            {
-                case AnchorPoint.TopCenter:
-                case AnchorPoint.TopRight:
-                    return AnchorPoint.TopLeft;
-
-                case AnchorPoint.Center:
-                case AnchorPoint.MiddleRight:
-                    return AnchorPoint.MiddleLeft;
-
-                case AnchorPoint.BottomCenter:
-                case AnchorPoint.BottomRight:
-                    return AnchorPoint.BottomLeft;
-
-                default:
-                    return anchorPoint;
-            }
-        }
-
         public static AnchorPoint GetVerticalOpposite(AnchorPoint anchorPoint)
         {
             switch (anchorPoint)

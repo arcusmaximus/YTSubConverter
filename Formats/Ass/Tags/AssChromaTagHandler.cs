@@ -95,16 +95,13 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 if (colors[i].A == 0)
                     continue;
 
-                AssLine chromaLine = new AssLine(originalLine.Start, originalLine.End) { AnchorPoint = originalLine.AnchorPoint };
-                chromaLine.Sections.Add(
-                    new AssSection(originalLine.Text)
-                    {
-                        ForeColor = colors[i],
-                        Bold = originalLine.Sections[0].Bold,
-                        Italic = originalLine.Sections[0].Italic,
-                        Underline = originalLine.Sections[0].Underline
-                    }
-                );
+                AssLine chromaLine = (AssLine)originalLine.Clone();
+                foreach (Section section in chromaLine.Sections)
+                {
+                    section.ForeColor = colors[i];
+                    section.BackColor = Color.Empty;
+                    section.ShadowColors.Clear();
+                }
 
                 float offsetFactor = colors.Count > 1 ? (float)i / (colors.Count - 1) : 0.5f;
                 float offsetX = offsetFactor * (-maxOffsetX * 2) + maxOffsetX;

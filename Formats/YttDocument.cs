@@ -81,6 +81,7 @@ namespace Arc.YTSubConverter.Formats
             {
                 HardenSpaces(i);
                 AddRubySafetySection(i);
+                SplitMultiBackgroundLine(i);
                 i += ExpandLineForMultiShadows(i) - 1;
                 i += ExpandLineForDarkText(i) - 1;
             }
@@ -99,8 +100,8 @@ namespace Arc.YTSubConverter.Formats
         }
 
         /// <summary>
-        /// To ensure the first section of a multisection line doesn't lose its "p" attribute, we add a Mongolian
-        /// vowel separator after it (<see cref="WriteLine"/>). However, this workaround also breaks any ruby groups that
+        /// To ensure the first section of a multisection line doesn't lose its "p" attribute, we add a zero-width space
+        /// after it (<see cref="WriteLine"/>). However, this workaround also breaks any ruby groups that
         /// are right at the start of the line (because the separator is spliced into the group). To prevent this,
         /// we prepend a dummy section so the separator will appear before the ruby group inside of inside it.
         /// </summary>
@@ -111,9 +112,64 @@ namespace Arc.YTSubConverter.Formats
                 return;
 
             Section dummySection = (Section)line.Sections[0].Clone();
-            dummySection.Text = "\x180E";
+            dummySection.Text = "\x200B";
             dummySection.RubyPart = RubyPart.None;
             line.Sections.Insert(0, dummySection);
+        }
+
+        /// <summary>
+        /// Even after taking months to fix a regression that completely broke the use of multiple formats
+        /// in one subtitle, YouTube still hasn't got the Javascript code down. While changing the background
+        /// color in the middle of a line now works again, changing it before or after a line break results
+        /// in the rounded corners disappearing on one side. It doesn't look pretty.
+        /// The only workaround seems to be to split the subtitle in two.
+        /// </summary>
+        private void SplitMultiBackgroundLine(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+            if (AnchorPointUtil.IsMiddleAligned(line.AnchorPoint))
+                return;
+
+            int numLineBreaks = line.Sections.SelectMany(s => s.Text).Count(c => c == '\n');
+            if (numLineBreaks != 1)
+                return;
+
+            int secondSubLineStartSectionIdx = -1;
+            for (int i = 1; i < line.Sections.Count; i++)
+            {
+                Section prevSection = line.Sections[i - 1];
+                Section section = line.Sections[i];
+                if (prevSection.BackColor != section.BackColor && (prevSection.Text.EndsWith("\r\n") || section.Text.StartsWith("\r\n")))
+                {
+                    secondSubLineStartSectionIdx = i;
+                    break;
+                }
+            }
+
+            if (secondSubLineStartSectionIdx < 0)
+                return;
+
+            Line secondLine = (Line)line.Clone();
+            line.Sections.RemoveRange(secondSubLineStartSectionIdx, line.Sections.Count - secondSubLineStartSectionIdx);
+            line.Sections[secondSubLineStartSectionIdx - 1].Text = line.Sections[secondSubLineStartSectionIdx - 1].Text.Replace("\r\n", "");
+            secondLine.Sections.RemoveRange(0, secondSubLineStartSectionIdx);
+            secondLine.Sections[0].Text = secondLine.Sections[0].Text.Replace("\r\n", "");
+
+            PointF position = line.Position ?? GetDefaultPosition(line.AnchorPoint);
+            if (AnchorPointUtil.IsTopAligned(line.AnchorPoint))
+            {
+                position.Y += VideoDimensions.Height * 0.05f;
+                line.AnchorPoint = AnchorPointUtil.GetVerticalOpposite(line.AnchorPoint);
+            }
+            else
+            {
+                position.Y -= VideoDimensions.Height * 0.05f;
+                secondLine.AnchorPoint = AnchorPointUtil.GetVerticalOpposite(secondLine.AnchorPoint);
+            }
+
+            line.Position = position;
+            secondLine.Position = position;
+            Lines.Insert(lineIndex + 1, secondLine);
         }
 
         /// <summary>
