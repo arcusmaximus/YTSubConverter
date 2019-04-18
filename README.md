@@ -11,7 +11,7 @@ YouTube's built-in subtitle editor doesn't support styling of any kind. If you w
 * Outlines, glows and drop shadows
 * Fonts and font sizes
 * Positioning (place your subtitles anywhere on the video)
-* Karaoke timing (make each word of a lyric appear right as it's sung)
+* Karaoke timing (make the syllables of a song lyric light up as they're sung)
 * Vertical text
 * Ruby text
 
