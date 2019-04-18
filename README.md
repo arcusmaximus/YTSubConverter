@@ -5,14 +5,15 @@ A tool for creating styled YouTube subtitles.
 
 ## About this tool
 YouTube's built-in subtitle editor doesn't support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called YTT (YouTube Timed Text). It supports the following:
+* Bold/italic/underline
 * Text coloring and transparency
 * Background coloring and transparency (including hiding the background box completely)
-* Glowing text
-* Text with a drop shadow
-* Bold/italic/underline
-* Fonts
+* Outlines, glows and drop shadows
+* Fonts and font sizes
 * Positioning (place your subtitles anywhere on the video)
 * Karaoke timing (make each word of a lyric appear right as it's sung)
+* Vertical text
+* Ruby text
 
 YTSubConverter can produce this file format for you.
 
