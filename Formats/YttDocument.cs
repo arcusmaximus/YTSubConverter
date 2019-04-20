@@ -39,8 +39,8 @@ namespace Arc.YTSubConverter.Formats
 
         public override void Save(string filePath)
         {
-            ApplyEnhancements();
             CloseGaps();
+            ApplyEnhancements();
 
             ExtractAttributes(
                 Lines,
@@ -85,6 +85,7 @@ namespace Arc.YTSubConverter.Formats
                 i += ExpandLineForMultiShadows(i) - 1;
                 i += ExpandLineForDarkText(i) - 1;
             }
+            AddItalicPrefetch();
         }
 
         /// <summary>
@@ -112,7 +113,7 @@ namespace Arc.YTSubConverter.Formats
                 return;
 
             Section dummySection = (Section)line.Sections[0].Clone();
-            dummySection.Text = "\x200B";
+            dummySection.Text = "x";
             dummySection.RubyPart = RubyPart.None;
             line.Sections.Insert(0, dummySection);
         }
@@ -251,6 +252,31 @@ namespace Arc.YTSubConverter.Formats
             return 2;
         }
 
+        /// <summary>
+        /// On PC, the first piece of italic text shows up with a noticeable delay: the background appears as usual,
+        /// but for a fraction of a second after that, the text is either shown as non-italic or not shown at all.
+        /// To work around this, we add an invisible italic subtitle at the start to make YouTube eagerly load
+        /// whatever it normally loads lazily.
+        /// </summary>
+        private void AddItalicPrefetch()
+        {
+            Line italicLine =
+                new Line(TimeBase.AddMilliseconds(SubtitleDelayMs), TimeBase.AddMilliseconds(SubtitleDelayMs + 100))
+                {
+                    Position = new PointF(0, 0),
+                    AnchorPoint = AnchorPoint.BottomRight
+                };
+            Section section =
+                new Section("\x200B")
+                {
+                    ForeColor = Color.FromArgb(1, 0, 0, 0),
+                    BackColor = Color.Empty,
+                    Italic = true
+                };
+            italicLine.Sections.Add(section);
+            Lines.Add(italicLine);
+        }
+
         private void WriteHead(XmlWriter writer, List<Line> positions, List<Line> windowStyles, List<Section> pens)
         {
             writer.WriteStartElement("head");
@@ -367,12 +393,26 @@ namespace Arc.YTSubConverter.Formats
                 if (shadowColor.Value.A > 0)
                 {
                     writer.WriteAttributeString("et", GetEdgeTypeId(shadowColor.Key).ToString());
-                    writer.WriteAttributeString("ec", ColorUtil.ToHtml(shadowColor.Value));
+
+                    // YouTube's handling of shadow transparency is inconsistent: if you specify an "ec" attribute,
+                    // the shadow is fully opaque, but if you don't (resulting in a default color of #222222),
+                    // it follows the foreground transparency. Because of this, we only write the "ec" attribute
+                    // (and lose transparency support) if we have to.
+                    if (shadowColor.Value.R != 0x22 ||
+                        shadowColor.Value.G != 0x22 ||
+                        shadowColor.Value.B != 0x22 ||
+                        shadowColor.Value.A != foreColor.A)
+                    {
+                        writer.WriteAttributeString("ec", ColorUtil.ToHtml(shadowColor.Value));
+                    }
                 }
             }
 
             if (format.RubyPart != RubyPart.None)
                 writer.WriteAttributeString("rb", GetRubyPartId(format.RubyPart).ToString());
+
+            if (format.Packed)
+                writer.WriteAttributeString("hg", "1");
 
             writer.WriteEndElement();
         }

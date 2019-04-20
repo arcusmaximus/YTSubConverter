@@ -87,6 +87,7 @@
     <Compile Include="Formats\Ass\Tags\AssMoveTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssOutlineAlphaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssOutlineColorTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssPackTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssPositionTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssRegularScriptTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssResetTagHandler.cs" />

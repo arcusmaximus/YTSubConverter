@@ -16,6 +16,7 @@ namespace Arc.YTSubConverter
                 x.ForeColor != y.ForeColor ||
                 x.BackColor != y.BackColor ||
                 x.RubyPart != y.RubyPart ||
+                x.Packed != y.Packed ||
                 x.ShadowColors.Count != y.ShadowColors.Count)
             {
                 return false;
@@ -40,7 +41,8 @@ namespace Arc.YTSubConverter
                    section.Offset.GetHashCode() ^
                    section.ForeColor.GetHashCode() ^
                    section.BackColor.GetHashCode() ^
-                   section.RubyPart.GetHashCode();
+                   section.RubyPart.GetHashCode() ^
+                   section.Packed.GetHashCode();
         }
     }
 }

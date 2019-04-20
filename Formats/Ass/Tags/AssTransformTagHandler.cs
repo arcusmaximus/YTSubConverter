@@ -41,7 +41,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             foreach (Match match in Regex.Matches(modifiers, @"\\(?<tag>\d?[a-z]+)(?<arg>[^\\]*)"))
             {
                 if (TransformTagHandlers.TryGetValue(match.Groups["tag"].Value, out TransformTagHandler handler))
-                    handler(context, startTime, endTime, accel, match.Groups["arg"].Value);
+                    handler(context, startTime, endTime, accel, match.Groups["arg"].Value.Trim());
             }
         }
 

@@ -44,7 +44,7 @@ namespace Arc.YTSubConverter.Formats
 
         private static (DateTime, DateTime) ParseTimestamps(string timestamps)
         {
-            Match match = Regex.Match(timestamps, @"^(\d+):(\d+):(\d+)\.(\d+),(\d+):(\d+):(\d+)\.(\d+)");
+            Match match = Regex.Match(timestamps, @"^(\d+):(\d+):(\d+)[\.,](\d+),(\d+):(\d+):(\d+)[\.,](\d+)");
             return (
                 new DateTime(
                     TimeBase.Year,

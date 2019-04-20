@@ -82,6 +82,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             RegisterTagHandler(new AssMoveTagHandler());
             RegisterTagHandler(new AssOutlineAlphaTagHandler());
             RegisterTagHandler(new AssOutlineColorTagHandler());
+            RegisterTagHandler(new AssPackTagHandler());
             RegisterTagHandler(new AssPositionTagHandler());
             RegisterTagHandler(new AssRegularScriptTagHandler());
             RegisterTagHandler(new AssResetTagHandler());
@@ -172,7 +173,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             
             string text = Regex.Replace(dialogue.Text, @"(?:\\N)+$", "");
             int start = 0;
-            foreach (Match match in Regex.Matches(text, @"\{(?:\\(?<tag>fn|\d?[a-z]+)(?<arg>\([^\{\}\(\)]*\)|[^\{\}\(\)\\]*))+\}"))
+            foreach (Match match in Regex.Matches(text, @"\{(?:\s*\\(?<tag>fn|\d?[a-z]+)\s*(?<arg>\([^\{\}\(\)]*\)|[^\{\}\(\)\\]*))+\s*\}"))
             {
                 int end = match.Index;
 
@@ -191,7 +192,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                 for (int i = 0; i < tags.Count; i++)
                 {
                     if (_tagHandlers.TryGetValue(tags[i].Value, out AssTagHandlerBase handler))
-                        handler.Handle(context, arguments[i].Value);
+                        handler.Handle(context, arguments[i].Value.Trim());
                 }
 
                 start = match.Index + match.Length;

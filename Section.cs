@@ -74,6 +74,12 @@ namespace Arc.YTSubConverter
             set;
         }
 
+        public bool Packed
+        {
+            get;
+            set;
+        }
+
         public override string ToString()
         {
             return Text;
@@ -100,6 +106,7 @@ namespace Arc.YTSubConverter
             ShadowColors.Clear();
             ShadowColors.AddRange(section.ShadowColors);
             RubyPart = section.RubyPart;
+            Packed = section.Packed;
         }
     }
 }
