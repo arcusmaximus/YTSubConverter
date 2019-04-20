@@ -663,40 +663,40 @@ namespace Arc.YTSubConverter.Formats
 
         private static int GetFontStyleId(string font)
         {
-            switch (font)
+            switch (font?.ToLower())
             {
-                case "Courier New":
-                case "Courier":
-                case "Nimbus Mono L":
-                case "Cutive Mono":
+                case "courier new":
+                case "courier":
+                case "nimbus mono l":
+                case "cutive mono":
                     return 1;
 
-                case "Times New Roman":
-                case "Times":
-                case "Georgia":
-                case "Cambria":
-                case "PT Serif Caption":
+                case "times new roman":
+                case "times":
+                case "georgia":
+                case "cambria":
+                case "pt serif caption":
                     return 2;
 
-                case "Deja Vu Sans Mono":
-                case "Lucida Console":
-                case "Monaco":
-                case "Consolas":
-                case "PT Mono":
+                case "deja vu sans mono":
+                case "lucida console":
+                case "monaco":
+                case "consolas":
+                case "pt mono":
                     return 3;
 
-                case "Comic Sans MS":
-                case "Impact":
-                case "Handlee":
+                case "comic sans ms":
+                case "impact":
+                case "handlee":
                     return 5;
 
-                case "Monotype Corsiva":
-                case "URW Chancery L":
-                case "Apple Chancery":
-                case "Dancing Script":
+                case "monotype corsiva":
+                case "urw chancery l":
+                case "apple chancery":
+                case "dancing script":
                     return 6;
 
-                case "Carrois Gothic SC":
+                case "carrois gothic sc":
                     return 7;
 
                 default:
