@@ -60,12 +60,13 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\1a}` - regular text transparency
 * `{\2c}` - unsung karaoke text transparency
 * `{\3a}` - background transparency
+* `{\4a}` - shadow transparency. Due to YouTube limitations, this only works if the shadow color is &H222222& and the shadow transparency equals the text transparency.
 * `{\pos}` - position
 * `{\an}` - alignment
 * `{\k}` - karaoke segment duration
 * `{\r}` - reset to current or specified style
-* `{\fad}` - simple fade
-* `{\fade}` - complex fade
+* `{\fad}` - simple fade. Due to YouTube limitations, shadows don't fade along unless their color is &H222222&.
+* `{\fade}` - complex fade. Due to YouTube limitations, shadows don't fade along unless their color is &H222222&.
 * `{\move}` - move from one point to another
 * `{\t}` - animate colors, transparencies and font sizes.
 * `{\ytsub}` - start using subscript (only works on PC)
@@ -77,6 +78,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
   * `{\ytvert7}` - characters are placed vertically in columns, with those columns going from left to right.
   * `{\ytvert1}` - the whole subtitle is rotated 90° counter-clockwise so that the lines that used to go from top to bottom now go from left to right.
   * `{\ytvert3}` - the whole subtitle is rotated 90° counter-clockwise and the order of the lines is inverted so they go from right to left.
+* `{\ytpack}` - start (`{\ytpack1}`) or stop (`{\ytpack0}`) packing text into the space of a single full-width character. Only works on PC in vertical text.
 * `{\ytshake}` - make the subtitle randomly jump around.
   * `{\ytshake}` - shake for the duration of the subtitle, staying within 20px of the original position.
   * `{\ytshake(radius)}` - stay within `radius` pixels of the original position.
