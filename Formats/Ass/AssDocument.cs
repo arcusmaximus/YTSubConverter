@@ -158,20 +158,21 @@ namespace Arc.YTSubConverter.Formats.Ass
             AssLine line = new AssLine(startTime, endTime) { AnchorPoint = style.AnchorPoint };
 
             AssTagContext context = new AssTagContext
-                                 {
-                                     Document = this,
-                                     Dialogue = dialogue,
-                                     InitialStyle = style,
-                                     InitialStyleOptions = styleOptions,
-                                     Style = style,
-                                     StyleOptions = styleOptions,
-                                     Line = line,
-                                     Section = new AssSection(null)
-                                 };
+                                    {
+                                        Document = this,
+                                        Dialogue = dialogue,
+                                        InitialStyle = style,
+                                        InitialStyleOptions = styleOptions,
+                                        Style = style,
+                                        StyleOptions = styleOptions,
+                                        Line = line,
+                                        Section = new AssSection(null)
+                                    };
 
             ApplyStyle(context.Section, style, styleOptions);
             
             string text = Regex.Replace(dialogue.Text, @"(?:\\N)+$", "");
+            text = Regex.Replace(text, @"(\{\\k\d+\})(\{\\k\d+\})", "$1\x200B$2");
             int start = 0;
             foreach (Match match in Regex.Matches(text, @"\{(?:\s*\\(?<tag>fn|\d?[a-z]+)\s*(?<arg>\([^\{\}\(\)]*\)|[^\{\}\(\)\\]*))+\s*\}"))
             {

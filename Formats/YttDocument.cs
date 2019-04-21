@@ -465,8 +465,7 @@ namespace Arc.YTSubConverter.Formats
             else
             {
                 // The server will remove the "p" (pen ID) attribute of the first section unless the line has text that's not part of any section.
-                // We use a Mongolian vowel separator after the first section to avoid visual impact. This is like a zero-width space,
-                // except it doesn't increase the line height.
+                // We use a zero-width space after the first section to avoid visual impact.
                 bool multiSectionWorkaroundWritten = false;
                 foreach (Section section in line.Sections)
                 {
@@ -487,7 +486,7 @@ namespace Arc.YTSubConverter.Formats
             writer.WriteStartElement("s");
             writer.WriteAttributeString("p", penIds[section].ToString());
 
-            // Surround line breaks by Mongolian vowel separators just in case one of those breaks lies at
+            // Surround line breaks by zero-width spaces just in case one of those breaks lies at
             // a section border (which would cause the rounded corners on that side to get cut off)
             writer.WriteValue(section.Text.Replace("\r\n", "\x200B\r\n\x200B"));
 
