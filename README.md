@@ -72,7 +72,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\ytsub}` - start using subscript (only works on PC)
 * `{\ytsup}` - start using superscript (only works on PC)
 * `{\ytsur}` - switch back to regular script
-* `{\ytruby}` - enable ruby text. `{\ytruby}これは[漢/かん][字/じ]です` will result in a 漢 with a かん above it, followed by a 字 with a じ above it. You can change the position of the ruby text: `{\ytruby8}` will display it above the line (default), while `{\ytruby2}` will display it below. This tag only works on PC; mobile apps will display これは漢(かん)字(じ)です instead.
+* `{\ytruby}` - enable ruby text. `{\ytruby}これは[漢/かん][字/じ]です` will result in a 漢 with a かん above it, followed by a 字 with a じ above it. You can change the position of the ruby text: `{\ytruby8}` will display it above the line (default), while `{\ytruby2}` will display it below. Due to a YouTube limitation, text with ruby is always shown in the default style (black background, white text). Also, this tag only works on PC; mobile apps will display これは漢(かん)字(じ)です instead.
 * `{\ytvert}` - enable vertical text (only works on PC):
   * `{\ytvert9}` - characters are placed vertically in columns, with those columns going from right to left.
   * `{\ytvert7}` - characters are placed vertically in columns, with those columns going from left to right.
