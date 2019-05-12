@@ -164,6 +164,8 @@ YouTube has some bugs and limitations when it comes to styled subtitles. Please 
 * The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
   * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
 
+![Mobile limitation](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/mobile.png)
+
 ## Example workflow for creating subtitles that are color-coded by speaker
 * Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f<number>` to download a smaller file.)
   * If you're planning on doing karaoke timing, you may want to check if the video has Opus-encoded audio and explicitly download that - reason being that the m4a audio you normally get is ever so slightly shifted in time. Example: `-f137+251`
