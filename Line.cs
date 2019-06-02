@@ -64,12 +64,6 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public RubyPosition RubyPosition
-        {
-            get;
-            set;
-        }
-
         public override string ToString()
         {
             return Text;
@@ -89,13 +83,9 @@ namespace Arc.YTSubConverter
             AnchorPoint = line.AnchorPoint;
             Position = line.Position;
             VerticalTextType = line.VerticalTextType;
-            RubyPosition = line.RubyPosition;
 
             Sections.Clear();
-            foreach (Section section in line.Sections)
-            {
-                Sections.Add((Section)section.Clone());
-            }
+            Sections.AddRange(line.Sections.Select(s => (Section)s.Clone()));
         }
     }
 }

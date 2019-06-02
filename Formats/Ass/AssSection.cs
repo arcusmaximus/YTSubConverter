@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Arc.YTSubConverter.Animations;
 
 namespace Arc.YTSubConverter.Formats.Ass
@@ -62,7 +63,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             CurrentWordShadowColor = assSection.CurrentWordShadowColor;
             Duration = assSection.Duration;
             Animations.Clear();
-            Animations.AddRange(assSection.Animations);
+            Animations.AddRange(assSection.Animations.Select(a => (Animation)a.Clone()));
         }
     }
 }

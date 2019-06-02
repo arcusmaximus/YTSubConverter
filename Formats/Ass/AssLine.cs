@@ -68,7 +68,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             AssLine assLine = (AssLine)line;
             Alpha = assLine.Alpha;
             Animations.Clear();
-            Animations.AddRange(assLine.Animations);
+            Animations.AddRange(assLine.Animations.Select(a => (Animation)a.Clone()));
             KaraokeType = assLine.KaraokeType;
         }
     }

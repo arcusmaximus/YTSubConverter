@@ -70,5 +70,47 @@
                     return anchorPoint;
             }
         }
+
+        public static AnchorPoint MakeTopAligned(AnchorPoint anchorPoint)
+        {
+            switch (anchorPoint)
+            {
+                case AnchorPoint.MiddleLeft:
+                case AnchorPoint.BottomLeft:
+                    return AnchorPoint.TopLeft;
+
+                case AnchorPoint.Center:
+                case AnchorPoint.BottomCenter:
+                    return AnchorPoint.TopCenter;
+
+                case AnchorPoint.MiddleRight:
+                case AnchorPoint.BottomRight:
+                    return AnchorPoint.TopRight;
+
+                default:
+                    return anchorPoint;
+            }
+        }
+
+        public static AnchorPoint MakeBottomAligned(AnchorPoint anchorPoint)
+        {
+            switch (anchorPoint)
+            {
+                case AnchorPoint.TopLeft:
+                case AnchorPoint.MiddleLeft:
+                    return AnchorPoint.BottomLeft;
+
+                case AnchorPoint.TopCenter:
+                case AnchorPoint.Center:
+                    return AnchorPoint.BottomCenter;
+
+                case AnchorPoint.TopRight:
+                case AnchorPoint.MiddleRight:
+                    return AnchorPoint.BottomRight;
+
+                default:
+                    return anchorPoint;
+            }
+        }
     }
 }

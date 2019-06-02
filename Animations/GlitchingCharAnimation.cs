@@ -32,5 +32,10 @@ namespace Arc.YTSubConverter.Animations
             CharacterRange range = _charRanges[_random.Next(_charRanges.Length)];
             return (char)(range.Start + _random.Next(range.End - range.Start));
         }
+
+        public override object Clone()
+        {
+            return new GlitchingCharAnimation(StartTime, EndTime, _charRanges);
+        }
     }
 }

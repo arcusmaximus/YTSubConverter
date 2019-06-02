@@ -74,7 +74,19 @@ namespace Arc.YTSubConverter
             set;
         }
 
+        public RubyPosition RubyPosition
+        {
+            get;
+            set;
+        }
+
         public bool Packed
+        {
+            get;
+            set;
+        }
+
+        public TimeSpan StartOffset
         {
             get;
             set;
@@ -106,7 +118,9 @@ namespace Arc.YTSubConverter
             ShadowColors.Clear();
             ShadowColors.AddRange(section.ShadowColors);
             RubyPart = section.RubyPart;
+            RubyPosition = section.RubyPosition;
             Packed = section.Packed;
+            StartOffset = section.StartOffset;
         }
     }
 }

@@ -43,5 +43,10 @@ namespace Arc.YTSubConverter.Animations
                 line.Position = Center;
             }
         }
+
+        public override object Clone()
+        {
+            return new ShakeAnimation(StartTime, EndTime, Center, Radius);
+        }
     }
 }

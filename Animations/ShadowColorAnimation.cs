@@ -21,5 +21,10 @@ namespace Arc.YTSubConverter.Animations
         {
             section.ShadowColors[ShadowType] = GetColor(t);
         }
+
+        public override object Clone()
+        {
+            return new ShadowColorAnimation(ShadowType, StartTime, StartColor, EndTime, EndColor);
+        }
     }
 }

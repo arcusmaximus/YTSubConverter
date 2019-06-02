@@ -37,5 +37,10 @@ namespace Arc.YTSubConverter.Animations
                     throw new NotSupportedException();
             }
         }
+
+        public override object Clone()
+        {
+            return new FadeAnimation(StartTime, StartAlpha, EndTime, EndAlpha);
+        }
     }
 }

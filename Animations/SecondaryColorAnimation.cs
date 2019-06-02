@@ -15,5 +15,10 @@ namespace Arc.YTSubConverter.Animations
         {
             section.SecondaryColor = GetColor(t);
         }
+
+        public override object Clone()
+        {
+            return new SecondaryColorAnimation(StartTime, StartColor, EndTime, EndColor);
+        }
     }
 }

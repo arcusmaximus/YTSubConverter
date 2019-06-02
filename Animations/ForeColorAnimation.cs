@@ -15,5 +15,10 @@ namespace Arc.YTSubConverter.Animations
         {
             section.ForeColor = GetColor(t);
         }
+
+        public override object Clone()
+        {
+            return new ForeColorAnimation(StartTime, StartColor, EndTime, EndColor);
+        }
     }
 }

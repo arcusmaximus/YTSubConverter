@@ -28,5 +28,10 @@ namespace Arc.YTSubConverter.Animations
         {
             section.Scale = Interpolate(StartScale, EndScale, t);
         }
+
+        public override object Clone()
+        {
+            return new ScaleAnimation(StartTime, StartScale, EndTime, EndScale);
+        }
     }
 }

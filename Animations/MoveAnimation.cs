@@ -31,5 +31,10 @@ namespace Arc.YTSubConverter.Animations
             float y = Interpolate(StartPosition.Y, EndPosition.Y, t);
             line.Position = new PointF(x, y);
         }
+
+        public override object Clone()
+        {
+            return new MoveAnimation(StartTime, StartPosition, EndTime, EndPosition);
+        }
     }
 }

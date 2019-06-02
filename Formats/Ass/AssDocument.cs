@@ -205,8 +205,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                 line.Sections.Add(context.Section);
             }
 
-            if (line.RubyPosition != RubyPosition.None)
-                CreateRubySections(line);
+            CreateRubySections(line);
 
             List<AssLine> lines = new List<AssLine> { line };
             foreach (AssTagContext.PostProcessor postProcessor in context.PostProcessors)
@@ -264,7 +263,10 @@ namespace Arc.YTSubConverter.Formats.Ass
         {
             for (int sectionIdx = line.Sections.Count - 1; sectionIdx >= 0; sectionIdx--)
             {
-                Section section = line.Sections[sectionIdx];
+                AssSection section = (AssSection)line.Sections[sectionIdx];
+                if (section.RubyPosition == RubyPosition.None)
+                    continue;
+
                 MatchCollection matches = Regex.Matches(section.Text, @"\[(?<text>.+?)/(?<ruby>.+?)\]");
                 if (matches.Count == 0)
                     continue;
@@ -280,7 +282,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 
                     InsertRubySection(line, section, match.Groups["text"].Value, RubyPart.Text, sectionIdx, ref numSubSections);
                     InsertRubySection(line, section, "(", RubyPart.Parenthesis, sectionIdx, ref numSubSections);
-                    InsertRubySection(line, section, match.Groups["ruby"].Value, line.RubyPosition == RubyPosition.Below ? RubyPart.RubyBelow : RubyPart.RubyAbove, sectionIdx, ref numSubSections);
+                    InsertRubySection(line, section, match.Groups["ruby"].Value, section.RubyPosition == RubyPosition.Below ? RubyPart.RubyBelow : RubyPart.RubyAbove, sectionIdx, ref numSubSections);
                     InsertRubySection(line, section, ")", RubyPart.Parenthesis, sectionIdx, ref numSubSections);
 
                     interStartPos = match.Index + match.Length;
@@ -288,14 +290,17 @@ namespace Arc.YTSubConverter.Formats.Ass
 
                 if (interStartPos < section.Text.Length)
                     InsertRubySection(line, section, section.Text.Substring(interStartPos), RubyPart.None, sectionIdx, ref numSubSections);
+
+                ((AssSection)line.Sections[sectionIdx]).Duration = section.Duration;
             }
         }
 
         private static void InsertRubySection(AssLine line, Section format, string text, RubyPart rubyPart, int sectionIndex, ref int numSubSections)
         {
-            Section section = (Section)format.Clone();
+            AssSection section = (AssSection)format.Clone();
             section.Text = text;
             section.RubyPart = rubyPart;
+            section.Duration = TimeSpan.Zero;
             line.Sections.Insert(sectionIndex + numSubSections, section);
             numSubSections++;
         }
@@ -308,11 +313,36 @@ namespace Arc.YTSubConverter.Formats.Ass
         private static IEnumerable<AssLine> ExpandLineForKaraoke(AssLine line)
         {
             if (line.Sections.Cast<AssSection>().All(s => s.Duration == TimeSpan.Zero))
+                return new[] { line };
+
+            if (CanUseNativeKaraoke(line))
             {
-                yield return line;
-                yield break;
+                ApplyNativeKaraoke(line);
+                return new[] { line };
             }
 
+            return CreateEmulatedKaraokeLines(line);
+        }
+
+        private static bool CanUseNativeKaraoke(AssLine line)
+        {
+            return line.KaraokeType == KaraokeType.Simple &&
+                   line.Animations.Count == 0 &&
+                   line.Sections.Cast<AssSection>().All(s => s.SecondaryColor.A == 0 && s.Animations.Count == 0 && s.RubyPosition == RubyPosition.None);
+        }
+
+        private static void ApplyNativeKaraoke(AssLine line)
+        {
+            TimeSpan timeOffset = TimeSpan.Zero;
+            foreach (AssSection section in line.Sections)
+            {
+                section.StartOffset = timeOffset;
+                timeOffset += section.Duration;
+            }
+        }
+
+        private static IEnumerable<AssLine> CreateEmulatedKaraokeLines(AssLine line)
+        {
             SortedList<TimeSpan, int> activeSectionsPerStep = GetKaraokeSteps(line);
             for (int stepIdx = 0; stepIdx < activeSectionsPerStep.Count; stepIdx++)
             {
@@ -386,7 +416,11 @@ namespace Arc.YTSubConverter.Formats.Ass
                 }
 
                 if (section.ForeColor.A == 0 && !section.Animations.OfType<ForeColorAnimation>().Any())
+                {
+                    section.ForeColor = Color.FromArgb(0, 0, 0, 0);
+                    section.BackColor = Color.FromArgb(0, 0, 0, 0);
                     section.ShadowColors.Clear();
+                }
             }
 
             AddKaraokeEffects(originalLine, stepLine, activeSectionsPerStep, stepIdx);
@@ -395,78 +429,87 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         private static void AddKaraokeEffects(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
         {
+            int prevNumActiveActions = stepIdx > 0 ? activeSectionsPerStep.Values[stepIdx - 1] : 0;
             int numActiveSections = activeSectionsPerStep.Values[stepIdx];
-            AssSection singingSection = (AssSection)stepLine.Sections[numActiveSections - 1];
+            List<AssSection> singingSections = stepLine.Sections
+                                                       .Cast<AssSection>()
+                                                       .Skip(prevNumActiveActions)
+                                                       .Take(numActiveSections - prevNumActiveActions)
+                                                       .ToList();
 
             switch (stepLine.KaraokeType)
             {
                 case KaraokeType.Simple:
-                    ApplySimpleKaraokeEffect(singingSection);
+                    ApplySimpleKaraokeEffect(singingSections);
                     break;
 
                 case KaraokeType.Fade:
-                    ApplyFadeKaraokeEffect(originalLine, stepLine, activeSectionsPerStep, stepIdx);
+                    ApplyFadeKaraokeEffect(originalLine, stepLine, activeSectionsPerStep, stepIdx, singingSections);
                     break;
 
                 case KaraokeType.Glitch:
-                    ApplyGlitchKaraokeEffect(stepLine, singingSection);
+                    ApplyGlitchKaraokeEffect(stepLine, singingSections);
                     break;
             }
         }
 
-        private static void ApplySimpleKaraokeEffect(AssSection singingSection)
+        private static void ApplySimpleKaraokeEffect(List<AssSection> singingSections)
         {
-            if (!singingSection.CurrentWordForeColor.IsEmpty)
-                singingSection.ForeColor = singingSection.CurrentWordForeColor;
-
-            if (!singingSection.CurrentWordShadowColor.IsEmpty)
+            foreach (AssSection singingSection in singingSections)
             {
-                foreach (ShadowType shadowType in singingSection.ShadowColors.Keys.ToList())
-                {
-                    singingSection.ShadowColors[shadowType] = singingSection.CurrentWordShadowColor;
-                }
-            }
+                if (!singingSection.CurrentWordForeColor.IsEmpty)
+                    singingSection.ForeColor = singingSection.CurrentWordForeColor;
 
-            if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.ShadowColors.ContainsKey(ShadowType.Glow))
-                singingSection.ShadowColors[ShadowType.Glow] = singingSection.CurrentWordOutlineColor;
+                if (!singingSection.CurrentWordShadowColor.IsEmpty)
+                {
+                    foreach (ShadowType shadowType in singingSection.ShadowColors.Keys.ToList())
+                    {
+                        singingSection.ShadowColors[shadowType] = singingSection.CurrentWordShadowColor;
+                    }
+                }
+
+                if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.ShadowColors.ContainsKey(ShadowType.Glow))
+                    singingSection.ShadowColors[ShadowType.Glow] = singingSection.CurrentWordOutlineColor;
+            }
         }
 
-        private static void ApplyFadeKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
+        private static void ApplyFadeKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx, List<AssSection> singingSections)
         {
-            int numActiveSections = activeSectionsPerStep.Values[stepIdx];
-            AssSection singingSection = (AssSection)stepLine.Sections[numActiveSections - 1];
-            ApplyFadeInKaraokeEffect(stepLine, singingSection);
+            ApplyFadeInKaraokeEffect(stepLine, singingSections);
             ApplyFadeOutKaraokeEffect(originalLine, stepLine, activeSectionsPerStep, stepIdx);
         }
 
-        private static void ApplyFadeInKaraokeEffect(AssLine stepLine, AssSection singingSection)
+        private static void ApplyFadeInKaraokeEffect(AssLine stepLine, List<AssSection> singingSections)
         {
             DateTime fadeEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(500), stepLine.End);
 
-            if (singingSection.CurrentWordForeColor.IsEmpty)
+            foreach (AssSection singingSection in singingSections)
             {
-                if (singingSection.ForeColor != singingSection.SecondaryColor)
-                    singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.ForeColor));
-            }
-            else
-            {
-                if (singingSection.CurrentWordForeColor != singingSection.SecondaryColor)
-                    singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.CurrentWordForeColor));
-            }
-
-            if (!singingSection.CurrentWordShadowColor.IsEmpty)
-            {
-                foreach (KeyValuePair<ShadowType, Color> shadowColor in singingSection.ShadowColors)
+                if (singingSection.CurrentWordForeColor.IsEmpty)
                 {
-                    if (singingSection.CurrentWordShadowColor != shadowColor.Value)
-                        singingSection.Animations.Add(new ShadowColorAnimation(shadowColor.Key, stepLine.Start, shadowColor.Value, fadeEndTime, singingSection.CurrentWordShadowColor));
+                    if (singingSection.ForeColor != singingSection.SecondaryColor)
+                        singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.ForeColor));
                 }
-            }
+                else
+                {
+                    if (singingSection.CurrentWordForeColor != singingSection.SecondaryColor)
+                        singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.CurrentWordForeColor));
+                }
 
-            if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.CurrentWordOutlineColor != singingSection.ShadowColors.GetOrDefault(ShadowType.Glow))
-            {
-                singingSection.Animations.Add(new ShadowColorAnimation(
-                    ShadowType.Glow, stepLine.Start, singingSection.ShadowColors[ShadowType.Glow], fadeEndTime, singingSection.CurrentWordOutlineColor));
+                if (!singingSection.CurrentWordShadowColor.IsEmpty)
+                {
+                    foreach (KeyValuePair<ShadowType, Color> shadowColor in singingSection.ShadowColors)
+                    {
+                        if (singingSection.CurrentWordShadowColor != shadowColor.Value)
+                            singingSection.Animations.Add(new ShadowColorAnimation(shadowColor.Key, stepLine.Start, shadowColor.Value, fadeEndTime, singingSection.CurrentWordShadowColor));
+                    }
+                }
+
+                if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.CurrentWordOutlineColor != singingSection.ShadowColors.GetOrDefault(ShadowType.Glow))
+                {
+                    singingSection.Animations.Add(new ShadowColorAnimation(
+                        ShadowType.Glow, stepLine.Start, singingSection.ShadowColors[ShadowType.Glow], fadeEndTime, singingSection.CurrentWordOutlineColor));
+                }
             }
         }
 
@@ -488,7 +531,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                     {
                         foreach (KeyValuePair<ShadowType, Color> shadowColor in section.ShadowColors)
                         {
-                            if(section.CurrentWordShadowColor != shadowColor.Value)
+                            if (section.CurrentWordShadowColor != shadowColor.Value)
                                 section.Animations.Add(new ShadowColorAnimation(shadowColor.Key, fadeStartTime, section.CurrentWordShadowColor, fadeEndTime, shadowColor.Value));
                         }
                     }
@@ -501,12 +544,13 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
         }
 
-        private static void ApplyGlitchKaraokeEffect(AssLine stepLine, AssSection singingSection)
+        private static void ApplyGlitchKaraokeEffect(AssLine stepLine, List<AssSection> singingSections)
         {
-            if (singingSection.Text.Length == 0)
+            AssSection singingSection = singingSections.LastOrDefault(s => s.RubyPart == RubyPart.None || s.RubyPart == RubyPart.Text);
+            if (singingSection == null || singingSection.Text.Length == 0)
                 return;
 
-            ApplySimpleKaraokeEffect(singingSection);
+            ApplySimpleKaraokeEffect(singingSections);
             DateTime glitchEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(70), stepLine.End);
             Util.CharacterRange[] charRanges = GetGlitchKaraokeCharacterRanges(singingSection.Text[0]);
             singingSection.Animations.Add(new GlitchingCharAnimation(stepLine.Start, glitchEndTime, charRanges));
@@ -542,7 +586,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             int i = 0;
             while (i < line.Sections.Count - 1)
             {
-                if (comparer.Equals(line.Sections[i], line.Sections[i + 1]))
+                if (comparer.Equals(line.Sections[i], line.Sections[i + 1]) && line.Sections[i].StartOffset == line.Sections[i + 1].StartOffset)
                 {
                     line.Sections[i].Text += line.Sections[i + 1].Text;
                     line.Sections.RemoveAt(i + 1);

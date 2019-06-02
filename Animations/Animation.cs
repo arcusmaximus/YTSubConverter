@@ -4,7 +4,7 @@ using Arc.YTSubConverter.Formats.Ass;
 
 namespace Arc.YTSubConverter.Animations
 {
-    internal abstract class Animation
+    internal abstract class Animation : ICloneable
     {
         protected Animation(DateTime startTime, DateTime endTime)
         {
@@ -50,5 +50,7 @@ namespace Arc.YTSubConverter.Animations
                 Interpolate(from.B, to.B, t)
             );
         }
+
+        public abstract object Clone();
     }
 }

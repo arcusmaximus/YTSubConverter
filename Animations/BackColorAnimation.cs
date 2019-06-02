@@ -15,5 +15,10 @@ namespace Arc.YTSubConverter.Animations
         {
             section.BackColor = GetColor(t);
         }
+
+        public override object Clone()
+        {
+            return new BackColorAnimation(StartTime, StartColor, EndTime, EndColor);
+        }
     }
 }

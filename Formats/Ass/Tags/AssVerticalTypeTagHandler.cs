@@ -7,7 +7,7 @@
         public override void Handle(AssTagContext context, string arg)
         {
             if (!int.TryParse(arg, out int vertType))
-                return;
+                vertType = 9;
 
             switch (vertType)
             {

@@ -21,10 +21,10 @@ namespace Arc.YTSubConverter.Formats
             doc.Load(filePath);
             foreach (XmlElement parElem in doc.SelectNodes("/timedtext/body/p"))
             {
-                int startMs = int.Parse(parElem.GetAttribute("t")) + SubtitleDelayMs;
-                int durationMs = int.Parse(parElem.GetAttribute("d"));
+                int.TryParse(parElem.GetAttribute("t"), out int startMs);
+                int.TryParse(parElem.GetAttribute("d"), out int durationMs);
 
-                DateTime start = TimeBase.AddMilliseconds(startMs);
+                DateTime start = TimeBase.AddMilliseconds(startMs + SubtitleDelayMs);
                 DateTime end = start.AddMilliseconds(durationMs);
                 Line line = new Line(start, end, parElem.InnerText);
                 Lines.Add(line);
@@ -40,6 +40,7 @@ namespace Arc.YTSubConverter.Formats
         public override void Save(string filePath)
         {
             CloseGaps();
+            MergeSimultaneousLines();
             ApplyEnhancements();
 
             ExtractAttributes(
@@ -79,6 +80,7 @@ namespace Arc.YTSubConverter.Formats
         {
             for (int i = 0; i < Lines.Count; i++)
             {
+                MakeInvisibleTextBlack(i);
                 HardenSpaces(i);
                 AddRubySafetySection(i);
                 SplitMultiBackgroundLine(i);
@@ -86,6 +88,19 @@ namespace Arc.YTSubConverter.Formats
                 i += ExpandLineForDarkText(i) - 1;
             }
             AddItalicPrefetch();
+        }
+
+        /// <summary>
+        /// The Android app doesn't support text transparency, meaning invisible text would become visible there.
+        /// Make such text black so it melts into the app's black, opaque background.
+        /// </summary>
+        private void MakeInvisibleTextBlack(int lineIndex)
+        {
+            foreach (Section section in Lines[lineIndex].Sections)
+            {
+                if (section.ForeColor.A == 0)
+                    section.ForeColor = Color.FromArgb(0, 0, 0, 0);
+            }
         }
 
         /// <summary>
@@ -113,7 +128,7 @@ namespace Arc.YTSubConverter.Formats
                 return;
 
             Section dummySection = (Section)line.Sections[0].Clone();
-            dummySection.Text = "x";
+            dummySection.Text = "\x200B";
             dummySection.RubyPart = RubyPart.None;
             line.Sections.Insert(0, dummySection);
         }
@@ -128,9 +143,6 @@ namespace Arc.YTSubConverter.Formats
         private void SplitMultiBackgroundLine(int lineIndex)
         {
             Line line = Lines[lineIndex];
-            if (AnchorPointUtil.IsMiddleAligned(line.AnchorPoint))
-                return;
-
             int numLineBreaks = line.Sections.SelectMany(s => s.Text).Count(c => c == '\n');
             if (numLineBreaks != 1)
                 return;
@@ -140,7 +152,8 @@ namespace Arc.YTSubConverter.Formats
             {
                 Section prevSection = line.Sections[i - 1];
                 Section section = line.Sections[i];
-                if (prevSection.BackColor != section.BackColor && (prevSection.Text.EndsWith("\r\n") || section.Text.StartsWith("\r\n")))
+                if ((prevSection.BackColor != section.BackColor || prevSection.Font != section.Font || prevSection.Scale != section.Scale) &&
+                    (prevSection.Text.EndsWith("\r\n") || section.Text.StartsWith("\r\n")))
                 {
                     secondSubLineStartSectionIdx = i;
                     break;
@@ -161,6 +174,11 @@ namespace Arc.YTSubConverter.Formats
             {
                 position.Y += VideoDimensions.Height * 0.05f;
                 line.AnchorPoint = AnchorPointUtil.GetVerticalOpposite(line.AnchorPoint);
+            }
+            else if (AnchorPointUtil.IsMiddleAligned(line.AnchorPoint))
+            {
+                line.AnchorPoint = AnchorPointUtil.MakeBottomAligned(line.AnchorPoint);
+                secondLine.AnchorPoint = AnchorPointUtil.MakeTopAligned(secondLine.AnchorPoint);
             }
             else
             {
@@ -234,13 +252,13 @@ namespace Arc.YTSubConverter.Formats
         private int ExpandLineForDarkText(int lineIdx)
         {
             Line line = Lines[lineIdx];
-            if (!line.Sections.Any(s => ColorUtil.IsDark(s.ForeColor)))
+            if (!line.Sections.Any(s => s.ForeColor.A > 0 && ColorUtil.IsDark(s.ForeColor)))
                 return 1;
 
             Line brightLine = (Line)line.Clone();
             foreach (Section section in brightLine.Sections)
             {
-                if (ColorUtil.IsDark(section.ForeColor))
+                if (section.ForeColor.A > 0 && ColorUtil.IsDark(section.ForeColor))
                     section.ForeColor = ColorUtil.Brighten(section.ForeColor);
 
                 section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 0);
@@ -346,15 +364,12 @@ namespace Arc.YTSubConverter.Formats
             if (fontStyleId != 0)
                 writer.WriteAttributeString("fs", fontStyleId.ToString());
 
-            if (format.Scale != 1)
-            {
-                // Similar to window positions, YouTube refuses to simply take the specified size percentage and apply it.
-                // Instead, they do actualScale = 1 + (specifiedScale - 1) / 4, meaning that specifying a 200% size
-                // results in only 125% and that you can't go lower than an actual scale of 75% (specifiedScale = 0).
-                // Maybe they do this to allow for more granularity? But then why not simply allow floating point numbers? Who knows...
-                float yttScale = Math.Max(1 + (format.Scale - 1) * 4, 0);
-                writer.WriteAttributeString("sz", ((int)(yttScale * 100)).ToString());
-            }
+            // Similar to window positions, YouTube refuses to simply take the specified size percentage and apply it.
+            // Instead, they do actualScale = 1 + (specifiedScale - 1) / 4, meaning that specifying a 200% size
+            // results in only 125% and that you can't go lower than an actual scale of 75% (specifiedScale = 0).
+            // Maybe they do this to allow for more granularity? But then why not simply allow floating point numbers? Who knows...
+            float yttScale = Math.Max(1 + (format.Scale - 1) * 4, 0);
+            writer.WriteAttributeString("sz", ((int)(yttScale * 100)).ToString());
 
             if (format.Offset != OffsetType.Regular)
                 writer.WriteAttributeString("of", GetOffsetTypeId(format.Offset).ToString());
@@ -461,6 +476,9 @@ namespace Arc.YTSubConverter.Formats
             if (line.Sections.Count == 1)
             {
                 writer.WriteValue(line.Sections[0].Text);
+
+                // Add a zero-width space. (These spaces affect line height in some browsers, so we always want at least one to ensure consistency)
+                writer.WriteValue("\x200B");
             }
             else
             {
@@ -486,9 +504,16 @@ namespace Arc.YTSubConverter.Formats
             writer.WriteStartElement("s");
             writer.WriteAttributeString("p", penIds[section].ToString());
 
+            if (section.StartOffset > TimeSpan.Zero)
+                writer.WriteAttributeString("t", ((int)section.StartOffset.TotalMilliseconds).ToString());
+
             // Surround line breaks by zero-width spaces just in case one of those breaks lies at
             // a section border (which would cause the rounded corners on that side to get cut off)
             writer.WriteValue(section.Text.Replace("\r\n", "\x200B\r\n\x200B"));
+
+            // Add another zero-width space for lines without line breaks. (ZW spaces affect line height in some browsers, so we always
+            // want at least one to ensure consistency)
+            writer.WriteValue("\x200B");
 
             writer.WriteEndElement();
         }
