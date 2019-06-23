@@ -17,6 +17,8 @@ YouTube's built-in subtitle editor doesn't support styling of any kind. If you w
 
 YTSubConverter can produce this file format for you.
 
+[![Download](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases/download/1.3.6/YTSubConverter.exe)
+
 ## Usage
 YTSubConverter is an .ass -> .ytt converter. You can create .ass subtitles using e.g. [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the styling before uploading.
 
