@@ -62,7 +62,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\3c}` - outline color
 * `{\4c}` - shadow color
 * `{\1a}` - regular text transparency
-* `{\2c}` - unsung karaoke text transparency
+* `{\2a}` - unsung karaoke text transparency
 * `{\3a}` - background transparency
 * `{\4a}` - shadow transparency. Due to YouTube limitations, this only works if the shadow color is &H222222& and the shadow transparency equals the text transparency.
 * `{\pos}` - position
