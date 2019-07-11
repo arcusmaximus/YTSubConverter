@@ -102,7 +102,7 @@ Unsupported tags are ignored.
 
 ## Examples
 The repository contains two sample .ass files:
-* [Color-coded dialogue sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=AvBxTdwCfzs))
+* [Color-coded dialogue sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=sc3-z_2aNX0))
 * [Karaoke sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=il4cAeVzZwI))
 
 ## Testing on PC
