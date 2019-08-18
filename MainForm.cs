@@ -31,7 +31,7 @@ namespace Arc.YTSubConverter
         private void LocalizeUI()
         {
             Version version = Assembly.GetEntryAssembly().GetName().Version;
-            Text = $"YTSubConverter {version.Major}.{version.Minor}.{version.Build}";
+            Text = $"YTSubConverter {version}";
 
             _chkStyleOptions.Text = Resources.StyleOptions;
             _lblShadowTypes.Text = Resources.ShadowTypes;

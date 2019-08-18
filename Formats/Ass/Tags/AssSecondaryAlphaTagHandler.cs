@@ -9,7 +9,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         public override void Handle(AssTagContext context, string arg)
         {
-            int alpha = 255 - ParseHex(arg);
+            int alpha = !string.IsNullOrEmpty(arg) ? 255 - ParseHex(arg) : context.Style.SecondaryColor.A;
             context.Section.SecondaryColor = ColorUtil.ChangeColorAlpha(context.Section.SecondaryColor, alpha);
             context.Section.Animations.RemoveAll(a => a is SecondaryColorAnimation);
         }

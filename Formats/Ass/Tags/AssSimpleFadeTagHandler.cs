@@ -10,7 +10,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         public override void Handle(AssTagContext context, string arg)
         {
-            List<float> times = ParseNumberList(arg);
+            List<float> times = ParseFloatList(arg);
             if (times == null || times.Count != 2)
                 return;
 

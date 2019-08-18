@@ -17,24 +17,13 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         protected static int ParseHex(string arg)
         {
-            if (!arg.StartsWith("&H"))
-                return 0;
-
-            string hex = arg.Substring(2, arg.Length - (arg.EndsWith("&") ? 3 : 2));
-            int.TryParse(hex, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);
+            arg = arg.Replace("&", "");
+            arg = arg.Replace("H", "");
+            int.TryParse(arg, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);
             return value;
         }
 
-        protected static Color ParseColor(string arg, int alpha)
-        {
-            int bgr = ParseHex(arg);
-            byte r = (byte)bgr;
-            byte g = (byte)(bgr >> 8);
-            byte b = (byte)(bgr >> 16);
-            return Color.FromArgb(alpha, r, g, b);
-        }
-
-        protected static List<float> ParseNumberList(string arg)
+        protected static List<float> ParseFloatList(string arg)
         {
             Match match = Regex.Match(arg, @"^\s*\((?:\s*,?\s*([\d\.]+))+\s*\)\s*$");
             if (!match.Success)
@@ -61,6 +50,15 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                         .Cast<Capture>()
                         .Select(c => c.Value.Trim())
                         .ToList();
+        }
+
+        protected static Color ParseColor(string arg, int alpha)
+        {
+            int bgr = ParseHex(arg);
+            byte r = (byte)bgr;
+            byte g = (byte)(bgr >> 8);
+            byte b = (byte)(bgr >> 16);
+            return Color.FromArgb(alpha, r, g, b);
         }
     }
 }

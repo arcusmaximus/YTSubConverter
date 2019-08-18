@@ -16,7 +16,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         public override void Handle(AssTagContext context, string arg)
         {
-            context.Section.ForeColor = ParseColor(arg, context.Section.ForeColor.A);
+            context.Section.ForeColor = !string.IsNullOrEmpty(arg) ? ParseColor(arg, context.Section.ForeColor.A) : context.Style.PrimaryColor;
             context.Section.Animations.RemoveAll(a => a is ForeColorAnimation);
         }
     }

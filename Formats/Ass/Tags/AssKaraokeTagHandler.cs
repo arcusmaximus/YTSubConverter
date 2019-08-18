@@ -8,7 +8,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         public override void Handle(AssTagContext context, string arg)
         {
-            int centiSeconds = int.Parse(arg);
+            int.TryParse(arg, out int centiSeconds);
             context.Section.Duration = TimeSpan.FromMilliseconds(centiSeconds * 10);
         }
     }

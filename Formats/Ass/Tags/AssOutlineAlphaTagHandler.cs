@@ -12,7 +12,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             if (!context.Style.HasOutline)
                 return;
 
-            int alpha = 255 - ParseHex(arg);
+            int alpha = !string.IsNullOrEmpty(arg) ? 255 - ParseHex(arg) : context.Style.OutlineColor.A;
 
             if (context.Style.OutlineIsBox)
             {

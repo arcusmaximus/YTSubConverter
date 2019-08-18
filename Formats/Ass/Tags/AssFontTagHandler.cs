@@ -6,7 +6,7 @@
 
         public override void Handle(AssTagContext context, string arg)
         {
-            context.Section.Font = arg;
+            context.Section.Font = !string.IsNullOrEmpty(arg) ? arg : context.Style.Font;
         }
     }
 }

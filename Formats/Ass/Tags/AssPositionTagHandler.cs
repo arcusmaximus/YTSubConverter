@@ -9,7 +9,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         public override void Handle(AssTagContext context, string arg)
         {
-            List<float> coords = ParseNumberList(arg);
+            List<float> coords = ParseFloatList(arg);
             if (coords == null || coords.Count != 2 || context.Line.Position != null)
                 return;
 

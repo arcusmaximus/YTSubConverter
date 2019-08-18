@@ -15,7 +15,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             if (!context.Style.HasShadow)
                 return;
 
-            int alpha = 255 - ParseHex(arg);
+            int alpha = !string.IsNullOrEmpty(arg) ? 255 - ParseHex(arg) : context.Style.ShadowColor.A;
             foreach (KeyValuePair<ShadowType, Color> shadowColor in context.Section.ShadowColors.ToList())
             {
                 if (shadowColor.Key != ShadowType.Glow || !context.Style.HasOutline || context.Style.HasOutlineBox)

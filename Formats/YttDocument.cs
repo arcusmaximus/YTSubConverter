@@ -143,6 +143,9 @@ namespace Arc.YTSubConverter.Formats
         private void SplitMultiBackgroundLine(int lineIndex)
         {
             Line line = Lines[lineIndex];
+            if (line.Sections.All(s => s.BackColor.A == 0))
+                return;
+
             int numLineBreaks = line.Sections.SelectMany(s => s.Text).Count(c => c == '\n');
             if (numLineBreaks != 1)
                 return;
@@ -227,9 +230,6 @@ namespace Arc.YTSubConverter.Formats
                     if (layerIdx > 0)
                         section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, 0);
 
-                    if (layerIdx < maxNumShadows - 1)
-                        section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 0);
-
                     if (layerIdx < sectionLayerShadowTypes.Count)
                         section.ShadowColors.RemoveAll(t => t != sectionLayerShadowTypes[layerIdx]);
                     else
@@ -279,7 +279,7 @@ namespace Arc.YTSubConverter.Formats
         private void AddItalicPrefetch()
         {
             Line italicLine =
-                new Line(TimeBase.AddMilliseconds(SubtitleDelayMs), TimeBase.AddMilliseconds(SubtitleDelayMs + 100))
+                new Line(TimeBase.AddMilliseconds(SubtitleDelayMs + 5000), TimeBase.AddMilliseconds(SubtitleDelayMs + 5100))
                 {
                     Position = new PointF(0, 0),
                     AnchorPoint = AnchorPoint.BottomRight
@@ -386,7 +386,7 @@ namespace Arc.YTSubConverter.Formats
             // Lots of pen attributes get removed if the foreground color is white -> use #FEFEFE instead
             Color foreColor = IsWhiteOrEmpty(format.ForeColor) ? Color.FromArgb(format.ForeColor.A, 254, 254, 254) : format.ForeColor;
             writer.WriteAttributeString("fc", ColorUtil.ToHtml(foreColor));
-            writer.WriteAttributeString("fo", foreColor.A.ToString());
+            writer.WriteAttributeString("fo", Math.Min((int)foreColor.A, 254).ToString());
 
             if (!format.BackColor.IsEmpty)
             {
@@ -703,6 +703,7 @@ namespace Arc.YTSubConverter.Formats
                     return 2;
 
                 case "deja vu sans mono":
+                case "dejavu sans mono":
                 case "lucida console":
                 case "monaco":
                 case "consolas":

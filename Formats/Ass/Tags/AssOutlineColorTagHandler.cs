@@ -13,12 +13,12 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
             if (context.Style.OutlineIsBox)
             {
-                context.Section.BackColor = ParseColor(arg, context.Section.BackColor.A);
+                context.Section.BackColor = !string.IsNullOrEmpty(arg) ? ParseColor(arg, context.Section.BackColor.A) : context.Style.OutlineColor;
                 context.Section.Animations.RemoveAll(a => a is BackColorAnimation);
             }
             else
             {
-                context.Section.ShadowColors[ShadowType.Glow] = ParseColor(arg, context.Section.ShadowColors[ShadowType.Glow].A);
+                context.Section.ShadowColors[ShadowType.Glow] = !string.IsNullOrEmpty(arg) ? ParseColor(arg, context.Section.ShadowColors[ShadowType.Glow].A) : context.Style.OutlineColor;
                 context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);
             }
         }

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Bevel" xml:space="preserve">
-    <value>ベベル</value>
+    <value>沈み彫り</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>変換</value>
@@ -136,10 +136,10 @@
     <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv</value>
   </data>
   <data name="Glow" xml:space="preserve">
-    <value>輪郭</value>
+    <value>アウトライン</value>
   </data>
   <data name="HardShadow" xml:space="preserve">
-    <value>ぼかしの無い影</value>
+    <value>浮き彫り</value>
   </data>
   <data name="HighlightCurrentWord" xml:space="preserve">
     <value>現在の文字のハイライト</value>
@@ -175,7 +175,7 @@
     <value>影</value>
   </data>
   <data name="SoftShadow" xml:space="preserve">
-    <value>ぼかしのある影</value>
+    <value>ドロップシャドウ</value>
   </data>
   <data name="StyleOptions" xml:space="preserve">
     <value>スタイルオプション</value>

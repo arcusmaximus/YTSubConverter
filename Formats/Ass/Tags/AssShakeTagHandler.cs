@@ -37,7 +37,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             if (string.IsNullOrWhiteSpace(arg))
                 return true;
 
-            List<float> args = ParseNumberList(arg);
+            List<float> args = ParseFloatList(arg);
             if (args == null)
                 return false;
 

@@ -17,7 +17,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             foreach (KeyValuePair<ShadowType, Color> shadowColor in context.Section.ShadowColors.ToList())
             {
                 if (shadowColor.Key != ShadowType.Glow || !context.Style.HasOutline || context.Style.HasOutlineBox)
-                    context.Section.ShadowColors[shadowColor.Key] = ParseColor(arg, shadowColor.Value.A);
+                    context.Section.ShadowColors[shadowColor.Key] = !string.IsNullOrEmpty(arg) ? ParseColor(arg, shadowColor.Value.A) : context.Style.ShadowColor;
             }
 
             context.Section.Animations.RemoveAll(a => a is ShadowColorAnimation);

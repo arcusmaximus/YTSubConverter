@@ -6,7 +6,24 @@
 
         public override void Handle(AssTagContext context, string arg)
         {
-            context.Section.Italic = arg != "0";
+            if (string.IsNullOrEmpty(arg))
+            {
+                context.Section.Italic = context.Style.Italic;
+                return;
+            }
+
+            if (!int.TryParse(arg, out int value))
+            {
+                context.Section.Italic = false;
+                return;
+            }
+
+            if (value == 0)
+                context.Section.Italic = false;
+            else if (value == 1)
+                context.Section.Italic = true;
+            else
+                context.Section.Italic = context.Style.Italic;
         }
     }
 }

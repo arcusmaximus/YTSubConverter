@@ -11,7 +11,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         public override void Handle(AssTagContext context, string arg)
         {
-            List<float> args = ParseNumberList(arg);
+            List<float> args = ParseFloatList(arg);
             if (args == null || args.Count < 4)
                 return;
 
