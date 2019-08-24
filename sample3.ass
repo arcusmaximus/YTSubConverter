@@ -29,9 +29,9 @@ Style: Soft shadow,Arial,20,&H00FFFFFF,&HFF000000,&H00000000,&H00000000,0,0,0,0,
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.15,0:00:05.48,Soft shadow,,0,0,0,,{\k8}{\ytkt2\pos(41.8,73.2)}{\an4\c&H4A4436&\4c&HC1BCB1&}H{\k9}a{\k9}t{\k9}e{\k17}d {\k9}b{\k17}y {\k8}l{\k9}i{\k9}f{\k17}e {\k8}i{\k9}t{\k8}s{\k9}e{\k9}l{\k9}f
-Dialogue: 0,0:00:05.65,0:00:19.91,Soft shadow,,0,0,0,,{\k9\pos(49.8,73.2)}{\ytkt2\pos(41.8,73.2)}{\an4\c&H4A4436&\4c&HC1BCB1&\t(6580,6900,\1a&HFF&\c&H837D73&\4c&H837D73&)\t(8250,8500,\1a&H00&\c&H4A4436&\4c&HC1BCB1&)\t(8550,8780,\1a&HFF&\c&H837D73&\4c&H837D73&)\t(12650,13080,\1a&H00&\c&H4A4436&\4c&HC1BCB1&)}C{\k10}o{\k9}c{\k9}o{\k18}a {\k9}D{\k10}o{\k9}m{\k10}y{\k9}o{\k9}j{\k9}i
-Dialogue: 0,0:00:20.01,0:00:22.45,JP,,0,0,0,,{\ytkt2}{\k21\4c&HA9A49C&}“shi{\k12}ni{\k31}tai {\k29}nan{\k20}te {\k23}iu {\k14}na {\k94}yo
+Dialogue: 0,0:00:00.15,0:00:05.48,Soft shadow,,0,0,0,,{\k8}{\ytktGlitch\pos(41.8,73.2)}{\an4\c&H4A4436&\4c&HC1BCB1&}H{\k9}a{\k9}t{\k9}e{\k17}d {\k9}b{\k17}y {\k8}l{\k9}i{\k9}f{\k17}e {\k8}i{\k9}t{\k8}s{\k9}e{\k9}l{\k9}f
+Dialogue: 0,0:00:05.65,0:00:19.91,Soft shadow,,0,0,0,,{\k9\pos(49.8,73.2)}{\ytktGlitch\pos(41.8,73.2)}{\an4\c&H4A4436&\4c&HC1BCB1&\t(6580,6900,\1a&HFF&\c&H837D73&\4c&H837D73&)\t(8250,8500,\1a&H00&\c&H4A4436&\4c&HC1BCB1&)\t(8550,8780,\1a&HFF&\c&H837D73&\4c&H837D73&)\t(12650,13080,\1a&H00&\c&H4A4436&\4c&HC1BCB1&)}C{\k10}o{\k9}c{\k9}o{\k18}a {\k9}D{\k10}o{\k9}m{\k10}y{\k9}o{\k9}j{\k9}i
+Dialogue: 0,0:00:20.01,0:00:22.45,JP,,0,0,0,,{\ytktGlitch}{\k21\4c&HA9A49C&}“shi{\k12}ni{\k31}tai {\k29}nan{\k20}te {\k23}iu {\k14}na {\k94}yo
 Dialogue: 0,0:00:20.01,0:00:22.45,EN,,0,0,0,,{\4c&HCFCABF&}“Don’t you wish for death when you’re feeling weak!”
 Dialogue: 0,0:00:22.45,0:00:24.48,JP,,0,0,0,,{\ytktGlitch}{\k14\4c&HA9A49C&}a{\k17}ki{\k14}ra{\k16}me{\k28}nai{\k15}de {\k13}i{\k19}ki{\k14}ro {\k53}yo”
 Dialogue: 0,0:00:22.45,0:00:24.48,EN,,0,0,0,,{\4c&HCFCABF&}“Hardships aren’t as hard as they seem to be!”
