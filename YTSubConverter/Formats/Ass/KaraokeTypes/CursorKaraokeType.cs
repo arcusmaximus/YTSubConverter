@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter.Formats.Ass.KaraokeTypes
 {
-    internal class CursorKaraokeType : IKaraokeType
+    internal class CursorKaraokeType : SimpleKaraokeType
     {
         private readonly IList<string> _cursors;
         private readonly int _intervalMs;
@@ -18,8 +17,10 @@ namespace Arc.YTSubConverter.Formats.Ass.KaraokeTypes
             _beforeSinging = beforeSinging;
         }
 
-        public IEnumerable<AssLine> Apply(AssKaraokeStepContext context)
+        public override IEnumerable<AssLine> Apply(AssKaraokeStepContext context)
         {
+            base.Apply(context);
+
             int startCursorStepIdx = (int)(context.StepLine.Start - context.OriginalLine.Start).TotalMilliseconds / _intervalMs;
             int endCursorStepIdx = (int)(context.StepLine.End - context.OriginalLine.Start).TotalMilliseconds / _intervalMs;
             for (int cursorStepIdx = startCursorStepIdx; cursorStepIdx <= endCursorStepIdx; cursorStepIdx++)
