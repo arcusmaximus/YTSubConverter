@@ -124,7 +124,7 @@
     <value>양각효과</value>
   </data>
   <data name="ClearBackgroundImage" xml:space="preserve">
-    <value>자막 배경 이미지 지우기</value>
+    <value>배경 이미지 지우기</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>변환</value>
@@ -178,7 +178,7 @@
     <value>이것은 예시 문자 입니다</value>
   </data>
   <data name="SelectBackgroundImage" xml:space="preserve">
-    <value>자막 배경 이미지 선택</value>
+    <value>배경 이미지 선택</value>
   </data>
   <data name="ShadowTypes" xml:space="preserve">
     <value>그림자 종류</value>
