@@ -65,6 +65,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\2a}` - unsung karaoke text transparency
 * `{\3a}` - background transparency
 * `{\4a}` - shadow transparency. Due to YouTube limitations, this only works if the shadow color is &H222222& and the shadow transparency equals the text transparency.
+* `{\alpha}` - set all transparencies at the same time
 * `{\pos}` - position
 * `{\an}` - alignment
 * `{\k}` - karaoke segment duration
@@ -97,6 +98,10 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\ytkt}` - enables advanced Karaoke Types. Warning: using these will result in large files that may require multiple upload attempts before YouTube will accept them.
   * `{\ytktFade}` - Configure the line to use fading karaoke ([example video](https://www.youtube.com/watch?v=nLMRAKeoif0)).
   * `{\ytktGlitch}` - Configure the line to use karaoke with glitching text ([example video](https://www.youtube.com/watch?v=9_IKgqsnfco)). Looks for Latin, Chinese, Japanese and Korean characters in each syllable and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
+  * `{\ytkt(Cursor,text)}` - Places the specified text after the word that's currently being sung.
+  * `{\ytkt(Cursor,formatting tags,text)}` - Like the above, but you can customize the look of the cursor with override tags (similar to `\t`).
+  * `{\ytkt(Cursor,interval,tags1,text1,tags2,text2,...)}` - Defines an animated cursor where each "frame" lasts `interval` milliseconds.
+  * `{\ytkt(LCursor,text)}` and other variants - Like `Cursor`, except the cursor is placed before (to the Left of) the word that's currently being sung.
 
 Unsupported tags are ignored.
 
