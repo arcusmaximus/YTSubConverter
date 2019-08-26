@@ -4,6 +4,8 @@
     {
         public override string Tag => "ytvert";
 
+        public override bool AffectsWholeLine => true;
+
         public override void Handle(AssTagContext context, string arg)
         {
             if (!int.TryParse(arg, out int vertType))

@@ -8,6 +8,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
     {
         public override string Tag => "fad";
 
+        public override bool AffectsWholeLine => true;
+
         public override void Handle(AssTagContext context, string arg)
         {
             List<float> times = ParseFloatList(arg);

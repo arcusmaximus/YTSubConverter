@@ -117,12 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Autoconvert" xml:space="preserve">
+    <value>Autoconvert</value>
+  </data>
   <data name="Bevel" xml:space="preserve">
     <value>Bevel</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Checkers" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>checkers.png_;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ClearBackgroundImage" xml:space="preserve">
+    <value>Clear background image</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>Convert</value>
@@ -136,9 +142,6 @@
   <data name="FailedToLoadFile0" xml:space="preserve">
     <value>Failed to load file: {0}</value>
   </data>
-  <data name="FileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv</value>
-  </data>
   <data name="Glow" xml:space="preserve">
     <value>Glow</value>
   </data>
@@ -147,6 +150,9 @@
   </data>
   <data name="HighlightCurrentWord" xml:space="preserve">
     <value>Highlight current word</value>
+  </data>
+  <data name="ImageFileFilter" xml:space="preserve">
+    <value>Images|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
   <data name="IsNotAValidColor" xml:space="preserve">
     <value>{0} is not a valid color</value>
@@ -175,6 +181,9 @@
   <data name="PreviewSampleRegular" xml:space="preserve">
     <value>Sample text</value>
   </data>
+  <data name="SelectBackgroundImage" xml:space="preserve">
+    <value>Select background image...</value>
+  </data>
   <data name="ShadowTypes" xml:space="preserve">
     <value>Shadow types:</value>
   </data>
@@ -183,6 +192,9 @@
   </data>
   <data name="StyleOptions" xml:space="preserve">
     <value>Style options</value>
+  </data>
+  <data name="SubtitleFileFilter" xml:space="preserve">
+    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
     <value>Successfully created {0}</value>

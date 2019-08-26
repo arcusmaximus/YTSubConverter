@@ -53,7 +53,8 @@ namespace Arc.YTSubConverter.Formats
 
         public void MergeSimultaneousLines()
         {
-            List<Line> lines = Lines.OrderBy(l => l.Start).ToList();     // Use OrderBy to get a stable sort (List.Sort() is unstable)
+            List<Line> lines = Lines.Where(l => l.Start < l.End)
+                                    .OrderBy(l => l.Start).ToList();     // Use OrderBy to get a stable sort (List.Sort() is unstable)
 
             int i = 0;
             while (i < lines.Count)
@@ -88,24 +89,24 @@ namespace Arc.YTSubConverter.Formats
                 lines.RemoveAt(i);
 
                 if (firstLine.Start < secondLine.Start)
-                    InsertConcatenedLine(lines, i, firstLine.Start, secondLine.Start, firstLine);
+                    InsertConcatenedLine(lines, i, firstLine.Start, secondLine.Start, false, firstLine);
 
                 if (AnchorPointUtil.IsBottomAligned(firstLine.AnchorPoint))
-                    InsertConcatenedLine(lines, i, secondLine.Start, TimeUtil.Min(firstLine.End, secondLine.End), secondLine, firstLine);
+                    InsertConcatenedLine(lines, i, secondLine.Start, TimeUtil.Min(firstLine.End, secondLine.End), false, secondLine, firstLine);
                 else
-                    InsertConcatenedLine(lines, i, secondLine.Start, TimeUtil.Min(firstLine.End, secondLine.End), firstLine, secondLine);
+                    InsertConcatenedLine(lines, i, secondLine.Start, TimeUtil.Min(firstLine.End, secondLine.End), false, firstLine, secondLine);
 
                 if (firstLine.End < secondLine.End)
-                    InsertConcatenedLine(lines, i, firstLine.End, secondLine.End, secondLine);
+                    InsertConcatenedLine(lines, i, firstLine.End, secondLine.End, true, secondLine);
                 else if (secondLine.End < firstLine.End)
-                    InsertConcatenedLine(lines, i, secondLine.End, firstLine.End, firstLine);
+                    InsertConcatenedLine(lines, i, secondLine.End, firstLine.End, false, firstLine);
             }
 
             Lines.Clear();
             Lines.AddRange(lines);
         }
 
-        private static void InsertConcatenedLine(List<Line> targetList, int baseIndex, DateTime start, DateTime end, params Line[] sourceLines)
+        private static void InsertConcatenedLine(List<Line> targetList, int baseIndex, DateTime start, DateTime end, bool afterEqualStart, params Line[] sourceLines)
         {
             Line line = (Line)sourceLines[0].Clone();
             for (int i = 1; i < sourceLines.Length; i++)
@@ -118,7 +119,7 @@ namespace Arc.YTSubConverter.Formats
             line.End = end;
 
             int index = baseIndex;
-            while (index < targetList.Count && targetList[index].Start < start)
+            while (index < targetList.Count && (afterEqualStart ? targetList[index].Start <= start : targetList[index].Start < start))
             {
                 index++;
             }

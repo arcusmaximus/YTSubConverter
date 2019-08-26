@@ -26,12 +26,12 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public static List<AssStyleOptions> Load()
+        public static List<AssStyleOptions> Load(string filePath = FileName)
         {
-            if (!File.Exists(FileName))
+            if (!File.Exists(filePath))
                 return new List<AssStyleOptions>();
 
-            using (Stream stream = File.Open(FileName, FileMode.Open, FileAccess.Read))
+            using (Stream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
                 AssStyleOptionsList options = (AssStyleOptionsList)serializer.Deserialize(stream);
@@ -39,9 +39,9 @@ namespace Arc.YTSubConverter
             }
         }
 
-        public static void Save(IEnumerable<AssStyleOptions> options)
+        public static void Save(IEnumerable<AssStyleOptions> options, string filePath = FileName)
         {
-            using (Stream stream = File.Open(FileName, FileMode.Create, FileAccess.Write))
+            using (Stream stream = File.Open(filePath, FileMode.Create, FileAccess.Write))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
                 AssStyleOptionsList list = new AssStyleOptionsList(options);

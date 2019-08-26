@@ -12,6 +12,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
     {
         public override string Tag => "ytshake";
 
+        public override bool AffectsWholeLine => true;
+
         public override void Handle(AssTagContext context, string arg)
         {
             if (!TryParseArgs(context, arg, out SizeF radius, out DateTime startTime, out DateTime endTime))

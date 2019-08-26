@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<StyleOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Style>
+    <Name>Default</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Soft shadow box</Name>
+    <ShadowType>SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>KaraokeNoHilight</Name>
+    <ShadowType>Glow SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>KaraokeHilight</Name>
+    <ShadowType>Glow SoftShadow</ShadowType>
+    <IsKaraoke>true</IsKaraoke>
+    <CurrentWordTextColor>#FF0000</CurrentWordTextColor>
+    <CurrentWordOutlineColor>#00FF00</CurrentWordOutlineColor>
+    <CurrentWordShadowColor>#0000FF</CurrentWordShadowColor>
+  </Style>
+  <Style>
+    <Name>Default Dark</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Bold</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Italic</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Underline</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Plain</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Plain box</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Outline</Name>
+    <ShadowType>Glow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Outline shadow</Name>
+    <ShadowType>Glow SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Outline box</Name>
+    <ShadowType>Glow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Glow shadow box</Name>
+    <ShadowType>Glow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Bevel shadow box</Name>
+    <ShadowType>Bevel</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Soft shadow</Name>
+    <ShadowType>SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Hard shadow</Name>
+    <ShadowType>SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Hard shadow box</Name>
+    <ShadowType>HardShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Glow + soft shadow box</Name>
+    <ShadowType>Glow SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Glow + hard shadow box</Name>
+    <ShadowType>Glow HardShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Font1</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Font2</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Font3</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Font5</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Font6</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Font7</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Top left</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Top center</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Top right</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Middle left</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Middle center</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Middle right</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Bottom left</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Bottom center</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Bottom right</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Outline+Soft shadow</Name>
+    <ShadowType>Glow SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Outline+Hard shadow</Name>
+    <ShadowType>Glow SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>Glow shadow</Name>
+    <ShadowType>Glow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+</StyleOptions>

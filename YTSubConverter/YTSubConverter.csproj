@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\ILMerge.3.0.29\build\ILMerge.props" Condition="Exists('..\packages\ILMerge.3.0.29\build\ILMerge.props')" />
-  <Import Project="packages\ILMerge.3.0.21\build\ILMerge.props" Condition="Exists('packages\ILMerge.3.0.21\build\ILMerge.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Arc.YTSubConverter</RootNamespace>
     <AssemblyName>YTSubConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -70,11 +69,18 @@
     <Compile Include="Formats\Ass\AssDocument.cs" />
     <Compile Include="Formats\Ass\AssDocumentItem.cs" />
     <Compile Include="Formats\Ass\AssFileSection.cs" />
+    <Compile Include="Formats\Ass\AssKaraokeStepContext.cs" />
     <Compile Include="Formats\Ass\AssLine.cs" />
     <Compile Include="Formats\Ass\AssSection.cs" />
     <Compile Include="Formats\Ass\AssStyle.cs" />
     <Compile Include="Formats\Ass\AssTagContext.cs" />
+    <Compile Include="Formats\Ass\KaraokeTypes\CursorKaraokeType.cs" />
+    <Compile Include="Formats\Ass\KaraokeTypes\FadeKaraokeType.cs" />
+    <Compile Include="Formats\Ass\KaraokeTypes\GlitchKaraokeType.cs" />
+    <Compile Include="Formats\Ass\KaraokeTypes\IKaraokeType.cs" />
+    <Compile Include="Formats\Ass\KaraokeTypes\SimpleKaraokeType.cs" />
     <Compile Include="Formats\Ass\Tags\AssAlignmentTagHandler.cs" />
+    <Compile Include="Formats\Ass\Tags\AssAlphaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssBoldTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssChromaTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssComplexFadeTagHandler.cs" />
@@ -162,7 +168,6 @@
     <PropertyGroup>
       <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\ILMerge.3.0.21\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\ILMerge.3.0.21\build\ILMerge.props'))" />
     <Error Condition="!Exists('..\packages\ILMerge.3.0.29\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.29\build\ILMerge.props'))" />
   </Target>
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">

@@ -4,15 +4,17 @@
     {
         public override string Tag => "i";
 
+        public override bool AffectsWholeLine => false;
+
         public override void Handle(AssTagContext context, string arg)
         {
             if (string.IsNullOrEmpty(arg))
             {
-                context.Section.Italic = context.Style.Italic;
+                context.Section.Italic = context.InitialStyle.Italic;
                 return;
             }
 
-            if (!int.TryParse(arg, out int value))
+            if (!TryParseInt(arg, out int value))
             {
                 context.Section.Italic = false;
                 return;
@@ -23,7 +25,7 @@
             else if (value == 1)
                 context.Section.Italic = true;
             else
-                context.Section.Italic = context.Style.Italic;
+                context.Section.Italic = context.InitialStyle.Italic;
         }
     }
 }

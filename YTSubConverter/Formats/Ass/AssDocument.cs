@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Arc.YTSubConverter.Animations;
+using Arc.YTSubConverter.Formats.Ass.KaraokeTypes;
 using Arc.YTSubConverter.Formats.Ass.Tags;
 using Arc.YTSubConverter.Util;
 
@@ -12,6 +13,8 @@ namespace Arc.YTSubConverter.Formats.Ass
 {
     internal class AssDocument : SubtitleDocument
     {
+        private static readonly IKaraokeType SimpleKaraokeType = new SimpleKaraokeType();
+
         private readonly Dictionary<string, AssTagHandlerBase> _tagHandlers = new Dictionary<string, AssTagHandlerBase>();
         private readonly Dictionary<string, AssStyle> _styles;
         private readonly Dictionary<string, AssStyleOptions> _styleOptions;
@@ -68,6 +71,7 @@ namespace Arc.YTSubConverter.Formats.Ass
         private void RegisterTagHandlers()
         {
             RegisterTagHandler(new AssAlignmentTagHandler());
+            RegisterTagHandler(new AssAlphaTagHandler());
             RegisterTagHandler(new AssBoldTagHandler());
             RegisterTagHandler(new AssChromaTagHandler());
             RegisterTagHandler(new AssComplexFadeTagHandler());
@@ -155,12 +159,11 @@ namespace Arc.YTSubConverter.Formats.Ass
         {
             DateTime startTime = TimeUtil.SnapTimeToFrame(dialogue.Start.AddMilliseconds(32));
             DateTime endTime = TimeUtil.SnapTimeToFrame(dialogue.End).AddMilliseconds(32);
-            AssLine line = new AssLine(startTime, endTime) { AnchorPoint = style.AnchorPoint };
+            AssLine line = new AssLine(startTime, endTime) { AnchorPoint = style.AnchorPoint, KaraokeType = SimpleKaraokeType };
 
             AssTagContext context = new AssTagContext
                                     {
                                         Document = this,
-                                        Dialogue = dialogue,
                                         InitialStyle = style,
                                         InitialStyleOptions = styleOptions,
                                         Style = style,
@@ -170,41 +173,7 @@ namespace Arc.YTSubConverter.Formats.Ass
                                     };
 
             ApplyStyle(context.Section, style, styleOptions);
-            
-            string text = Regex.Replace(dialogue.Text, @"(?:\\N)+$", "");
-            text = Regex.Replace(text, @"(\{\\k\d+\})(\{\\k\d+\})", "$1\x200B$2");
-            int start = 0;
-            foreach (Match match in Regex.Matches(text, @"\{(?:\s*\\(?<tag>fn|\d?[a-z]+)\s*(?<arg>\([^\{\}\(\)]*\)|[^\{\}\(\)\\]*))+\s*\}"))
-            {
-                int end = match.Index;
-
-                if (end > start)
-                {
-                    context.Section.Text = text.Substring(start, end - start).Replace("\\N", "\r\n");
-                    line.Sections.Add(context.Section);
-
-                    context.Section = (AssSection)context.Section.Clone();
-                    context.Section.Text = null;
-                    context.Section.Duration = TimeSpan.Zero;
-                }
-
-                CaptureCollection tags = match.Groups["tag"].Captures;
-                CaptureCollection arguments = match.Groups["arg"].Captures;
-                for (int i = 0; i < tags.Count; i++)
-                {
-                    if (_tagHandlers.TryGetValue(tags[i].Value, out AssTagHandlerBase handler))
-                        handler.Handle(context, arguments[i].Value.Trim());
-                }
-
-                start = match.Index + match.Length;
-            }
-
-            if (start < text.Length)
-            {
-                context.Section.Text = text.Substring(start, text.Length - start).Replace("\\N", "\r\n");
-                line.Sections.Add(context.Section);
-            }
-
+            CreateTagSections(line, dialogue.Text, context);
             CreateRubySections(line);
 
             List<AssLine> lines = new List<AssLine> { line };
@@ -216,6 +185,48 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
 
             return lines;
+        }
+
+        internal void CreateTagSections(AssLine line, string text, AssTagContext context)
+        {
+            text = Regex.Replace(text, @"(?:\\N)+$", "");
+            text = Regex.Replace(text, @"(\{\\k\d+\})(\{\\k\d+\})", "$1\x200B$2");
+            HashSet<string> handledWholeLineTags = new HashSet<string>();
+
+            int start = 0;
+            foreach (Match tagGroupMatch in Regex.Matches(text, @"\{(.*?)\}"))
+            {
+                int end = tagGroupMatch.Index;
+
+                if (end > start)
+                {
+                    context.Section.Text = text.Substring(start, end - start).Replace("\\N", "\r\n");
+                    line.Sections.Add(context.Section);
+
+                    context.Section = (AssSection)context.Section.Clone();
+                    context.Section.Text = null;
+                    context.Section.Duration = TimeSpan.Zero;
+                }
+
+                foreach (Match tagMatch in Regex.Matches(tagGroupMatch.Groups[1].Value, @"\\(?<tag>fn|\d?[a-z]+)\s*(?<arg>\([^\(\)]*(?:\)|$)|[^\\\(\)]*)"))
+                {
+                    if (!_tagHandlers.TryGetValue(tagMatch.Groups["tag"].Value, out AssTagHandlerBase handler))
+                        continue;
+
+                    if (handler.AffectsWholeLine && !handledWholeLineTags.Add(tagMatch.Groups["tag"].Value))
+                        continue;
+
+                    handler.Handle(context, tagMatch.Groups["arg"].Value.Trim());
+                }
+
+                start = tagGroupMatch.Index + tagGroupMatch.Length;
+            }
+
+            if (start < text.Length)
+            {
+                context.Section.Text = text.Substring(start, text.Length - start).Replace("\\N", "\r\n");
+                line.Sections.Add(context.Section);
+            }
         }
 
         internal static void ApplyStyle(AssSection section, AssStyle style, AssStyleOptions options)
@@ -305,12 +316,12 @@ namespace Arc.YTSubConverter.Formats.Ass
             numSubSections++;
         }
 
-        private static IEnumerable<AssLine> ExpandLine(AssLine line)
+        private IEnumerable<AssLine> ExpandLine(AssLine line)
         {
             return ExpandLineForKaraoke(line).SelectMany(Animator.Expand);
         }
 
-        private static IEnumerable<AssLine> ExpandLineForKaraoke(AssLine line)
+        private IEnumerable<AssLine> ExpandLineForKaraoke(AssLine line)
         {
             if (line.Sections.Cast<AssSection>().All(s => s.Duration == TimeSpan.Zero))
                 return new[] { line };
@@ -326,9 +337,14 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         private static bool CanUseNativeKaraoke(AssLine line)
         {
-            return line.KaraokeType == KaraokeType.Simple &&
+            return line.KaraokeType.GetType() == typeof(SimpleKaraokeType) &&
                    line.Animations.Count == 0 &&
-                   line.Sections.Cast<AssSection>().All(s => s.SecondaryColor.A == 0 && s.Animations.Count == 0 && s.RubyPosition == RubyPosition.None);
+                   line.Sections.Cast<AssSection>().All(s => s.SecondaryColor.A == 0 &&
+                                                             s.CurrentWordForeColor.IsEmpty &&
+                                                             s.CurrentWordOutlineColor.IsEmpty &&
+                                                             s.CurrentWordShadowColor.IsEmpty &&
+                                                             s.Animations.Count == 0 &&
+                                                             s.Duration != TimeSpan.Zero);
         }
 
         private static void ApplyNativeKaraoke(AssLine line)
@@ -341,14 +357,16 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
         }
 
-        private static IEnumerable<AssLine> CreateEmulatedKaraokeLines(AssLine line)
+        private IEnumerable<AssLine> CreateEmulatedKaraokeLines(AssLine line)
         {
             SortedList<TimeSpan, int> activeSectionsPerStep = GetKaraokeSteps(line);
             for (int stepIdx = 0; stepIdx < activeSectionsPerStep.Count; stepIdx++)
             {
-                AssLine stepLine = CreateKaraokeStepLine(line, activeSectionsPerStep, stepIdx);
-                if (stepLine != null)
+                IEnumerable<AssLine> stepLines = CreateKaraokeStepLines(line, activeSectionsPerStep, stepIdx);
+                foreach (AssLine stepLine in stepLines)
+                {
                     yield return stepLine;
+                }
             }
         }
 
@@ -374,14 +392,14 @@ namespace Arc.YTSubConverter.Formats.Ass
             return activeSectionsPerStep;
         }
 
-        private static AssLine CreateKaraokeStepLine(AssLine originalLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
+        private IEnumerable<AssLine> CreateKaraokeStepLines(AssLine originalLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
         {
             TimeSpan timeOffset = activeSectionsPerStep.Keys[stepIdx];
             int numActiveSections = activeSectionsPerStep.Values[stepIdx];
 
             DateTime startTime = TimeUtil.SnapTimeToFrame((originalLine.Start + timeOffset).AddMilliseconds(20));
             if (startTime >= originalLine.End)
-                return null;
+                return new List<AssLine>();
 
             DateTime endTime;
             if (stepIdx < activeSectionsPerStep.Count - 1)
@@ -423,11 +441,10 @@ namespace Arc.YTSubConverter.Formats.Ass
                 }
             }
 
-            AddKaraokeEffects(originalLine, stepLine, activeSectionsPerStep, stepIdx);
-            return stepLine;
+            return ApplyKaraokeType(originalLine, stepLine, activeSectionsPerStep, stepIdx);
         }
 
-        private static void AddKaraokeEffects(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
+        private IEnumerable<AssLine> ApplyKaraokeType(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
         {
             int prevNumActiveActions = stepIdx > 0 ? activeSectionsPerStep.Values[stepIdx - 1] : 0;
             int numActiveSections = activeSectionsPerStep.Values[stepIdx];
@@ -437,147 +454,19 @@ namespace Arc.YTSubConverter.Formats.Ass
                                                        .Take(numActiveSections - prevNumActiveActions)
                                                        .ToList();
 
-            switch (stepLine.KaraokeType)
-            {
-                case KaraokeType.Simple:
-                    ApplySimpleKaraokeEffect(singingSections);
-                    break;
-
-                case KaraokeType.Fade:
-                    ApplyFadeKaraokeEffect(originalLine, stepLine, activeSectionsPerStep, stepIdx, singingSections);
-                    break;
-
-                case KaraokeType.Glitch:
-                    ApplyGlitchKaraokeEffect(stepLine, singingSections);
-                    break;
-            }
-        }
-
-        private static void ApplySimpleKaraokeEffect(List<AssSection> singingSections)
-        {
-            foreach (AssSection singingSection in singingSections)
-            {
-                if (!singingSection.CurrentWordForeColor.IsEmpty)
-                    singingSection.ForeColor = singingSection.CurrentWordForeColor;
-
-                if (!singingSection.CurrentWordShadowColor.IsEmpty)
+            AssKaraokeStepContext context =
+                new AssKaraokeStepContext
                 {
-                    foreach (ShadowType shadowType in singingSection.ShadowColors.Keys.ToList())
-                    {
-                        singingSection.ShadowColors[shadowType] = singingSection.CurrentWordShadowColor;
-                    }
-                }
-
-                if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.ShadowColors.ContainsKey(ShadowType.Glow))
-                    singingSection.ShadowColors[ShadowType.Glow] = singingSection.CurrentWordOutlineColor;
-            }
-        }
-
-        private static void ApplyFadeKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx, List<AssSection> singingSections)
-        {
-            ApplyFadeInKaraokeEffect(stepLine, singingSections);
-            ApplyFadeOutKaraokeEffect(originalLine, stepLine, activeSectionsPerStep, stepIdx);
-        }
-
-        private static void ApplyFadeInKaraokeEffect(AssLine stepLine, List<AssSection> singingSections)
-        {
-            DateTime fadeEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(500), stepLine.End);
-
-            foreach (AssSection singingSection in singingSections)
-            {
-                if (singingSection.CurrentWordForeColor.IsEmpty)
-                {
-                    if (singingSection.ForeColor != singingSection.SecondaryColor)
-                        singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.ForeColor));
-                }
-                else
-                {
-                    if (singingSection.CurrentWordForeColor != singingSection.SecondaryColor)
-                        singingSection.Animations.Add(new ForeColorAnimation(stepLine.Start, singingSection.SecondaryColor, fadeEndTime, singingSection.CurrentWordForeColor));
-                }
-
-                if (!singingSection.CurrentWordShadowColor.IsEmpty)
-                {
-                    foreach (KeyValuePair<ShadowType, Color> shadowColor in singingSection.ShadowColors)
-                    {
-                        if (singingSection.CurrentWordShadowColor != shadowColor.Value)
-                            singingSection.Animations.Add(new ShadowColorAnimation(shadowColor.Key, stepLine.Start, shadowColor.Value, fadeEndTime, singingSection.CurrentWordShadowColor));
-                    }
-                }
-
-                if (!singingSection.CurrentWordOutlineColor.IsEmpty && singingSection.CurrentWordOutlineColor != singingSection.ShadowColors.GetOrDefault(ShadowType.Glow))
-                {
-                    singingSection.Animations.Add(new ShadowColorAnimation(
-                        ShadowType.Glow, stepLine.Start, singingSection.ShadowColors[ShadowType.Glow], fadeEndTime, singingSection.CurrentWordOutlineColor));
-                }
-            }
-        }
-
-        private static void ApplyFadeOutKaraokeEffect(AssLine originalLine, AssLine stepLine, SortedList<TimeSpan, int> activeSectionsPerStep, int stepIdx)
-        {
-            int stepFirstSectionIdx = 0;
-            for (int prevStepIdx = 0; prevStepIdx < stepIdx; prevStepIdx++)
-            {
-                DateTime fadeStartTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[prevStepIdx + 1]).AddMilliseconds(20));
-                DateTime fadeEndTime = fadeStartTime.AddMilliseconds(1000);
-                int stepLastSectionIdx = activeSectionsPerStep.Values[prevStepIdx] - 1;
-                for (int sectionIdx = stepFirstSectionIdx; sectionIdx <= stepLastSectionIdx; sectionIdx++)
-                {
-                    AssSection section = (AssSection)stepLine.Sections[sectionIdx];
-                    if (!section.CurrentWordForeColor.IsEmpty && section.CurrentWordForeColor != section.ForeColor)
-                        section.Animations.Add(new ForeColorAnimation(fadeStartTime, section.CurrentWordForeColor, fadeEndTime, section.ForeColor));
-
-                    if (!section.CurrentWordShadowColor.IsEmpty)
-                    {
-                        foreach (KeyValuePair<ShadowType, Color> shadowColor in section.ShadowColors)
-                        {
-                            if (section.CurrentWordShadowColor != shadowColor.Value)
-                                section.Animations.Add(new ShadowColorAnimation(shadowColor.Key, fadeStartTime, section.CurrentWordShadowColor, fadeEndTime, shadowColor.Value));
-                        }
-                    }
-
-                    if (!section.CurrentWordOutlineColor.IsEmpty && section.CurrentWordOutlineColor != section.ShadowColors.GetOrDefault(ShadowType.Glow))
-                        section.Animations.Add(new ShadowColorAnimation(ShadowType.Glow, fadeStartTime, section.CurrentWordOutlineColor, fadeEndTime, section.ShadowColors[ShadowType.Glow]));
-                }
-
-                stepFirstSectionIdx = stepLastSectionIdx + 1;
-            }
-        }
-
-        private static void ApplyGlitchKaraokeEffect(AssLine stepLine, List<AssSection> singingSections)
-        {
-            AssSection singingSection = singingSections.LastOrDefault(s => s.RubyPart == RubyPart.None || s.RubyPart == RubyPart.Text);
-            if (singingSection == null || singingSection.Text.Length == 0)
-                return;
-
-            ApplySimpleKaraokeEffect(singingSections);
-            DateTime glitchEndTime = TimeUtil.Min(stepLine.Start.AddMilliseconds(70), stepLine.End);
-            Util.CharacterRange[] charRanges = GetGlitchKaraokeCharacterRanges(singingSection.Text[0]);
-            singingSection.Animations.Add(new GlitchingCharAnimation(stepLine.Start, glitchEndTime, charRanges));
-        }
-
-        private static Util.CharacterRange[] GetGlitchKaraokeCharacterRanges(char c)
-        {
-            Util.CharacterRange[][] availableRanges =
-                {
-                    new[] { new Util.CharacterRange('A', 'Z'), new Util.CharacterRange('a', 'z') },
-                    new[] { Util.CharacterRange.IdeographRange, Util.CharacterRange.IdeographExtensionRange, Util.CharacterRange.IdeographCompatibilityRange },
-                    new[] { Util.CharacterRange.HiraganaRange },
-                    new[] { Util.CharacterRange.KatakanaRange },
-                    new[] { Util.CharacterRange.HangulRange }
+                    Document = this,
+                    OriginalLine = originalLine,
+                    ActiveSectionsPerStep = activeSectionsPerStep,
+                    
+                    StepLine = stepLine,
+                    StepIndex = stepIdx,
+                    NumActiveSections = numActiveSections,
+                    SingingSections = singingSections
                 };
-
-            foreach (Util.CharacterRange[] ranges in availableRanges)
-            {
-                if (ranges.Any(r => r.Contains(c)))
-                    return ranges;
-            }
-
-            return new[]
-                   {
-                       new Util.CharacterRange('\x2300', '\x231A'),
-                       new Util.CharacterRange('\x231C', '\x23E1')
-                   };
+            return stepLine.KaraokeType.Apply(context);
         }
 
         private static void MergeIdenticallyFormattedSections(Line line)

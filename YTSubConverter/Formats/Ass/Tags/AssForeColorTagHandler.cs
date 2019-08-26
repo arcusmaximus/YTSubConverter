@@ -14,6 +14,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             get;
         }
 
+        public override bool AffectsWholeLine => false;
+
         public override void Handle(AssTagContext context, string arg)
         {
             context.Section.ForeColor = !string.IsNullOrEmpty(arg) ? ParseColor(arg, context.Section.ForeColor.A) : context.Style.PrimaryColor;

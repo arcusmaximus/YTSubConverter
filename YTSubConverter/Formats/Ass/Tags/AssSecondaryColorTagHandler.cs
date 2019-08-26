@@ -6,6 +6,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
     {
         public override string Tag => "2c";
 
+        public override bool AffectsWholeLine => false;
+
         public override void Handle(AssTagContext context, string arg)
         {
             context.Section.SecondaryColor = !string.IsNullOrEmpty(arg) ? ParseColor(arg, context.Section.SecondaryColor.A) : context.Style.SecondaryColor;

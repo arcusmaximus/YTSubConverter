@@ -6,6 +6,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
     {
         public override string Tag => "3c";
 
+        public override bool AffectsWholeLine => false;
+
         public override void Handle(AssTagContext context, string arg)
         {
             if (!context.Style.HasOutline)

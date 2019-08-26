@@ -4,15 +4,17 @@
     {
         public override string Tag => "u";
 
+        public override bool AffectsWholeLine => false;
+
         public override void Handle(AssTagContext context, string arg)
         {
             if (string.IsNullOrEmpty(arg))
             {
-                context.Section.Underline = context.Style.Underline;
+                context.Section.Underline = context.InitialStyle.Underline;
                 return;
             }
 
-            if (!int.TryParse(arg, out int value))
+            if (!TryParseInt(arg, out int value))
             {
                 context.Section.Underline = false;
                 return;
@@ -23,7 +25,7 @@
             else if (value == 1)
                 context.Section.Underline = true;
             else
-                context.Section.Underline = context.Style.Underline;
+                context.Section.Underline = context.InitialStyle.Underline;
         }
     }
 }

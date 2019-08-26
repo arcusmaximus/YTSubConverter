@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Xml.Serialization;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
@@ -133,6 +134,17 @@ namespace Arc.YTSubConverter
         {
             get { return ColorUtil.ToHtml(CurrentWordShadowColor); }
             set { CurrentWordShadowColor = ColorUtil.FromHtml(value); }
+        }
+
+        public string BackgroundImagePath
+        {
+            get;
+            set;
+        }
+
+        public bool HasExistingBackgroundImage
+        {
+            get { return !string.IsNullOrEmpty(BackgroundImagePath) && File.Exists(BackgroundImagePath); }
         }
 
         public override string ToString()

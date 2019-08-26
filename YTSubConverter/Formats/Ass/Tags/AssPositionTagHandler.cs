@@ -7,6 +7,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
     {
         public override string Tag => "pos";
 
+        public override bool AffectsWholeLine => true;
+
         public override void Handle(AssTagContext context, string arg)
         {
             List<float> coords = ParseFloatList(arg);

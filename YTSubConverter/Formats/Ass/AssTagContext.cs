@@ -7,7 +7,6 @@ namespace Arc.YTSubConverter.Formats.Ass
         public delegate List<AssLine> PostProcessor();
 
         public AssDocument Document;
-        public AssDialogue Dialogue;
         public AssStyle InitialStyle;
         public AssStyleOptions InitialStyleOptions;
         public AssStyle Style;

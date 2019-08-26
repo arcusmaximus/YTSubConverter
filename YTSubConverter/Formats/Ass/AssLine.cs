@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using Arc.YTSubConverter.Animations;
+using Arc.YTSubConverter.Formats.Ass.KaraokeTypes;
 using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter.Formats.Ass
@@ -22,7 +23,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         public List<Animation> Animations { get; } = new List<Animation>();
 
-        public KaraokeType KaraokeType
+        public IKaraokeType KaraokeType
         {
             get;
             set;

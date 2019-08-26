@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Autoconvert" xml:space="preserve">
+    <value>自動轉換</value>
+  </data>
   <data name="Bevel" xml:space="preserve">
     <value>斜面</value>
+  </data>
+  <data name="ClearBackgroundImage" xml:space="preserve">
+    <value>重置背景</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>轉換</value>
@@ -132,9 +138,6 @@
   <data name="FailedToLoadFile0" xml:space="preserve">
     <value>無法載入檔案。{0}</value>
   </data>
-  <data name="FileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv</value>
-  </data>
   <data name="Glow" xml:space="preserve">
     <value>輪廓</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="HighlightCurrentWord" xml:space="preserve">
     <value>使目前文字發光</value>
+  </data>
+  <data name="ImageFileFilter" xml:space="preserve">
+    <value>影像檔案|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
   <data name="IsNotAValidColor" xml:space="preserve">
     <value>{0}不是有效的顏色代碼。</value>
@@ -171,6 +177,9 @@
   <data name="PreviewSampleRegular" xml:space="preserve">
     <value>範例文字</value>
   </data>
+  <data name="SelectBackgroundImage" xml:space="preserve">
+    <value>選擇背景檔案</value>
+  </data>
   <data name="ShadowTypes" xml:space="preserve">
     <value>陰影</value>
   </data>
@@ -179,6 +188,9 @@
   </data>
   <data name="StyleOptions" xml:space="preserve">
     <value>樣式選項</value>
+  </data>
+  <data name="SubtitleFileFilter" xml:space="preserve">
+    <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
     <value>{0}轉換成功。</value>

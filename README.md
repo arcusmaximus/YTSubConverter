@@ -42,10 +42,10 @@ YTSubConverter supports the following .ass style features:
   * Carrois Gothic SC
   * Comic Sans MS
   * Courier New
-  * Deja Vu Sans Mono
+  * DejaVu Sans Mono
   * Monotype Corsiva
-  * Times New Roman
   * Roboto (YouTube default; the tool will automatically pick this if the specified font is not allowed)
+  * Times New Roman
 * Bold, italic, underline
 * Primary, secondary, outline and shadow color
 * Alignment

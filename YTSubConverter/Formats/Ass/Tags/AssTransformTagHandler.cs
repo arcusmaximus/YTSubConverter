@@ -23,6 +23,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                                        { "2c", HandleTransformSecondaryColorTag },
                                        { "3c", HandleTransformOutlineColorTag },
                                        { "4c", HandleTransformShadowColorTag },
+                                       { "alpha", HandleTransformAlphaTag },
                                        { "1a", HandleTransformForeAlphaTag },
                                        { "2a", HandleTransformSecondaryAlphaTag },
                                        { "3a", HandleTransformOutlineAlphaTag },
@@ -32,6 +33,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
         }
 
         public override string Tag => "t";
+
+        public override bool AffectsWholeLine => false;
 
         public override void Handle(AssTagContext context, string arg)
         {
@@ -153,16 +156,24 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             anim.EndColor = ParseColor(arg, anim.EndColor.A);
         }
 
+        private static void HandleTransformAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        {
+            HandleTransformForeAlphaTag(context, startTime, endTime, accel, arg);
+            HandleTransformSecondaryAlphaTag(context, startTime, endTime, accel, arg);
+            HandleTransformOutlineAlphaTag(context, startTime, endTime, accel, arg);
+            HandleTransformShadowAlphaTag(context, startTime, endTime, accel, arg);
+        }
+
         private static void HandleTransformForeAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
         {
             ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c));
-            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
         }
 
         private static void HandleTransformSecondaryAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
         {
             SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c));
-            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
         }
 
         private static void HandleTransformOutlineAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
@@ -173,7 +184,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             if (context.Style.OutlineIsBox)
             {
                 BackColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.BackColor, (s, e, c) => new BackColorAnimation(s, c, e, c));
-                anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+                anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
             }
             else
             {
@@ -200,7 +211,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 s => s.ShadowColors[shadowType],
                 (s, e, c) => new ShadowColorAnimation(shadowType, s, c, e, c)
             );
-            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - ParseHex(arg));
+            anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
         }
 
         private static void HandleTransformFontSizeTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)

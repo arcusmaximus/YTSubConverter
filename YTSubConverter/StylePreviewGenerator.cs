@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using Arc.YTSubConverter.Formats.Ass;
+using Arc.YTSubConverter.Util;
 
 namespace Arc.YTSubConverter
 {
     internal static class StylePreviewGenerator
     {
-        private static readonly string BackgroundImageData;
-
-        static StylePreviewGenerator()
-        {
-            byte[] backgroundImage = Resources.Checkers;
-            BackgroundImageData = Convert.ToBase64String(backgroundImage);
-        }
+        private static readonly Dictionary<string, string> ExtensionToMimeType =
+            new Dictionary<string, string>
+            {
+                { ".bmp", "image/bmp" },
+                { ".gif", "image/gif" },
+                { ".jpeg", "image/jpeg" },
+                { ".jpg", "image/jpeg" },
+                { ".png", "image/png" },
+                { ".tif", "image/tiff" },
+                { ".tiff", "image/tiff" }
+            };
 
         public static string GenerateHtml(AssStyle style, AssStyleOptions options)
         {
@@ -26,9 +32,30 @@ namespace Arc.YTSubConverter
                   <head>
                       <meta http-equiv=""X-UA-Compatible"" content=""IE=edge"" />
                       <style>
-                          html, body {{ width: 100%; height: 100%; padding: 0; margin: 0; }}
-                          body {{ display: table; background-image: url(data:image/png;base64,{BackgroundImageData}); }}
-                          #wrapper {{ display: table-cell; height: 100%; text-align: center; vertical-align: middle; }}
+                          html, body
+                          {{
+                              width: 100%;
+                              height: 100%;
+                              padding: 0;
+                              margin: 0;
+                              cursor: default;
+                          }}
+                          body
+                          {{
+                              display: table;
+                              background-image: url({GetBackgroundImageUrl(options)});
+                              background-position: {GetBackgroundImagePosition(options)};
+                              background-repeat: {GetBackgroundImageRepeat(options)};
+                              -ms-user-select: none;
+                          }}
+                          #wrapper
+                          {{
+                              display: table-cell;
+                              height: 100%;
+                              padding: 10px;
+                              text-align: {GetTextAlign(style, options)};
+                              vertical-align: {GetVerticalAlign(style, options)};
+                          }}
             ");
 
             if (options != null)
@@ -118,9 +145,9 @@ namespace Arc.YTSubConverter
                 html.Append("text-decoration: underline;");
 
             if (IsSupportedFont(style.Font))
-                html.Append($"font-family: '{style.Font}';");
+                html.Append($"font-family: '{FixFontName(style.Font)}';");
             else
-                html.Append("font-family: 'Arial';");
+                html.Append("font-family: 'Roboto', 'Arial';");
 
             html.Append($"color: {ToRgba(foreColor)};");
 
@@ -152,15 +179,89 @@ namespace Arc.YTSubConverter
             ");
         }
 
+        private static string GetBackgroundImageUrl(AssStyleOptions options)
+        {
+            byte[] imageData;
+            string mimeType;
+            if (options?.HasExistingBackgroundImage ?? false)
+            {
+                try
+                {
+                    imageData = File.ReadAllBytes(options.BackgroundImagePath);
+                    mimeType = ExtensionToMimeType.GetOrDefault(Path.GetExtension(options.BackgroundImagePath).ToLower()) ?? "image/png";
+                }
+                catch
+                {
+                    imageData = Resources.Checkers;
+                    mimeType = "image/png";
+                }
+            }
+            else
+            {
+                imageData = Resources.Checkers;
+                mimeType = "image/png";
+            }
+
+            return $"data:{mimeType};base64,{Convert.ToBase64String(imageData)}";
+        }
+
+        private static string GetBackgroundImagePosition(AssStyleOptions options)
+        {
+            return options?.HasExistingBackgroundImage ?? false ? "center center" : "left top";
+        }
+
+        private static string GetBackgroundImageRepeat(AssStyleOptions options)
+        {
+            return options?.HasExistingBackgroundImage ?? false ? "no-repeat" : "repeat";
+        }
+
+        private static string GetTextAlign(AssStyle style, AssStyleOptions options)
+        {
+            if (!(options?.HasExistingBackgroundImage ?? false))
+                return "center";
+
+            if (AnchorPointUtil.IsLeftAligned(style.AnchorPoint))
+                return "left";
+
+            if (AnchorPointUtil.IsRightAligned(style.AnchorPoint))
+                return "right";
+
+            return "center";
+        }
+
+        private static string GetVerticalAlign(AssStyle style, AssStyleOptions options)
+        {
+            if (!(options?.HasExistingBackgroundImage ?? false))
+                return "middle";
+
+            if (AnchorPointUtil.IsTopAligned(style.AnchorPoint))
+                return "top";
+
+            if (AnchorPointUtil.IsBottomAligned(style.AnchorPoint))
+                return "bottom";
+
+            return "middle";
+        }
+
         private static bool IsSupportedFont(string font)
         {
-            return font == "YouTube Noto" ||
-                   font == "Courier New" ||
-                   font == "Times New Roman" ||
-                   font == "Deja Vu Sans Mono" ||
-                   font == "Comic Sans MS" ||
-                   font == "Monotype Corsiva" ||
-                   font == "Carrois Gothic SC";
+            return font == null ||
+                   font.Equals("Carrois Gothic SC", StringComparison.InvariantCultureIgnoreCase) ||
+                   font.Equals("Comic Sans MS", StringComparison.InvariantCultureIgnoreCase) ||
+                   font.Equals("Courier New", StringComparison.InvariantCultureIgnoreCase) ||
+                   font.Equals("DejaVu Sans Mono", StringComparison.InvariantCultureIgnoreCase) ||
+                   font.Equals("Deja Vu Sans Mono", StringComparison.InvariantCultureIgnoreCase) ||
+                   font.Equals("Monotype Corsiva", StringComparison.InvariantCultureIgnoreCase) ||
+                   font.Equals("Roboto", StringComparison.InvariantCultureIgnoreCase) ||
+                   font.Equals("Times New Roman", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        private static string FixFontName(string font)
+        {
+            if (font != null && font.Equals("Deja Vu Sans Mono", StringComparison.InvariantCultureIgnoreCase))
+                return "DejaVu Sans Mono";
+
+            return font;
         }
 
         private static string ToRgba(Color color)

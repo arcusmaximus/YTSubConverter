@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Arc.YTSubConverter.Formats;
@@ -16,6 +17,7 @@ namespace Arc.YTSubConverter
     {
         private Dictionary<string, AssStyleOptions> _styleOptions;
         private Dictionary<string, AssStyle> _styles;
+        private bool _previewSuspended;
 
         public MainForm()
         {
@@ -31,7 +33,7 @@ namespace Arc.YTSubConverter
         private void LocalizeUI()
         {
             Version version = Assembly.GetEntryAssembly().GetName().Version;
-            Text = $"YTSubConverter {version}";
+            Text = $"YTSubConverter {version.Major}.{version.Minor}.{version.Build}";
 
             _chkStyleOptions.Text = Resources.StyleOptions;
             _lblShadowTypes.Text = Resources.ShadowTypes;
@@ -44,8 +46,12 @@ namespace Arc.YTSubConverter
             _lblCurrentWordTextColor.Text = Resources.KaraokeTextColor;
             _lblCurrentWordOutlineColor.Text = Resources.KaraokeOutlineColor;
             _lblCurrentWordShadowColor.Text = Resources.KaraokeShadowColor;
+            UpdateBackgroundImageButton();
+            _chkAutoConvert.Text = Resources.Autoconvert;
             _btnConvert.Text = Resources.Convert;
-            _dlgOpenFile.Filter = Resources.FileFilter;
+
+            _dlgOpenSubtitles.Filter = Resources.SubtitleFileFilter;
+            _dlgOpenImage.Filter = Resources.ImageFileFilter;
         }
 
         private AssStyleOptions SelectedStyleOptions
@@ -65,10 +71,10 @@ namespace Arc.YTSubConverter
 
         private void _btnBrowse_Click(object sender, EventArgs e)
         {
-            if (_dlgOpenFile.ShowDialog() != DialogResult.OK)
+            if (_dlgOpenSubtitles.ShowDialog() != DialogResult.OK)
                 return;
 
-            LoadFile(_dlgOpenFile.FileName);
+            LoadFile(_dlgOpenSubtitles.FileName);
         }
 
         private void LoadFile(string filePath)
@@ -107,6 +113,10 @@ namespace Arc.YTSubConverter
                     _lstStyles.SelectedIndex = 0;
             }
 
+            _chkAutoConvert.Enabled = true;
+            _chkAutoConvert.Checked = false;
+            _subtitleWatcher.Path = Path.GetDirectoryName(filePath);
+            _subtitleWatcher.Filter = Path.GetFileName(filePath);
             _btnConvert.Enabled = true;
         }
 
@@ -118,6 +128,8 @@ namespace Arc.YTSubConverter
             _grpStyleOptions.Enabled = false;
             _lstStyles.DataSource = null;
             UpdateStylePreview();
+            _chkAutoConvert.Enabled = false;
+            _chkAutoConvert.Checked = false;
             _btnConvert.Enabled = false;
         }
 
@@ -132,6 +144,7 @@ namespace Arc.YTSubConverter
             }
 
             AssStyle style = _styles[options.Name];
+            _previewSuspended = true;
 
             _spltStyleOptions.Panel2.Enabled = true;
             _pnlShadowType.Enabled = style.HasShadow;
@@ -170,6 +183,9 @@ namespace Arc.YTSubConverter
             _txtCurrentWordShadowColor.Text = _txtCurrentWordShadowColor.Enabled ? ColorUtil.ToHtml(currentWordShadowColor) : string.Empty;
             _btnPickShadowColor.Enabled = _txtCurrentWordShadowColor.Enabled;
 
+            UpdateBackgroundImageButton();
+
+            _previewSuspended = false;
             UpdateStylePreview();
         }
 
@@ -199,15 +215,18 @@ namespace Arc.YTSubConverter
 
         private void _chkKaraoke_CheckedChanged(object sender, EventArgs e)
         {
+            _previewSuspended = true;
             SelectedStyleOptions.IsKaraoke = _chkKaraoke.Checked;
             _chkHighlightCurrentWord.Enabled = _chkKaraoke.Checked;
             _chkHighlightCurrentWord.Checked = false;
+            _previewSuspended = false;
             UpdateStylePreview();
         }
 
         private void _chkHighlightCurrentWord_CheckedChanged(object sender, EventArgs e)
         {
             AssStyle style = _styles?[SelectedStyleOptions.Name];
+            _previewSuspended = true;
 
             _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
             _txtCurrentWordTextColor.Text = _txtCurrentWordTextColor.Enabled ? ColorUtil.ToHtml(style.PrimaryColor) : string.Empty;
@@ -221,6 +240,7 @@ namespace Arc.YTSubConverter
             _txtCurrentWordShadowColor.Text = _txtCurrentWordShadowColor.Enabled ? ColorUtil.ToHtml(style.ShadowColor) : string.Empty;
             _btnPickShadowColor.Enabled = _txtCurrentWordShadowColor.Enabled;
 
+            _previewSuspended = false;
             UpdateStylePreview();
         }
 
@@ -263,10 +283,57 @@ namespace Arc.YTSubConverter
                 _txtCurrentWordShadowColor.Text = ColorUtil.ToHtml(_dlgColor.Color);
         }
 
+        private void _btnBackgroundImage_Click(object sender, EventArgs e)
+        {
+            AssStyleOptions options = SelectedStyleOptions;
+            if (options.HasExistingBackgroundImage)
+            {
+                options.BackgroundImagePath = null;
+            }
+            else
+            {
+                if (_dlgOpenImage.ShowDialog() != DialogResult.OK)
+                    return;
+
+                options.BackgroundImagePath = _dlgOpenImage.FileName;
+            }
+
+            UpdateBackgroundImageButton();
+            UpdateStylePreview();
+        }
+
+        private void UpdateBackgroundImageButton()
+        {
+            if (SelectedStyleOptions?.HasExistingBackgroundImage ?? false)
+            {
+                _btnBackgroundImage.Text = "×";
+                _toolTip.SetToolTip(_btnBackgroundImage, Resources.ClearBackgroundImage);
+            }
+            else
+            {
+                _btnBackgroundImage.Text = "...";
+                _toolTip.SetToolTip(_btnBackgroundImage, Resources.SelectBackgroundImage);
+            }
+        }
+
         private void UpdateStylePreview()
         {
+            if (_previewSuspended)
+                return;
+
             AssStyle style = _styles?[SelectedStyleOptions.Name];
             _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions);
+        }
+
+        private void _chkAutoConvert_CheckedChanged(object sender, EventArgs e)
+        {
+            _subtitleWatcher.EnableRaisingEvents = _chkAutoConvert.Checked;
+        }
+
+        private void _subtitleWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            Thread.Sleep(100);
+            _btnConvert_Click(sender, e);
         }
 
         private async void _btnConvert_Click(object sender, EventArgs e)

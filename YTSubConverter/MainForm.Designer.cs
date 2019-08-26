@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this._spltStyleOptions = new System.Windows.Forms.SplitContainer();
             this._lstStyles = new System.Windows.Forms.ListBox();
             this._brwPreview = new System.Windows.Forms.WebBrowser();
@@ -52,12 +53,17 @@
             this._lblShadowTypes = new System.Windows.Forms.Label();
             this._txtInputFile = new System.Windows.Forms.TextBox();
             this._grpStyleOptions = new System.Windows.Forms.GroupBox();
-            this._dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
+            this._dlgOpenSubtitles = new System.Windows.Forms.OpenFileDialog();
             this._btnConvert = new System.Windows.Forms.Button();
             this._lblConversionSuccess = new System.Windows.Forms.Label();
             this._btnBrowse = new System.Windows.Forms.Button();
             this._chkStyleOptions = new System.Windows.Forms.CheckBox();
             this._dlgColor = new System.Windows.Forms.ColorDialog();
+            this._dlgOpenImage = new System.Windows.Forms.OpenFileDialog();
+            this._toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this._btnBackgroundImage = new System.Windows.Forms.Button();
+            this._chkAutoConvert = new System.Windows.Forms.CheckBox();
+            this._subtitleWatcher = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this._spltStyleOptions)).BeginInit();
             this._spltStyleOptions.Panel1.SuspendLayout();
             this._spltStyleOptions.Panel2.SuspendLayout();
@@ -66,6 +72,7 @@
             this._pnlKaraokeType.SuspendLayout();
             this._pnlShadowType.SuspendLayout();
             this._grpStyleOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._subtitleWatcher)).BeginInit();
             this.SuspendLayout();
             // 
             // _spltStyleOptions
@@ -80,10 +87,11 @@
             // 
             // _spltStyleOptions.Panel2
             // 
+            this._spltStyleOptions.Panel2.Controls.Add(this._btnBackgroundImage);
             this._spltStyleOptions.Panel2.Controls.Add(this._brwPreview);
             this._spltStyleOptions.Panel2.Controls.Add(this._pnlOptions);
             this._spltStyleOptions.Size = new System.Drawing.Size(763, 331);
-            this._spltStyleOptions.SplitterDistance = 291;
+            this._spltStyleOptions.SplitterDistance = 289;
             this._spltStyleOptions.TabIndex = 5;
             // 
             // _lstStyles
@@ -93,18 +101,21 @@
             this._lstStyles.IntegralHeight = false;
             this._lstStyles.Location = new System.Drawing.Point(0, 0);
             this._lstStyles.Name = "_lstStyles";
-            this._lstStyles.Size = new System.Drawing.Size(291, 331);
+            this._lstStyles.Size = new System.Drawing.Size(289, 331);
             this._lstStyles.TabIndex = 0;
             this._lstStyles.SelectedIndexChanged += new System.EventHandler(this._lstStyles_SelectedIndexChanged);
             // 
             // _brwPreview
             // 
+            this._brwPreview.AllowWebBrowserDrop = false;
             this._brwPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._brwPreview.Location = new System.Drawing.Point(0, 119);
+            this._brwPreview.IsWebBrowserContextMenuEnabled = false;
+            this._brwPreview.Location = new System.Drawing.Point(0, 121);
             this._brwPreview.MinimumSize = new System.Drawing.Size(20, 20);
             this._brwPreview.Name = "_brwPreview";
-            this._brwPreview.Size = new System.Drawing.Size(468, 212);
+            this._brwPreview.Size = new System.Drawing.Size(470, 210);
             this._brwPreview.TabIndex = 0;
+            this._brwPreview.WebBrowserShortcutsEnabled = false;
             // 
             // _pnlOptions
             // 
@@ -113,7 +124,7 @@
             this._pnlOptions.Dock = System.Windows.Forms.DockStyle.Top;
             this._pnlOptions.Location = new System.Drawing.Point(0, 0);
             this._pnlOptions.Name = "_pnlOptions";
-            this._pnlOptions.Size = new System.Drawing.Size(468, 119);
+            this._pnlOptions.Size = new System.Drawing.Size(470, 121);
             this._pnlOptions.TabIndex = 6;
             // 
             // _pnlKaraokeType
@@ -132,7 +143,7 @@
             this._pnlKaraokeType.Dock = System.Windows.Forms.DockStyle.Fill;
             this._pnlKaraokeType.Location = new System.Drawing.Point(198, 0);
             this._pnlKaraokeType.Name = "_pnlKaraokeType";
-            this._pnlKaraokeType.Size = new System.Drawing.Size(270, 119);
+            this._pnlKaraokeType.Size = new System.Drawing.Size(272, 121);
             this._pnlKaraokeType.TabIndex = 6;
             // 
             // _btnPickShadowColor
@@ -252,7 +263,7 @@
             this._pnlShadowType.Dock = System.Windows.Forms.DockStyle.Left;
             this._pnlShadowType.Location = new System.Drawing.Point(0, 0);
             this._pnlShadowType.Name = "_pnlShadowType";
-            this._pnlShadowType.Size = new System.Drawing.Size(198, 119);
+            this._pnlShadowType.Size = new System.Drawing.Size(198, 121);
             this._pnlShadowType.TabIndex = 5;
             // 
             // _chkBevel
@@ -331,9 +342,9 @@
             this._grpStyleOptions.TabIndex = 4;
             this._grpStyleOptions.TabStop = false;
             // 
-            // _dlgOpenFile
+            // _dlgOpenSubtitles
             // 
-            this._dlgOpenFile.Filter = "Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv";
+            this._dlgOpenSubtitles.Filter = "Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv";
             // 
             // _btnConvert
             // 
@@ -350,7 +361,7 @@
             // 
             this._lblConversionSuccess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._lblConversionSuccess.ForeColor = System.Drawing.Color.Green;
-            this._lblConversionSuccess.Location = new System.Drawing.Point(326, 411);
+            this._lblConversionSuccess.Location = new System.Drawing.Point(184, 411);
             this._lblConversionSuccess.Name = "_lblConversionSuccess";
             this._lblConversionSuccess.Size = new System.Drawing.Size(327, 13);
             this._lblConversionSuccess.TabIndex = 6;
@@ -381,12 +392,42 @@
             this._chkStyleOptions.UseVisualStyleBackColor = true;
             this._chkStyleOptions.CheckedChanged += new System.EventHandler(this._chkStyleOptions_CheckedChanged);
             // 
+            // _btnBackgroundImage
+            // 
+            this._btnBackgroundImage.Location = new System.Drawing.Point(439, 124);
+            this._btnBackgroundImage.Name = "_btnBackgroundImage";
+            this._btnBackgroundImage.Size = new System.Drawing.Size(24, 23);
+            this._btnBackgroundImage.TabIndex = 7;
+            this._btnBackgroundImage.Text = "...";
+            this._btnBackgroundImage.UseVisualStyleBackColor = true;
+            this._btnBackgroundImage.Click += new System.EventHandler(this._btnBackgroundImage_Click);
+            // 
+            // _chkAutoConvert
+            // 
+            this._chkAutoConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._chkAutoConvert.Appearance = System.Windows.Forms.Appearance.Button;
+            this._chkAutoConvert.Location = new System.Drawing.Point(524, 397);
+            this._chkAutoConvert.Name = "_chkAutoConvert";
+            this._chkAutoConvert.Size = new System.Drawing.Size(129, 41);
+            this._chkAutoConvert.TabIndex = 7;
+            this._chkAutoConvert.Text = "Autoconvert";
+            this._chkAutoConvert.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._chkAutoConvert.UseVisualStyleBackColor = true;
+            this._chkAutoConvert.CheckedChanged += new System.EventHandler(this._chkAutoConvert_CheckedChanged);
+            // 
+            // _subtitleWatcher
+            // 
+            this._subtitleWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
+            this._subtitleWatcher.SynchronizingObject = this;
+            this._subtitleWatcher.Changed += new System.IO.FileSystemEventHandler(this._subtitleWatcher_Changed);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this._chkAutoConvert);
             this.Controls.Add(this._lblConversionSuccess);
             this.Controls.Add(this._btnConvert);
             this.Controls.Add(this._chkStyleOptions);
@@ -410,6 +451,7 @@
             this._pnlShadowType.ResumeLayout(false);
             this._pnlShadowType.PerformLayout();
             this._grpStyleOptions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._subtitleWatcher)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -421,7 +463,7 @@
         private System.Windows.Forms.TextBox _txtInputFile;
         private System.Windows.Forms.GroupBox _grpStyleOptions;
         private System.Windows.Forms.ListBox _lstStyles;
-        private System.Windows.Forms.OpenFileDialog _dlgOpenFile;
+        private System.Windows.Forms.OpenFileDialog _dlgOpenSubtitles;
         private System.Windows.Forms.SplitContainer _spltStyleOptions;
         private System.Windows.Forms.Label _lblShadowTypes;
         private System.Windows.Forms.Button _btnConvert;
@@ -447,5 +489,10 @@
         private System.Windows.Forms.Button _btnPickTextColor;
         private System.Windows.Forms.ColorDialog _dlgColor;
         private System.Windows.Forms.CheckBox _chkBevel;
+        private System.Windows.Forms.OpenFileDialog _dlgOpenImage;
+        private System.Windows.Forms.ToolTip _toolTip;
+        private System.Windows.Forms.Button _btnBackgroundImage;
+        private System.Windows.Forms.CheckBox _chkAutoConvert;
+        private System.IO.FileSystemWatcher _subtitleWatcher;
     }
 }

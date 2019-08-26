@@ -61,6 +61,15 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
+        ///   Autoconvert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Autoconvert {
+            get {
+                return ResourceManager.GetString("Autoconvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Bevel に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Bevel {
@@ -76,6 +85,15 @@ namespace Arc.YTSubConverter {
             get {
                 object obj = ResourceManager.GetObject("Checkers", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Clear background image に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ClearBackgroundImage {
+            get {
+                return ResourceManager.GetString("ClearBackgroundImage", resourceCulture);
             }
         }
         
@@ -116,15 +134,6 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
-        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string FileFilter {
-            get {
-                return ResourceManager.GetString("FileFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Glow に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Glow {
@@ -148,6 +157,15 @@ namespace Arc.YTSubConverter {
         internal static string HighlightCurrentWord {
             get {
                 return ResourceManager.GetString("HighlightCurrentWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Images|*.gif;*.jpg;*.jpeg;*.png に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ImageFileFilter {
+            get {
+                return ResourceManager.GetString("ImageFileFilter", resourceCulture);
             }
         }
         
@@ -233,6 +251,15 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
+        ///   Select background image... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectBackgroundImage {
+            get {
+                return ResourceManager.GetString("SelectBackgroundImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Shadow types: に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string ShadowTypes {
@@ -256,6 +283,15 @@ namespace Arc.YTSubConverter {
         internal static string StyleOptions {
             get {
                 return ResourceManager.GetString("StyleOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SubtitleFileFilter {
+            get {
+                return ResourceManager.GetString("SubtitleFileFilter", resourceCulture);
             }
         }
         

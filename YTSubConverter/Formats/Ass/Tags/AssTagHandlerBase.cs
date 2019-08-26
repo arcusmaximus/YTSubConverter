@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Arc.YTSubConverter.Formats.Ass.Tags
 {
@@ -13,26 +12,56 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             get;
         }
 
+        public abstract bool AffectsWholeLine
+        {
+            get;
+        }
+
         public abstract void Handle(AssTagContext context, string arg);
+
+        protected static bool TryParseInt(string arg, out int value)
+        {
+            arg = arg.Replace("(", "")
+                     .Replace(")", "")
+                     .Replace(" ", "");
+            return int.TryParse(arg, out value);
+        }
+
+        protected static int ParseInt(string arg)
+        {
+            TryParseInt(arg, out int value);
+            return value;
+        }
+
+        protected static bool TryParseFloat(string arg, out float value)
+        {
+            arg = arg.Replace("(", "")
+                     .Replace(")", "")
+                     .Replace(" ", "");
+            return float.TryParse(arg, NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+        }
 
         protected static int ParseHex(string arg)
         {
-            arg = arg.Replace("&", "");
-            arg = arg.Replace("H", "");
-            int.TryParse(arg, NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int value);
+            arg = arg.Replace("&", "")
+                     .Replace("H", "")
+                     .Replace("(", "")
+                     .Replace(")", "");
+            int.TryParse(arg, NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture, out int value);
             return value;
         }
 
         protected static List<float> ParseFloatList(string arg)
         {
-            Match match = Regex.Match(arg, @"^\s*\((?:\s*,?\s*([\d\.]+))+\s*\)\s*$");
-            if (!match.Success)
+            List<string> items = ParseStringList(arg);
+            if (items == null)
                 return null;
 
             List<float> list = new List<float>();
-            foreach (Capture capture in match.Groups[1].Captures)
+            foreach (string item in items)
             {
-                list.Add(float.Parse(capture.Value, CultureInfo.InvariantCulture));
+                float.TryParse(item.Replace(" ", ""), NumberStyles.Float, CultureInfo.InvariantCulture, out float value);
+                list.Add(value);
             }
             return list;
         }
@@ -42,14 +71,15 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             if (string.IsNullOrWhiteSpace(arg))
                 return new List<string>();
 
-            Match match = Regex.Match(arg, @"^\s*\((?:\s*,?\s*([^,\(\)]+))+\)\s*$");
-            if (!match.Success)
+            arg = arg.Trim();
+            if (!arg.StartsWith("("))
                 return null;
 
-            return match.Groups[1].Captures
-                        .Cast<Capture>()
-                        .Select(c => c.Value.Trim())
-                        .ToList();
+            return arg.Replace("(", "")
+                      .Replace(")", "")
+                      .Split(',')
+                      .Select(i => i.Trim())
+                      .ToList();
         }
 
         protected static Color ParseColor(string arg, int alpha)

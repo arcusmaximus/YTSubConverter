@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Autoconvert" xml:space="preserve">
+    <value>자동변환</value>
+  </data>
   <data name="Bevel" xml:space="preserve">
     <value>양각효과</value>
+  </data>
+  <data name="ClearBackgroundImage" xml:space="preserve">
+    <value>자막 배경 이미지 지우기</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>변환</value>
@@ -132,9 +138,6 @@
   <data name="FailedToLoadFile0" xml:space="preserve">
     <value>불러오기 실패하였습니다{0}</value>
   </data>
-  <data name="FileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube 자막|*.sbv</value>
-  </data>
   <data name="Glow" xml:space="preserve">
     <value>윤곽</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="HighlightCurrentWord" xml:space="preserve">
     <value>현재 문자 강조</value>
+  </data>
+  <data name="ImageFileFilter" xml:space="preserve">
+    <value>이미지|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
   <data name="IsNotAValidColor" xml:space="preserve">
     <value>{0} 유효한 색이 아닙니다</value>
@@ -171,6 +177,9 @@
   <data name="PreviewSampleRegular" xml:space="preserve">
     <value>이것은 예시 문자 입니다</value>
   </data>
+  <data name="SelectBackgroundImage" xml:space="preserve">
+    <value>자막 배경 이미지 선택</value>
+  </data>
   <data name="ShadowTypes" xml:space="preserve">
     <value>그림자 종류</value>
   </data>
@@ -179,6 +188,9 @@
   </data>
   <data name="StyleOptions" xml:space="preserve">
     <value>스타일 옵션</value>
+  </data>
+  <data name="SubtitleFileFilter" xml:space="preserve">
+    <value>Advanced SubStation Alpha|*.ass|YouTube 자막|*.sbv</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
     <value>생성 완료{0}</value>

@@ -12,6 +12,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
     {
         public override string Tag => "ytchroma";
 
+        public override bool AffectsWholeLine => true;
+
         public override void Handle(AssTagContext context, string arg)
         {
             if (!TryParseArgs(arg, out List<Color> colors, out int alpha, out int maxOffsetX, out int maxOffsetY, out int chromaInMs, out int chromeOutMs))

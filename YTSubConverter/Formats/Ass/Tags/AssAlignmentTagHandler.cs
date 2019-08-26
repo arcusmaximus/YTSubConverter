@@ -4,12 +4,13 @@
     {
         public override string Tag => "an";
 
+        public override bool AffectsWholeLine => true;
+
         public override void Handle(AssTagContext context, string arg)
         {
-            if (!int.TryParse(arg, out int alignment))
-                return;
-
-            context.Line.AnchorPoint = AssDocument.GetAnchorPointFromAlignment(alignment);
+            int alignment = ParseInt(arg);
+            if (alignment >= 1 && alignment <= 9)
+                context.Line.AnchorPoint = AssDocument.GetAnchorPointFromAlignment(alignment);
         }
     }
 }

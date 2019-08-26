@@ -7,12 +7,14 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
     {
         public override string Tag => "3a";
 
+        public override bool AffectsWholeLine => false;
+
         public override void Handle(AssTagContext context, string arg)
         {
             if (!context.Style.HasOutline)
                 return;
 
-            int alpha = !string.IsNullOrEmpty(arg) ? 255 - ParseHex(arg) : context.Style.OutlineColor.A;
+            int alpha = !string.IsNullOrEmpty(arg) ? 255 - (ParseHex(arg) & 255) : context.Style.OutlineColor.A;
 
             if (context.Style.OutlineIsBox)
             {

@@ -52,11 +52,4 @@
         RotatedLtr,
         RotatedRtl
     }
-
-    public enum KaraokeType
-    {
-        Simple,
-        Fade,
-        Glitch
-    }
 }
