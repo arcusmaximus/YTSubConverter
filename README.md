@@ -39,13 +39,8 @@ Apart from converting from .ass to .ytt, the tool can also convert from .sbv (th
 ## ASS feature support
 YTSubConverter supports the following .ass style features:
 * Font name. YouTube only allows the following fonts:
-  * Carrois Gothic SC
-  * Comic Sans MS
-  * Courier New
-  * DejaVu Sans Mono
-  * Monotype Corsiva
-  * Roboto (YouTube default; the tool will automatically pick this if the specified font is not allowed)
-  * Times New Roman
+![Fonts](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/fonts.png)
+(Roboto is the YouTube default; the tool will automatically pick this if the specified font is not allowed)
 * Bold, italic, underline
 * Primary, secondary, outline and shadow color
 * Alignment
