@@ -8,7 +8,7 @@
     <pen id="2" i="1" />            <!-- Italic     -->
     <pen id="3" u="1" />            <!-- Underline  -->
     
-    <!-- Foreground color/opacity -->
+    <!-- Foreground color/opacity. The iOS app supports both, while the Android app only supports color. -->
     <pen id="4" fc="#FF0000" fo="40"  bo="0" />
     <pen id="5" fc="#00FF00" fo="127" bo="0" />
     <pen id="6" fc="#0000FF" fo="255" bo="0" />             <!-- fo="255" is the default and will get removed after uploading,          -->
@@ -18,19 +18,21 @@
                                                             <!-- recommended to go no higher than fo="254", thereby always              -->
                                                             <!-- overruling the custom setting and forcing subtitles to be readable.    -->
     
-    <!-- Background color/opacity -->
+    <!-- Background color/opacity. In theory, the iOS app supports both, but only if the        -->
+    <!-- well-hidden "Video Override" option is turned on in the iOS accessibility settings.    -->
+    <!-- In practice, neither Android nor iOS support custom backgrounds.                       -->
     <pen id="7"  fc="#FEFEFE" bc="#FF0000" bo="40"  />
     <pen id="8"  fc="#FEFEFE" bc="#00FF00" bo="127" />
     <pen id="9"  fc="#FEFEFE" bc="#0000FF" bo="255" />
     <pen id="10" fc="#000000" bc="#FFFFFF" bo="255" />      <!-- In practice, bo should be limited to 254 for the same reason as fo.    -->
     
-    <!-- Edge color/type -->
+    <!-- Edge color/type (not supported on mobile)  -->
     <pen id="11" fc="#FEFEFE" ec="#FF0000" et="1" />        <!-- Hard shadow    -->
     <pen id="12" fc="#FEFEFE" ec="#00FF00" et="2" />        <!-- Bevel          -->
     <pen id="13" fc="#FEFEFE" ec="#0000FF" et="3" />        <!-- Glow/Outline   -->
     <pen id="14" fc="#FEFEFE" ec="#FF00FF" et="4" />        <!-- Soft shadow    -->
     
-    <!-- Font styles -->
+    <!-- Font styles (not supported on mobile)      -->
     <pen id="15" fc="#FEFEFE" fs="0" />                     <!-- Default (same as 4).                               -->
     <pen id="16" fc="#FEFEFE" fs="1" />                     <!-- Monospaced Serif           (Courier New)           -->
     <pen id="17" fc="#FEFEFE" fs="2" />                     <!-- Proportional Serif         (Times New Roman)       -->
@@ -40,8 +42,9 @@
     <pen id="21" fc="#FEFEFE" fs="6" />                     <!-- Cursive                    (Monotype Corsiva)      -->
     <pen id="22" fc="#FEFEFE" fs="7" />                     <!-- Small Capitals             (Carrois Gothic SC)     -->
     
-    <!-- Font sizes. The value is a virtual percentage of the default size;         -->
-    <!-- the real percentage is 100 + (sz - 100) / 4, meaning sz="200" will result  -->
+    <!-- Font sizes (supported on iOS but not Android)                              -->
+    <!-- The value is a virtual percentage of the default size; the real            -->
+    <!-- percentage is 100 + (sz - 100) / 4, meaning sz="200" will result           -->
     <!-- in text that's *not* twice as big as the default but only 25% bigger.      -->
     <!-- The values can't be negative, meaning the smallest you can go is a         -->
     <!-- virtual percentage of 0 which equates to a real percentage of 75.          -->
@@ -49,12 +52,12 @@
     <pen id="24" sz="100" />        <!-- Default -->
     <pen id="25" sz="300" />
     
-    <!-- Ruby -->
+    <!-- Ruby (not supported on mobile) -->
     <pen id="26" rb="1" />              <!-- Ruby enable (for kanji spans)      -->
     <pen id="27" rb="4" />              <!-- Ruby over   (for furigana spans)   -->
     <pen id="28" rb="5" />              <!-- Ruby under  (for furigana spans)   -->
     
-    <!-- Subscript/superscript ("of" = "offset") -->
+    <!-- Subscript/superscript ("of" = "offset"). Not supported on mobile -->
     <pen id="29" fc="#FEFEFE" of="0" />              <!-- Subscript      -->
     <pen id="30" fc="#FEFEFE" of="1" />              <!-- Regular        -->
     <pen id="31" fc="#FEFEFE" of="2" />              <!-- Superscript    -->
@@ -63,7 +66,7 @@
     <pen id="32" fc="#FEFEFE" te="1" />     <!-- Allows bold text       -->
     <pen id="33" fc="#FEFEFE" te="2" />     <!-- Disallows bold text    -->
     
-    <!-- Text combination (\ytpack in YTSubConverter) -->
+    <!-- Text combination (\ytpack in YTSubConverter). Not supported on mobile -->
     <pen id="34" fc="#FEFEFE" hg="1" />
     
     <!-- Horizontal text alignment -->
@@ -71,7 +74,7 @@
     <ws id="2" ju="1" />                <!-- Right  -->
     <ws id="3" ju="2" />                <!-- Center -->
     
-    <!-- Vertical text alignment --> 
+    <!-- Vertical text alignment (not supported on mobile) --> 
     <ws id="4" pd="2" sd="0" />         <!-- Characters positioned above each other but not rotated; columns going from right to left   -->
     <ws id="5" pd="2" sd="1" />         <!-- Same as above, but columns going from left to right                                        -->
     <ws id="6" pd="3" sd="0" />         <!-- Entire subtitle rotated 90° CCW, columns going from left to right                          -->
