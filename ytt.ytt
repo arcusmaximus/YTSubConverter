@@ -11,18 +11,18 @@
     <!-- Foreground color/opacity -->
     <pen id="4" fc="#FF0000" fo="40"  bo="0" />
     <pen id="5" fc="#00FF00" fo="127" bo="0" />
-    <pen id="6" fc="#0000FF" fo="255" bo="0" />             <!-- fo="255" is the default and will get removed after uploading,      -->
-                                                            <!-- meaning the viewer's custom opacity setting (if any) will take     -->
-                                                            <!-- effect. Because most viewers set this custom opacity *by accident* -->
-                                                            <!-- rather than intentionally (all it takes is to press O), it's       -->
-                                                            <!-- recommended to go no higher than fo="254", thereby always          -->
-                                                            <!-- overruling the custom setting and forcing them to be readable.     -->
+    <pen id="6" fc="#0000FF" fo="255" bo="0" />             <!-- fo="255" is the default and will get removed after uploading,          -->
+                                                            <!-- meaning the viewer's custom opacity setting (if any) will take         -->
+                                                            <!-- effect. Because most viewers set this custom opacity by accident       -->
+                                                            <!-- rather than intentionally (all it takes is to press O), it's           -->
+                                                            <!-- recommended to go no higher than fo="254", thereby always              -->
+                                                            <!-- overruling the custom setting and forcing subtitles to be readable.    -->
     
     <!-- Background color/opacity -->
     <pen id="7"  fc="#FEFEFE" bc="#FF0000" bo="40"  />
     <pen id="8"  fc="#FEFEFE" bc="#00FF00" bo="127" />
     <pen id="9"  fc="#FEFEFE" bc="#0000FF" bo="255" />
-    <pen id="10" fc="#000000" bc="#FFFFFF" bo="255" />      <!-- In practice, bo should be limited to 254 for the same reason as fo. -->
+    <pen id="10" fc="#000000" bc="#FFFFFF" bo="255" />      <!-- In practice, bo should be limited to 254 for the same reason as fo.    -->
     
     <!-- Edge color/type -->
     <pen id="11" fc="#FEFEFE" ec="#FF0000" et="1" />        <!-- Hard shadow    -->
