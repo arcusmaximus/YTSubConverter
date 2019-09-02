@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<timedtext format="3">
+<head>
+    <!-- The elements in the <head> *must* appear in order of increasing ID's or the server will renumber them and screw everything up. -->
+    
+    <!-- Text styles -->
+    <pen id="1" b="1" />            <!-- Bold       -->
+    <pen id="2" i="1" />            <!-- Italic     -->
+    <pen id="3" u="1" />            <!-- Underline  -->
+    
+    <!-- Foreground color/opacity -->
+    <pen id="4" fc="#FF0000" fo="40"  bo="0" />
+    <pen id="5" fc="#00FF00" fo="127" bo="0" />
+    <pen id="6" fc="#0000FF" fo="255" bo="0" />             <!-- fo="255" is the default and will get removed after uploading,      -->
+                                                            <!-- meaning the viewer's custom opacity setting (if any) will take     -->
+                                                            <!-- effect. Because most viewers set this custom opacity *by accident* -->
+                                                            <!-- rather than intentionally (all it takes is to press O), it's       -->
+                                                            <!-- recommended to go no higher than fo="254", thereby always          -->
+                                                            <!-- overruling the custom setting and forcing them to be readable.     -->
+    
+    <!-- Background color/opacity -->
+    <pen id="7"  fc="#FEFEFE" bc="#FF0000" bo="40"  />
+    <pen id="8"  fc="#FEFEFE" bc="#00FF00" bo="127" />
+    <pen id="9"  fc="#FEFEFE" bc="#0000FF" bo="255" />
+    <pen id="10" fc="#000000" bc="#FFFFFF" bo="255" />      <!-- In practice, bo should be limited to 254 for the same reason as fo. -->
+    
+    <!-- Edge color/type -->
+    <pen id="11" fc="#FEFEFE" ec="#FF0000" et="1" />        <!-- Hard shadow    -->
+    <pen id="12" fc="#FEFEFE" ec="#00FF00" et="2" />        <!-- Bevel          -->
+    <pen id="13" fc="#FEFEFE" ec="#0000FF" et="3" />        <!-- Glow/Outline   -->
+    <pen id="14" fc="#FEFEFE" ec="#FF00FF" et="4" />        <!-- Soft shadow    -->
+    
+    <!-- Font styles -->
+    <pen id="15" fc="#FEFEFE" fs="0" />                     <!-- Default (same as 4).                               -->
+    <pen id="16" fc="#FEFEFE" fs="1" />                     <!-- Monospaced Serif           (Courier New)           -->
+    <pen id="17" fc="#FEFEFE" fs="2" />                     <!-- Proportional Serif         (Times New Roman)       -->
+    <pen id="18" fc="#FEFEFE" fs="3" />                     <!-- Monospaced Sans-Serif      (Deja Vu Sans Mono)     -->
+    <pen id="19" fc="#FEFEFE" fs="4" />                     <!-- Proportional Sans-Serif    (Roboto)                -->
+    <pen id="20" fc="#FEFEFE" fs="5" />                     <!-- Casual                     (Comic Saaans!)         -->
+    <pen id="21" fc="#FEFEFE" fs="6" />                     <!-- Cursive                    (Monotype Corsiva)      -->
+    <pen id="22" fc="#FEFEFE" fs="7" />                     <!-- Small Capitals             (Carrois Gothic SC)     -->
+    
+    <!-- Font sizes. The value is a virtual percentage of the default size;         -->
+    <!-- the real percentage is 100 + (sz - 100) / 4, meaning sz="200" will result  -->
+    <!-- in text that's *not* twice as big as the default but only 25% bigger.      -->
+    <!-- The values can't be negative, meaning the smallest you can go is a         -->
+    <!-- virtual percentage of 0 which equates to a real percentage of 75.          -->
+    <pen id="23" sz="30"  />
+    <pen id="24" sz="100" />        <!-- Default -->
+    <pen id="25" sz="300" />
+    
+    <!-- Ruby -->
+    <pen id="26" rb="1" />              <!-- Ruby enable (for kanji spans)      -->
+    <pen id="27" rb="4" />              <!-- Ruby over   (for furigana spans)   -->
+    <pen id="28" rb="5" />              <!-- Ruby under  (for furigana spans)   -->
+    
+    <!-- Subscript/superscript ("of" = "offset") -->
+    <pen id="29" fc="#FEFEFE" of="0" />              <!-- Subscript      -->
+    <pen id="30" fc="#FEFEFE" of="1" />              <!-- Regular        -->
+    <pen id="31" fc="#FEFEFE" of="2" />              <!-- Superscript    -->
+    
+    <!-- Text emphasis (dots above text; not currently allowed by YouTube subtitle upload) -->
+    <pen id="32" fc="#FEFEFE" te="1" />     <!-- Allows bold text       -->
+    <pen id="33" fc="#FEFEFE" te="2" />     <!-- Disallows bold text    -->
+    
+    <!-- Text combination (\ytpack in YTSubConverter) -->
+    <pen id="34" fc="#FEFEFE" hg="1" />
+    
+    <!-- Horizontal text alignment -->
+    <ws id="1" ju="0" />                <!-- Left   -->
+    <ws id="2" ju="1" />                <!-- Right  -->
+    <ws id="3" ju="2" />                <!-- Center -->
+    
+    <!-- Vertical text alignment --> 
+    <ws id="4" pd="2" sd="0" />         <!-- Characters positioned above each other but not rotated; columns going from right to left   -->
+    <ws id="5" pd="2" sd="1" />         <!-- Same as above, but columns going from left to right                                        -->
+    <ws id="6" pd="3" sd="0" />         <!-- Entire subtitle rotated 90° CCW, columns going from left to right                          -->
+    <ws id="7" pd="3" sd="1" />         <!-- Same as above, but columns going from right to left                                        -->
+    <!-- pd="1" sets the paragraph to RTL mode, making the spans appear horizontally but in the opposite order. -->
+    
+    <!-- Positions (ap: anchor point, ah: X coordinate (0 = left, 100 = right), av: Y coordinate (0 = top, 100 = bottom) -->
+    <wp id="0"  ap="0" ah="0"   av="10" />     <!-- "ap" determines which point on the subtitle box gets placed at the specified position:             -->
+    <wp id="1"  ap="0" ah="0"   av="10" />     <!--   0 ======== 1 ======== 2                                                                          -->
+    <wp id="2"  ap="1" ah="50"  av="10" />     <!--   |                     |                                                                          -->
+    <wp id="3"  ap="2" ah="100" av="10" />     <!--   3          4          5                                                                          -->
+    <wp id="4"  ap="3" ah="0"   av="50" />     <!--   |                     |                                                                          -->
+    <wp id="5"  ap="4" ah="50"  av="50" />     <!--   6 ======== 7 ======== 8                                                                          -->
+    <wp id="6"  ap="5" ah="100" av="50" />
+    <wp id="7"  ap="6" ah="0"   av="90" />     <!-- The server only accepts integers for "ah" and "av", even though the player accepts floating point. -->
+    <wp id="8"  ap="7" ah="50"  av="90" />     <!-- In theater mode, the width covered by "ah" includes the black bars on the sides, meaning the       -->
+    <wp id="9"  ap="8" ah="100" av="90" />     <!-- subtitles move towards the sides and even out of the video.                                        -->
+    <wp id="10" ap="1" ah="50"  av="70" />     <!-- The player transforms the coordinates according to effectiveCoord = (specifiedCoord * 0.96) + 2,   -->
+</head>                                        <!-- meaning subtitles don't appear *quite* where you want them to.                                     -->
+<body>
+    <!-- Text styles -->
+    <p t="0" d="4000" wp="1" p="1">Bold</p>             <!-- t = start time in ms, d = duration in ms, wp = position ID, p = pen ID.                -->
+    <p t="0" d="4000" wp="2" p="2">Italic</p>           <!-- t="0" should be avoided as it causes the Android app to ignore positioning             -->
+    <p t="0" d="4000" wp="3" p="3">Underline</p>        <!-- and sometimes not display the subtitle at all. (t="1" works fine, however)             -->
+    <p t="0" d="4000" wp="5"><s p="1">Bold</s> <s p="2">Italic</s> <s p="3">Underline</s></p>
+    
+    <!--
+        Usage of multiple spans has a bug: unless there's *some* text that's not part of any span, the server will remove
+        the first span's "p" attribute, causing it to lose its formatting. Completely random, but that's how it is.
+        The best workaround is to place a zero-width space after the first span, as this way there are no visual
+        changes to the subtitle. (This workaround is used in all of the following examples)
+     -->
+    
+    <!-- Foreground color/transparency -->
+    <p t="4000" d="4000" wp="1" p="4">Red (a = 40)</p>
+    <p t="4000" d="4000" wp="2" p="5">Green (a = 127)</p>
+    <p t="4000" d="4000" wp="3" p="6">Blue (a = 255)</p>
+    <p t="4000" d="4000" wp="5"><s p="4">Red </s>&#8203;<s p="5">Green </s><s p="6">Blue</s></p>
+    
+    <!-- Background color/transparency -->
+    <p t="8000" d="4000" wp="1" p="7">Red (a = 40)</p>
+    <p t="8000" d="4000" wp="2" p="8">Green (a = 127)</p>
+    <p t="8000" d="4000" wp="3" p="9">Blue (a = 255)</p>
+    <p t="8000" d="4000" wp="10" p="10">Opaque</p>
+    <p t="8000" d="4000" wp="8"><s p="7">Red </s>&#8203;<s p="8">Green </s><s p="9">Blue</s></p>
+    
+    <!-- Edges -->
+    <p t="12000" d="4000" wp="1" p="11">Edge type 1</p>
+    <p t="12000" d="4000" wp="2" p="12">Edge type 2</p>
+    <p t="12000" d="4000" wp="3" p="13">Edge type 3</p>
+    <p t="12000" d="4000" wp="4" p="14">Edge type 4</p>
+    <p t="12000" d="4000" wp="5"><s p="11">One </s>&#8203;<s p="12">Two </s><s p="13">Three </s><s p="14">Four</s></p>
+    
+    <!-- Fonts (one per paragraph) -->
+    <p t="16000" d="4000" wp="1" p="15">Font 0</p>
+    <p t="16000" d="4000" wp="2" p="16">Font 1</p>
+    <p t="16000" d="4000" wp="3" p="17">Font 2</p>
+    <p t="16000" d="4000" wp="4" p="18">Font 3</p>
+    <p t="16000" d="4000" wp="5" p="19">Font 4</p>
+    <p t="16000" d="4000" wp="6" p="20">Font 5</p>
+    <p t="16000" d="4000" wp="7" p="21">Font 6</p>
+    <p t="16000" d="4000" wp="8" p="22">Font 7</p>
+    
+    <!-- Fonts (multiple) -->
+    <p t="20000" d="4000" wp="5"><s p="15">Zero </s>&#8203;<s p="16">One </s><s p="17">Two </s><s p="18">Three </s><s p="19">Four </s><s p="20">Five </s><s p="21">Six </s><s p="22">Seven</s></p>
+    
+    <!-- Font sizes -->
+    <p t="24000" d="4000" wp="1" p="23">30%</p>
+    <p t="24000" d="4000" wp="2" p="24">100%</p>
+    <p t="24000" d="4000" wp="3" p="25">300%</p>
+    <p t="24000" d="4000" wp="5"><s p="23">30% </s>&#8203;<s p="24">100% </s><s p="25">300%</s></p>
+    
+    <!-- Positioning -->
+    <p t="28000" d="4000" wp="1">Top left</p>
+    <p t="28000" d="4000" wp="2">Top center</p>
+    <p t="28000" d="4000" wp="3">Top right</p>
+    <p t="28000" d="4000" wp="4">Middle left</p>
+    <p t="28000" d="4000" wp="5">Middle center</p>
+    <p t="28000" d="4000" wp="6">Middle right</p>
+    <p t="28000" d="4000" wp="7">Bottom left</p>
+    <p t="28000" d="4000" wp="8">Bottom center</p>
+    <p t="28000" d="4000" wp="9">Bottom right</p>
+    
+    <!-- Alignment -->
+    <p t="32000" d="4000" wp="4" ws="1">Left-
+aligned line</p>
+    <p t="32000" d="4000" wp="5" ws="3">Centered
+line</p>
+    <p t="32000" d="4000" wp="6" ws="2">Right-
+aligned line</p>
+
+    <!-- Karaoke. Each span's "t" attribute gives its relative appearance time in ms.   -->
+    <p t="36000" d="4000" wp="5" p="15"><s>Ka</s><s t="1000">ra</s><s t="2000">o</s><s t="3000">ke</s></p>
+    
+    <!-- Line breaks at section start/end (note the missing rounded corners - YouTube bug) -->
+    <p t="40000" d="4000" wp="4"><s p="11">Line </s>&#8203;<s p="12">break </s><s p="13">
+at start </s><s p="14">of span</s></p>
+    <p t="40000" d="4000" wp="5"><s p="11">Line </s>&#8203;<s p="12">break
+in </s><s p="13">middle </s><s p="14">of span</s></p>
+    <p t="40000" d="4000" wp="6"><s p="11">Line </s>&#8203;<s p="12">break
+</s><s p="13">at end </s><s p="14">of span</s></p>
+
+    <!--
+        Ruby text works by creating four spans for each ruby'd word:
+        * A span for the kanji text, referring to a pen with rb="1"
+        * A span with an opening parenthesis (fallback for clients without ruby support)
+        * A span with the furigana text, optionally referring to a pen with rb="4"/"6" (above kanji) or "5"/"7" (below kanji)
+        * A span with a closing parenthesis
+        The ruby text always uses the same formatting as the base text (i.e. the other attributes of the furigana pen are ignored).
+        
+        The mobile apps don't support ruby text. They'll display the below subtitle as 漢(かん)字(じ).
+    -->
+    <p t="44000" d="4000" wp="5"><s p="26">漢</s><s>(</s><s p="27">かん</s><s>)</s><s p="26">字</s><s>(</s><s p="28">じ</s><s>)</s></p>
+    
+    <!-- Subscript/superscript -->
+    <p t="48000" d="4000" wp="5"><s p="29">Subscript </s>&#8203;<s p="30">Regular </s><s p="31">Superscript</s></p>
+    
+    <!-- Vertical text -->
+    <p t="52000" d="4000" wp="1" ws="4">Vertical
+text (RTL)</p>
+    <p t="52000" d="4000" wp="3" ws="5">Vertical
+text (LTR)</p>
+    <p t="52000" d="4000" wp="7" ws="7">Rotated
+text (RTL)</p>
+    <p t="52000" d="4000" wp="9" ws="6">Rotated
+text (LTR)</p>
+</body>
+</timedtext>
