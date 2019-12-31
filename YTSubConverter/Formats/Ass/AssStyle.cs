@@ -8,7 +8,7 @@ namespace Arc.YTSubConverter.Formats.Ass
         {
             Name = item.GetString("Name");
             Font = item.GetString("Fontname");
-            FontSize = item.GetInt("Fontsize");
+            FontSize = item.GetFloat("Fontsize");
             Bold = item.GetBool("Bold");
             Italic = item.GetBool("Italic");
             Underline = item.GetBool("Underline");
@@ -32,7 +32,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             get;
         }
 
-        public int FontSize
+        public float FontSize
         {
             get;
         }

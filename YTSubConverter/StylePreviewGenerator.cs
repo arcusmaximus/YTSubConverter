@@ -23,7 +23,7 @@ namespace Arc.YTSubConverter
                 { ".tiff", "image/tiff" }
             };
 
-        public static string GenerateHtml(AssStyle style, AssStyleOptions options)
+        public static string GenerateHtml(AssStyle style, AssStyleOptions options, float defaultFontSize)
         {
             StringBuilder html = new StringBuilder();
             html.Append($@"
@@ -60,7 +60,7 @@ namespace Arc.YTSubConverter
 
             if (options != null)
             {
-                GenerateBackgroundCss(html, "#background", style);
+                GenerateBackgroundCss(html, "#background", style, defaultFontSize);
                 GenerateForegroundCss(html, "#regular", style, style.PrimaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
                 if (options.IsKaraoke)
                 {
@@ -110,14 +110,14 @@ namespace Arc.YTSubConverter
             return html.ToString();
         }
 
-        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style)
+        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style, float defaultFontSize)
         {
             html.Append($@"
                 {selector}
                 {{
                     padding: 3px 5px;
                     border-radius: 3px;
-                    font-size: 32px;
+                    font-size: {Math.Max(32 * style.FontSize / defaultFontSize, 24)}px;
             ");
 
             if (style.HasOutline && style.OutlineIsBox)
@@ -145,7 +145,7 @@ namespace Arc.YTSubConverter
                 html.Append("text-decoration: underline;");
 
             if (IsSupportedFont(style.Font))
-                html.Append($"font-family: '{FixFontName(style.Font)}';");
+                html.Append($"font-family: '{FixFontName(style.Font)}', 'Arial';");
             else
                 html.Append("font-family: 'Roboto', 'Arial';");
 

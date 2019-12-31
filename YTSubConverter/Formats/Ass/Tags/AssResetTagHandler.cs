@@ -10,8 +10,7 @@
         {
             context.Style = context.Document.GetStyle(arg) ?? context.InitialStyle;
             context.StyleOptions = context.Document.GetStyleOptions(arg) ?? context.InitialStyleOptions;
-            AssDocument.ApplyStyle(context.Section, context.Style, context.StyleOptions);
-            context.Section.Scale = 1;
+            context.Document.ApplyStyle(context.Section, context.Style, context.StyleOptions);
             context.Section.Offset = OffsetType.Regular;
             context.Section.RubyPosition = RubyPosition.None;
             context.Section.Animations.Clear();

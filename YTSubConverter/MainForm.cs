@@ -17,6 +17,7 @@ namespace Arc.YTSubConverter
     {
         private Dictionary<string, AssStyleOptions> _styleOptions;
         private Dictionary<string, AssStyle> _styles;
+        private float _defaultFontSize;
         private bool _previewSuspended;
 
         public MainForm()
@@ -102,6 +103,7 @@ namespace Arc.YTSubConverter
                 _grpStyleOptions.Enabled = true;
 
                 _styles = assDoc.Styles.ToDictionary(s => s.Name);
+                _defaultFontSize = assDoc.DefaultFontSize;
                 foreach (AssStyle style in assDoc.Styles)
                 {
                     if (!_styleOptions.ContainsKey(style.Name))
@@ -322,12 +324,14 @@ namespace Arc.YTSubConverter
                 return;
 
             AssStyle style = _styles?[SelectedStyleOptions.Name];
-            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions);
+            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions, _defaultFontSize);
         }
 
         private void _chkAutoConvert_CheckedChanged(object sender, EventArgs e)
         {
             _subtitleWatcher.EnableRaisingEvents = _chkAutoConvert.Checked;
+            if (_chkAutoConvert.Checked)
+                _btnConvert_Click(sender, e);
         }
 
         private void _subtitleWatcher_Changed(object sender, FileSystemEventArgs e)

@@ -11,7 +11,7 @@
             if (!TryParseFloat(arg, out float size))
                 size = context.Style.FontSize;
 
-            context.Section.Scale = size / context.Style.FontSize;
+            context.Section.Scale = size / context.Document.DefaultFontSize;
         }
     }
 }

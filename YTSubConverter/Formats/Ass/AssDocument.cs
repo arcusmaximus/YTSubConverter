@@ -34,6 +34,8 @@ namespace Arc.YTSubConverter.Formats.Ass
             if (styleOptions != null)
                 _styleOptions = styleOptions.ToDictionary(o => o.Name);
 
+            DefaultFontSize = (_styles.GetOrDefault("Default") ?? _styles.First().Value).FontSize;
+
             foreach (AssDialogue dialogue in fileSections["Events"].MapItems("Dialogue", i => new AssDialogue(i)))
             {
                 AssStyle style = GetStyle(dialogue.Style);
@@ -46,11 +48,17 @@ namespace Arc.YTSubConverter.Formats.Ass
                 Lines.AddRange(lines.SelectMany(ExpandLine));
             }
 
+            EmulateKaraokeForSimultaneousLines();
             foreach (AssLine line in Lines)
             {
                 MergeIdenticallyFormattedSections(line);
                 line.NormalizeAlpha();
             }
+        }
+
+        public float DefaultFontSize
+        {
+            get;
         }
 
         public IEnumerable<AssStyle> Styles
@@ -190,7 +198,6 @@ namespace Arc.YTSubConverter.Formats.Ass
         internal void CreateTagSections(AssLine line, string text, AssTagContext context)
         {
             text = Regex.Replace(text, @"(?:\\N)+$", "");
-            text = Regex.Replace(text, @"(\{\\k\d+\})(\{\\k\d+\})", "$1\x200B$2");
             HashSet<string> handledWholeLineTags = new HashSet<string>();
 
             int start = 0;
@@ -198,9 +205,13 @@ namespace Arc.YTSubConverter.Formats.Ass
             {
                 int end = tagGroupMatch.Index;
 
-                if (end > start)
+                if (end > start || (context.Section.Duration > TimeSpan.Zero && Regex.IsMatch(tagGroupMatch.Groups[1].Value, @"\\k\s*\d+")))
                 {
-                    context.Section.Text = text.Substring(start, end - start).Replace("\\N", "\r\n");
+                    if (end == start)
+                        context.Section.Text = "\x200B";
+                    else
+                        context.Section.Text = text.Substring(start, end - start).Replace("\\N", "\r\n");
+
                     line.Sections.Add(context.Section);
 
                     context.Section = (AssSection)context.Section.Clone();
@@ -229,9 +240,10 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
         }
 
-        internal static void ApplyStyle(AssSection section, AssStyle style, AssStyleOptions options)
+        internal void ApplyStyle(AssSection section, AssStyle style, AssStyleOptions options)
         {
             section.Font = style.Font;
+            section.Scale = style.FontSize / DefaultFontSize;
             section.Bold = style.Bold;
             section.Italic = style.Italic;
             section.Underline = style.Underline;
@@ -467,6 +479,27 @@ namespace Arc.YTSubConverter.Formats.Ass
                     SingingSections = singingSections
                 };
             return stepLine.KaraokeType.Apply(context);
+        }
+
+        private void EmulateKaraokeForSimultaneousLines()
+        {
+            for (int i = 0; i < Lines.Count; i++)
+            {
+                AssLine line = (AssLine)Lines[i];
+                if (line.Position != null || !line.Sections.Any(s => s.StartOffset > TimeSpan.Zero))
+                    continue;
+
+                if (!Lines.Any(l => l.Start < line.End && l.End > line.Start && l.Position == null && l.AnchorPoint == line.AnchorPoint))
+                    continue;
+
+                foreach (AssSection section in line.Sections)
+                {
+                    section.StartOffset = TimeSpan.Zero;
+                }
+
+                Lines.RemoveAt(i);
+                Lines.InsertRange(i, CreateEmulatedKaraokeLines(line));
+            }
         }
 
         private static void MergeIdenticallyFormattedSections(Line line)
