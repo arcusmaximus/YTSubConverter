@@ -43,6 +43,7 @@ YTSubConverter supports the following .ass style features:
 ![Fonts](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/fonts.png)
 
 (Roboto is the YouTube default; the tool will automatically pick this if the specified font is not allowed)
+* Font size. The "Default" style (or the first style if there is no "Default") always gets the standard YouTube font size no matter what you pick, while the other styles are relative to it. For example, if the "Default" style has size 15 in Aegisub and the "Header" style has 30, these will be respectively at 100% and 200% of the standard size in YouTube. Note that you can't go lower than 75% and that Android doesn't support custom sizes.
 * Bold, italic, underline
 * Primary, secondary, outline and shadow color
 * Alignment
@@ -53,7 +54,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\i}` - italic
 * `{\u}` - underline
 * `{\fn}` - font. (See above for list of allowed fonts)
-* `{\fs}` - font size. If you set it to e.g. twice the size defined in the style, the YouTube subtitle will be twice the default size. Note that you can't go lower than 75% and that this tag has no effect on Android.
+* `{\fs}` - font size. This tag is relative to the size of the "Default" style (or the first style if there is no "Default"). For example, if the "Default" style has size 15 and you put `{\fs30}`, the YouTube subtitle will be twice the standard size. Note that you can't go lower than 75% and that Android doesn't support custom sizes.
 * `{\c}` or `{\1c}` - regular text color
 * `{\2c}` - unsung karaoke text color
 * `{\3c}` - outline color
