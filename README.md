@@ -1,7 +1,7 @@
 # YTSubConverter
 A tool for creating styled YouTube subtitles.
  
-![Sample image](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/sample.png)
+![Sample image](images/sample.png)
 
 ## About this tool
 YouTube's built-in subtitle editor doesn't support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called YTT (YouTube Timed Text). It supports the following:
@@ -17,9 +17,9 @@ YouTube's built-in subtitle editor doesn't support styling of any kind. If you w
 
 YTSubConverter can produce this file format for you.
 
-The current version is **1.4.0**. You can find the change history on the [Releases](https://github.com/arcusmaximus/YTSubConverter/releases) tab.
+The current version is **1.4.1**. You can find the change history on the [Releases](https://github.com/arcusmaximus/YTSubConverter/releases) tab.
 
-[![Download](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases/download/1.4.0/YTSubConverter.exe)
+[![Download](images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases/latest/download/YTSubConverter.exe)
 
 ## Usage
 YTSubConverter is an .ass -> .ytt converter. You can create .ass subtitles using e.g. [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the styling before uploading.
@@ -28,11 +28,11 @@ Conversion is straightforward: launch the program, open your .ass file and click
 
 The program tries to approximate the look of the Aegisub subtitles as closely as possible on YouTube:
 
-![Outlines](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/outlines.png)
+![Outlines](images/outlines.png)
 
 You'll notice that each .ass shadow can turn into one of four different YouTube shadow types: glow (same as outline), bevel, soft shadow and hard shadow. You can even combine multiple shadow types if you want - just choose from the checkboxes in the conversion UI. This is also where you can configure current word highlighting for karaoke ([example video](https://www.youtube.com/watch?v=il4cAeVzZwI)).
 
-![Style options](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/style-options.png)
+![Style options](images/style-options.png)
 
 Apart from converting from .ass to .ytt, the tool can also convert from .sbv (the format you get when downloading subs from YouTube's built-in editor) to .srt. This allows you to download existing, unstyled subs and add styling to them. Simply open the .sbv file, click Convert, and open the resulting .srt file in Aegisub.
 
@@ -40,7 +40,7 @@ Apart from converting from .ass to .ytt, the tool can also convert from .sbv (th
 YTSubConverter supports the following .ass style features:
 * Font name. YouTube only allows the following fonts:
 
-![Fonts](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/fonts.png)
+![Fonts](images/fonts.png)
 
 (Roboto is the YouTube default; the tool will automatically pick this if the specified font is not allowed)
 * Font size. The "Default" style (or the first style if there is no "Default") always gets the standard YouTube font size no matter what you pick, while the other styles are relative to it. For example, if the "Default" style has size 15 in Aegisub and the "Header" style has 30, these will be respectively at 100% and 200% of the standard size in YouTube. Note that you can't go lower than 75% and that Android doesn't support custom sizes.
@@ -105,8 +105,8 @@ Unsupported tags are ignored.
 
 ## Examples
 The repository contains two sample .ass files:
-* [Color-coded dialogue sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=sc3-z_2aNX0))
-* [Karaoke sample](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=il4cAeVzZwI))
+* [Color-coded dialogue sample](sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=sc3-z_2aNX0))
+* [Karaoke sample](sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=il4cAeVzZwI))
 
 ## Testing on PC
 After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the “real” player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
@@ -161,7 +161,7 @@ Styled subtitles work on your own videos, but also on those made by others: if a
 
 You can upload subtitles through the “Actions” dropdown in YouTube's built-in subtitle editor.
 
-![Upload menu](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/upload.png)
+![Upload menu](images/upload.png)
 
 Once the upload is complete, click “Submit contribution” while making sure not to change *anything* in the built-in editor. If you do, all styling information will be lost. (YouTube warns you about this when uploading to your own channel, but not when uploading to others').
 
@@ -171,7 +171,7 @@ YouTube has some bugs and limitations when it comes to styled subtitles. Please 
 * The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
   * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
 
-![Mobile limitation](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/images/mobile.png)
+![Mobile limitation](images/mobile.png)
 
 ## Example workflow for creating subtitles that are color-coded by speaker
 * Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f<number>` to download a smaller file.)
