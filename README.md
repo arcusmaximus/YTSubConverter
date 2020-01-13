@@ -4,14 +4,14 @@ A tool for creating styled YouTube subtitles.
 ![Sample image](images/sample.png)
 
 ## About this tool
-YouTube's built-in subtitle editor doesn't support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called YTT (YouTube Timed Text). It supports the following:
+YouTube's built-in subtitle editor doesn't support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called YTT (YouTube Timed Text, also known as SRV3). It supports the following:
 * Bold/italic/underline
 * Text coloring and transparency
 * Background coloring and transparency (including hiding the background box completely)
 * Outlines, glows and drop shadows
 * Fonts and font sizes
 * Positioning (place your subtitles anywhere on the video)
-* Karaoke timing (make the syllables of a song lyric light up as they're sung)
+* Karaoke timing (make the syllables of a song lyric appear as they're sung)
 * Vertical text
 * Ruby text
 
@@ -22,7 +22,7 @@ The current version is **1.4.1**. You can find the change history on the [Releas
 [![Download](images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases/latest/download/YTSubConverter.exe)
 
 ## Usage
-YTSubConverter is an .ass -> .ytt converter. You can create .ass subtitles using e.g. [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the styling before uploading.
+YTSubConverter is an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](http://www.aegisub.org/), which allows you to set up and preview the styling before uploading.
 
 Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe. In both cases, you'll get a .ytt file that's ready for upload.
 
@@ -93,8 +93,8 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
   * `{\ytchroma(intime, outtime)}` - copies converge over `intime` milliseconds at the start and disperse over `outtime` milliseconds at the end.
   * `{\ytchroma(offsetX, offsetY, intime, outtime)}` - the first copy starts at `offsetX` pixels to the left of and `offsetY` pixels above the subtitle position. (The last copy starts at the same distance in the opposite direction.) Both offsets can be negative.
   * `{\ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)}` - replace the default red/green/blue by any number of custom colors. Both the colors and the alpha value should be specified in hexadecimal (`&H...&`).
-* `{\ytkt}` - enables advanced Karaoke Types. Warning: using these will result in large files that may require multiple upload attempts before YouTube will accept them.
-  * `{\ytktFade}` - Configure the line to use fading karaoke ([example video](https://www.youtube.com/watch?v=nLMRAKeoif0)).
+* `{\ytkt}` - enables advanced Karaoke Types.
+  * `{\ytktFade}` - Configure the line to use fading karaoke ([example video](https://www.youtube.com/watch?v=eB90el6Zb_k)).
   * `{\ytktGlitch}` - Configure the line to use karaoke with glitching text ([example video](https://www.youtube.com/watch?v=9_IKgqsnfco)). Looks for Latin, Chinese, Japanese and Korean characters in each syllable and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
   * `{\ytkt(Cursor,text)}` - Places the specified text after the word that's currently being sung.
   * `{\ytkt(Cursor,formatting tags,text)}` - Like the above, but you can customize the look of the cursor with override tags (similar to `\t`).
@@ -109,7 +109,7 @@ The repository contains two sample .ass files:
 * [Karaoke sample](sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=il4cAeVzZwI))
 
 ## Testing on PC
-After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the “real” player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
+After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the "real" player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
 
 Fortunately, there's an easier way to test your subtitles - one which doesn't require you to upload them at all. It works by using Fiddler, a program which can intercept web requests from your browser and send back a file from your hard drive (rather than one from YouTube's servers). By redirecting your browser's request for subtitles to your local .ytt file, you can see those local subtitles in your browser *as though* you uploaded them. Since you're not *actually* uploading them, you can test your changes much more quickly.
 
@@ -117,53 +117,66 @@ While this approach can save you a lot of time, it does require some initial set
 * Download and install [Fiddler](https://www.telerik.com/download/fiddler).
 * Launch the program.
 * Open the menu Tools → Options.
-  * On the “HTTPS” tab, enable “Capture HTTPS CONNECTs” as well as “Decrypt HTTPS traffic.”
+  * On the "HTTPS" tab, enable "Capture HTTPS CONNECTs" as well as "Decrypt HTTPS traffic."
   * Allow the program to install the security certificate. (Note: if you're using Firefox, some [additional steps](https://docs.telerik.com/fiddler/Configure-Fiddler/Tasks/FirefoxHTTPS) are needed)
   * Click OK.
-* In the toolbar, change “Keep: All sessions” to “Keep: 100 sessions.” (This is to keep the request log from growing too much if you leave the program open for a long time)
-* Switch to the “AutoResponder” tab in the right hand panel.
-  * Put checkmarks in “Enable rules” and “Unmatched requests passthrough.”
-  * Click “Add Rule.”
-  * In the “Rule Editor” at the bottom, put the following text in the top textbox: `regex:^https://www.youtube.com/api/timedtext`
-  * Click “Save.”
+* In the toolbar, change "Keep: All sessions" to "Keep: 100 sessions." (This is to keep the request log from growing too much if you leave the program open for a long time)
+* Switch to the "AutoResponder" tab in the right hand panel.
+  * Put checkmarks in "Enable rules" and "Unmatched requests passthrough."
+  * Click "Add Rule."
+  * In the "Rule Editor" at the top, put the following text in the top textbox: `regex:^https://www\.youtube\.com/api/timedtext`
+  * Click "Save."
 
 Once this initial setup is done, you only need to do the following whenever you want to test subtitles:
 * Launch Fiddler
-* Select the rule on the “AutoResponder” tab
-* Put the path to your local .ytt file in the bottom textbox in the “Rule Editor”
-* Click “Save.”
+* Select the rule on the "AutoResponder" tab
+* Put the path to your local .ytt file in the bottom textbox in the "Rule Editor"
+* Click "Save."
 
-As long as Fiddler is running (and “Capture Traffic” is enabled in the “File” menu), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it; simply disable and re-enable subtitles in the video, which will cause the YouTube player to “redownload” them.
+As long as Fiddler is running (and the rule is enabled), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it; simply disable and re-enable subtitles in the video, which will cause the YouTube player to "redownload" them.
 
 ## Testing on Android
 Each variant of the YouTube player (web, Android, iOS...) displays subtitles in its own unique way. For this reason, it can be useful to test your subtitles in more places than one; after all, subs that look fine on PC might overlap on mobile (because of the bigger font size). This section describes how to test your subtitles in the Android app, again without actually having to upload them - or owning an Android device.
 
 Initial setup is as follows:
 * Install and configure Fiddler as described above.
-* Go to Tools -> Options.
-  * On the “HTTPS” tab, click Actions -> Export Root Certificate to Desktop.
-  * On the “Connections” tab, enable “Allow remote computers to connect.”
+* Go to Tools → Options.
+  * On the "HTTPS" tab, click Actions → Export Root Certificate to Desktop.
+  * On the "Connections" tab, enable "Allow remote computers to connect."
 * Restart Fiddler.
 * Install an Android emulator. Plenty of free ones are available; the steps below are based on [KOPLAYER](http://www.koplayer.com/).
 * Launch the emulator.
-  * Click “Shared Folder” in the left-hand toolbar and select your Desktop. This will open a file explorer in the emulator.
-  * Longpress “FiddlerRoot.cer”, click “Move”, navigate to /sdcard/Download and click “Move here” in the top menu.
-  * Go to the Home screen and click System tool -> Settings -> Security. From there, click “Install from SD card”, navigate to Internal storage -> Download and click the FiddlerRoot.cer to install it. Give it a name (e.g. “Fiddler”) and leave “Credential use” at “VPN and apps.”
-  * Click System tool -> Settings -> Wi-Fi, longpress the network and click “Modify network.” Expand the Advanced Options, set the proxy type to Manual, enter your PC's host name in “Proxy hostname” and the number 8888 in “Proxy port.” If you don't know your PC's host name, you can find it out by pressing Windows key + Pause and noting the “PC name.”
+  * Click "Shared Folder" in the left-hand toolbar and select your Desktop. This will open a file explorer in the emulator.
+  * Longpress "FiddlerRoot.cer", click "Move", navigate to /sdcard/Download and click "Move here" in the top menu.
+  * Go to the Home screen and click System tool → Settings → Security. From there, click "Install from SD card", navigate to Internal storage → Download and click the FiddlerRoot.cer to install it. Give it a name (e.g. "Fiddler") and leave "Credential use" at "VPN and apps."
+  * Click System tool → Settings → Wi-Fi, longpress the network and click "Modify network." Expand the Advanced Options, set the proxy type to Manual, enter your PC's host name in "Proxy hostname" and the number 8888 in "Proxy port." If you don't know your PC's host name, you can find it out by pressing Windows key + Pause and noting the "PC name."
   * Install the YouTube app from the Play Store.
 
 From then on, the YouTube app in the emulator will be subject to the same .ytt redirecting as the YouTube player in your browser. Just like with the browser player, loading a changed file into the app is as simple as turning subtitles off and on again.
 
-Another useful trick to know is that you can enter video ID's (the string of letters and numbers after “watch?v=”) in the app's search field. This allows you view, say, unlisted videos.
+Another useful trick to know is that you can enter video ID's (the string of letters and numbers after "watch?v=") in the app's search field. This allows you view, say, unlisted videos.
 
 ## Uploading
-Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles for it.
+Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles to it.
 
-You can upload subtitles through the “Actions” dropdown in YouTube's built-in subtitle editor.
+First access the subtitle editor as follows:
 
-![Upload menu](images/upload.png)
+![Open editor](images/upload1.png)
 
-Once the upload is complete, click “Submit contribution” while making sure not to change *anything* in the built-in editor. If you do, all styling information will be lost. (YouTube warns you about this when uploading to your own channel, but not when uploading to others').
+Then upload your .ytt file through the "Actions" dropdown:
+
+![Upload menu](images/upload2.png)
+
+Once the upload is complete, click "Submit contribution" while making sure not to change *anything* in the built-in editor. If you do, all styling information will be lost. (YouTube warns you about this when uploading to your own channel, but not when uploading to others').
+
+## Publishing
+Subtitles won't appear on the video right away after uploading - they also need to be published. For your own channel, you can of course do this yourself.
+
+For others' channels, there used to be a community approval feature: if enough community members clicked the "Looks good" button, the subtitles would get published automatically, without intervention of the channel owner. As of September 2019, however, this is no longer possible. The hasty fix YouTube made in response to spam complaints from "top creators" means that while the "Looks good" button is still there, it no longer does anything: the subtitles won't get published no matter how many people click it.
+
+The result is that only channel owners can publish community subtitles now. However, YouTube didn't inform them of this change and also doesn't notify them about subtitles awaiting approval. Chances of them noticing and publishing your subtitles are therefore next to zero.
+
+This means that, after you submit your subtitles, you need to contact the channel owner and ask them to publish - each and every time. The first time you contact them, you can point them to YouTube's help page on the topic ([English](https://support.google.com/youtube/answer/7300578?hl=en&ref_topic=7295414)/[Japanese](https://support.google.com/youtube/answer/7300578?hl=ja&ref_topic=7295414)) to explain the situation.
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
@@ -173,18 +186,27 @@ YouTube has some bugs and limitations when it comes to styled subtitles. Please 
 
 ![Mobile limitation](images/mobile.png)
 
-## Example workflow for creating subtitles that are color-coded by speaker
+## Example workflow for quick style assignment
+Subtitles for a certain channel will often have recurring looks. For example, Kizuna AI's gaming channel has pink subtitles for talking, red for screaming and yellow for explanations. To avoid having to put tags everywhere, you should of course define these recurring looks as Aegisub styles. Assigning these styles to the individual subtitles can be quite a hassle, however. This section offers a quicker way.
+
+First do some initial setup:
+* Create the styles you need and put them in your Aegisub style storage.
+* Place the script [replace markers.lua](replace%20markers.lua) from this repository in Aegisub\automation\autoload.
+* Choose a marker (ideally a single, special character) for each style and link these markers to their styles inside the script. The script contains some examples, and as you'll see, it's in fact possible to register multiple marker sets for different YouTube channels.
+
+Then do the following for each video:
 * Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f<number>` to download a smaller file.)
   * If you're planning on doing karaoke timing, you may want to check if the video has Opus-encoded audio and explicitly download that - reason being that the m4a audio you normally get is ever so slightly shifted in time. Example: `-f137+251`
 * Open the locally saved video in a player that supports global hotkeys (e.g. VLC). If you haven't yet, set up hotkeys for pausing, resuming and rewinding the video.
 * Open Notepad and type out the subtitles, using the global hotkeys to control the video without having to switch between windows.
-* While typing, prefix each line with a “special” character (such as `*`, `+`...) to identify the speaker. Use `\N` for manual line breaks. (Example: `*Huh, that sign has an evil rabbit on it\N+That does look evil`)
-* When done, do a search/replace of each special character by the corresponding .ass color code (e.g. `*` -> `{\c&HA92EED&}`); note that the color is in the format BBGGRR, that is, in the opposite order as it would be in HTML.
-* Copy the text document and paste it into Aegisub's subtitle grid.
-* Set up the timings and (if needed) additional formatting.
+* While typing, prefix each line with the marker of the style it should get later on. (e.g. `*Hello, Darling!`)
+* When you're done, copy all the text and paste it into Aegisub's subtitle grid (simply click the grid and press Ctrl-V).
+* Next, run the script by clicking Automation → Replace markers → \<channel name\> in the Aegisub menu. This will remove the markers and assign the corresponding styles.
+* Set up the timings and additional formatting.
+  * If the video has hardsubs, you can save a lot of time by using the "Align subtitle to video" feature of this [unofficial Aegisub version](https://github.com/wangqr/Aegisub/releases). Simply select the softsub, activate the feature, click a point in the hardsub and click OK; the timing of the softsub will be automatically updated to match. To work even faster, set up a hotkey for this feature using the `time/align` command name.
 * Save the subtitles as an .ass file.
 * Convert the .ass to .ytt using YTSubConverter.
-* Upload the .ytt to YouTube.
+* Upload the .ytt to YouTube and contact the channel owner for publishing.
 
 ## Credits
 Thanks to the following people for providing the UI translations:
