@@ -176,7 +176,7 @@ For others' channels, there used to be a community approval feature: if enough c
 
 The result is that only channel owners can publish community subtitles now. However, YouTube didn't inform them of this change and also doesn't notify them about subtitles awaiting approval. Chances of them noticing and publishing your subtitles are therefore next to zero.
 
-This means that, after you submit your subtitles, you need to contact the channel owner and ask them to publish - each and every time. The first time you contact them, you can point them to YouTube's help page on the topic ([English](https://support.google.com/youtube/answer/7300578?hl=en&ref_topic=7295414)/[Japanese](https://support.google.com/youtube/answer/7300578?hl=ja&ref_topic=7295414)) to explain the situation.
+This means that, after you submit your subtitles, you need to contact the channel owner and ask them to publish - each and every time. The first time you contact them, you can point them to YouTube's help page on the topic ([English](https://support.google.com/youtube/answer/7300578?hl=en)/[Japanese](https://support.google.com/youtube/answer/7300578?hl=ja)) to explain the situation.
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
