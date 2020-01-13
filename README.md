@@ -191,7 +191,7 @@ Subtitles for a certain channel will often have recurring looks. For example, Ki
 
 First do some initial setup:
 * Create the styles you need and put them in your Aegisub style storage.
-* Place the script [replace markers.lua](replace%20markers.lua) from this repository in Aegisub\automation\autoload.
+* Place the script [replace markers.lua](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/replace%20markers.lua) in Aegisub\automation\autoload.
 * Choose a marker (ideally a single, special character) for each style and link these markers to their styles inside the script. The script contains some examples, and as you'll see, it's in fact possible to register multiple marker sets for different YouTube channels.
 
 Then do the following for each video:
