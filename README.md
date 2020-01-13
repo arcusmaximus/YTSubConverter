@@ -154,7 +154,7 @@ Initial setup is as follows:
 
 From then on, the YouTube app in the emulator will be subject to the same .ytt redirecting as the YouTube player in your browser. Just like with the browser player, loading a changed file into the app is as simple as turning subtitles off and on again.
 
-Another useful trick to know is that you can enter video ID's (the string of letters and numbers after "watch?v=") in the app's search field. This allows you view, say, unlisted videos.
+Another useful trick to know is that you can enter video ID's (the string of letters and numbers after "watch?v=") in the app's search field. This allows you to quickly jump to the video you're working on, not to mention view unlisted videos (such as reuploaded videos on your own channel).
 
 ## Uploading
 Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles to it.
