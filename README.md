@@ -172,7 +172,7 @@ Once the upload is complete, click "Submit contribution" while making sure not t
 ## Publishing
 Subtitles won't appear on the video right away after uploading - they also need to be published. For your own channel, you can of course do this yourself.
 
-For others' channels, there used to be a community approval feature: if enough community members clicked the "Looks good" button, the subtitles would get published automatically, without intervention of the channel owner. As of September 2019, however, this is no longer possible. The hasty fix YouTube made in response to spam complaints from "top creators" means that while the "Looks good" button is still there, it no longer does anything: the subtitles won't get published no matter how many people click it.
+For others' channels, there used to be a community approval feature: if enough community members clicked the "Looks good" button, the subtitles would get published automatically, without intervention of the channel owner. As of September 2019, however, this is no longer possible. The hasty change YouTube made in response to spam complaints from top creators means that while the "Looks good" button is still there, it no longer does anything: the subtitles won't get published no matter how many people click it.
 
 The result is that only channel owners can publish community subtitles now. However, YouTube didn't inform them of this change and also doesn't notify them about subtitles awaiting approval. Chances of them noticing and publishing your subtitles are therefore next to zero.
 
