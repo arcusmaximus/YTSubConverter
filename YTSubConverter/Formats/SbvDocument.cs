@@ -12,40 +12,49 @@ namespace Arc.YTSubConverter.Formats
 
         public SbvDocument(string filePath)
         {
-            using (StreamReader reader = new StreamReader(filePath))
+            using StreamReader reader = new StreamReader(filePath);
+
+            string fileLine;
+            Line subLine = null;
+            while ((fileLine = reader.ReadLine()) != null)
             {
-                while (true)
+                if (TryParseTimestamps(fileLine, out DateTime startTime, out DateTime endTime))
                 {
-                    string timestamps = reader.ReadLine();
-                    if (timestamps == null)
-                        break;
-
-                    if (string.IsNullOrWhiteSpace(timestamps))
-                        continue;
-
-                    string content = null;
-                    while (true)
+                    if (subLine != null && subLine.Sections.Count > 0)
                     {
-                        string line = reader.ReadLine();
-                        if (string.IsNullOrWhiteSpace(line))
-                            break;
-
-                        if (content != null)
-                            content += "\r\n";
-
-                        content += line;
+                        subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
+                        Lines.Add(subLine);
                     }
 
-                    (DateTime start, DateTime end) = ParseTimestamps(timestamps);
-                    Lines.Add(new Line(start, end, content));
+                    subLine = new Line(startTime, endTime);
                 }
+                else if (subLine != null)
+                {
+                    if (subLine.Sections.Count == 0)
+                        subLine.Sections.Add(new Section(fileLine));
+                    else
+                        subLine.Sections[0].Text += "\r\n" + fileLine;
+                }
+            }
+
+            if (subLine != null && subLine.Sections.Count > 0)
+            {
+                subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
+                Lines.Add(subLine);
             }
         }
 
-        private static (DateTime, DateTime) ParseTimestamps(string timestamps)
+        private static bool TryParseTimestamps(string timestamps, out DateTime startTime, out DateTime endTime)
         {
             Match match = Regex.Match(timestamps, @"^(\d+):(\d+):(\d+)[\.,](\d+),(\d+):(\d+):(\d+)[\.,](\d+)");
-            return (
+            if (!match.Success)
+            {
+                startTime = DateTime.MinValue;
+                endTime = DateTime.MinValue;
+                return false;
+            }
+
+            startTime =
                 new DateTime(
                     TimeBase.Year,
                     TimeBase.Month,
@@ -54,7 +63,8 @@ namespace Arc.YTSubConverter.Formats
                     int.Parse(match.Groups[2].Value),
                     int.Parse(match.Groups[3].Value),
                     int.Parse(match.Groups[4].Value)
-                ),
+                );
+            endTime =
                 new DateTime(
                     TimeBase.Year,
                     TimeBase.Month,
@@ -63,8 +73,8 @@ namespace Arc.YTSubConverter.Formats
                     int.Parse(match.Groups[6].Value),
                     int.Parse(match.Groups[7].Value),
                     int.Parse(match.Groups[8].Value)
-                )
-            );
+                );
+            return true;
         }
     }
 }
