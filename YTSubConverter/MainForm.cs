@@ -19,6 +19,7 @@ namespace Arc.YTSubConverter
         private Dictionary<string, AssStyle> _styles;
         private float _defaultFontSize;
         private bool _previewSuspended;
+        private DateTime _lastAutoConvertTime = DateTime.MinValue;
 
         public MainForm()
         {
@@ -117,8 +118,15 @@ namespace Arc.YTSubConverter
 
             _chkAutoConvert.Enabled = true;
             _chkAutoConvert.Checked = false;
-            _subtitleWatcher.Path = Path.GetDirectoryName(filePath);
-            _subtitleWatcher.Filter = Path.GetFileName(filePath);
+
+            _subtitleModifyWatcher.Path = Path.GetDirectoryName(filePath);
+            _subtitleModifyWatcher.Filter = Path.GetFileName(filePath);
+
+            // Aegisub doesn't write straight to the .ass file, but instead creates a separate <name>_tmp_<number>.ass
+            // and renames that to the original name.
+            _subtitleRenameWatcher.Path = Path.GetDirectoryName(filePath);
+            _subtitleRenameWatcher.Filter = Path.GetFileNameWithoutExtension(filePath) + "_tmp_*" + Path.GetExtension(filePath);
+            
             _btnConvert.Enabled = true;
         }
 
@@ -329,15 +337,32 @@ namespace Arc.YTSubConverter
 
         private void _chkAutoConvert_CheckedChanged(object sender, EventArgs e)
         {
-            _subtitleWatcher.EnableRaisingEvents = _chkAutoConvert.Checked;
+            _subtitleModifyWatcher.EnableRaisingEvents = _chkAutoConvert.Checked;
+            _subtitleRenameWatcher.EnableRaisingEvents = _chkAutoConvert.Checked;
             if (_chkAutoConvert.Checked)
                 _btnConvert_Click(sender, e);
         }
 
-        private void _subtitleWatcher_Changed(object sender, FileSystemEventArgs e)
+        private void HandleTmpFileRenamed(object sender, RenamedEventArgs e)
         {
+            PerformAutoConvert();
+        }
+
+        private void HandleFileModified(object sender, FileSystemEventArgs e)
+        {
+            PerformAutoConvert();
+        }
+
+        private void PerformAutoConvert()
+        {
+            // The FileSystemWatcher may trigger multiple times in a row
+            if ((DateTime.Now - _lastAutoConvertTime).TotalMilliseconds < 100)
+                return;
+
+            // Sleep a bit just in case an antivirus is still doing something with the file
             Thread.Sleep(100);
-            _btnConvert_Click(sender, e);
+            _btnConvert_Click(_btnConvert, EventArgs.Empty);
+            _lastAutoConvertTime = DateTime.Now;
         }
 
         private async void _btnConvert_Click(object sender, EventArgs e)

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this._spltStyleOptions = new System.Windows.Forms.SplitContainer();
             this._lstStyles = new System.Windows.Forms.ListBox();
+            this._btnBackgroundImage = new System.Windows.Forms.Button();
             this._brwPreview = new System.Windows.Forms.WebBrowser();
             this._pnlOptions = new System.Windows.Forms.Panel();
             this._pnlKaraokeType = new System.Windows.Forms.Panel();
@@ -61,9 +62,9 @@
             this._dlgColor = new System.Windows.Forms.ColorDialog();
             this._dlgOpenImage = new System.Windows.Forms.OpenFileDialog();
             this._toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this._btnBackgroundImage = new System.Windows.Forms.Button();
             this._chkAutoConvert = new System.Windows.Forms.CheckBox();
-            this._subtitleWatcher = new System.IO.FileSystemWatcher();
+            this._subtitleRenameWatcher = new System.IO.FileSystemWatcher();
+            this._subtitleModifyWatcher = new System.IO.FileSystemWatcher();
             ((System.ComponentModel.ISupportInitialize)(this._spltStyleOptions)).BeginInit();
             this._spltStyleOptions.Panel1.SuspendLayout();
             this._spltStyleOptions.Panel2.SuspendLayout();
@@ -72,7 +73,8 @@
             this._pnlKaraokeType.SuspendLayout();
             this._pnlShadowType.SuspendLayout();
             this._grpStyleOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._subtitleWatcher)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._subtitleRenameWatcher)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._subtitleModifyWatcher)).BeginInit();
             this.SuspendLayout();
             // 
             // _spltStyleOptions
@@ -104,6 +106,16 @@
             this._lstStyles.Size = new System.Drawing.Size(289, 331);
             this._lstStyles.TabIndex = 0;
             this._lstStyles.SelectedIndexChanged += new System.EventHandler(this._lstStyles_SelectedIndexChanged);
+            // 
+            // _btnBackgroundImage
+            // 
+            this._btnBackgroundImage.Location = new System.Drawing.Point(439, 124);
+            this._btnBackgroundImage.Name = "_btnBackgroundImage";
+            this._btnBackgroundImage.Size = new System.Drawing.Size(24, 23);
+            this._btnBackgroundImage.TabIndex = 7;
+            this._btnBackgroundImage.Text = "...";
+            this._btnBackgroundImage.UseVisualStyleBackColor = true;
+            this._btnBackgroundImage.Click += new System.EventHandler(this._btnBackgroundImage_Click);
             // 
             // _brwPreview
             // 
@@ -392,16 +404,6 @@
             this._chkStyleOptions.UseVisualStyleBackColor = true;
             this._chkStyleOptions.CheckedChanged += new System.EventHandler(this._chkStyleOptions_CheckedChanged);
             // 
-            // _btnBackgroundImage
-            // 
-            this._btnBackgroundImage.Location = new System.Drawing.Point(439, 124);
-            this._btnBackgroundImage.Name = "_btnBackgroundImage";
-            this._btnBackgroundImage.Size = new System.Drawing.Size(24, 23);
-            this._btnBackgroundImage.TabIndex = 7;
-            this._btnBackgroundImage.Text = "...";
-            this._btnBackgroundImage.UseVisualStyleBackColor = true;
-            this._btnBackgroundImage.Click += new System.EventHandler(this._btnBackgroundImage_Click);
-            // 
             // _chkAutoConvert
             // 
             this._chkAutoConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -415,11 +417,19 @@
             this._chkAutoConvert.UseVisualStyleBackColor = true;
             this._chkAutoConvert.CheckedChanged += new System.EventHandler(this._chkAutoConvert_CheckedChanged);
             // 
-            // _subtitleWatcher
+            // _subtitleRenameWatcher
             // 
-            this._subtitleWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
-            this._subtitleWatcher.SynchronizingObject = this;
-            this._subtitleWatcher.Changed += new System.IO.FileSystemEventHandler(this._subtitleWatcher_Changed);
+            this._subtitleRenameWatcher.EnableRaisingEvents = true;
+            this._subtitleRenameWatcher.NotifyFilter = System.IO.NotifyFilters.FileName;
+            this._subtitleRenameWatcher.SynchronizingObject = this;
+            this._subtitleRenameWatcher.Renamed += new System.IO.RenamedEventHandler(this.HandleTmpFileRenamed);
+            // 
+            // _subtitleModifyWatcher
+            // 
+            this._subtitleModifyWatcher.EnableRaisingEvents = true;
+            this._subtitleModifyWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
+            this._subtitleModifyWatcher.SynchronizingObject = this;
+            this._subtitleModifyWatcher.Changed += new System.IO.FileSystemEventHandler(this.HandleFileModified);
             // 
             // MainForm
             // 
@@ -451,7 +461,8 @@
             this._pnlShadowType.ResumeLayout(false);
             this._pnlShadowType.PerformLayout();
             this._grpStyleOptions.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this._subtitleWatcher)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._subtitleRenameWatcher)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._subtitleModifyWatcher)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -493,6 +504,7 @@
         private System.Windows.Forms.ToolTip _toolTip;
         private System.Windows.Forms.Button _btnBackgroundImage;
         private System.Windows.Forms.CheckBox _chkAutoConvert;
-        private System.IO.FileSystemWatcher _subtitleWatcher;
+        private System.IO.FileSystemWatcher _subtitleRenameWatcher;
+        private System.IO.FileSystemWatcher _subtitleModifyWatcher;
     }
 }
