@@ -119,11 +119,13 @@ namespace Arc.YTSubConverter
             _chkAutoConvert.Enabled = true;
             _chkAutoConvert.Checked = false;
 
+            _subtitleModifyWatcher.EnableRaisingEvents = false;
             _subtitleModifyWatcher.Path = Path.GetDirectoryName(filePath);
             _subtitleModifyWatcher.Filter = Path.GetFileName(filePath);
 
             // Aegisub doesn't write straight to the .ass file, but instead creates a separate <name>_tmp_<number>.ass
             // and renames that to the original name.
+            _subtitleRenameWatcher.EnableRaisingEvents = false;
             _subtitleRenameWatcher.Path = Path.GetDirectoryName(filePath);
             _subtitleRenameWatcher.Filter = Path.GetFileNameWithoutExtension(filePath) + "_tmp_*" + Path.GetExtension(filePath);
             

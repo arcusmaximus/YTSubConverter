@@ -83,7 +83,7 @@ namespace Arc.YTSubConverter.Animations
                 clusterRange.IntersectWith(lineRange);
                 clusterRange.Start = TimeUtil.SnapTimeToFrame(clusterRange.Start.AddMilliseconds(32));
                 clusterRange.End = TimeUtil.SnapTimeToFrame(clusterRange.End).AddMilliseconds(32);
-                clusters.Add(clusterRange, clusterAnims);
+                clusters.FetchValue(clusterRange, () => new List<AnimationWithSectionIndex>()).AddRange(clusterAnims);
             }
             return clusters;
         }

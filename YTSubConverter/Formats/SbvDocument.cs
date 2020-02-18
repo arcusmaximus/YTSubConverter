@@ -12,35 +12,36 @@ namespace Arc.YTSubConverter.Formats
 
         public SbvDocument(string filePath)
         {
-            using StreamReader reader = new StreamReader(filePath);
-
-            string fileLine;
-            Line subLine = null;
-            while ((fileLine = reader.ReadLine()) != null)
+            using (StreamReader reader = new StreamReader(filePath))
             {
-                if (TryParseTimestamps(fileLine, out DateTime startTime, out DateTime endTime))
+                string fileLine;
+                Line subLine = null;
+                while ((fileLine = reader.ReadLine()) != null)
                 {
-                    if (subLine != null && subLine.Sections.Count > 0)
+                    if (TryParseTimestamps(fileLine, out DateTime startTime, out DateTime endTime))
                     {
-                        subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
-                        Lines.Add(subLine);
+                        if (subLine != null && subLine.Sections.Count > 0)
+                        {
+                            subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
+                            Lines.Add(subLine);
+                        }
+
+                        subLine = new Line(startTime, endTime);
                     }
-
-                    subLine = new Line(startTime, endTime);
+                    else if (subLine != null)
+                    {
+                        if (subLine.Sections.Count == 0)
+                            subLine.Sections.Add(new Section(fileLine));
+                        else
+                            subLine.Sections[0].Text += "\r\n" + fileLine;
+                    }
                 }
-                else if (subLine != null)
+
+                if (subLine != null && subLine.Sections.Count > 0)
                 {
-                    if (subLine.Sections.Count == 0)
-                        subLine.Sections.Add(new Section(fileLine));
-                    else
-                        subLine.Sections[0].Text += "\r\n" + fileLine;
+                    subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
+                    Lines.Add(subLine);
                 }
-            }
-
-            if (subLine != null && subLine.Sections.Count > 0)
-            {
-                subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
-                Lines.Add(subLine);
             }
         }
 

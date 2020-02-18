@@ -41,6 +41,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             if (!TryParseArgs(context, arg, out DateTime startTime, out DateTime endTime, out int accel, out string modifiers))
                 return;
 
+            context.Line.AndroidColorHackAllowed = false;
+
             foreach (Match match in Regex.Matches(modifiers, @"\\(?<tag>\d?[a-z]+)(?<arg>[^\\]*)"))
             {
                 if (TransformTagHandlers.TryGetValue(match.Groups["tag"].Value, out TransformTagHandler handler))

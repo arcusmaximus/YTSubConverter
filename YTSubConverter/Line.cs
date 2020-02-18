@@ -64,6 +64,12 @@ namespace Arc.YTSubConverter
             set;
         }
 
+        public bool AndroidColorHackAllowed
+        {
+            get;
+            set;
+        } = true;
+
         public override string ToString()
         {
             return Text;
@@ -83,6 +89,7 @@ namespace Arc.YTSubConverter
             AnchorPoint = line.AnchorPoint;
             Position = line.Position;
             VerticalTextType = line.VerticalTextType;
+            AndroidColorHackAllowed = line.AndroidColorHackAllowed;
 
             Sections.Clear();
             Sections.AddRange(line.Sections.Select(s => (Section)s.Clone()));

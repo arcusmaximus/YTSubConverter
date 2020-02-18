@@ -78,16 +78,45 @@ namespace Arc.YTSubConverter.Formats
 
         private void ApplyEnhancements()
         {
+            AddItalicPrefetch();
             for (int i = 0; i < Lines.Count; i++)
             {
                 MakeInvisibleTextBlack(i);
+                PreventItalicShadowClipping(i);
                 HardenSpaces(i);
                 AddRubySafetySection(i);
                 SplitMultiBackgroundLine(i);
                 i += ExpandLineForMultiShadows(i) - 1;
                 i += ExpandLineForDarkText(i) - 1;
             }
-            AddItalicPrefetch();
+        }
+
+        /// <summary>
+        /// On PC, the first piece of italic text shows up with a noticeable delay: the background appears instantly,
+        /// but during a fraction of a second after that, the text is either shown as non-italic or not shown at all.
+        /// To work around this, we add an invisible italic subtitle at the start to make YouTube eagerly load
+        /// whatever it normally loads lazily.
+        /// </summary>
+        private void AddItalicPrefetch()
+        {
+            if (!Lines.SelectMany(l => l.Sections).Any(s => s.Italic))
+                return;
+
+            Line italicLine =
+                new Line(TimeBase.AddMilliseconds(SubtitleDelayMs + 5000), TimeBase.AddMilliseconds(SubtitleDelayMs + 5100))
+                {
+                    Position = new PointF(0, 0),
+                    AnchorPoint = AnchorPoint.BottomRight
+                };
+            Section section =
+                new Section("\x200B")
+                {
+                    ForeColor = Color.FromArgb(1, 0, 0, 0),
+                    BackColor = Color.Empty,
+                    Italic = true
+                };
+            italicLine.Sections.Add(section);
+            Lines.Add(italicLine);
         }
 
         /// <summary>
@@ -100,6 +129,26 @@ namespace Arc.YTSubConverter.Formats
             {
                 if (section.ForeColor.A == 0)
                     section.ForeColor = Color.FromArgb(0, 0, 0, 0);
+            }
+        }
+
+        /// <summary>
+        /// Italicized words, such as in "This {\i1}word{\i0} is important", get their shadow cut off
+        /// on the right hand side. As a workaround, move the space so we get "This {\i1}word {\i0}is important",
+        /// giving the shadow room to fall into.
+        /// </summary>
+        private void PreventItalicShadowClipping(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+            for (int i = 0; i < line.Sections.Count - 1; i++)
+            {
+                Section currSection = line.Sections[i];
+                Section nextSection = line.Sections[i + 1];
+                if (currSection.Italic && !currSection.Text.EndsWith(" ") && !nextSection.Italic && nextSection.Text.StartsWith(" "))
+                {
+                    currSection.Text += " ";
+                    nextSection.Text = nextSection.Text.Substring(1);
+                }
             }
         }
 
@@ -252,7 +301,7 @@ namespace Arc.YTSubConverter.Formats
         private int ExpandLineForDarkText(int lineIdx)
         {
             Line line = Lines[lineIdx];
-            if (!line.Sections.Any(s => s.ForeColor.A > 0 && ColorUtil.IsDark(s.ForeColor)))
+            if (!line.AndroidColorHackAllowed || !line.Sections.Any(s => s.ForeColor.A > 0 && ColorUtil.IsDark(s.ForeColor)))
                 return 1;
 
             Line brightLine = (Line)line.Clone();
@@ -268,31 +317,6 @@ namespace Arc.YTSubConverter.Formats
 
             Lines.Insert(lineIdx + 1, brightLine);
             return 2;
-        }
-
-        /// <summary>
-        /// On PC, the first piece of italic text shows up with a noticeable delay: the background appears as usual,
-        /// but for a fraction of a second after that, the text is either shown as non-italic or not shown at all.
-        /// To work around this, we add an invisible italic subtitle at the start to make YouTube eagerly load
-        /// whatever it normally loads lazily.
-        /// </summary>
-        private void AddItalicPrefetch()
-        {
-            Line italicLine =
-                new Line(TimeBase.AddMilliseconds(SubtitleDelayMs + 5000), TimeBase.AddMilliseconds(SubtitleDelayMs + 5100))
-                {
-                    Position = new PointF(0, 0),
-                    AnchorPoint = AnchorPoint.BottomRight
-                };
-            Section section =
-                new Section("\x200B")
-                {
-                    ForeColor = Color.FromArgb(1, 0, 0, 0),
-                    BackColor = Color.Empty,
-                    Italic = true
-                };
-            italicLine.Sections.Add(section);
-            Lines.Add(italicLine);
         }
 
         private void WriteHead(XmlWriter writer, List<Line> positions, List<Line> windowStyles, List<Section> pens)
@@ -369,7 +393,13 @@ namespace Arc.YTSubConverter.Formats
             // results in only 125% and that you can't go lower than an actual scale of 75% (specifiedScale = 0).
             // Maybe they do this to allow for more granularity? But then why not simply allow floating point numbers? Who knows...
             float yttScale = Math.Max(1 + (format.Scale - 1) * 4, 0);
-            writer.WriteAttributeString("sz", ((int)(yttScale * 100)).ToString());
+
+            // On 2020/02/04, YouTube introduced a new JSON-based subtitle delivery format, and they wouldn't
+            // be YouTube if they didn't break something along the way. The new Javascript code checks the
+            // presence of the font size attribute using simply "if(pen.sz)", which of course skips sz=0
+            // as well. The result is that existing subtitles with the minimum font size now use the default
+            // size instead. Going forward, we use a minimum of sz=1 to work around this.
+            writer.WriteAttributeString("sz", Math.Max((int)(yttScale * 100), 1).ToString());
 
             if (format.Offset != OffsetType.Regular)
                 writer.WriteAttributeString("of", GetOffsetTypeId(format.Offset).ToString());
