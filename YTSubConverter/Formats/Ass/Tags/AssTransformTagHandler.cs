@@ -218,13 +218,13 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         private static void HandleTransformFontSizeTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
         {
-            if (!int.TryParse(arg, out int size))
+            if (!TryParseFloat(arg, out float size))
                 return;
 
             AssSection section = context.Section;
             ScaleAnimation prevAnim = section.Animations.OfType<ScaleAnimation>().LastOrDefault();
             float startScale = prevAnim?.EndScale ?? context.Section.Scale;
-            float endScale = (float)size / context.Style.FontSize;
+            float endScale = size / context.Document.DefaultFontSize;
             context.Section.Animations.Add(new ScaleAnimation(startTime, startScale, endTime, endScale));
         }
 

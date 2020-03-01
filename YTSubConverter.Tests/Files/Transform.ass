@@ -11,10 +11,11 @@ YCbCr Matrix: None
 
 [Aegisub Project Garbage]
 Last Style Storage: Default
-Audio File: D:/Subtitles/Can We Beat CUPHEAD!【Co-op】-TSBvhuPFYmM.mp4
-Video File: ?dummy:30.000000:40000:640:480:204:202:200:
+Video File: ?dummy:23.976000:40000:640:480:150:150:150:
+Video AR Value: 1.333333
 Video Zoom Percent: 0.875000
-Active Line: 1
+Active Line: 26
+Video Position: 240
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -26,7 +27,7 @@ Style: Outline box,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0
 Style: Glow shadow,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00222222,0,0,0,0,100,100,0,0,1,0,2,5,10,10,10,1
 Style: Soft shadow,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00222222,0,0,0,0,100,100,0,0,1,0,2,5,10,10,10,1
 Style: Soft shadow box,Roboto,15,&H00FFFFFF,&H00FFFFFF,&H00000000,&H00222222,0,0,0,0,100,100,0,0,3,2,2,5,10,10,10,1
-Style: Hard shadow,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,2,2,10,10,10,1
+Style: Hard shadow,Roboto,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,2,5,10,10,10,1
 Style: Hard shadow box,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00828282,0,0,0,0,100,100,0,0,3,2,2,2,10,10,10,1
 Style: Outline+Soft shadow,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00222222,0,0,0,0,100,100,0,0,1,2,2,5,10,10,10,1
 Style: Outline+Hard shadow,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,2,2,10,10,10,1
@@ -59,4 +60,4 @@ Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\t(\4aFF)\pos(152.4,1
 Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\3c&HD90016&\t(\alphaFF)\pos(291.6,160.4)}\t(\alphaFF){\alpha00}\alpha00
 Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\k600\t(\1a40\2a80\3aC0\4aFF)\pos(172.2,224)}\t{\k1}(\1a40\2a80\3aC0\4aFF)
 Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\t(0,1000,\1a80)\t(1000,2000,\1a00)\pos(172.2,259.4)}\t(0,1000,\1a80)\t(1000,2000,\1a00)\N{\1a00}\1a00{\t(\1a80)}\t(\1a80){\t(\1aFF)}\t(\1aFF)
-Dialogue: 0,0:00:10.01,0:00:15.05,Soft shadow,,0,0,0,,{\t(1000,3000,\fs30)}\t(1000,3000,\fs30){\r}\r
+Dialogue: 0,0:00:10.01,0:00:15.05,Hard shadow,,0,0,0,,{\fs15\t(1000,3000,\fs30.5)}\t(1000,3000,\fs30.5){\r}\r
