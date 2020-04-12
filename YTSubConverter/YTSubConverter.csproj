@@ -151,6 +151,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.ja.resx" />
     <EmbeddedResource Include="Resources.ko.resx" />
+    <EmbeddedResource Include="Resources.ru.resx" />
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
