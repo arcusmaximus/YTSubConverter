@@ -213,3 +213,4 @@ Thanks to the following people for providing the UI translations:
 * Mali (@mali_5157) - Chinese
 * tototo (@vvto33) - Japanese
 * Kasaka-117 (@kasaka_117) - Korean
+* Saiv46 - Russian
