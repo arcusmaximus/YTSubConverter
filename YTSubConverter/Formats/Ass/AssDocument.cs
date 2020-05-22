@@ -165,9 +165,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         private List<AssLine> ParseLine(AssDialogue dialogue, AssStyle style, AssStyleOptions styleOptions)
         {
-            DateTime startTime = TimeUtil.SnapTimeToFrame(dialogue.Start.AddMilliseconds(32));
-            DateTime endTime = TimeUtil.SnapTimeToFrame(dialogue.End).AddMilliseconds(32);
-            AssLine line = new AssLine(startTime, endTime) { AnchorPoint = style.AnchorPoint, KaraokeType = SimpleKaraokeType };
+            AssLine line = new AssLine(dialogue.Start, dialogue.End) { AnchorPoint = style.AnchorPoint, KaraokeType = SimpleKaraokeType };
 
             AssTagContext context = new AssTagContext
                                     {
@@ -330,7 +328,7 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         private IEnumerable<AssLine> ExpandLine(AssLine line)
         {
-            return ExpandLineForKaraoke(line).SelectMany(Animator.Expand);
+            return ExpandLineForKaraoke(line).SelectMany(l => Animator.Expand(this, l));
         }
 
         private IEnumerable<AssLine> ExpandLineForKaraoke(AssLine line)
@@ -409,14 +407,14 @@ namespace Arc.YTSubConverter.Formats.Ass
             TimeSpan timeOffset = activeSectionsPerStep.Keys[stepIdx];
             int numActiveSections = activeSectionsPerStep.Values[stepIdx];
 
-            DateTime startTime = TimeUtil.SnapTimeToFrame((originalLine.Start + timeOffset).AddMilliseconds(20));
+            DateTime startTime = TimeUtil.RoundTimeToFrameCenter(originalLine.Start + timeOffset);
             if (startTime >= originalLine.End)
                 return new List<AssLine>();
 
             DateTime endTime;
             if (stepIdx < activeSectionsPerStep.Count - 1)
             {
-                endTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[stepIdx + 1]).AddMilliseconds(20)).AddMilliseconds(-1);
+                endTime = TimeUtil.RoundTimeToFrameCenter(originalLine.Start + activeSectionsPerStep.Keys[stepIdx + 1]);
                 if (endTime > originalLine.End)
                     endTime = originalLine.End;
             }

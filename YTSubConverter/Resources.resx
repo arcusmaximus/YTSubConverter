@@ -142,6 +142,9 @@
   <data name="FailedToLoadFile0" xml:space="preserve">
     <value>Failed to load file: {0}</value>
   </data>
+  <data name="FontName" xml:space="preserve">
+    <value />
+  </data>
   <data name="Glow" xml:space="preserve">
     <value>Glow</value>
   </data>

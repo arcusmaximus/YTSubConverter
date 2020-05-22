@@ -48,7 +48,7 @@ Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnMonotype Corsiva\pos(2
 Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnCarrois Gothic SC\pos(214.2,245.8)}\fnCarrois Gothic SC
 Dialogue: 0,0:00:00.00,0:00:05.01,Plain,,0,0,0,,{\an5\pos(31.2,159.6)}Line\N{\fnCarrois Gothic SC}break
 Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an5\pos(31.2,200.4)}Line\N{\fnCarrois Gothic SC}break
-Dialogue: 0,0:00:05.01,0:00:20.05,Default,,0,0,0,,{\an5\fs7 . 5\pos(192,53.8)}\fs ( 7 . 5 ) {\fs}\fs {\fs7.5}\fs7.5 {\fsX}\fsX {\fs30}\fs30 {\r}\r
-Dialogue: 0,0:00:05.01,0:00:20.05,Small,,0,0,0,,{\pos(192,108.2)}small{\rDefault}\rDefault{\rBig}\rBig{\r}\r{\fs15}\fs15
+Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\fs7 . 5\pos(192,53.8)}\fs ( 7 . 5 ) {\fs}\fs {\fs7.5}\fs7.5 {\fsX}\fsX {\fs30}\fs30 {\r}\r
+Dialogue: 0,0:00:05.01,0:00:10.05,Small,,0,0,0,,{\pos(192,108.2)}small{\rDefault}\rDefault{\rBig}\rBig{\r}\r{\fs15}\fs15
 Dialogue: 0,0:00:05.01,0:00:10.05,Plain,,0,0,0,,{\an5\pos(192,157)}Line\N{\fs30}break
 Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\pos(192,225.4)}Line\N{\fs30}break

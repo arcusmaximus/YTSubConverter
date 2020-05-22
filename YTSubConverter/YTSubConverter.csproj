@@ -175,10 +175,11 @@
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
     <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp1.exe&quot; &quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)ja\YTSubConverter.resources.dll&quot;" />
     <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp2.exe&quot; &quot;$(TargetDir)YTSubConverter-temp1.exe&quot; &quot;$(TargetDir)ko\YTSubConverter.resources.dll&quot;" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)YTSubConverter-temp2.exe&quot; &quot;$(TargetDir)zh-Hans\YTSubConverter.resources.dll&quot;" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-merged.exe&quot; &quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)zh-Hant\YTSubConverter.resources.dll&quot;" />
-    <Delete Files="$(TargetDir)YTSubConverter.exe;$(TargetDir)YTSubConverter-temp1.exe;$(TargetDir)YTSubConverter-temp2.exe;$(TargetDir)YTSubConverter-temp3.exe" />
-    <RemoveDir Directories="$(TargetDir)ja;$(TargetDir)ko;$(TargetDir)zh-Hans;$(TargetDir)zh-Hant" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)YTSubConverter-temp2.exe&quot; &quot;$(TargetDir)ru\YTSubConverter.resources.dll&quot;" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp4.exe&quot; &quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)zh-Hans\YTSubConverter.resources.dll&quot;" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-merged.exe&quot; &quot;$(TargetDir)YTSubConverter-temp4.exe&quot; &quot;$(TargetDir)zh-Hant\YTSubConverter.resources.dll&quot;" />
+    <Delete Files="$(TargetDir)YTSubConverter.exe;$(TargetDir)YTSubConverter-temp1.exe;$(TargetDir)YTSubConverter-temp2.exe;$(TargetDir)YTSubConverter-temp3.exe;$(TargetDir)YTSubConverter-temp4.exe" />
+    <RemoveDir Directories="$(TargetDir)ja;$(TargetDir)ko;$(TargetDir)ru;$(TargetDir)zh-Hans;$(TargetDir)zh-Hant" />
     <Move SourceFiles="$(TargetDir)YTSubConverter-merged.exe" DestinationFiles="$(TargetDir)YTSubConverter.exe" />
   </Target>
 </Project>

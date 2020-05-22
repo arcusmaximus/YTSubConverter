@@ -13,7 +13,7 @@ YCbCr Matrix: TV.601
 Last Style Storage: Default
 Video File: ?dummy:30.000000:40000:640:480:204:202:200:
 Video AR Value: 1.333333
-Active Line: 12
+Active Line: 3
 Video Position: 241
 
 [V4+ Styles]
@@ -30,7 +30,8 @@ Style: Shadow box,Arial,15,&H0000FF00,&HFF0000FF,&H64000000,&H000505FF,0,0,0,0,1
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:00:00.00,0:00:05.01,Plain,,0,0,0,,{\k1000\pos(192,46.2)}Kara{\k1000}oke
 Dialogue: 0,0:00:00.00,0:00:05.01,Outline,,0,0,0,,{\pos(192,88.8)}Outline
-Dialogue: 0,0:00:00.00,0:00:05.01,Box outline,,0,0,0,,{\pos(192,140.4)}Box
+Dialogue: 0,0:00:00.00,0:00:05.01,Box outline,,0,0,0,,{\pos(156,140.4)}Box\{}N\N{\1cFFFFFF}Break
+Dialogue: 0,0:00:00.00,0:00:05.01,Box outline,,0,0,0,,{\pos(223.8,140.4)}Box{\1cFFFFFF}\N\{}NBreak
 Dialogue: 0,0:00:00.00,0:00:05.01,Shadow,,0,0,0,,{\pos(192,183)}Shadow
 Dialogue: 0,0:00:00.00,0:00:05.01,Outline+shadow,,0,0,0,,{\pos(192,229.2)}Outline shadow
 Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\pos(192,51.6)\c ( FF ) \1a(1C0)}\c ( FF ) \1a(1C0) {\c\1a}\c\1a {\1c&HFF00\1a&H80}\1c&HFF00\1a&H80 {\r}\r {\cHHFF0000&&\1aHH40&&}\cHHFF0000&&\1aHH40&&

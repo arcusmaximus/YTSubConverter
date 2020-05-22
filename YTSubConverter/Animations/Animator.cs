@@ -8,7 +8,7 @@ namespace Arc.YTSubConverter.Animations
 {
     internal static class Animator
     {
-        public static IEnumerable<AssLine> Expand(AssLine originalLine)
+        public static IEnumerable<AssLine> Expand(AssDocument document, AssLine originalLine)
         {
             List<AnimationWithSectionIndex> anims = GetAnimationsWithSectionIndex(originalLine);
             if (anims.Count == 0)
@@ -26,13 +26,13 @@ namespace Arc.YTSubConverter.Animations
             {
                 TimeRange clusterRange = animClusters.Keys[i];
                 List<AnimationWithSectionIndex> clusterAnims = animClusters.Values[i];
-                foreach (AssLine frameLine in CreateFrameLines(lastLine, clusterRange, clusterAnims))
+                foreach (AssLine frameLine in CreateFrameLines(document, lastLine, clusterRange, clusterAnims))
                 {
                     lastLine.End = frameLine.Start;
                     yield return lastLine = frameLine;
                 }
 
-                DateTime interAnimStart = TimeUtil.FrameToTime(TimeUtil.TimeToFrame(clusterRange.End) + 1);
+                DateTime interAnimStart = clusterRange.End;
                 DateTime interAnimEnd = i < animClusters.Count - 1 ? animClusters.Keys[i + 1].Start : originalLine.End;
                 if (interAnimEnd > interAnimStart)
                     yield return lastLine = CreatePostAnimationClusterLine(originalLine, lastLine, interAnimStart, interAnimEnd, clusterAnims);
@@ -45,7 +45,12 @@ namespace Arc.YTSubConverter.Animations
         {
             List<AnimationWithSectionIndex> animations = new List<AnimationWithSectionIndex>();
 
-            foreach (Animation anim in line.Animations)
+            foreach (Animation anim in line.Animations.Where(a => a is MoveAnimation))
+            {
+                animations.Add(new AnimationWithSectionIndex(anim, -1));
+            }
+
+            foreach (Animation anim in line.Animations.Where(a => !(a is MoveAnimation)))
             {
                 animations.Add(new AnimationWithSectionIndex(anim, -1));
             }
@@ -81,8 +86,8 @@ namespace Arc.YTSubConverter.Animations
                 }
 
                 clusterRange.IntersectWith(lineRange);
-                clusterRange.Start = TimeUtil.SnapTimeToFrame(clusterRange.Start.AddMilliseconds(32));
-                clusterRange.End = TimeUtil.SnapTimeToFrame(clusterRange.End).AddMilliseconds(32);
+                clusterRange.Start = TimeUtil.RoundTimeToFrameCenter(clusterRange.Start);
+                clusterRange.End = TimeUtil.RoundTimeToFrameCenter(clusterRange.End);
                 clusters.FetchValue(clusterRange, () => new List<AnimationWithSectionIndex>()).AddRange(clusterAnims);
             }
             return clusters;
@@ -110,6 +115,7 @@ namespace Arc.YTSubConverter.Animations
         private static AssLine CreateInitialLine(AssLine originalLine, List<AnimationWithSectionIndex> anims)
         {
             AssLine newLine = (AssLine)originalLine.Clone();
+            newLine.Start = TimeUtil.RoundTimeToFrameCenter(newLine.Start);
 
             foreach (AnimationWithSectionIndex anim in anims.Where(a => a.Animation.EndTime < originalLine.Start)
                                                             .OrderBy(a => a.Animation.EndTime))
@@ -141,13 +147,14 @@ namespace Arc.YTSubConverter.Animations
             return newLine;
         }
 
-        private static IEnumerable<AssLine> CreateFrameLines(AssLine originalLine, TimeRange timeRange, List<AnimationWithSectionIndex> animations)
+        private static IEnumerable<AssLine> CreateFrameLines(AssDocument document, AssLine originalLine, TimeRange timeRange, List<AnimationWithSectionIndex> animations)
         {
-            int rangeStartFrame = TimeUtil.TimeToFrame(timeRange.Start);
-            int rangeEndFrame = TimeUtil.TimeToFrame(timeRange.End);
+            int rangeStartFrame = TimeUtil.StartTimeToFrame(timeRange.Start);
+            int rangeEndFrame = TimeUtil.EndTimeToFrame(timeRange.End);
 
             const int frameStepSize = 2;
-            int lastIterationFrame = rangeStartFrame + (rangeEndFrame - 1 - rangeStartFrame) / frameStepSize * frameStepSize;
+            int subStepFrames = (rangeEndFrame + 1 - rangeStartFrame) % frameStepSize;
+            int lastIterationFrame = rangeEndFrame + 1 - subStepFrames - frameStepSize;
 
             bool needTextReset = animations.Any(a => a.Animation.AffectsText);
 
@@ -155,20 +162,21 @@ namespace Arc.YTSubConverter.Animations
             for (int frame = rangeStartFrame; frame <= lastIterationFrame; frame += frameStepSize)
             {
                 frameLine = (AssLine)frameLine.Clone();
-                frameLine.Start = TimeUtil.FrameToTime(frame);
-                frameLine.End = frame < lastIterationFrame ? TimeUtil.FrameToTime(frame + frameStepSize) : timeRange.End;
+                frameLine.Start = TimeUtil.FrameToStartTime(frame);
+                frameLine.End = frame < lastIterationFrame ? TimeUtil.FrameToEndTime(frame + frameStepSize - 1) : timeRange.End;
+                frameLine.Position = originalLine.Position ?? document.GetDefaultPosition(originalLine.AnchorPoint);
                 if (needTextReset)
                     ResetText(frameLine, originalLine);
 
-                int interpFrame = frame + frameStepSize / 2;
+                float interpFrame = frame + (frameStepSize - 1) / 2.0f;
 
                 foreach (AnimationWithSectionIndex animWithSection in animations)
                 {
-                    int animStartFrame = TimeUtil.TimeToFrame(animWithSection.Animation.StartTime);
-                    int animEndFrame = TimeUtil.TimeToFrame(animWithSection.Animation.EndTime);
+                    int animStartFrame = TimeUtil.StartTimeToFrame(animWithSection.Animation.StartTime);
+                    int animEndFrame = TimeUtil.EndTimeToFrame(animWithSection.Animation.EndTime);
                     if (interpFrame >= animStartFrame && interpFrame < animEndFrame)
                     {
-                        float t = (float)(interpFrame - animStartFrame) / (animEndFrame - animStartFrame);
+                        float t = (interpFrame - animStartFrame) / (animEndFrame - animStartFrame);
                         ApplyAnimation(frameLine, animWithSection, t);
                     }
                     else if (interpFrame >= animEndFrame && interpFrame < animEndFrame + frameStepSize)

@@ -13,7 +13,6 @@ YCbCr Matrix: TV.601
 Last Style Storage: Default
 Video File: ?dummy:30.000000:40000:640:480:204:202:200:
 Video AR Value: 1.333333
-Active Line: 8
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding

@@ -27,10 +27,10 @@ namespace Arc.YTSubConverter.Formats.Ass.KaraokeTypes
             {
                 AssLine cursorStepLine = (AssLine)context.StepLine.Clone();
                 if (cursorStepIdx > startCursorStepIdx)
-                    cursorStepLine.Start = TimeUtil.SnapTimeToFrame(context.OriginalLine.Start.AddMilliseconds(cursorStepIdx * _intervalMs));
+                    cursorStepLine.Start = TimeUtil.RoundTimeToFrameCenter(context.OriginalLine.Start.AddMilliseconds(cursorStepIdx * _intervalMs));
 
                 if (cursorStepIdx < endCursorStepIdx)
-                    cursorStepLine.End = TimeUtil.SnapTimeToFrame(context.OriginalLine.Start.AddMilliseconds((cursorStepIdx + 1) * _intervalMs));
+                    cursorStepLine.End = TimeUtil.RoundTimeToFrameCenter(context.OriginalLine.Start.AddMilliseconds((cursorStepIdx + 1) * _intervalMs));
 
                 if (cursorStepLine.Start == cursorStepLine.End)
                     continue;

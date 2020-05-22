@@ -54,7 +54,7 @@ namespace Arc.YTSubConverter.Formats.Ass.KaraokeTypes
             int stepFirstSectionIdx = 0;
             for (int prevStepIdx = 0; prevStepIdx < stepIdx; prevStepIdx++)
             {
-                DateTime fadeStartTime = TimeUtil.SnapTimeToFrame((originalLine.Start + activeSectionsPerStep.Keys[prevStepIdx + 1]).AddMilliseconds(20));
+                DateTime fadeStartTime = originalLine.Start + activeSectionsPerStep.Keys[prevStepIdx + 1];
                 DateTime fadeEndTime = fadeStartTime.AddMilliseconds(1000);
                 int stepLastSectionIdx = activeSectionsPerStep.Values[prevStepIdx] - 1;
                 for (int sectionIdx = stepFirstSectionIdx; sectionIdx <= stepLastSectionIdx; sectionIdx++)

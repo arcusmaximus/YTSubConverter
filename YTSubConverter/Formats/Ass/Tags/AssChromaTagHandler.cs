@@ -37,13 +37,13 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                     if (chromaInMs > 0)
                     {
                         chromaLines.AddRange(CreateChromaLines(originalLine, colors, center, maxOffsetX, maxOffsetY, chromaInMs, true));
-                        originalLine.Start = TimeUtil.SnapTimeToFrame(originalLine.Start.AddMilliseconds(chromaInMs));
+                        originalLine.Start = TimeUtil.RoundTimeToFrameCenter(originalLine.Start.AddMilliseconds(chromaInMs));
                     }
 
                     if (chromeOutMs > 0)
                     {
                         chromaLines.AddRange(CreateChromaLines(originalLine, colors, center, maxOffsetX, maxOffsetY, chromeOutMs, false));
-                        originalLine.End = TimeUtil.SnapTimeToFrame(originalLine.End.AddMilliseconds(-chromeOutMs));
+                        originalLine.End = TimeUtil.RoundTimeToFrameCenter(originalLine.End.AddMilliseconds(-chromeOutMs));
                     }
 
                     return chromaLines;
@@ -100,7 +100,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 AssLine chromaLine = (AssLine)originalLine.Clone();
                 foreach (Section section in chromaLine.Sections)
                 {
-                    section.ForeColor = colors[i];
+                    int alpha = (int)(section.ForeColor.A * (colors[i].A / 255.0f));
+                    section.ForeColor = Color.FromArgb(alpha, colors[i].R, colors[i].G, colors[i].B);
                     section.BackColor = Color.Empty;
                     section.ShadowColors.Clear();
                 }
@@ -112,12 +113,12 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 PointF nearPosition = new PointF(center.X + offsetX / 5, center.Y + offsetY / 5);
                 if (moveIn)
                 {
-                    chromaLine.End = TimeUtil.SnapTimeToFrame(originalLine.Start.AddMilliseconds(durationMs)).AddMilliseconds(32);
+                    chromaLine.End = TimeUtil.RoundTimeToFrameCenter(originalLine.Start.AddMilliseconds(durationMs));
                     chromaLine.Animations.Add(new MoveAnimation(chromaLine.Start, farPosition, chromaLine.End, nearPosition));
                 }
                 else
                 {
-                    chromaLine.Start = TimeUtil.SnapTimeToFrame(originalLine.End.AddMilliseconds(-durationMs));
+                    chromaLine.Start = TimeUtil.RoundTimeToFrameCenter(originalLine.End.AddMilliseconds(-durationMs));
                     chromaLine.Animations.Add(new MoveAnimation(chromaLine.Start, nearPosition, chromaLine.End, farPosition));
                 }
                 yield return chromaLine;

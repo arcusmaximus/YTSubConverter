@@ -111,8 +111,12 @@ namespace Arc.YTSubConverter.Formats
             Line line = (Line)sourceLines[0].Clone();
             for (int i = 1; i < sourceLines.Length; i++)
             {
-                line.Sections.Last().Text += "\r\n";
+                if (sourceLines[i].Sections.Count == 0)
+                    continue;
+
+                int firstNewSectionIdx = line.Sections.Count;
                 line.Sections.AddRange(sourceLines[i].Sections.Select(s => (Section)s.Clone()));
+                line.Sections[firstNewSectionIdx].Text = "\r\n" + line.Sections[firstNewSectionIdx].Text;
             }
 
             line.Start = start;

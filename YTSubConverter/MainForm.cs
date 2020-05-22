@@ -54,6 +54,16 @@ namespace Arc.YTSubConverter
 
             _dlgOpenSubtitles.Filter = Resources.SubtitleFileFilter;
             _dlgOpenImage.Filter = Resources.ImageFileFilter;
+
+            if (!string.IsNullOrEmpty(Resources.FontName))
+            {
+                AutoScaleMode = AutoScaleMode.None;
+                Font = new Font(Resources.FontName, Font.Size);
+                _btnBrowse.Height = _txtInputFile.Height;
+                _btnPickTextColor.Height = _txtCurrentWordTextColor.Height;
+                _btnPickOutlineColor.Height = _txtCurrentWordOutlineColor.Height;
+                _btnPickShadowColor.Height = _txtCurrentWordShadowColor.Height;
+            }
         }
 
         private AssStyleOptions SelectedStyleOptions
@@ -91,29 +101,19 @@ namespace Arc.YTSubConverter
             catch (Exception ex)
             {
                 MessageBox.Show(string.Format(Resources.FailedToLoadFile0, ex.Message), Resources.Error, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                ClearUi();
             }
         }
 
-        private void PopulateUi(string filePath, SubtitleDocument doc)
+        private void PopulateUi(string filePath, SubtitleDocument document)
         {
             _txtInputFile.Text = filePath;
 
-            AssDocument assDoc = doc as AssDocument;
+            AssDocument assDoc = document as AssDocument;
             if (assDoc != null)
             {
                 _grpStyleOptions.Enabled = true;
-
-                _styles = assDoc.Styles.ToDictionary(s => s.Name);
-                _defaultFontSize = assDoc.DefaultFontSize;
-                foreach (AssStyle style in assDoc.Styles)
-                {
-                    if (!_styleOptions.ContainsKey(style.Name))
-                        _styleOptions.Add(style.Name, new AssStyleOptions(style));
-                }
-
-                _lstStyles.DataSource = assDoc.Styles.Select(s => _styleOptions[s.Name]).ToList();
-                if (_lstStyles.Items.Count > 0)
-                    _lstStyles.SelectedIndex = 0;
+                RefreshStyleList(assDoc);
             }
 
             _chkAutoConvert.Enabled = true;
@@ -130,6 +130,24 @@ namespace Arc.YTSubConverter
             _subtitleRenameWatcher.Filter = Path.GetFileNameWithoutExtension(filePath) + "_tmp_*" + Path.GetExtension(filePath);
             
             _btnConvert.Enabled = true;
+        }
+
+        private void RefreshStyleList(AssDocument document)
+        {
+            _styles = document.Styles.ToDictionary(s => s.Name);
+            _defaultFontSize = document.DefaultFontSize;
+            foreach (AssStyle style in document.Styles)
+            {
+                if (!_styleOptions.ContainsKey(style.Name))
+                    _styleOptions.Add(style.Name, new AssStyleOptions(style));
+            }
+
+            int selectedIndex = _lstStyles.SelectedIndex;
+            _lstStyles.DataSource = document.Styles.Select(s => _styleOptions[s.Name]).ToList();
+            if (_lstStyles.Items.Count > selectedIndex)
+                _lstStyles.SelectedIndex = selectedIndex;
+            else if (_lstStyles.Items.Count > 0)
+                _lstStyles.SelectedIndex = 0;
         }
 
         private void ClearUi()
@@ -378,6 +396,8 @@ namespace Arc.YTSubConverter
                     YttDocument outputDoc = new YttDocument(inputDoc);
                     outputFilePath = Path.ChangeExtension(_txtInputFile.Text, ".ytt");
                     outputDoc.Save(outputFilePath);
+
+                    RefreshStyleList(inputDoc);
                 }
                 else
                 {

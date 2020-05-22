@@ -10,11 +10,6 @@ namespace Arc.YTSubConverter.Formats
 {
     internal class YttDocument : SubtitleDocument
     {
-        /// <summary>
-        /// Defines the (approximate) delay between the specified subtitle appearance time and the time it actually appears.
-        /// </summary>
-        private const int SubtitleDelayMs = 60;
-
         public YttDocument(string filePath)
         {
             XmlDocument doc = new XmlDocument();
@@ -24,7 +19,7 @@ namespace Arc.YTSubConverter.Formats
                 int.TryParse(parElem.GetAttribute("t"), out int startMs);
                 int.TryParse(parElem.GetAttribute("d"), out int durationMs);
 
-                DateTime start = TimeBase.AddMilliseconds(startMs + SubtitleDelayMs);
+                DateTime start = TimeBase.AddMilliseconds(startMs);
                 DateTime end = start.AddMilliseconds(durationMs);
                 Line line = new Line(start, end, parElem.InnerText);
                 Lines.Add(line);
@@ -45,6 +40,7 @@ namespace Arc.YTSubConverter.Formats
 
             ExtractAttributes(
                 Lines,
+                new Line(TimeBase, TimeBase) { Position = new PointF() },
                 new LinePositionComparer(),
                 out Dictionary<Line, int> positionIds,
                 out List<Line> positions
@@ -52,6 +48,7 @@ namespace Arc.YTSubConverter.Formats
 
             ExtractAttributes(
                 Lines,
+                new Line(TimeBase, TimeBase),
                 new LineAlignmentComparer(),
                 out Dictionary<Line, int> windowStyleIds,
                 out List<Line> windowStyles
@@ -59,6 +56,7 @@ namespace Arc.YTSubConverter.Formats
 
             ExtractAttributes(
                 Lines.SelectMany(l => l.Sections),
+                new Section(null),
                 new SectionFormatComparer(),
                 out Dictionary<Section, int> penIds,
                 out List<Section> pens
@@ -83,9 +81,9 @@ namespace Arc.YTSubConverter.Formats
             {
                 MakeInvisibleTextBlack(i);
                 PreventItalicShadowClipping(i);
+                PreventBackgroundBoxClipping(i);
                 HardenSpaces(i);
                 AddRubySafetySection(i);
-                SplitMultiBackgroundLine(i);
                 i += ExpandLineForMultiShadows(i) - 1;
                 i += ExpandLineForDarkText(i) - 1;
             }
@@ -103,7 +101,7 @@ namespace Arc.YTSubConverter.Formats
                 return;
 
             Line italicLine =
-                new Line(TimeBase.AddMilliseconds(SubtitleDelayMs + 5000), TimeBase.AddMilliseconds(SubtitleDelayMs + 5100))
+                new Line(TimeBase.AddMilliseconds(5000), TimeBase.AddMilliseconds(5100))
                 {
                     Position = new PointF(0, 0),
                     AnchorPoint = AnchorPoint.BottomRight
@@ -153,6 +151,34 @@ namespace Arc.YTSubConverter.Formats
         }
 
         /// <summary>
+        /// Despite several code revisions spanning multiple years, YouTube still doesn't get line breaks in subtitles right.
+        /// Even now, having a line break at the beginning or end of a section result in another section losing part of
+        /// its background box. The best they could do was apparently getting rid of the rounded corners to make it
+        /// less obvious (-> now everything has sharp corners, not just the clipped parts).
+        /// The asymmetry in box padding remains visible, however, so we apply a workaround involving zero-width spaces
+        /// to fix it where possible.
+        /// </summary>
+        private void PreventBackgroundBoxClipping(int lineIndex)
+        {
+            Line line = Lines[lineIndex];
+            for (int i = 0; i < line.Sections.Count - 1; i++)
+            {
+                Section thisSection = line.Sections[i];
+                Section nextSection = line.Sections[i + 1];
+                if (thisSection.BackColor != nextSection.BackColor ||
+                    thisSection.Font != nextSection.Font ||
+                    thisSection.Offset != nextSection.Offset ||
+                    thisSection.Scale != nextSection.Scale)
+                    continue;
+
+                if (thisSection.Text.EndsWith("\r\n"))
+                    thisSection.Text = thisSection.Text + "\x200B";
+                else if (nextSection.Text.StartsWith("\r\n"))
+                    nextSection.Text = "\x200B" + nextSection.Text;
+            }
+        }
+
+        /// <summary>
         /// Sequences of multiple spaces get collapsed into a single space in browsers -> replace by non-breaking spaces.
         /// (Useful for expanding the background box to cover up on-screen text)
         /// </summary>
@@ -165,7 +191,7 @@ namespace Arc.YTSubConverter.Formats
         }
 
         /// <summary>
-        /// To ensure the first section of a multisection line doesn't lose its "p" attribute, we add a zero-width space
+        /// To ensure the first section of a multi-section line doesn't lose its "p" attribute, we add a zero-width space
         /// after it (<see cref="WriteLine"/>). However, this workaround also breaks any ruby groups that
         /// are right at the start of the line (because the separator is spliced into the group). To prevent this,
         /// we prepend a dummy section so the separator will appear before the ruby group inside of inside it.
@@ -180,67 +206,6 @@ namespace Arc.YTSubConverter.Formats
             dummySection.Text = "\x200B";
             dummySection.RubyPart = RubyPart.None;
             line.Sections.Insert(0, dummySection);
-        }
-
-        /// <summary>
-        /// Even after taking months to fix a regression that completely broke the use of multiple formats
-        /// in one subtitle, YouTube still hasn't got the Javascript code down. While changing the background
-        /// color in the middle of a line now works again, changing it before or after a line break results
-        /// in the rounded corners disappearing on one side. It doesn't look pretty.
-        /// The only workaround seems to be to split the subtitle in two.
-        /// </summary>
-        private void SplitMultiBackgroundLine(int lineIndex)
-        {
-            Line line = Lines[lineIndex];
-            if (line.Sections.All(s => s.BackColor.A == 0))
-                return;
-
-            int numLineBreaks = line.Sections.SelectMany(s => s.Text).Count(c => c == '\n');
-            if (numLineBreaks != 1)
-                return;
-
-            int secondSubLineStartSectionIdx = -1;
-            for (int i = 1; i < line.Sections.Count; i++)
-            {
-                Section prevSection = line.Sections[i - 1];
-                Section section = line.Sections[i];
-                if ((prevSection.BackColor != section.BackColor || prevSection.Font != section.Font || prevSection.Scale != section.Scale) &&
-                    (prevSection.Text.EndsWith("\r\n") || section.Text.StartsWith("\r\n")))
-                {
-                    secondSubLineStartSectionIdx = i;
-                    break;
-                }
-            }
-
-            if (secondSubLineStartSectionIdx < 0)
-                return;
-
-            Line secondLine = (Line)line.Clone();
-            line.Sections.RemoveRange(secondSubLineStartSectionIdx, line.Sections.Count - secondSubLineStartSectionIdx);
-            line.Sections[secondSubLineStartSectionIdx - 1].Text = line.Sections[secondSubLineStartSectionIdx - 1].Text.Replace("\r\n", "");
-            secondLine.Sections.RemoveRange(0, secondSubLineStartSectionIdx);
-            secondLine.Sections[0].Text = secondLine.Sections[0].Text.Replace("\r\n", "");
-
-            PointF position = line.Position ?? GetDefaultPosition(line.AnchorPoint);
-            if (AnchorPointUtil.IsTopAligned(line.AnchorPoint))
-            {
-                position.Y += VideoDimensions.Height * 0.05f;
-                line.AnchorPoint = AnchorPointUtil.GetVerticalOpposite(line.AnchorPoint);
-            }
-            else if (AnchorPointUtil.IsMiddleAligned(line.AnchorPoint))
-            {
-                line.AnchorPoint = AnchorPointUtil.MakeBottomAligned(line.AnchorPoint);
-                secondLine.AnchorPoint = AnchorPointUtil.MakeTopAligned(secondLine.AnchorPoint);
-            }
-            else
-            {
-                position.Y -= VideoDimensions.Height * 0.05f;
-                secondLine.AnchorPoint = AnchorPointUtil.GetVerticalOpposite(secondLine.AnchorPoint);
-            }
-
-            line.Position = position;
-            secondLine.Position = position;
-            Lines.Insert(lineIndex + 1, secondLine);
         }
 
         /// <summary>
@@ -357,7 +322,7 @@ namespace Arc.YTSubConverter.Formats
         /// <summary>
         /// YouTube decided to be helpful by moving your subtitles slightly towards the center so they'll never sit at the video's edge.
         /// However, it doesn't just impose a cap on each coordinate - it moves your sub regardless of where it is. For example,
-        /// you doesn't just get your X = 0% changed to a 2%, but also your 10% to an 11.6%.
+        /// you don't just get your X = 0% changed to a 2%, but also your 10% to an 11.6%.
         /// We counteract this cleverness so our subs actually get displayed where we said they should be.
         /// (Or at least as close as possible because the server doesn't allow floating point coordinates for whatever reason)
         /// </summary>
@@ -477,12 +442,10 @@ namespace Arc.YTSubConverter.Formats
             if (line.Sections.Count == 0)
                 return;
 
-            // Compensate for the subtitle delay (YouTube displaying the subtitle too late) by moving the start time up.
-            int lineStartMs = (int)(line.Start - TimeBase).TotalMilliseconds - SubtitleDelayMs;
+            int lineStartMs = (int)(line.Start - TimeBase).TotalMilliseconds;
             int lineDurationMs = (int)(line.End - line.Start).TotalMilliseconds;
 
-            // If subtracting the subtitle delay brought us into negative time (because the original starting time was less than
-            // the delay), set the starting time to 1ms and reduce the duration instead.
+            // If we start in negative time for whatever reason, set the starting time to 1ms and reduce the duration to compensate.
             // (The reason for using 1ms is that the Android app does not respect the positioning of, and sometimes does not display,
             // subtitles that start at 0ms)
             if (lineStartMs <= 0)
@@ -506,9 +469,6 @@ namespace Arc.YTSubConverter.Formats
             if (line.Sections.Count == 1)
             {
                 writer.WriteValue(line.Sections[0].Text);
-
-                // Add a zero-width space. (These spaces affect line height in some browsers, so we always want at least one to ensure consistency)
-                writer.WriteValue("\x200B");
             }
             else
             {
@@ -520,7 +480,7 @@ namespace Arc.YTSubConverter.Formats
                     WriteSection(writer, section, penIds);
                     if (!multiSectionWorkaroundWritten)
                     {
-                        writer.WriteCharEntity((char)0x200B);
+                        writer.WriteValue("\x200B");
                         multiSectionWorkaroundWritten = true;
                     }
                 }
@@ -537,30 +497,32 @@ namespace Arc.YTSubConverter.Formats
             if (section.StartOffset > TimeSpan.Zero)
                 writer.WriteAttributeString("t", ((int)section.StartOffset.TotalMilliseconds).ToString());
 
-            // Surround line breaks by zero-width spaces just in case one of those breaks lies at
-            // a section border (which would cause the rounded corners on that side to get cut off)
-            writer.WriteValue(section.Text.Replace("\r\n", "\x200B\r\n\x200B"));
-
-            // Add another zero-width space for lines without line breaks. (ZW spaces affect line height in some browsers, so we always
-            // want at least one to ensure consistency)
-            writer.WriteValue("\x200B");
-
+            writer.WriteValue(section.Text);
             writer.WriteEndElement();
         }
 
         private static void ExtractAttributes<T>(
             IEnumerable<T> objects,
+            T dummyAttr,
             IEqualityComparer<T> comparer,
             out Dictionary<T, int> mappings,
             out List<T> attributes
         )
         {
             mappings = new Dictionary<T, int>();
-            attributes = new List<T>();
+
+            // The iOS app ignores the background color for pen 0 and might have other,
+            // similar bugs too, so we insert a dummy attribute to ensure our actual attributes
+            // start at ID 1. (We can't just number them starting at 1 because YouTube
+            // renumbers them starting at 0 during upload - badly. Without a pen 0,
+            // all pen IDs would shift down by 1, but the pen references would *not*
+            // be updated, resulting in everything getting the wrong color.)
+            attributes = new List<T> { dummyAttr };
+
             foreach (T attr in objects)
             {
-                int index = attributes.IndexOf(attr, comparer);
-                if (index < 0)
+                int index = 1 + attributes.Skip(1).IndexOf(attr, comparer);
+                if (index <= 0)
                 {
                     index = attributes.Count;
                     attributes.Add(attr);

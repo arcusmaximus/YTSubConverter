@@ -138,6 +138,9 @@
   <data name="FailedToLoadFile0" xml:space="preserve">
     <value>불러오기 실패하였습니다{0}</value>
   </data>
+  <data name="FontName" xml:space="preserve">
+    <value>Malgun Gothic</value>
+  </data>
   <data name="Glow" xml:space="preserve">
     <value>윤곽</value>
   </data>

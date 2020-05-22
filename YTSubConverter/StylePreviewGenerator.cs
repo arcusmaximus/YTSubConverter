@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
@@ -11,6 +12,17 @@ namespace Arc.YTSubConverter
 {
     internal static class StylePreviewGenerator
     {
+        private static readonly string[][] FontLists =
+            {
+                new[] { "Courier New", "Courier", "Nimbus Mono L", "Cutive Mono", "monospace" },
+                new[] { "Times New Roman", "Times", "Georgia", "Cambria", "PT Serif Caption", "serif" },
+                new[] { "Deja Vu Sans Mono", "DejaVu Sans Mono", "Lucida Console", "Monaco", "Consolas", "PT Mono", "monospace" },
+                new[] { "Comic Sans MS", "Impact", "Handlee", "fantasy" },
+                new[] { "Monotype Corsiva", "URW Chancery L", "Apple Chancery", "Dancing Script", "cursive" },
+                new[] { "Carrois Gothic SC", "sans-serif-smallcaps" },
+                new[] { "Roboto", "Arial Unicode Ms", "Arial", "Helvetica", "Verdana", "PT Sans Caption", "sans-serif" }
+            };
+
         private static readonly Dictionary<string, string> ExtensionToMimeType =
             new Dictionary<string, string>
             {
@@ -144,11 +156,7 @@ namespace Arc.YTSubConverter
             if (style.Underline)
                 html.Append("text-decoration: underline;");
 
-            if (IsSupportedFont(style.Font))
-                html.Append($"font-family: '{FixFontName(style.Font)}', 'Arial';");
-            else
-                html.Append("font-family: 'Roboto', 'Arial';");
-
+            html.Append($"font-family: {GetFullFontList(style.Font)};");
             html.Append($"color: {ToRgba(foreColor)};");
 
             List<string> shadows = new List<string>();
@@ -243,24 +251,16 @@ namespace Arc.YTSubConverter
             return "middle";
         }
 
-        private static bool IsSupportedFont(string font)
+        private static string GetFullFontList(string font)
         {
-            return font == null ||
-                   font.Equals("Carrois Gothic SC", StringComparison.InvariantCultureIgnoreCase) ||
-                   font.Equals("Comic Sans MS", StringComparison.InvariantCultureIgnoreCase) ||
-                   font.Equals("Courier New", StringComparison.InvariantCultureIgnoreCase) ||
-                   font.Equals("DejaVu Sans Mono", StringComparison.InvariantCultureIgnoreCase) ||
-                   font.Equals("Deja Vu Sans Mono", StringComparison.InvariantCultureIgnoreCase) ||
-                   font.Equals("Monotype Corsiva", StringComparison.InvariantCultureIgnoreCase) ||
-                   font.Equals("Roboto", StringComparison.InvariantCultureIgnoreCase) ||
-                   font.Equals("Times New Roman", StringComparison.InvariantCultureIgnoreCase);
-        }
+            if (string.IsNullOrEmpty(font))
+                return "Roboto";
 
-        private static string FixFontName(string font)
-        {
-            if (font != null && font.Equals("Deja Vu Sans Mono", StringComparison.InvariantCultureIgnoreCase))
-                return "DejaVu Sans Mono";
-
+            foreach (string[] fontList in FontLists)
+            {
+                if (fontList.Any(f => f.Equals(font, StringComparison.InvariantCultureIgnoreCase)))
+                    return string.Join(", ", fontList.Select(f => "\"" + f + "\""));
+            }
             return font;
         }
 

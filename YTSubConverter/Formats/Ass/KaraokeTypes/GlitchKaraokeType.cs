@@ -30,7 +30,7 @@ namespace Arc.YTSubConverter.Formats.Ass.KaraokeTypes
                 return new List<AssLine> { context.StepLine };
 
             base.Apply(context);
-            DateTime glitchEndTime = TimeUtil.Min(context.StepLine.Start.AddMilliseconds(70), context.StepLine.End);
+            DateTime glitchEndTime = TimeUtil.FrameToEndTime(TimeUtil.StartTimeToFrame(context.StepLine.Start) + 1);
             CharacterRange[] charRanges = GetGlitchKaraokeCharacterRanges(singingSection.Text[0]);
             singingSection.Animations.Add(new GlitchingCharAnimation(context.StepLine.Start, glitchEndTime, charRanges));
             return new[] { context.StepLine };

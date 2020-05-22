@@ -138,6 +138,9 @@
   <data name="FailedToLoadFile0" xml:space="preserve">
     <value>無法載入檔案。{0}</value>
   </data>
+  <data name="FontName" xml:space="preserve">
+    <value>Microsoft YaHei</value>
+  </data>
   <data name="Glow" xml:space="preserve">
     <value>輪廓</value>
   </data>

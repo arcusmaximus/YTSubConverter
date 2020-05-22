@@ -138,6 +138,9 @@
   <data name="FailedToLoadFile0" xml:space="preserve">
     <value>読み込みに失敗しました。{0}</value>
   </data>
+  <data name="FontName" xml:space="preserve">
+    <value>Meiryo</value>
+  </data>
   <data name="Glow" xml:space="preserve">
     <value>アウトライン</value>
   </data>

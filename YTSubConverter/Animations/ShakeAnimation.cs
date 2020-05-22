@@ -9,17 +9,11 @@ namespace Arc.YTSubConverter.Animations
     {
         private readonly Random _random;
 
-        public ShakeAnimation(DateTime startTime, DateTime endTime, PointF center, SizeF radius)
+        public ShakeAnimation(DateTime startTime, DateTime endTime, SizeF radius)
             : base(startTime, endTime)
         {
-            Center = center;
             Radius = radius;
             _random = new Random((int)(startTime - SubtitleDocument.TimeBase).TotalMilliseconds);
-        }
-
-        public PointF Center
-        {
-            get;
         }
 
         public SizeF Radius
@@ -31,22 +25,18 @@ namespace Arc.YTSubConverter.Animations
 
         public override void Apply(AssLine line, AssSection section, float t)
         {
-            if (t > 0 && t < 1)
-            {
-                line.Position = new PointF(
-                    Center.X + Radius.Width * ((float)_random.NextDouble() * 2 - 1.0f),
-                    Center.Y + Radius.Height * ((float)_random.NextDouble() * 2 - 1.0f)
-                );
-            }
-            else
-            {
-                line.Position = Center;
-            }
+            if (t <= 0 || t >= 1 || line.Position == null)
+                return;
+
+            line.Position = new PointF(
+                line.Position.Value.X + Radius.Width * ((float)_random.NextDouble() * 2 - 1.0f),
+                line.Position.Value.Y + Radius.Height * ((float)_random.NextDouble() * 2 - 1.0f)
+            );
         }
 
         public override object Clone()
         {
-            return new ShakeAnimation(StartTime, EndTime, Center, Radius);
+            return new ShakeAnimation(StartTime, EndTime, Radius);
         }
     }
 }
