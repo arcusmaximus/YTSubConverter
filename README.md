@@ -181,7 +181,7 @@ This means that, after you submit your subtitles, you need to contact the channe
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
 * Subtitles positioned off-center will move out towards the sides in theater mode, possibly even hanging out of the video frame.
-* Position and alignment are not taken into account during video premiere (bug).
+* Custom positions and alignments don't work during a premiere; subtitles are always displayed in the default position, being the bottom center of the video (bug). Once the premiere is over, however, they'll be displayed correctly.
 * The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
   * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
 
