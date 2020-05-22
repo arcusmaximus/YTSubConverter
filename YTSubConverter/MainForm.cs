@@ -15,7 +15,7 @@ namespace Arc.YTSubConverter
 {
     public partial class MainForm : Form
     {
-        private readonly SizeF _dpiScaleFactor;
+        private readonly float _windowsScaleFactor;
 
         private Dictionary<string, AssStyleOptions> _styleOptions;
         private Dictionary<string, AssStyle> _styles;
@@ -26,7 +26,7 @@ namespace Arc.YTSubConverter
         public MainForm()
         {
             InitializeComponent();
-            _dpiScaleFactor = new SizeF(AutoScaleDimensions.Width / 6, AutoScaleDimensions.Height / 12);
+            _windowsScaleFactor = AutoScaleDimensions.Height / 12;
 
             LocalizeUI();
 
@@ -81,7 +81,7 @@ namespace Arc.YTSubConverter
 
         private void ExpandCollapseStyleOptions()
         {
-            Height = (int)((_chkStyleOptions.Checked ? 488 : 142) * _dpiScaleFactor.Height);
+            Height = (int)((_chkStyleOptions.Checked ? 488 : 142) * _windowsScaleFactor);
         }
 
         private void _btnBrowse_Click(object sender, EventArgs e)
@@ -355,7 +355,7 @@ namespace Arc.YTSubConverter
                 return;
 
             AssStyle style = _styles?[SelectedStyleOptions.Name];
-            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions, _defaultFontSize);
+            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions, _defaultFontSize, _windowsScaleFactor);
         }
 
         private void _chkAutoConvert_CheckedChanged(object sender, EventArgs e)

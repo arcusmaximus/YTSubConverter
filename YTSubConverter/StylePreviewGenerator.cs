@@ -35,7 +35,7 @@ namespace Arc.YTSubConverter
                 { ".tiff", "image/tiff" }
             };
 
-        public static string GenerateHtml(AssStyle style, AssStyleOptions options, float defaultFontSize)
+        public static string GenerateHtml(AssStyle style, AssStyleOptions options, float defaultFontSize, float windowsScaleFactor)
         {
             StringBuilder html = new StringBuilder();
             html.Append($@"
@@ -72,7 +72,7 @@ namespace Arc.YTSubConverter
 
             if (options != null)
             {
-                GenerateBackgroundCss(html, "#background", style, defaultFontSize);
+                GenerateBackgroundCss(html, "#background", style, defaultFontSize, windowsScaleFactor);
                 GenerateForegroundCss(html, "#regular", style, style.PrimaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
                 if (options.IsKaraoke)
                 {
@@ -122,14 +122,14 @@ namespace Arc.YTSubConverter
             return html.ToString();
         }
 
-        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style, float defaultFontSize)
+        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style, float defaultFontSize, float windowsScaleFactor)
         {
             html.Append($@"
                 {selector}
                 {{
                     padding: 3px 5px;
                     border-radius: 3px;
-                    font-size: {Math.Max(32 * style.FontSize / defaultFontSize, 24)}px;
+                    font-size: {(int)(Math.Max(32 * style.FontSize / defaultFontSize, 24) * windowsScaleFactor)}px;
             ");
 
             if (style.HasOutline && style.OutlineIsBox)
