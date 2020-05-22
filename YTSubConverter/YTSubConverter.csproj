@@ -40,6 +40,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -161,6 +164,7 @@
     <EmbeddedResource Include="Resources.zh-Hant.resx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.manifest" />
     <None Include="checkers.png_" />
     <None Include="packages.config" />
   </ItemGroup>
