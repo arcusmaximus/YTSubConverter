@@ -211,7 +211,8 @@ Then do the following for each video:
 
 ## Credits
 Thanks to the following people for providing the UI translations:
-* Mali (@mali_5157) - Chinese
-* tototo (@vvto33) - Japanese
+* Admiy02 - Malay
 * Kasaka-117 (@kasaka_117) - Korean
+* Mali (@mali_5157) - Chinese
 * Saiv46 - Russian
+* tototo (@vvto33) - Japanese
