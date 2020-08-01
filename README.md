@@ -47,7 +47,7 @@ YTSubConverter supports the following .ass style features:
 * Bold, italic, underline
 * Primary, secondary, outline and shadow color
 * Alignment
-* Outline and shadow thickness (only checking whether the value is 0 or greater than 0)
+* Outline thickness and shadow distance (only checking whether the value is 0 or greater than 0)
 
 It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_Tags/):
 * `{\b}` - bold
