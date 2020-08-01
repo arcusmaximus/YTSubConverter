@@ -8,7 +8,7 @@ namespace Arc.YTSubConverter.Formats.Ass
         {
             Name = item.GetString("Name");
             Font = item.GetString("Fontname");
-            FontSize = item.GetFloat("Fontsize");
+            LineHeight = item.GetFloat("Fontsize");
             Bold = item.GetBool("Bold");
             Italic = item.GetBool("Italic");
             Underline = item.GetBool("Underline");
@@ -18,8 +18,8 @@ namespace Arc.YTSubConverter.Formats.Ass
             OutlineThickness = item.GetFloat("Outline");
             OutlineIsBox = item.GetInt("BorderStyle") == 3;
             ShadowColor = item.GetColor("BackColour");
-            ShadowThickness = item.GetFloat("Shadow");
-            AnchorPoint = AssDocument.GetAnchorPointFromAlignment(item.GetInt("Alignment"));
+            ShadowDistance = item.GetFloat("Shadow");
+            AnchorPoint = AssDocument.GetAnchorPoint(item.GetInt("Alignment"));
         }
 
         public string Name
@@ -32,9 +32,10 @@ namespace Arc.YTSubConverter.Formats.Ass
             get;
         }
 
-        public float FontSize
+        public float LineHeight
         {
             get;
+            set;
         }
 
         public bool Bold
@@ -86,12 +87,12 @@ namespace Arc.YTSubConverter.Formats.Ass
             get;
         }
 
-        public float ShadowThickness
+        public float ShadowDistance
         {
             get;
         }
 
-        public bool HasShadow => ShadowThickness > 0;
+        public bool HasShadow => ShadowDistance > 0;
 
         public AnchorPoint AnchorPoint
         {

@@ -5,6 +5,8 @@ namespace Arc.YTSubConverter.Formats.Ass.KaraokeTypes
 {
     internal class SimpleKaraokeType : IKaraokeType
     {
+        public static readonly SimpleKaraokeType Instance = new SimpleKaraokeType();
+
         public virtual IEnumerable<AssLine> Apply(AssKaraokeStepContext context)
         {
             foreach (AssSection singingSection in context.SingingSections)

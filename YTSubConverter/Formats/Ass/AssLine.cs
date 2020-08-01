@@ -15,19 +15,26 @@ namespace Arc.YTSubConverter.Formats.Ass
         {
         }
 
-        public int Alpha
+        public AssLine(Line line)
+            : base(line)
         {
-            get;
-            set;
-        } = 255;
+            if (line is AssLine || Sections.All(s => s.StartOffset == TimeSpan.Zero))
+                return;
+
+            for (int i = 0; i < Sections.Count - 1; i++)
+            {
+                ((AssSection)Sections[i]).Duration = Sections[i + 1].StartOffset - Sections[i].StartOffset;
+            }
+
+            AssSection lastSection = (AssSection)Sections.Last();
+            lastSection.Duration = End - Start - lastSection.StartOffset;
+        }
+
+        public int Alpha { get; set; } = 255;
 
         public List<Animation> Animations { get; } = new List<Animation>();
 
-        public IKaraokeType KaraokeType
-        {
-            get;
-            set;
-        }
+        public IKaraokeType KaraokeType { get; set; } = SimpleKaraokeType.Instance;
 
         public void NormalizeAlpha()
         {
@@ -57,20 +64,24 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         public override object Clone()
         {
-            AssLine newLine = new AssLine(Start, End);
-            newLine.Assign(this);
-            return newLine;
+            return new AssLine(this);
         }
 
         protected override void Assign(Line line)
         {
             base.Assign(line);
+            if (!(line is AssLine assLine))
+                return;
 
-            AssLine assLine = (AssLine)line;
             Alpha = assLine.Alpha;
             Animations.Clear();
             Animations.AddRange(assLine.Animations.Select(a => (Animation)a.Clone()));
             KaraokeType = assLine.KaraokeType;
+        }
+
+        protected override Section CreateSection(Section section)
+        {
+            return new AssSection(section);
         }
     }
 }

@@ -125,13 +125,19 @@
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Checkers" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>checkers.png_;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>Resources\checkers.png_;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="ClearBackgroundImage" xml:space="preserve">
     <value>Clear background image</value>
   </data>
   <data name="Convert" xml:space="preserve">
     <value>Convert</value>
+  </data>
+  <data name="DefaultStyleOptions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\StyleOptions.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
+  </data>
+  <data name="DefaultStyles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\defaultstyles.ass;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="DragNDropTip" xml:space="preserve">
     <value>Drag&amp;drop .ass/.sbv file or click the "..." button</value>
@@ -197,7 +203,7 @@
     <value>Style options</value>
   </data>
   <data name="SubtitleFileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv</value>
+    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
     <value>Successfully created {0}</value>

@@ -6,8 +6,8 @@ namespace Arc.YTSubConverter.Animations
 {
     internal class ShadowColorAnimation : ColorAnimation
     {
-        public ShadowColorAnimation(ShadowType shadowType, DateTime startTime, Color startColor, DateTime endTime, Color endColor)
-            : base(startTime, startColor, endTime, endColor)
+        public ShadowColorAnimation(ShadowType shadowType, DateTime startTime, Color startColor, DateTime endTime, Color endColor, float acceleration)
+            : base(startTime, startColor, endTime, endColor, acceleration)
         {
             ShadowType = shadowType;
         }
@@ -24,7 +24,7 @@ namespace Arc.YTSubConverter.Animations
 
         public override object Clone()
         {
-            return new ShadowColorAnimation(ShadowType, StartTime, StartColor, EndTime, EndColor);
+            return new ShadowColorAnimation(ShadowType, StartTime, StartColor, EndTime, EndColor, Acceleration);
         }
     }
 }

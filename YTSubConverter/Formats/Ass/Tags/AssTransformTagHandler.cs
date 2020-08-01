@@ -10,7 +10,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 {
     internal class AssTransformTagHandler : AssTagHandlerBase
     {
-        private delegate void TransformTagHandler(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg);
+        private delegate void TransformTagHandler(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg);
 
         private static readonly Dictionary<string, TransformTagHandler> TransformTagHandlers;
 
@@ -38,10 +38,10 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
         public override void Handle(AssTagContext context, string arg)
         {
-            if (!TryParseArgs(context, arg, out DateTime startTime, out DateTime endTime, out int accel, out string modifiers))
+            if (!TryParseArgs(context, arg, out DateTime startTime, out DateTime endTime, out float accel, out string modifiers))
                 return;
 
-            context.Line.AndroidColorHackAllowed = false;
+            context.Line.AndroidDarkTextHackAllowed = false;
 
             foreach (Match match in Regex.Matches(modifiers, @"\\(?<tag>\d?[a-z]+)(?<arg>[^\\]*)"))
             {
@@ -50,7 +50,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
         }
 
-        private static bool TryParseArgs(AssTagContext context, string arg, out DateTime startTime, out DateTime endTime, out int accel, out string modifiers)
+        private static bool TryParseArgs(AssTagContext context, string arg, out DateTime startTime, out DateTime endTime, out float accel, out string modifiers)
         {
             startTime = context.Line.Start;
             endTime = context.Line.End;
@@ -71,7 +71,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
                 case 2:
                 {
-                    if (!int.TryParse(args[0], out accel))
+                    if (!TryParseFloat(args[0], out accel))
                         return false;
 
                     modifiers = args[1];
@@ -80,8 +80,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
                 case 3:
                 {
-                    if (!int.TryParse(args[0], out int t1) ||
-                        !int.TryParse(args[1], out int t2))
+                    if (!TryParseInt(args[0], out int t1) ||
+                        !TryParseInt(args[1], out int t2))
                         return false;
 
                     startTime = context.Line.Start.AddMilliseconds(t1);
@@ -92,9 +92,9 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
 
                 case 4:
                 {
-                    if (!int.TryParse(args[0], out int t1) ||
-                        !int.TryParse(args[1], out int t2) ||
-                        !int.TryParse(args[2], out accel))
+                    if (!TryParseInt(args[0], out int t1) ||
+                        !TryParseInt(args[1], out int t2) ||
+                        !TryParseFloat(args[2], out accel))
                         return false;
 
                     startTime = context.Line.Start.AddMilliseconds(t1);
@@ -108,26 +108,26 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
         }
 
-        private static void HandleTransformForeColorTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformForeColorTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
-            ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c));
+            ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c, accel));
             anim.EndColor = ParseColor(arg, anim.EndColor.A);
         }
 
-        private static void HandleTransformSecondaryColorTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformSecondaryColorTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
-            SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c));
+            SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c, accel));
             anim.EndColor = ParseColor(arg, anim.EndColor.A);
         }
 
-        private static void HandleTransformOutlineColorTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformOutlineColorTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
             if (!context.Style.HasOutline)
                 return;
 
             if (context.Style.OutlineIsBox)
             {
-                BackColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.BackColor, (s, e, c) => new BackColorAnimation(s, c, e, c));
+                BackColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.BackColor, (s, e, c) => new BackColorAnimation(s, c, e, c, accel));
                 anim.EndColor = ParseColor(arg, anim.EndColor.A);
             }
             else
@@ -136,7 +136,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
         }
 
-        private static void HandleTransformShadowColorTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformShadowColorTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
             foreach (ShadowType shadowType in context.Section.ShadowColors.Keys)
             {
@@ -145,7 +145,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
         }
 
-        private static void HandleTransformShadowColorTag(AssTagContext context, ShadowType shadowType, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformShadowColorTag(AssTagContext context, ShadowType shadowType, DateTime startTime, DateTime endTime, float accel, string arg)
         {
             ShadowColorAnimation anim = FetchColorAnimation(
                 context,
@@ -153,12 +153,12 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 endTime,
                 a => a.ShadowType == shadowType,
                 s => s.ShadowColors[shadowType],
-                (s, e, c) => new ShadowColorAnimation(shadowType, s, c, e, c)
+                (s, e, c) => new ShadowColorAnimation(shadowType, s, c, e, c, accel)
             );
             anim.EndColor = ParseColor(arg, anim.EndColor.A);
         }
 
-        private static void HandleTransformAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
             HandleTransformForeAlphaTag(context, startTime, endTime, accel, arg);
             HandleTransformSecondaryAlphaTag(context, startTime, endTime, accel, arg);
@@ -166,26 +166,26 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             HandleTransformShadowAlphaTag(context, startTime, endTime, accel, arg);
         }
 
-        private static void HandleTransformForeAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformForeAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
-            ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c));
+            ForeColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.ForeColor, (s, e, c) => new ForeColorAnimation(s, c, e, c, accel));
             anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
         }
 
-        private static void HandleTransformSecondaryAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformSecondaryAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
-            SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c));
+            SecondaryColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.SecondaryColor, (s, e, c) => new SecondaryColorAnimation(s, c, e, c, accel));
             anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
         }
 
-        private static void HandleTransformOutlineAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformOutlineAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
             if (!context.Style.HasOutline)
                 return;
 
             if (context.Style.OutlineIsBox)
             {
-                BackColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.BackColor, (s, e, c) => new BackColorAnimation(s, c, e, c));
+                BackColorAnimation anim = FetchColorAnimation(context, startTime, endTime, s => s.BackColor, (s, e, c) => new BackColorAnimation(s, c, e, c, accel));
                 anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
             }
             else
@@ -194,7 +194,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
         }
 
-        private static void HandleTransformShadowAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformShadowAlphaTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
             foreach (KeyValuePair<ShadowType, Color> shadowColor in context.Section.ShadowColors)
             {
@@ -203,7 +203,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
             }
         }
 
-        private static void HandleTransformShadowAlphaTag(AssTagContext context, ShadowType shadowType, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformShadowAlphaTag(AssTagContext context, ShadowType shadowType, DateTime startTime, DateTime endTime, float accel, string arg)
         {
             ShadowColorAnimation anim = FetchColorAnimation(
                 context,
@@ -211,21 +211,21 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 endTime,
                 a => a.ShadowType == shadowType,
                 s => s.ShadowColors[shadowType],
-                (s, e, c) => new ShadowColorAnimation(shadowType, s, c, e, c)
+                (s, e, c) => new ShadowColorAnimation(shadowType, s, c, e, c, accel)
             );
             anim.EndColor = ColorUtil.ChangeColorAlpha(anim.EndColor, 255 - (ParseHex(arg) & 255));
         }
 
-        private static void HandleTransformFontSizeTag(AssTagContext context, DateTime startTime, DateTime endTime, int accel, string arg)
+        private static void HandleTransformFontSizeTag(AssTagContext context, DateTime startTime, DateTime endTime, float accel, string arg)
         {
-            if (!TryParseFloat(arg, out float size))
+            if (!TryParseFloat(arg, out float lineHeight))
                 return;
 
             AssSection section = context.Section;
             ScaleAnimation prevAnim = section.Animations.OfType<ScaleAnimation>().LastOrDefault();
             float startScale = prevAnim?.EndScale ?? context.Section.Scale;
-            float endScale = size / context.Document.DefaultFontSize;
-            context.Section.Animations.Add(new ScaleAnimation(startTime, startScale, endTime, endScale));
+            float endScale = lineHeight / context.Document.DefaultStyle.LineHeight;
+            context.Section.Animations.Add(new ScaleAnimation(startTime, startScale, endTime, endScale, accel));
         }
 
         private static T FetchColorAnimation<T>(

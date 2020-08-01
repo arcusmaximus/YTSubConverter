@@ -8,39 +8,43 @@
     <pen id="2" i="1" />            <!-- Italic     -->
     <pen id="3" u="1" />            <!-- Underline  -->
     
-    <!-- Foreground color/opacity. The iOS app supports both, while the Android app only supports color. -->
+    <!-- Foreground color/opacity. The iOS app supports both, while the Android app only supports color.              -->
+    <!-- Specifying fo="255" will result in the loss of the attribute after upload. Specifying fc="#FFFFFF" fo="255"  -->
+    <!-- will result in the loss of both attributes. Lost attributes, in turn, mean the viewer's custom settings      -->
+    <!-- (if any) will take effect. Because most viewers change these settings by accident rather than intentionaly   -->
+    <!-- (all it takes is a single keypress, e.g. O for opacity), it's recommended to go no higher than fo="254",     -->
+    <!-- thereby always overruling these accidental settings and ensuring the subtitles look how they're supposed to. -->
     <pen id="4" fc="#FF0000" fo="40"  bo="0" />
     <pen id="5" fc="#00FF00" fo="127" bo="0" />
-    <pen id="6" fc="#0000FF" fo="255" bo="0" />             <!-- fo="255" is the default and will get removed after uploading,          -->
-                                                            <!-- meaning the viewer's custom opacity setting (if any) will take         -->
-                                                            <!-- effect. Because most viewers set this custom opacity by accident       -->
-                                                            <!-- rather than intentionally (all it takes is to press O), it's           -->
-                                                            <!-- recommended to go no higher than fo="254", thereby always              -->
-                                                            <!-- overruling the custom setting and forcing subtitles to be readable.    -->
+    <pen id="6" fc="#0000FF" fo="254" bo="0" />
     
-    <!-- Background color/opacity. In theory, the iOS app supports both, but only if the        -->
-    <!-- well-hidden "Video Override" option is turned on in the iOS accessibility settings.    -->
-    <!-- In practice, neither Android nor iOS support custom backgrounds.                       -->
-    <pen id="7"  fc="#FEFEFE" bc="#FF0000" bo="40"  />
-    <pen id="8"  fc="#FEFEFE" bc="#00FF00" bo="127" />
-    <pen id="9"  fc="#FEFEFE" bc="#0000FF" bo="255" />
-    <pen id="10" fc="#000000" bc="#FFFFFF" bo="255" />      <!-- In practice, bo should be limited to 254 for the same reason as fo.    -->
+    <!-- Background color/opacity. In theory, the iOS app supports both, but only if the well-hidden "Video Override" -->
+    <!-- option is turned on in the iOS accessibility settings. In practice, neither Android nor iOS support custom   -->
+    <!-- backgrounds.                                                                                                 -->
+    <!-- Similar to "fo", the "bo" attribute is lost if it's set to 255 (even though the default background opacity   -->
+    <!-- is 191 on PC). And similar to fc/fo, bc/bo are lost if they're set to #000000/255 (even though the default   -->
+    <!-- background color is #080808 on PC).                                                                          -->
+    <pen id="7"  fc="#FFFFFF" bc="#FF0000" bo="40"  />
+    <pen id="8"  fc="#FFFFFF" bc="#00FF00" bo="127" />
+    <pen id="9"  fc="#FFFFFF" bc="#0000FF" bo="254" />
+    <pen id="10" fc="#000000" bc="#FFFFFF" bo="254" />
     
-    <!-- Edge color/type (not supported on mobile)  -->
+    <!-- Edge color/type (same mobile support as bc/bo)  -->
     <pen id="11" fc="#FEFEFE" ec="#FF0000" et="1" />        <!-- Hard shadow    -->
     <pen id="12" fc="#FEFEFE" ec="#00FF00" et="2" />        <!-- Bevel          -->
-    <pen id="13" fc="#FEFEFE" ec="#0000FF" et="3" />        <!-- Glow/Outline   -->
+    <pen id="13" fc="#FE0000" ec="#0000FF" et="3" />        <!-- Glow/Outline   -->
     <pen id="14" fc="#FEFEFE" ec="#FF00FF" et="4" />        <!-- Soft shadow    -->
     
-    <!-- Font styles (not supported on mobile)      -->
-    <pen id="15" fc="#FEFEFE" fs="0" />                     <!-- Default (same as 4).                               -->
-    <pen id="16" fc="#FEFEFE" fs="1" />                     <!-- Monospaced Serif           (Courier New)           -->
-    <pen id="17" fc="#FEFEFE" fs="2" />                     <!-- Proportional Serif         (Times New Roman)       -->
-    <pen id="18" fc="#FEFEFE" fs="3" />                     <!-- Monospaced Sans-Serif      (Deja Vu Sans Mono)     -->
-    <pen id="19" fc="#FEFEFE" fs="4" />                     <!-- Proportional Sans-Serif    (Roboto)                -->
-    <pen id="20" fc="#FEFEFE" fs="5" />                     <!-- Casual                     (Comic Saaans!)         -->
-    <pen id="21" fc="#FEFEFE" fs="6" />                     <!-- Cursive                    (Monotype Corsiva)      -->
-    <pen id="22" fc="#FEFEFE" fs="7" />                     <!-- Small Capitals             (Carrois Gothic SC)     -->
+    <!-- Font styles. Android doesn't support custom fonts at all, while iOS "supports" them as in using non-default    -->
+    <!-- fonts which are however completely different than on PC. The comments below show the PC fonts.                 -->
+    <pen id="15" fs="0" />                     <!-- Default (same as 4).                                                -->
+    <pen id="16" fs="1" />                     <!-- Monospaced Serif           (Courier New)                            -->
+    <pen id="17" fs="2" />                     <!-- Proportional Serif         (Times New Roman)                        -->
+    <pen id="18" fs="3" />                     <!-- Monospaced Sans-Serif      (Lucida Console)                         -->
+    <pen id="19" fs="4" />                     <!-- Proportional Sans-Serif    (Roboto)                                 -->
+    <pen id="20" fs="5" />                     <!-- Casual                     (Comic Saaans!)                          -->
+    <pen id="21" fs="6" />                     <!-- Cursive                    (Monotype Corsiva)                       -->
+    <pen id="22" fs="7" />                     <!-- Small Capitals             (Arial with font-variant: small-caps)    -->
     
     <!-- Font sizes (supported on iOS but not Android)                              -->
     <!-- The value is a virtual percentage of the default size; the real            -->
@@ -53,21 +57,22 @@
     <pen id="25" sz="300" />
     
     <!-- Ruby (not supported on mobile) -->
-    <pen id="26" rb="1" />              <!-- Ruby enable (for kanji spans)      -->
-    <pen id="27" rb="4" />              <!-- Ruby over   (for furigana spans)   -->
-    <pen id="28" rb="5" />              <!-- Ruby under  (for furigana spans)   -->
+    <pen id="26" rb="1" />              <!-- Ruby text (for kanji spans)                            -->
+    <pen id="27" rb="2" />              <!-- Ruby parenthesis (for clients that don't support ruby) -->
+    <pen id="28" rb="4" />              <!-- Ruby over   (for furigana spans)                       -->
+    <pen id="29" rb="5" />              <!-- Ruby under  (for furigana spans)                       -->
     
     <!-- Subscript/superscript ("of" = "offset"). Not supported on mobile -->
-    <pen id="29" fc="#FEFEFE" of="0" />              <!-- Subscript      -->
-    <pen id="30" fc="#FEFEFE" of="1" />              <!-- Regular        -->
-    <pen id="31" fc="#FEFEFE" of="2" />              <!-- Superscript    -->
+    <pen id="30" fc="#FEFEFE" of="0" />              <!-- Subscript      -->
+    <pen id="31" fc="#FEFEFE" of="1" />              <!-- Regular        -->
+    <pen id="32" fc="#FEFEFE" of="2" />              <!-- Superscript    -->
     
     <!-- Text emphasis (dots above text; not currently allowed by YouTube subtitle upload) -->
-    <pen id="32" fc="#FEFEFE" te="1" />     <!-- Allows bold text       -->
-    <pen id="33" fc="#FEFEFE" te="2" />     <!-- Disallows bold text    -->
+    <pen id="33" fc="#FEFEFE" te="1" />     <!-- Allows bold text       -->
+    <pen id="34" fc="#FEFEFE" te="2" />     <!-- Disallows bold text    -->
     
     <!-- Text combination (\ytpack in YTSubConverter). Not supported on mobile -->
-    <pen id="34" fc="#FEFEFE" hg="1" />
+    <pen id="35" fc="#FEFEFE" hg="1" />
     
     <!-- Horizontal text alignment -->
     <ws id="1" ju="0" />                <!-- Left   -->
@@ -111,13 +116,13 @@
     <!-- Foreground color/transparency -->
     <p t="4000" d="4000" wp="1" p="4">Red (a = 40)</p>
     <p t="4000" d="4000" wp="2" p="5">Green (a = 127)</p>
-    <p t="4000" d="4000" wp="3" p="6">Blue (a = 255)</p>
+    <p t="4000" d="4000" wp="3" p="6">Blue (a = 254)</p>
     <p t="4000" d="4000" wp="5"><s p="4">Red </s>&#8203;<s p="5">Green </s><s p="6">Blue</s></p>
     
     <!-- Background color/transparency -->
     <p t="8000" d="4000" wp="1" p="7">Red (a = 40)</p>
     <p t="8000" d="4000" wp="2" p="8">Green (a = 127)</p>
-    <p t="8000" d="4000" wp="3" p="9">Blue (a = 255)</p>
+    <p t="8000" d="4000" wp="3" p="9">Blue (a = 254)</p>
     <p t="8000" d="4000" wp="10" p="10">Opaque</p>
     <p t="8000" d="4000" wp="8"><s p="7">Red </s>&#8203;<s p="8">Green </s><s p="9">Blue</s></p>
     
@@ -169,8 +174,8 @@ aligned line</p>
     <!-- Karaoke. Each span's "t" attribute gives its relative appearance time in ms.   -->
     <p t="36000" d="4000" wp="5" p="15"><s>Ka</s><s t="1000">ra</s><s t="2000">o</s><s t="3000">ke</s></p>
     
-    <!-- Line breaks at section start/end (note the missing rounded corners - YouTube bug) -->
-    <p t="40000" d="4000" wp="4"><s p="11">Line </s>&#8203;<s p="12">break </s><s p="13">
+    <!-- Line breaks at section start/end (note the asymmetric background box in the last case - YouTube bug) -->
+    <p t="40000" d="4000" wp="4"><s p="11">Box</s>&#8203;<s p="13">&#8203;
 at start </s><s p="14">of span</s></p>
     <p t="40000" d="4000" wp="5"><s p="11">Line </s>&#8203;<s p="12">break
 in </s><s p="13">middle </s><s p="14">of span</s></p>
@@ -180,17 +185,17 @@ in </s><s p="13">middle </s><s p="14">of span</s></p>
     <!--
         Ruby text works by creating four spans for each ruby'd word:
         * A span for the kanji text, referring to a pen with rb="1"
-        * A span with an opening parenthesis (fallback for clients without ruby support)
-        * A span with the furigana text, optionally referring to a pen with rb="4"/"6" (above kanji) or "5"/"7" (below kanji)
-        * A span with a closing parenthesis
+        * A span for the opening parenthesis (fallback for clients without ruby support), referring to a pen with rb="2"
+        * A span with the furigana text, referring to a pen with rb="4"/"6" (above kanji) or "5"/"7" (below kanji)
+        * A span with the closing parenthesis, referring to a pen with rb="2"
         The ruby text always uses the same formatting as the base text (i.e. the other attributes of the furigana pen are ignored).
         
         The mobile apps don't support ruby text. They'll display the below subtitle as 漢(かん)字(じ).
     -->
-    <p t="44000" d="4000" wp="5"><s p="26">漢</s><s>(</s><s p="27">かん</s><s>)</s><s p="26">字</s><s>(</s><s p="28">じ</s><s>)</s></p>
+    <p t="44000" d="4000" wp="5"><s p="26">漢</s><s p="27">(</s><s p="28">かん</s><s p="27">)</s>&#8203;<s p="26">字</s><s p="27">(</s><s p="28">じ</s><s p="27">)</s></p>
     
     <!-- Subscript/superscript -->
-    <p t="48000" d="4000" wp="5"><s p="29">Subscript </s>&#8203;<s p="30">Regular </s><s p="31">Superscript</s></p>
+    <p t="48000" d="4000" wp="5"><s p="30">Subscript </s>&#8203;<s p="31">Regular </s><s p="32">Superscript</s></p>
     
     <!-- Vertical text -->
     <p t="52000" d="4000" wp="1" ws="4">Vertical

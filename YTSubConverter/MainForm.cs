@@ -17,9 +17,10 @@ namespace Arc.YTSubConverter
     {
         private readonly float _windowsScaleFactor;
 
-        private Dictionary<string, AssStyleOptions> _styleOptions;
+        private readonly Dictionary<string, AssStyleOptions> _styleOptions;
+        private readonly HashSet<string> _builtinStyleNames;
         private Dictionary<string, AssStyle> _styles;
-        private float _defaultFontSize;
+        private AssStyle _defaultStyle;
         private bool _previewSuspended;
         private DateTime _lastAutoConvertTime = DateTime.MinValue;
 
@@ -30,7 +31,11 @@ namespace Arc.YTSubConverter
 
             LocalizeUI();
 
-            _styleOptions = AssStyleOptionsList.Load().ToDictionary(o => o.Name);
+            List<AssStyleOptions> builtinStyleOptions = AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions);
+            List<AssStyleOptions> customStyleOptions = AssStyleOptionsList.LoadFromFile();
+            _styleOptions = customStyleOptions.Concat(builtinStyleOptions).ToDictionaryOverwrite(o => o.Name);
+            _builtinStyleNames = builtinStyleOptions.Select(o => o.Name).ToHashSet();
+
             ExpandCollapseStyleOptions();
             ClearUi();
         }
@@ -138,7 +143,7 @@ namespace Arc.YTSubConverter
         private void RefreshStyleList(AssDocument document)
         {
             _styles = document.Styles.ToDictionary(s => s.Name);
-            _defaultFontSize = document.DefaultFontSize;
+            _defaultStyle = document.DefaultStyle;
             foreach (AssStyle style in document.Styles)
             {
                 if (!_styleOptions.ContainsKey(style.Name))
@@ -156,6 +161,7 @@ namespace Arc.YTSubConverter
         private void ClearUi()
         {
             _styles = null;
+            _defaultStyle = null;
 
             _txtInputFile.Text = Resources.DragNDropTip;
             _grpStyleOptions.Enabled = false;
@@ -180,6 +186,7 @@ namespace Arc.YTSubConverter
             _previewSuspended = true;
 
             _spltStyleOptions.Panel2.Enabled = true;
+            _pnlOptions.Enabled = !_builtinStyleNames.Contains(style.Name);
             _pnlShadowType.Enabled = style.HasShadow;
 
             if (style.HasOutline && !style.HasOutlineBox)
@@ -355,7 +362,7 @@ namespace Arc.YTSubConverter
                 return;
 
             AssStyle style = _styles?[SelectedStyleOptions.Name];
-            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions, _defaultFontSize, _windowsScaleFactor);
+            _brwPreview.DocumentText = StylePreviewGenerator.GenerateHtml(style, SelectedStyleOptions, _defaultStyle, _windowsScaleFactor);
         }
 
         private void _chkAutoConvert_CheckedChanged(object sender, EventArgs e)
@@ -392,23 +399,42 @@ namespace Arc.YTSubConverter
         {
             try
             {
-                string outputFilePath;
-                if (Path.GetExtension(_txtInputFile.Text).Equals(".ass", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    AssDocument inputDoc = new AssDocument(_txtInputFile.Text, (List<AssStyleOptions>)_lstStyles.DataSource);
-                    YttDocument outputDoc = new YttDocument(inputDoc);
-                    outputFilePath = Path.ChangeExtension(_txtInputFile.Text, ".ytt");
-                    outputDoc.Save(outputFilePath);
+                string inputExtension = Path.GetExtension(_txtInputFile.Text).ToLower();
+                SubtitleDocument outputDoc;
+                string outputExtension;
 
-                    RefreshStyleList(inputDoc);
-                }
-                else
+                switch (inputExtension)
                 {
-                    SubtitleDocument inputDoc = SubtitleDocument.Load(_txtInputFile.Text);
-                    SrtDocument outputDoc = new SrtDocument(inputDoc);
-                    outputFilePath = Path.ChangeExtension(_txtInputFile.Text, ".srt");
-                    outputDoc.Save(outputFilePath);
+                    case ".ass":
+                    {
+                        AssDocument inputDoc = new AssDocument(_txtInputFile.Text, (List<AssStyleOptions>)_lstStyles.DataSource);
+                        outputDoc = new YttDocument(inputDoc);
+                        outputExtension = ".ytt";
+
+                        RefreshStyleList(inputDoc);
+                        break;
+                    }
+
+                    case ".ytt":
+                    case ".srv3":
+                    {
+                        YttDocument inputDoc = new YttDocument(_txtInputFile.Text);
+                        outputDoc = new AssDocument(inputDoc);
+                        outputExtension = inputExtension == ".ytt" ? ".reverse.ass" : ".ass";
+                        break;
+                    }
+
+                    default:
+                    {
+                        SubtitleDocument inputDoc = SubtitleDocument.Load(_txtInputFile.Text);
+                        outputDoc = new SrtDocument(inputDoc);
+                        outputExtension = ".srt";
+                        break;
+                    }
                 }
+
+                string outputFilePath = Path.ChangeExtension(_txtInputFile.Text, outputExtension);
+                outputDoc.Save(outputFilePath);
 
                 _lblConversionSuccess.Text = string.Format(Resources.SuccessfullyCreated0, Path.GetFileName(outputFilePath));
                 _lblConversionSuccess.Visible = true;
@@ -429,7 +455,9 @@ namespace Arc.YTSubConverter
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
-            LoadFile(GetDroppedFilePath(e));
+            string filePath = GetDroppedFilePath(e);
+            if (filePath != null)
+                LoadFile(filePath);
         }
 
         private static string GetDroppedFilePath(DragEventArgs e)
@@ -442,16 +470,24 @@ namespace Arc.YTSubConverter
                 return null;
 
             string filePath = filePaths[0];
-            string extension = Path.GetExtension(filePath) ?? string.Empty;
-            if (!extension.Equals(".ass", StringComparison.InvariantCultureIgnoreCase) && !extension.Equals(".sbv", StringComparison.InvariantCultureIgnoreCase))
+            string extension = (Path.GetExtension(filePath) ?? string.Empty).ToLower();
+            if (extension != ".ass" &&
+                extension != ".ytt" &&
+                extension != ".srv3" &&
+                extension != ".sbv")
+            {
                 return null;
+            }
 
             return filePath;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AssStyleOptionsList.Save(_styleOptions.Values);
+            AssStyleOptionsList.SaveToFile(
+                _styleOptions.Where(p => !_builtinStyleNames.Contains(p.Key))
+                             .Select(p => p.Value)
+            );
         }
     }
 }

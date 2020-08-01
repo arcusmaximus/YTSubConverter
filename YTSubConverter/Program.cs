@@ -30,36 +30,88 @@ namespace Arc.YTSubConverter
 
         private static void RunCommandLine(string[] args)
         {
-            if (args.Length != 1)
-            {
-                Console.WriteLine("Too many arguments specified");
+            CommandLineArguments parsedArgs = ParseArguments(args);
+            if (parsedArgs == null)
                 return;
-            }
 
-            string filePath = args[0];
-            if (!File.Exists(filePath))
+            if (!File.Exists(parsedArgs.SourceFilePath))
             {
-                Console.WriteLine("Specified file not found");
+                Console.WriteLine("Specified source file not found");
                 return;
             }
 
             try
             {
-                if (Path.GetExtension(filePath).Equals(".ass", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    SubtitleDocument doc = new AssDocument(filePath, AssStyleOptionsList.Load());
-                    new YttDocument(doc).Save(Path.ChangeExtension(filePath, ".ytt"));
-                }
-                else
-                {
-                    SubtitleDocument doc = SubtitleDocument.Load(filePath);
-                    new SrtDocument(doc).Save(Path.ChangeExtension(filePath, ".srt"));
-                }
+                SubtitleDocument sourceDoc = SubtitleDocument.Load(parsedArgs.SourceFilePath);
+                SubtitleDocument destinationDoc =
+                    Path.GetExtension(parsedArgs.DestinationFilePath).ToLower() switch
+                    {
+                        ".ass" => parsedArgs.ForVisualization ? new VisualizingAssDocument(sourceDoc) : new AssDocument(sourceDoc),
+                        ".srv3" => new YttDocument(sourceDoc),
+                        ".ytt" => new YttDocument(sourceDoc),
+                        _ => new SrtDocument(sourceDoc)
+                    };
+                destinationDoc.Save(parsedArgs.DestinationFilePath);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error occurred: {ex}");
             }
+        }
+
+        private static CommandLineArguments ParseArguments(string[] args)
+        {
+            CommandLineArguments parsedArgs = new CommandLineArguments();
+
+            List<string> filePaths = new List<string>();
+            foreach (string arg in args)
+            {
+                if (arg.StartsWith("-"))
+                {
+                    switch (arg)
+                    {
+                        case "-viz":
+                            parsedArgs.ForVisualization = true;
+                            break;
+                    }
+                }
+                else
+                {
+                    filePaths.Add(arg);
+                }
+            }
+
+            if (filePaths.Count == 0)
+            {
+                Console.WriteLine("Please specify a source file.");
+                return null;
+            }
+
+            if (filePaths.Count > 2)
+            {
+                Console.WriteLine("Too many file paths specified.");
+                return null;
+            }
+
+            parsedArgs.SourceFilePath = filePaths[0];
+            if (filePaths.Count == 1)
+            {
+                string destinationExtension =
+                    Path.GetExtension(parsedArgs.SourceFilePath).ToLower() switch
+                    {
+                        ".ass" => ".ytt",
+                        ".ytt" => ".reverse.ass",
+                        ".srv3" => ".ass",
+                        _ => ".srt"
+                    };
+                parsedArgs.DestinationFilePath = Path.ChangeExtension(parsedArgs.SourceFilePath, destinationExtension);
+            }
+            else
+            {
+                parsedArgs.DestinationFilePath = filePaths[1];
+            }
+
+            return parsedArgs;
         }
 
         /// <summary>
@@ -78,11 +130,31 @@ namespace Arc.YTSubConverter
                     continue;
 
                 string culture = match.Groups[1].Value;
-                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-                {
-                    ResourceSet resSet = new ResourceSet(stream);
-                    resourceSets.Add(culture, resSet);
-                }
+                using Stream stream = assembly.GetManifestResourceStream(resourceName);
+                ResourceSet resSet = new ResourceSet(stream);
+                resourceSets.Add(culture, resSet);
+            }
+        }
+
+        private class CommandLineArguments
+        {
+            public bool ForVisualization
+            {
+                get;
+                set;
+            }
+
+            public string SourceFilePath
+            {
+                get;
+                set;
+            }
+
+
+            public string DestinationFilePath
+            {
+                get;
+                set;
             }
         }
     }

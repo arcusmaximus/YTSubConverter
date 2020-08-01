@@ -13,7 +13,7 @@ YCbCr Matrix: TV.601
 Last Style Storage: Default
 Video File: ?dummy:30.000000:40000:640:480:218:216:214:
 Video AR Value: 1.333333
-Active Line: 16
+Active Line: 8
 Video Position: 121
 
 [V4+ Styles]
@@ -23,32 +23,35 @@ Style: Courier New,courier New,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,
 Style: Times New Roman,Times new roman,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
 Style: Deja Vu Sans Mono,Deja vu Sans Mono,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
 Style: DejaVu Sans Mono,Dejavu Sans Mono,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
+Style: Lucida Console,Lucida Console,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
 Style: Comic Sans MS,Comic sans ms,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
 Style: Monotype Corsiva,Monotype corsiva,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
 Style: Carrois Gothic SC,Carrois gothic sc,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
 Style: Default,Arial,15,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
-Style: Small,Arial,7.5,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,5,10,10,10,1
-Style: Big,Arial,30,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
+Style: small,Arial,7.5,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,5,10,10,10,1
+Style: big,Arial,30,&H00FFFFFF,&HFFFFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,3,2,0,2,10,10,10,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:05.01,Courier New,,0,0,0,,{\an6\pos(172.2,43.6)}Courier New
-Dialogue: 0,0:00:00.00,0:00:05.01,Times New Roman,,0,0,0,,{\an6\pos(172.2,73.6)}Times New Roman
-Dialogue: 0,0:00:00.00,0:00:05.01,Deja Vu Sans Mono,,0,0,0,,{\an6\pos(172.2,103.6)}Deja Vu Sans Mono
-Dialogue: 0,0:00:00.00,0:00:05.01,DejaVu Sans Mono,,0,0,0,,{\an6\pos(172.2,134.8)}DejaVu Sans Mono
+Dialogue: 0,0:00:00.00,0:00:05.01,Courier New,,0,0,0,,{\an6\pos(172.2,23.2)}Courier New
+Dialogue: 0,0:00:00.00,0:00:05.01,Times New Roman,,0,0,0,,{\an6\pos(172.2,51.6)}Times New Roman
+Dialogue: 0,0:00:00.00,0:00:05.01,Deja Vu Sans Mono,,0,0,0,,{\an6\pos(172.2,80.8)}Deja Vu Sans Mono
+Dialogue: 0,0:00:00.00,0:00:05.01,DejaVu Sans Mono,,0,0,0,,{\an6\pos(172.5,110)}DejaVu Sans Mono
+Dialogue: 0,0:00:00.00,0:00:05.01,Lucida Console,,0,0,0,,{\an6\pos(172.5,140)}Lucida Console
 Dialogue: 0,0:00:00.00,0:00:05.01,Comic Sans MS,,0,0,0,,{\an6\pos(172.2,169.6)}Comic Sans MS
 Dialogue: 0,0:00:00.00,0:00:05.01,Monotype Corsiva,,0,0,0,,{\an6\pos(172.2,208)}Monotype Corsiva
 Dialogue: 0,0:00:00.00,0:00:05.01,Carrois Gothic SC,,0,0,0,,{\an6\pos(172.2,247.6)}Carrois Gothic SC
-Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\pos(214.2,43.6)\fncourier new}\fncourier new {\r}\r
-Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnTimes new roman\pos(214.2,73.6)}\fnTimes new roman {\fn}\fn
-Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnDeja vu sans mono\pos(214.2,103.6)}\fnDeja vu sans mono {\fnX}\fnX
-Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnDejaVu Sans Mono\pos(214.2,134.8)}\fnDejaVu Sans Mono
+Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fncourier new\pos(214.2,25.6)}\fncourier new {\r}\r
+Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnTimes new roman\pos(214.2,52.8)}\fnTimes new roman {\fn}\fn
+Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnDeja vu sans mono\pos(214.2,81.2)}\fnDeja vu sans mono {\fnX}\fnX
+Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnDejaVu Sans Mono\pos(214.2,109.6)}\fnDejaVu Sans Mono
+Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnLucida Console\pos(214.2,140)}\fnLucida Console
 Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnComic Sans MS\pos(214.2,169.6)}\fnComic Sans MS
 Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnMonotype Corsiva\pos(214.2,206.2)}\fnMonotype Corsiva
 Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an4\fnCarrois Gothic SC\pos(214.2,245.8)}\fnCarrois Gothic SC
 Dialogue: 0,0:00:00.00,0:00:05.01,Plain,,0,0,0,,{\an5\pos(31.2,159.6)}Line\N{\fnCarrois Gothic SC}break
 Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an5\pos(31.2,200.4)}Line\N{\fnCarrois Gothic SC}break
 Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\fs7 . 5\pos(192,53.8)}\fs ( 7 . 5 ) {\fs}\fs {\fs7.5}\fs7.5 {\fsX}\fsX {\fs30}\fs30 {\r}\r
-Dialogue: 0,0:00:05.01,0:00:10.05,Small,,0,0,0,,{\pos(192,108.2)}small{\rDefault}\rDefault{\rBig}\rBig{\r}\r{\fs15}\fs15
+Dialogue: 0,0:00:05.01,0:00:10.05,small,,0,0,0,,{\pos(192,108.2)}small{\rDefault}\rDefault{\rbig}\rbig{\r}\r{\fs15}\fs15
 Dialogue: 0,0:00:05.01,0:00:10.05,Plain,,0,0,0,,{\an5\pos(192,157)}Line\N{\fs30}break
 Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\pos(192,225.4)}Line\N{\fs30}break

@@ -78,6 +78,7 @@
     <Compile Include="Formats\Ass\AssSection.cs" />
     <Compile Include="Formats\Ass\AssStyle.cs" />
     <Compile Include="Formats\Ass\AssTagContext.cs" />
+    <Compile Include="Formats\Ass\AssLineContentBuilder.cs" />
     <Compile Include="Formats\Ass\KaraokeTypes\CursorKaraokeType.cs" />
     <Compile Include="Formats\Ass\KaraokeTypes\FadeKaraokeType.cs" />
     <Compile Include="Formats\Ass\KaraokeTypes\GlitchKaraokeType.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Formats\Ass\Tags\AssTransformTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssUnderlineTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssVerticalTypeTagHandler.cs" />
+    <Compile Include="Formats\Ass\VisualizingAssDocument.cs" />
     <Compile Include="Formats\SbvDocument.cs" />
     <Compile Include="Formats\SrtDocument.cs" />
     <Compile Include="Formats\SubtitleDocument.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="AssStyleOptions.cs" />
     <Compile Include="AssStyleOptionsList.cs" />
     <Compile Include="Util\CharacterRange.cs" />
+    <Compile Include="Util\CollectionExtensions.cs" />
     <Compile Include="Util\ColorUtil.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -139,14 +142,16 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StylePreviewGenerator.cs" />
+    <Compile Include="Util\FontSizeMapper.cs" />
     <Compile Include="Util\Range.cs" />
+    <Compile Include="Util\StringExtensions.cs" />
     <Compile Include="Util\TimeRange.cs" />
     <Compile Include="Util\TimeUtil.cs" />
-    <Compile Include="Util\Extensions.cs" />
     <Compile Include="Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Line.cs" />
+    <Compile Include="Util\XmlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -166,10 +171,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
-    <None Include="checkers.png_" />
     <None Include="packages.config" />
+    <None Include="Resources\checkers.png_" />
+    <None Include="Resources\defaultstyles.ass" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\StyleOptions.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

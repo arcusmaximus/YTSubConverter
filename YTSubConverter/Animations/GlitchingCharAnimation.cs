@@ -11,7 +11,7 @@ namespace Arc.YTSubConverter.Animations
         private readonly CharacterRange[] _charRanges;
 
         public GlitchingCharAnimation(DateTime startTime, DateTime endTime, params CharacterRange[] charRanges)
-            : base(startTime, endTime)
+            : base(startTime, endTime, 1)
         {
             _random = new Random((int)(startTime - SubtitleDocument.TimeBase).TotalMilliseconds);
             _charRanges = charRanges;

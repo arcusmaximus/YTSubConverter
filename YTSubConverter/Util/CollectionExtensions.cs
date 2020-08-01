@@ -5,43 +5,16 @@ using System.Linq;
 
 namespace Arc.YTSubConverter.Util
 {
-    internal static class Extensions
+    internal static class CollectionExtensions
     {
-        public static List<string> Split(this string str, string separator, int? maxItems = null)
+        public static Dictionary<TKey, TValue> ToDictionaryOverwrite<TKey, TValue>(this IEnumerable<TValue> items, Func<TValue, TKey> keySelector)
         {
-            List<string> result = new List<string>();
-            int start = 0;
-            int end;
-            while (start <= str.Length)
+            Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
+            foreach (TValue value in items)
             {
-                if (start < str.Length && (maxItems == null || result.Count < maxItems.Value - 1))
-                {
-                    end = str.IndexOf(separator, start);
-                    if (end < 0)
-                        end = str.Length;
-                }
-                else
-                {
-                    end = str.Length;
-                }
-
-                result.Add(str.Substring(start, end - start));
-                start = end + separator.Length;
+                dict[keySelector(value)] = value;
             }
-            return result;
-        }
-
-        public static int IndexOf<T>(this IEnumerable<T> items, T itemToSearch, IEqualityComparer<T> comparer)
-        {
-            int index = 0;
-            foreach (T item in items)
-            {
-                if (comparer.Equals(item, itemToSearch))
-                    return index;
-
-                index++;
-            }
-            return -1;
+            return dict;
         }
 
         public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> predicate)

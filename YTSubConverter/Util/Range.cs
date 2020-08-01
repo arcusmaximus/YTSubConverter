@@ -28,14 +28,14 @@ namespace Arc.YTSubConverter.Util
             return point.CompareTo(Start) >= 0 && point.CompareTo(End) < 0;
         }
 
-        public bool Intersects(Range<T> other)
+        public bool Overlaps(Range<T> other)
         {
             return Start.CompareTo(other.End) < 0 && End.CompareTo(other.Start) > 0;
         }
 
         public void IntersectWith(Range<T> other)
         {
-            if (!Intersects(other))
+            if (!Overlaps(other))
                 throw new InvalidOperationException("Can't intersect with a non-overlapping time range");
 
             Start =  Max(Start, other.Start);
@@ -44,7 +44,7 @@ namespace Arc.YTSubConverter.Util
 
         public void UnionWith(Range<T> other)
         {
-            if (!Intersects(other))
+            if (!Overlaps(other))
                 throw new InvalidOperationException("Can't union with a non-overlapping time range");
 
             Start = Min(Start, other.Start);

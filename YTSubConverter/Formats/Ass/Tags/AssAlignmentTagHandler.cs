@@ -10,7 +10,7 @@
         {
             int alignment = ParseInt(arg);
             if (alignment >= 1 && alignment <= 9)
-                context.Line.AnchorPoint = AssDocument.GetAnchorPointFromAlignment(alignment);
+                context.Line.AnchorPoint = AssDocument.GetAnchorPoint(alignment);
         }
     }
 }

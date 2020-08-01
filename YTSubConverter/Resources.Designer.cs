@@ -107,6 +107,40 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
+        ///   &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;StyleOptions xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+        ///  &lt;Style&gt;
+        ///    &lt;Name&gt;YTPlain&lt;/Name&gt;
+        ///    &lt;ShadowType&gt;None&lt;/ShadowType&gt;
+        ///    &lt;IsKaraoke&gt;false&lt;/IsKaraoke&gt;
+        ///    &lt;CurrentWordTextColor /&gt;
+        ///    &lt;CurrentWordOutlineColor /&gt;
+        ///    &lt;CurrentWordShadowColor /&gt;
+        ///  &lt;/Style&gt;
+        ///  &lt;Style&gt;
+        ///    &lt;Name&gt;YTPlainBox&lt;/Name&gt;
+        ///    &lt;ShadowType&gt;None&lt;/ShadowType&gt;
+        ///    &lt;IsKaraoke&gt;false&lt;/IsKaraoke&gt;
+        ///    &lt;CurrentWordTextColor /&gt;
+        ///    &lt;CurrentWordOutlin [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DefaultStyleOptions {
+            get {
+                return ResourceManager.GetString("DefaultStyleOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Byte[] のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static byte[] DefaultStyles {
+            get {
+                object obj = ResourceManager.GetObject("DefaultStyles", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Drag&amp;drop .ass/.sbv file or click the &quot;...&quot; button に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DragNDropTip {
@@ -296,7 +330,7 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
-        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv に類似しているローカライズされた文字列を検索します。
+        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SubtitleFileFilter {
             get {

@@ -7,7 +7,7 @@ namespace Arc.YTSubConverter.Animations
     internal class MoveAnimation : Animation
     {
         public MoveAnimation(DateTime startTime, PointF startPos, DateTime endTime, PointF endPos)
-            : base(startTime, endTime)
+            : base(startTime, endTime, 1)
         {
             StartPosition = startPos;
             EndPosition = endPos;

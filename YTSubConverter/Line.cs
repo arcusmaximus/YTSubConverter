@@ -27,6 +27,11 @@ namespace Arc.YTSubConverter
             Sections.AddRange(sections);
         }
 
+        public Line(Line line)
+        {
+            Assign(line);
+        }
+
         public DateTime Start
         {
             get;
@@ -64,7 +69,7 @@ namespace Arc.YTSubConverter
             set;
         }
 
-        public bool AndroidColorHackAllowed
+        public bool AndroidDarkTextHackAllowed
         {
             get;
             set;
@@ -77,9 +82,7 @@ namespace Arc.YTSubConverter
 
         public virtual object Clone()
         {
-            Line newLine = new Line(Start, End);
-            newLine.Assign(this);
-            return newLine;
+            return new Line(this);
         }
 
         protected virtual void Assign(Line line)
@@ -89,10 +92,15 @@ namespace Arc.YTSubConverter
             AnchorPoint = line.AnchorPoint;
             Position = line.Position;
             VerticalTextType = line.VerticalTextType;
-            AndroidColorHackAllowed = line.AndroidColorHackAllowed;
+            AndroidDarkTextHackAllowed = line.AndroidDarkTextHackAllowed;
 
             Sections.Clear();
-            Sections.AddRange(line.Sections.Select(s => (Section)s.Clone()));
+            Sections.AddRange(line.Sections.Select(CreateSection));
+        }
+
+        protected virtual Section CreateSection(Section section)
+        {
+            return new Section(section);
         }
     }
 }

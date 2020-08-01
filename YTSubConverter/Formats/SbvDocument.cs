@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -31,7 +32,7 @@ namespace Arc.YTSubConverter.Formats
                     else if (subLine != null)
                     {
                         if (subLine.Sections.Count == 0)
-                            subLine.Sections.Add(new Section(fileLine));
+                            subLine.Sections.Add(new Section(fileLine) { ForeColor = Color.White, BackColor = Color.FromArgb(192, 8, 8, 8) });
                         else
                             subLine.Sections[0].Text += "\r\n" + fileLine;
                     }

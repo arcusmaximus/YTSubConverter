@@ -10,7 +10,7 @@ namespace Arc.YTSubConverter.Animations
         private readonly Random _random;
 
         public ShakeAnimation(DateTime startTime, DateTime endTime, SizeF radius)
-            : base(startTime, endTime)
+            : base(startTime, endTime, 1)
         {
             Radius = radius;
             _random = new Random((int)(startTime - SubtitleDocument.TimeBase).TotalMilliseconds);

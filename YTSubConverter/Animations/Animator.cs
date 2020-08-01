@@ -75,7 +75,7 @@ namespace Arc.YTSubConverter.Animations
             var clusters = new SortedList<TimeRange, List<AnimationWithSectionIndex>>();
             foreach (TimeRange clusterRange in clusterRanges)
             {
-                if (!clusterRange.Intersects(lineRange))
+                if (!clusterRange.Overlaps(lineRange))
                     continue;
 
                 List<AnimationWithSectionIndex> clusterAnims = new List<AnimationWithSectionIndex>();
@@ -101,7 +101,7 @@ namespace Arc.YTSubConverter.Animations
                 TimeRange animationRange = new TimeRange(animation.StartTime, animation.EndTime);
                 for (int i = clusterRanges.Count - 1; i >= 0; i--)
                 {
-                    if (clusterRanges[i].Intersects(animationRange))
+                    if (clusterRanges[i].Overlaps(animationRange))
                     {
                         animationRange.UnionWith(clusterRanges[i]);
                         clusterRanges.RemoveAt(i);

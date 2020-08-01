@@ -9,6 +9,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             Start = item.GetTimestamp("Start");
             End = item.GetTimestamp("End");
             Style = item.GetString("Style");
+            Effect = item.GetString("Effect");
             Text = item.GetString("Text");
         }
 
@@ -23,6 +24,11 @@ namespace Arc.YTSubConverter.Formats.Ass
         }
 
         public string Style
+        {
+            get;
+        }
+
+        public string Effect
         {
             get;
         }

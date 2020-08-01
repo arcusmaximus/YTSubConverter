@@ -14,8 +14,8 @@ Last Style Storage: Default
 Video File: ?dummy:23.976000:40000:640:480:150:150:150:
 Video AR Value: 1.333333
 Video Zoom Percent: 0.875000
-Active Line: 26
-Video Position: 240
+Active Line: 28
+Video Position: 239
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -34,30 +34,33 @@ Style: Outline+Hard shadow,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00000000
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:05.00,Plain,,0,0,0,,{\t(\cFF)\pos(66,33.2)}\t(\cFF){\cFFFF}\cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Plain,,0,0,0,,{\t(\c0)\pos(255.257,33.2)}\t(\c0)
-Dialogue: 0,0:00:00.00,0:00:05.00,Plain,,0,0,0,,{\k224}{\pos(67.2,58.4)}{\pos(52.2,58.4)\t(\2cFF)}\t{\k83}(\2c{\k84}FF){\k109}{\2cFFFF}\2cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Outline,,0,0,0,,{\t(\3cFF)\pos(73.2,99.2)}\t(\3cFF){\3cFFFF}\3cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Glow shadow,,0,0,0,,{\t(\3cFF)\pos(190.8,95.6)}\t(\3cFF){\3cFFFF}\3cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Outline+Soft shadow,,0,0,0,,{\t(\3cFF)\pos(73.8,119)}\t(\3cFF){\3cFFFF}\3cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Outline box,,0,0,0,,{\t(\3cFF)\pos(190.8,117.8)}\t(\3cFF){\3cFFFF}\3cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Outline,,0,0,0,,{\t(\4cFF)\pos(68.4,153.2)}\t(\4cFF){\4cFFFF}\4cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Glow shadow,,0,0,0,,{\t(\4cFF)\pos(190.2,152)}\t(\4cFF){\4cFFFF}\4cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Outline+Soft shadow,,0,0,0,,{\t(\4cFF)\pos(69.6,175.4)}\t(\4cFF){\4cFFFF}\4cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Outline box,,0,0,0,,{\t(\4cFF)\pos(190.8,176)}\t(\4cFF){\4cFFFF}\4cFFFF
-Dialogue: 0,0:00:00.00,0:00:05.00,Soft shadow box,,0,0,0,,{\k600\t(\1cFF0000\2cFF00\3cFF\4cFFFF)\pos(171,216.8)}\t{\k1}(\1cFF0000\2cFF00\3cFF\4cFFFF)
-Dialogue: 0,0:00:00.00,0:00:05.00,Soft shadow box,,0,0,0,,{\t(0,1000,\cFF)\t(1000,2000,\cFF00)\pos(171.6,255.8)}\t(0,1000,\cFF)\t(1000,2000,\cFF00)\N{\cFFFFFF}\cFFFFFF{\t(\cFFFF)}\t(\cFFFF){\t(\cFFFF00)}\t(\cFFFF00)
-Dialogue: 0,0:00:04.98,0:00:10.01,Plain,,0,0,0,,{\t(\1aFF)\pos(51.6,33.2)}\1aFF{\1a00}\1a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Plain,,0,0,0,,{\k295}{\pos(52.2,58.4)\t(\2aFF)}\t{\k72}(\2a{\k64}FF){\k72}{\2a00}\2a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Outline,,0,0,0,,{\t(\3aFF)\pos(54,97.4)}\t(\3aFF){\3a00}\3a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow,,0,0,0,,{\t(\3aFF)\pos(154.8,94.4)}\t(\3aFF){\3a00}\3a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Outline+Soft shadow,,0,0,0,,{\t(\3aFF)\pos(49.2,119.6)}\t(\3aFF){\3a00}\3a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\t(\3aFF)\pos(153,118.4)}\t(\3aFF){\3a00}\3a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Outline,,0,0,0,,{\t(\4aFF)\pos(51.6,155)}\t(\4aFF){\4a00}\4a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow,,0,0,0,,{\t(\4aFF)\pos(151.8,153.2)}\t(\4aFF){\4a00}\4a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Outline+Soft shadow,,0,0,0,,{\t(\4aFF)\pos(43.2,181.4)}\t(\4aFF){\4a00}\4a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\t(\4aFF)\pos(152.4,180.2)}\t(\4aFF){\4a00}\4a00
-Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\3c&HD90016&\t(\alphaFF)\pos(291.6,160.4)}\t(\alphaFF){\alpha00}\alpha00
-Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\k600\t(\1a40\2a80\3aC0\4aFF)\pos(172.2,224)}\t{\k1}(\1a40\2a80\3aC0\4aFF)
-Dialogue: 0,0:00:04.98,0:00:10.01,Soft shadow box,,0,0,0,,{\t(0,1000,\1a80)\t(1000,2000,\1a00)\pos(172.2,259.4)}\t(0,1000,\1a80)\t(1000,2000,\1a00)\N{\1a00}\1a00{\t(\1a80)}\t(\1a80){\t(\1aFF)}\t(\1aFF)
-Dialogue: 0,0:00:10.01,0:00:15.05,Hard shadow,,0,0,0,,{\fs15\t(1000,3000,\fs30.5)}\t(1000,3000,\fs30.5){\r}\r
+Dialogue: 0,0:00:00.00,0:00:04.98,Plain,,0,0,0,,{\t(\cFF)\pos(66,33.2)}\t(\cFF){\cFFFF}\cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Plain,,0,0,0,,{\t(\c0)\pos(255.257,33.2)}\t(\c0)
+Dialogue: 0,0:00:00.00,0:00:04.98,Plain,,0,0,0,,{\k224}{\pos(67.2,58.4)}{\pos(52.2,58.4)\t(\2cFF)}\t{\k83}(\2c{\k84}FF){\k109}{\2cFFFF}\2cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Outline,,0,0,0,,{\t(\3cFF)\pos(73.2,99.2)}\t(\3cFF){\3cFFFF}\3cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Glow shadow,,0,0,0,,{\t(\3cFF)\pos(190.8,95.6)}\t(\3cFF){\3cFFFF}\3cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Outline+Soft shadow,,0,0,0,,{\t(\3cFF)\pos(73.8,119)}\t(\3cFF){\3cFFFF}\3cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Outline box,,0,0,0,,{\t(\3cFF)\pos(190.8,117.8)}\t(\3cFF){\3cFFFF}\3cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Outline,,0,0,0,,{\t(\4cFF)\pos(68.4,153.2)}\t(\4cFF){\4cFFFF}\4cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Glow shadow,,0,0,0,,{\t(\4cFF)\pos(190.2,152)}\t(\4cFF){\4cFFFF}\4cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Outline+Soft shadow,,0,0,0,,{\t(\4cFF)\pos(69.6,175.4)}\t(\4cFF){\4cFFFF}\4cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Outline box,,0,0,0,,{\t(\4cFF)\pos(190.8,176)}\t(\4cFF){\4cFFFF}\4cFFFF
+Dialogue: 0,0:00:00.00,0:00:04.98,Soft shadow box,,0,0,0,,{\k600\t(\1cFF0000\2cFF00\3cFF\4cFFFF)\pos(171,204.4)}\t{\k1}(\1cFF0000\2cFF00\3cFF\4cFFFF)
+Dialogue: 0,0:00:00.00,0:00:04.98,Soft shadow box,,0,0,0,,{\k600\t(0,5000,0.5,\1cFF0000\2cFF00\3cFF\4cFFFF)\pos(171,229.6)}\t{\k1}(0,5000,0.5,\1cFF0000\2cFF00\3cFF\4cFFFF)
+Dialogue: 0,0:00:00.00,0:00:04.98,Soft shadow box,,0,0,0,,{\t(0,1000,\cFF)\t(1000,2000,\cFF00)\pos(171.6,263.8)}\t(0,1000,\cFF)\t(1000,2000,\cFF00)\N{\cFFFFFF}\cFFFFFF{\t(\cFFFF)}\t(\cFFFF){\t(\cFFFF00)}\t(\cFFFF00)
+Dialogue: 0,0:00:04.98,0:00:09.99,Plain,,0,0,0,,{\t(\1aFF)\pos(51.6,33.2)}\1aFF{\1a00}\1a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Plain,,0,0,0,,{\k295}{\pos(52.2,58.4)\t(\2aFF)}\t{\k72}(\2a{\k64}FF){\k72}{\2a00}\2a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Outline,,0,0,0,,{\t(\3aFF)\pos(54,97.4)}\t(\3aFF){\3a00}\3a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow,,0,0,0,,{\t(\3aFF)\pos(154.8,94.4)}\t(\3aFF){\3a00}\3a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Outline+Soft shadow,,0,0,0,,{\t(\3aFF)\pos(49.2,119.6)}\t(\3aFF){\3a00}\3a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow box,,0,0,0,,{\t(\3aFF)\pos(153,118.4)}\t(\3aFF){\3a00}\3a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Outline,,0,0,0,,{\t(\4aFF)\pos(51.6,155)}\t(\4aFF){\4a00}\4a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow,,0,0,0,,{\t(\4aFF)\pos(151.8,153.2)}\t(\4aFF){\4a00}\4a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Outline+Soft shadow,,0,0,0,,{\t(\4aFF)\pos(43.2,181.4)}\t(\4aFF){\4a00}\4a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow box,,0,0,0,,{\t(\4aFF)\pos(152.4,180.2)}\t(\4aFF){\4a00}\4a00
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow box,,0,0,0,,{\3c&HD90016&\t(\alphaFF)\pos(291.6,160.4)}\t(\alphaFF){\alpha00}\alpha00
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow box,,0,0,0,,{\k600\t(\1a40\2a80\3aC0\4aFF)\pos(172.2,210.4)}\t{\k1}(\1a40\2a80\3aC0\4aFF)
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow box,,0,0,0,,{\k600\t(0,5000,0.5,\1a40\2a80\3aC0\4aFF)\pos(172.2,234)}\t{\k1}(0,5000,0.5,\1a40\2a80\3aC0\4aFF)
+Dialogue: 0,0:00:04.98,0:00:09.99,Soft shadow box,,0,0,0,,{\t(0,1000,\1a80)\t(1000,2000,\1a00)\pos(172.2,263.4)}\t(0,1000,\1a80)\t(1000,2000,\1a00)\N{\1a00}\1a00{\t(\1a80)}\t(\1a80){\t(\1aFF)}\t(\1aFF)
+Dialogue: 0,0:00:09.99,0:00:15.04,Hard shadow,,0,0,0,,{\fs15\t(1000,3000,\fs30.5)}\t(1000,3000,\fs30.5){\r}\r
+Dialogue: 0,0:00:09.99,0:00:15.04,Hard shadow,,0,0,0,,{\fs15\t(1000,3000,0.5,\fs30.5)\pos(192,186)}\t(1000,3000,0.5,\fs30.5){\r}\r

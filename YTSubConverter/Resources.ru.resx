@@ -190,7 +190,7 @@
     <value>Настройки стиля</value>
   </data>
   <data name="SubtitleFileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv</value>
+    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
     <value>{0} успешно создано</value>

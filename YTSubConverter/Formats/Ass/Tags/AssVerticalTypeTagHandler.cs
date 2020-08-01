@@ -11,24 +11,31 @@
             if (!int.TryParse(arg, out int vertType))
                 vertType = 9;
 
-            switch (vertType)
-            {
-                case 9:
-                    context.Line.VerticalTextType = VerticalTextType.VerticalRtl;
-                    break;
+            context.Line.VerticalTextType = GetVerticalTextType(vertType);
+        }
 
-                case 7:
-                    context.Line.VerticalTextType = VerticalTextType.VerticalLtr;
-                    break;
+        public static VerticalTextType GetVerticalTextType(int id)
+        {
+            return id switch
+                   {
+                       9 => VerticalTextType.VerticalRtl,
+                       7 => VerticalTextType.VerticalLtr,
+                       1 => VerticalTextType.RotatedLtr,
+                       3 => VerticalTextType.RotatedRtl,
+                       _ => VerticalTextType.None
+                   };
+        }
 
-                case 1:
-                    context.Line.VerticalTextType = VerticalTextType.RotatedLtr;
-                    break;
-
-                case 3:
-                    context.Line.VerticalTextType = VerticalTextType.RotatedRtl;
-                    break;
-            }
+        public static int GetVerticalTextTypeId(VerticalTextType type)
+        {
+            return type switch
+                   {
+                       VerticalTextType.VerticalRtl => 9,
+                       VerticalTextType.VerticalLtr => 7,
+                       VerticalTextType.RotatedLtr => 1,
+                       VerticalTextType.RotatedRtl => 3,
+                       _ => 0
+                   };
         }
     }
 }

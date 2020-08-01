@@ -1,26 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?><timedtext format="3"><head><wp id="0" ap="7" ah="0" av="0" /><wp id="1" ap="0" ah="0" av="0" /><wp id="2" ap="1" ah="50" av="0" /><wp id="3" ap="2" ah="100" av="0" /><wp id="4" ap="3" ah="0" av="50" /><wp id="5" ap="4" ah="50" av="50" /><wp id="6" ap="5" ah="100" av="50" /><wp id="7" ap="6" ah="0" av="100" /><wp id="8" ap="7" ah="50" av="100" /><wp id="9" ap="8" ah="100" av="100" /><wp id="10" ap="8" ah="0" av="0" /><ws id="0" ju="2" pd="0" sd="0" /><ws id="1" ju="0" pd="0" sd="0" /><ws id="2" ju="2" pd="0" sd="0" /><ws id="3" ju="1" pd="0" sd="0" /><pen id="0" sz="100" fc="#FEFEFE" fo="0" bo="0" /><pen id="1" sz="100" b="1" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /><pen id="2" sz="100" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /><pen id="3" sz="100" i="1" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /><pen id="4" sz="100" u="1" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /><pen id="5" sz="100" fc="#F60000" fo="254" bc="#000000" bo="195" /><pen id="6" sz="100" fc="#FEFEFE" fo="254" bc="#F60000" bo="195" /><pen id="7" sz="180" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /><pen id="8" sz="100" of="0" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /><pen id="9" sz="100" fc="#FEFEFE" fo="254" bc="#000000" bo="195" et="4" ec="#828282" /><pen id="10" fs="1" sz="100" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /><pen id="11" sz="100" fc="#000000" fo="0" bc="#000000" bo="0" /><pen id="12" sz="100" i="1" fc="#000000" fo="1" bo="0" /><pen id="13" sz="100" i="1" fc="#FEFEFE" fo="0" bc="#000000" bo="0" /></head><body><p t="1" d="4009" wp="1" ws="1"><s p="1">Top 7</s>​<s p="2">​
-Bottom 7</s></p><p t="1" d="4009" wp="2" ws="2"><s p="3">Top 8</s>​<s p="2">​
-Bottom 8</s></p><p t="1" d="4009" wp="3" ws="3"><s p="4">Top 9</s>​<s p="2">​
-Bottom 9</s></p><p t="1" d="4009" wp="4" ws="1"><s p="5">Top 4</s>​<s p="2">​
-Bottom 4</s></p><p t="1" d="4009" wp="5" ws="2"><s p="6">Top 5</s>​<s p="2">
-Bottom 5</s></p><p t="1" d="4009" wp="6" ws="3"><s p="7">Top 6</s>​<s p="2">
-Bottom 6</s></p><p t="1" d="4009" wp="7" ws="1"><s p="8">Top 1</s>​<s p="2">
-Bottom 1</s></p><p t="1" d="4009" wp="8" ws="2"><s p="9">Top 2</s>​<s p="2">​
-Bottom 2</s></p><p t="1" d="4009" wp="9" ws="3"><s p="10">Top 3</s>​<s p="2">
-Bottom 3</s></p><p t="4980" d="1000" p="2" wp="8" ws="2">Bottom</p><p t="5980" d="2700" wp="8" ws="2"><s p="2">Top</s>​<s p="2">​
-Bottom</s></p><p t="10010" d="3040" wp="8" ws="2"><s p="2">Top</s>​<s p="2">​
-Bottom</s></p><p t="13050" d="1000" p="2" wp="8" ws="2">Bottom</p><p t="15010" d="1000" p="2" wp="8" ws="2">Bottom</p><p t="16010" d="3040" wp="8" ws="2"><s p="2">Top</s>​<s p="2">​
-Bottom</s></p><p t="19050" d="1000" p="2" wp="8" ws="2">Bottom</p><p t="20710" d="600" p="2" wp="8" ws="2">Line 1</p><p t="21310" d="800" wp="8" ws="2"><s p="2">Line 2</s>​<s p="2">​
-Line 1</s></p><p t="22110" d="970" wp="8" ws="2"><s p="2">Line 3</s>​<s p="2">​
-Line 2</s><s p="2">​
-Line 1</s></p><p t="23080" d="1330" wp="8" ws="2"><s p="2">Line 2</s>​<s p="2">​
-Line 1</s></p><p t="24410" d="670" p="2" wp="8" ws="2">Line 1</p><p t="26710" d="1740" wp="8" ws="2"><s p="2">Top 1</s>​<s p="2">​
-Bottom</s></p><p t="28450" d="1960" wp="8" ws="2"><s p="2">Top 2</s>​<s p="2">​
-Bottom</s></p><p t="31710" d="1400" wp="8" ws="2"><s p="2">Top</s>​<s p="2">​
-Bottom 1</s></p><p t="33110" d="2340" wp="8" ws="2"><s p="2">Top</s>​<s p="2">​
-Bottom 2</s></p><p t="36420" d="567" wp="8" ws="2"><s p="2">Word1 </s>​<s p="11">Word2 Word3</s><s p="2">
-Word1 </s><s p="11">Word2 Word3</s></p><p t="36987" d="934" wp="8" ws="2"><s p="2">Word1 Word2 </s>​<s p="11">Word3</s><s p="2">
-Word1 </s><s p="11">Word2 Word3</s></p><p t="37921" d="468" wp="8" ws="2"><s p="2">Word1 Word2 </s>​<s p="11">Word3</s><s p="2">
-Word1 Word2 </s><s p="11">Word3</s></p><p t="38389" d="1034" wp="8" ws="2"><s p="2">Word1 Word2 Word3</s>​<s p="2">​
-Word1 Word2 </s><s p="11">Word3</s></p><p t="39423" d="1227" wp="8" ws="2"><s p="2">Word1 Word2 Word3</s>​<s p="2">​
-Word1 Word2 Word3</s></p><p t="5000" d="100" p="12" wp="10" ws="3">​</p><p t="5000" d="100" p="13" wp="10" ws="3">​</p></body></timedtext>
+﻿<?xml version="1.0" encoding="utf-8"?><timedtext format="3"><head><wp id="0" ap="7" ah="0" av="0" /><wp id="1" ap="0" ah="0" av="0" /><wp id="2" ap="1" ah="50" av="0" /><wp id="3" ap="2" ah="100" av="0" /><wp id="4" ap="3" ah="0" av="50" /><wp id="5" ap="4" ah="50" av="50" /><wp id="6" ap="5" ah="100" av="50" /><wp id="7" ap="6" ah="0" av="100" /><wp id="8" ap="7" ah="50" av="100" /><wp id="9" ap="8" ah="100" av="100" /><wp id="10" ap="8" ah="0" av="0" /><ws id="0" ju="2" pd="0" sd="0" /><ws id="1" ju="0" pd="0" sd="0" /><ws id="2" ju="2" pd="0" sd="0" /><ws id="3" ju="1" pd="0" sd="0" /><pen id="0" sz="100" fc="#000000" fo="0" bo="0" /><pen id="1" sz="100" b="1" fc="#FFFFFF" fo="254" bc="#000000" bo="195" /><pen id="2" sz="100" fc="#FFFFFF" fo="254" bc="#000000" bo="195" /><pen id="3" sz="100" i="1" fc="#FFFFFF" fo="254" bc="#000000" bo="195" /><pen id="4" sz="100" u="1" fc="#FFFFFF" fo="254" bc="#000000" bo="195" /><pen id="5" sz="100" fc="#F60000" fo="254" bc="#000000" bo="195" /><pen id="6" sz="100" fc="#FFFFFF" fo="254" bc="#F60000" bo="195" /><pen id="7" sz="180" fc="#FFFFFF" fo="254" bc="#000000" bo="195" /><pen id="8" sz="100" of="0" fc="#FFFFFF" fo="254" bc="#000000" bo="195" /><pen id="9" sz="100" fc="#FFFFFF" fo="254" bc="#000000" bo="195" et="4" ec="#828282" /><pen id="10" fs="1" sz="100" fc="#FFFFFF" fo="254" bc="#000000" bo="195" /><pen id="11" sz="100" fc="#000000" fo="0" bo="0" /><pen id="12" sz="100" i="1" fc="#000000" fo="1" bo="0" /><pen id="13" sz="100" i="1" fc="#828C96" fo="0" bo="0" /><pen id="14" sz="100" i="1" fc="#FFFFFF" fo="0" bo="0" /></head><body><p t="1" d="4009" wp="1" ws="1"><s p="1">​Top 7</s>​<s p="2">​
+​Bottom 7</s></p><p t="1" d="4009" wp="2" ws="2"><s p="3">​Top 8</s>​<s p="2">​
+​Bottom 8</s></p><p t="1" d="4009" wp="3" ws="3"><s p="4">​Top 9</s>​<s p="2">​
+​Bottom 9</s></p><p t="1" d="4009" wp="4" ws="1"><s p="5">​Top 4</s>​<s p="2">​
+​Bottom 4</s></p><p t="1" d="4009" wp="5" ws="2"><s p="6">​Top 5</s>​<s p="2">
+​Bottom 5</s></p><p t="1" d="4009" wp="6" ws="3"><s p="7">​Top 6</s>​<s p="2">
+​Bottom 6</s></p><p t="1" d="4009" wp="7" ws="1"><s p="8">​Top 1</s>​<s p="2">
+​Bottom 1</s></p><p t="1" d="4009" wp="8" ws="2"><s p="9">​Top 2</s>​<s p="2">​
+​Bottom 2</s></p><p t="1" d="4009" wp="9" ws="3"><s p="10">​Top 3</s>​<s p="2">
+​Bottom 3</s></p><p t="4980" d="1000" p="2" wp="8" ws="2">​Bottom</p><p t="5980" d="2700" p="2" wp="8" ws="2">​Top
+​Bottom</p><p t="10010" d="3040" p="2" wp="8" ws="2">​Top
+​Bottom</p><p t="13050" d="1000" p="2" wp="8" ws="2">​Bottom</p><p t="15010" d="1000" p="2" wp="8" ws="2">​Bottom</p><p t="16010" d="3040" p="2" wp="8" ws="2">​Top
+​Bottom</p><p t="19050" d="1000" p="2" wp="8" ws="2">​Bottom</p><p t="20710" d="600" p="2" wp="8" ws="2">​Line 1</p><p t="21310" d="800" p="2" wp="8" ws="2">​Line 2
+​Line 1</p><p t="22110" d="970" p="2" wp="8" ws="2">​Line 3
+​Line 2
+​Line 1</p><p t="23080" d="1330" p="2" wp="8" ws="2">​Line 2
+​Line 1</p><p t="24410" d="670" p="2" wp="8" ws="2">​Line 1</p><p t="26710" d="1740" p="2" wp="8" ws="2">​Top 1
+​Bottom</p><p t="28450" d="1960" p="2" wp="8" ws="2">​Top 2
+​Bottom</p><p t="31710" d="1400" p="2" wp="8" ws="2">​Top
+​Bottom 1</p><p t="33110" d="2340" p="2" wp="8" ws="2">​Top
+​Bottom 2</p><p t="36420" d="567" wp="8" ws="2"><s p="2">​Word1 </s>​<s p="11">​Word2 Word3</s><s p="2">
+​Word1 </s><s p="11">​Word2 Word3</s></p><p t="36987" d="934" wp="8" ws="2"><s p="2">​Word1 Word2 </s>​<s p="11">​Word3</s><s p="2">
+​Word1 </s><s p="11">​Word2 Word3</s></p><p t="37921" d="468" wp="8" ws="2"><s p="2">​Word1 Word2 </s>​<s p="11">​Word3</s><s p="2">
+​Word1 Word2 </s><s p="11">​Word3</s></p><p t="38389" d="1034" wp="8" ws="2"><s p="2">​Word1 Word2 Word3
+​Word1 Word2 </s>​<s p="11">​Word3</s></p><p t="39423" d="1227" p="2" wp="8" ws="2">​Word1 Word2 Word3
+​Word1 Word2 Word3</p><p t="5000" d="100" wp="10" ws="3"><s p="12">​</s>​<s p="13">​</s></p><p t="5000" d="100" wp="10" ws="3"><s p="14">​</s>​<s p="13">​</s></p></body></timedtext>

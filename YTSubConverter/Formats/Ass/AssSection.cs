@@ -8,12 +8,27 @@ namespace Arc.YTSubConverter.Formats.Ass
 {
     internal class AssSection : Section
     {
+        public AssSection()
+        {
+        }
+
         public AssSection(string text)
             : base(text)
         {
         }
 
+        public AssSection(Section section)
+            : base(section)
+        {
+        }
+
         public Color SecondaryColor
+        {
+            get;
+            set;
+        }
+
+        public float Blur
         {
             get;
             set;
@@ -47,17 +62,17 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         public override object Clone()
         {
-            AssSection newSection = new AssSection(Text);
-            newSection.Assign(this);
-            return newSection;
+            return new AssSection(this);
         }
 
         protected override void Assign(Section section)
         {
             base.Assign(section);
+            if (!(section is AssSection assSection))
+                return;
 
-            AssSection assSection = (AssSection)section;
             SecondaryColor = assSection.SecondaryColor;
+            Blur = assSection.Blur;
             CurrentWordForeColor = assSection.CurrentWordForeColor;
             CurrentWordOutlineColor = assSection.CurrentWordOutlineColor;
             CurrentWordShadowColor = assSection.CurrentWordShadowColor;

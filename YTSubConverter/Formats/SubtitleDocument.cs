@@ -14,6 +14,7 @@ namespace Arc.YTSubConverter.Formats
 
         protected SubtitleDocument()
         {
+            VideoDimensions = new Size(1280, 720);
         }
 
         protected SubtitleDocument(SubtitleDocument doc)
@@ -25,7 +26,7 @@ namespace Arc.YTSubConverter.Formats
         public Size VideoDimensions
         {
             get;
-            set;
+            protected set;
         }
 
         public List<Line> Lines { get; } = new List<Line>();
@@ -35,7 +36,7 @@ namespace Arc.YTSubConverter.Formats
             switch (Path.GetExtension(filePath)?.ToLower())
             {
                 case ".ass":
-                    return new AssDocument(filePath);
+                    return new AssDocument(filePath, AssStyleOptionsList.LoadFromFile().Concat(AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions)).ToList());
 
                 case ".sbv":
                     return new SbvDocument(filePath);
@@ -43,6 +44,7 @@ namespace Arc.YTSubConverter.Formats
                 case ".srt":
                     return new SrtDocument(filePath);
 
+                case ".srv3":
                 case ".ytt":
                     return new YttDocument(filePath);
 
@@ -129,6 +131,32 @@ namespace Arc.YTSubConverter.Formats
             }
 
             targetList.Insert(index, line);
+        }
+
+        public void MergeIdenticallyFormattedSections()
+        {
+            foreach (Line line in Lines)
+            {
+                MergeIdenticallyFormattedSections(line);
+            }
+        }
+
+        protected static void MergeIdenticallyFormattedSections(Line line)
+        {
+            SectionFormatComparer comparer = new SectionFormatComparer();
+            int i = 0;
+            while (i < line.Sections.Count - 1)
+            {
+                if (comparer.Equals(line.Sections[i], line.Sections[i + 1]) && line.Sections[i].StartOffset == line.Sections[i + 1].StartOffset)
+                {
+                    line.Sections[i].Text += line.Sections[i + 1].Text;
+                    line.Sections.RemoveAt(i + 1);
+                }
+                else
+                {
+                    i++;
+                }
+            }
         }
 
         public void CloseGaps()

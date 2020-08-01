@@ -8,10 +8,10 @@
 
         public override void Handle(AssTagContext context, string arg)
         {
-            if (!TryParseFloat(arg, out float size))
-                size = context.Style.FontSize;
+            if (!TryParseFloat(arg, out float lineHeight))
+                lineHeight = context.Style.LineHeight;
 
-            context.Section.Scale = size / context.Document.DefaultFontSize;
+            context.Section.Scale = lineHeight / context.Document.DefaultStyle.LineHeight;
         }
     }
 }

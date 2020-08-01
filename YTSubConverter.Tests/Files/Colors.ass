@@ -11,10 +11,10 @@ YCbCr Matrix: TV.601
 
 [Aegisub Project Garbage]
 Last Style Storage: Default
-Video File: ?dummy:30.000000:40000:640:480:204:202:200:
-Video AR Value: 1.333333
-Active Line: 3
-Video Position: 241
+Video File: ?dummy:23.976000:40000:1280:720:205:201:202:
+Video AR Value: 1.777778
+Video Zoom Percent: 0.750000
+Active Line: 5
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -33,7 +33,7 @@ Dialogue: 0,0:00:00.00,0:00:05.01,Outline,,0,0,0,,{\pos(192,88.8)}Outline
 Dialogue: 0,0:00:00.00,0:00:05.01,Box outline,,0,0,0,,{\pos(156,140.4)}Box\{}N\N{\1cFFFFFF}Break
 Dialogue: 0,0:00:00.00,0:00:05.01,Box outline,,0,0,0,,{\pos(223.8,140.4)}Box{\1cFFFFFF}\N\{}NBreak
 Dialogue: 0,0:00:00.00,0:00:05.01,Shadow,,0,0,0,,{\pos(192,183)}Shadow
-Dialogue: 0,0:00:00.00,0:00:05.01,Outline+shadow,,0,0,0,,{\pos(192,229.2)}Outline shadow
+Dialogue: 0,0:00:00.00,0:00:05.01,Outline+shadow,,0,0,0,,{\pos(192,227.333)}Outline shadow
 Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\pos(192,51.6)\c ( FF ) \1a(1C0)}\c ( FF ) \1a(1C0) {\c\1a}\c\1a {\1c&HFF00\1a&H80}\1c&HFF00\1a&H80 {\r}\r {\cHHFF0000&&\1aHH40&&}\cHHFF0000&&\1aHH40&&
 Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\k1000\pos(192,97.8)}-{\k1000\2c ( FF ) \2a(1C0)}\2c ( FF ) \2a(1C0) {\2c\2a}\2c\2a {\k1000\2c&HFF00\2a&H80}\2c&HFF00\2a&H80 {\r}\r {\2cHHFF0000&&\2aHH40&&}\2cHHFF0000&&\2aHH40&&
 Dialogue: 0,0:00:05.01,0:00:10.05,Outline,,0,0,0,,{\cFFFFFF\3c ( FF ) \3a(1C0)\4c0\4a0\pos(192,141)}\3c ( FF ) \3a(1C0) {\3c\3a}\3c\3a {\3c&HFF00\3a&H80}\3c&HFF00\3a&H80 {\r\cFFFFFF}\r {\3cFF}\3cFF {\3cHHFF0000&&\3aHH40&&}\3cHHFF0000&&\3aHH40&&
@@ -45,7 +45,8 @@ Dialogue: 0,0:00:10.05,0:00:15.08,Shadow,,0,0,0,,{\k600\pos(192,84.2)}{\pos(192,
 Dialogue: 0,0:00:10.05,0:00:15.08,Shadow box,,0,0,0,,{\k600\pos(192,117.2)}{\pos(192,80)\alphaC0\4c&H222222&\3c&HD90016&}\alp{\k1}haC0
 Dialogue: 0,0:00:10.05,0:00:15.08,Outline+shadow,,0,0,0,,{\3cFFFF\4cFFFF00\pos(192,140.6)}\3cFFFF\4cFFFF00
 Dialogue: 0,0:00:10.05,0:00:15.08,Plain,,0,0,0,,{\c&H000040&\pos(192,178.8)}Red {\c&H004000&}Green {\c&H400000}Blue {\c&H000000&}Black
-Dialogue: 0,0:00:10.05,0:00:15.08,Plain,,0,0,0,,{\c&H0000FF&\1a&HFF&\pos(192,214.2)}Invisible
+Dialogue: 0,0:00:10.05,0:00:15.08,Plain,,0,0,0,,{\c&H0000FF&\1a&HFF&\pos(192,214.2)}In{\1a0}visible
 Dialogue: 0,0:00:15.08,0:00:20.11,Default,,0,0,0,,{\an2\pos(69,152)}Background\N{\c&H000000&\3c&HFFFFFF&}change bottom
 Dialogue: 0,0:00:15.08,0:00:20.11,Default,,0,0,0,,{\an5\pos(192,152)}Background{\c&H000000&\3c&HFFFFFF&}\Nchange center
 Dialogue: 0,0:00:15.08,0:00:20.11,Default,,0,0,0,,{\an8\pos(323.4,152)}Background\N{\c&H000000&\3c&HFFFFFF&}change top
+Dialogue: 0,0:00:15.08,0:00:20.11,Plain,,0,0,0,no_android_dark_text_hack,{\pos(180,231.6)\c&H6A0011&\an5}No Android dark text hack

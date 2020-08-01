@@ -6,7 +6,7 @@ namespace Arc.YTSubConverter.Animations
     internal class FadeAnimation : Animation
     {
         public FadeAnimation(DateTime startTime, int startAlpha, DateTime endTime, int endAlpha)
-            : base(startTime, endTime)
+            : base(startTime, endTime, 1)
         {
             StartAlpha = startAlpha;
             EndAlpha = endAlpha;
@@ -26,16 +26,7 @@ namespace Arc.YTSubConverter.Animations
 
         public override void Apply(AssLine line, AssSection section, float t)
         {
-            int alpha = Interpolate(StartAlpha, EndAlpha, t);
-            switch (line)
-            {
-                case AssLine assLine:
-                    assLine.Alpha = alpha;
-                    break;
-
-                default:
-                    throw new NotSupportedException();
-            }
+            line.Alpha = Interpolate(StartAlpha, EndAlpha, t);
         }
 
         public override object Clone()

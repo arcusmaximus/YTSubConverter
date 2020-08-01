@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<StyleOptions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Style>
+    <Name>YTPlain</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTPlainBox</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTGlow</Name>
+    <ShadowType>Glow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTGlowBox</Name>
+    <ShadowType>Glow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTSoftShadow</Name>
+    <ShadowType>SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTSoftShadowBox</Name>
+    <ShadowType>SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTHardShadow</Name>
+    <ShadowType>HardShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTHardShadowBox</Name>
+    <ShadowType>HardShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTBevel</Name>
+    <ShadowType>Bevel</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>YTBevelBox</Name>
+    <ShadowType>Bevel</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>__ytplain</Name>
+    <ShadowType>None</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>__ytglow</Name>
+    <ShadowType>Glow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>__ytsoftshadow</Name>
+    <ShadowType>SoftShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>__ythardshadow</Name>
+    <ShadowType>HardShadow</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+  <Style>
+    <Name>__ytbevel</Name>
+    <ShadowType>Bevel</ShadowType>
+    <IsKaraoke>false</IsKaraoke>
+    <CurrentWordTextColor />
+    <CurrentWordOutlineColor />
+    <CurrentWordShadowColor />
+  </Style>
+</StyleOptions>

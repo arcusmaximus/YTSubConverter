@@ -16,11 +16,11 @@ namespace Arc.YTSubConverter
             {
                 new[] { "Courier New", "Courier", "Nimbus Mono L", "Cutive Mono", "monospace" },
                 new[] { "Times New Roman", "Times", "Georgia", "Cambria", "PT Serif Caption", "serif" },
-                new[] { "Deja Vu Sans Mono", "DejaVu Sans Mono", "Lucida Console", "Monaco", "Consolas", "PT Mono", "monospace" },
+                new[] { "Lucida Console", "Deja Vu Sans Mono", "DejaVu Sans Mono", "Monaco", "Consolas", "PT Mono", "monospace" },
                 new[] { "Comic Sans MS", "Impact", "Handlee", "fantasy" },
                 new[] { "Monotype Corsiva", "URW Chancery L", "Apple Chancery", "Dancing Script", "cursive" },
                 new[] { "Carrois Gothic SC", "sans-serif-smallcaps" },
-                new[] { "Roboto", "Arial Unicode Ms", "Arial", "Helvetica", "Verdana", "PT Sans Caption", "sans-serif" }
+                new[] { "Roboto", "YouTube Noto", "Arial Unicode Ms", "Arial", "Helvetica", "Verdana", "PT Sans Caption", "sans-serif" }
             };
 
         private static readonly Dictionary<string, string> ExtensionToMimeType =
@@ -35,7 +35,7 @@ namespace Arc.YTSubConverter
                 { ".tiff", "image/tiff" }
             };
 
-        public static string GenerateHtml(AssStyle style, AssStyleOptions options, float defaultFontSize, float windowsScaleFactor)
+        public static string GenerateHtml(AssStyle style, AssStyleOptions options, AssStyle defaultStyle, float windowsScaleFactor)
         {
             StringBuilder html = new StringBuilder();
             html.Append($@"
@@ -72,7 +72,7 @@ namespace Arc.YTSubConverter
 
             if (options != null)
             {
-                GenerateBackgroundCss(html, "#background", style, defaultFontSize, windowsScaleFactor);
+                GenerateBackgroundCss(html, "#background", style, defaultStyle, windowsScaleFactor);
                 GenerateForegroundCss(html, "#regular", style, style.PrimaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
                 if (options.IsKaraoke)
                 {
@@ -122,14 +122,13 @@ namespace Arc.YTSubConverter
             return html.ToString();
         }
 
-        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style, float defaultFontSize, float windowsScaleFactor)
+        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style, AssStyle defaultStyle, float windowsScaleFactor)
         {
             html.Append($@"
                 {selector}
                 {{
-                    padding: 3px 5px;
-                    border-radius: 3px;
-                    font-size: {(int)(Math.Max(32 * style.FontSize / defaultFontSize, 24) * windowsScaleFactor)}px;
+                    padding: 1px 8px;
+                    font-size: {(int)(Math.Max(32 * style.LineHeight / defaultStyle.LineHeight, 24) * windowsScaleFactor)}px;
             ");
 
             if (style.HasOutline && style.OutlineIsBox)
@@ -156,7 +155,7 @@ namespace Arc.YTSubConverter
             if (style.Underline)
                 html.Append("text-decoration: underline;");
 
-            html.Append($"font-family: {GetFullFontList(style.Font)};");
+            html.Append($"font-family: {string.Join(", ", GetFontListContaining(style.Font).Select(f => "\"" + f + "\""))};");
             html.Append($"color: {ToRgba(foreColor)};");
 
             List<string> shadows = new List<string>();
@@ -170,7 +169,12 @@ namespace Arc.YTSubConverter
                     shadows.Add($"0 0 2px {ToHex(shadowColor)}, 0 0 2px {ToHex(shadowColor)}, 0 0 3px {ToHex(shadowColor)}, 0 0 4px {ToHex(shadowColor)}");
 
                 if (shadowTypes.Contains(ShadowType.Bevel))
-                    shadows.Add($"2px 2px 0 {ToHex(shadowColor)}, -2px -2px 0 {ToHex(shadowColor)}");
+                {
+                    if (shadowColor.R == 0x22 && shadowColor.G == 0x22 && shadowColor.B == 0x22)
+                        shadows.Add("-1px -1px 0 #222222, 1px 1px 0 #CCCCCC");
+                    else
+                        shadows.Add($"-1px -1px 0 {ToHex(shadowColor)}, 1px 1px 0 {ToHex(shadowColor)}");
+                }
 
                 if (shadowTypes.Contains(ShadowType.SoftShadow))
                     shadows.Add($"2px 2px 3px {ToHex(shadowColor)}, 2px 2px 4px {ToHex(shadowColor)}, 2px 2px 5px {ToHex(shadowColor)}");
@@ -251,17 +255,17 @@ namespace Arc.YTSubConverter
             return "middle";
         }
 
-        private static string GetFullFontList(string font)
+        private static string[] GetFontListContaining(string font)
         {
             if (string.IsNullOrEmpty(font))
-                return "Roboto";
+                return GetFontListContaining("Roboto");
 
             foreach (string[] fontList in FontLists)
             {
                 if (fontList.Any(f => f.Equals(font, StringComparison.InvariantCultureIgnoreCase)))
-                    return string.Join(", ", fontList.Select(f => "\"" + f + "\""));
+                    return fontList;
             }
-            return font;
+            return GetFontListContaining("Roboto");
         }
 
         private static string ToRgba(Color color)

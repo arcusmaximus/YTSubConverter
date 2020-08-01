@@ -29,7 +29,7 @@ Dialogue: 0,0:00:00.00,0:00:07.01,Default,,0,0,0,,{\an5\pos(286.2,19.2)}Simple -
 Dialogue: 0,0:00:00.00,0:00:07.01,Soft shadow box,,0,0,0,,{\k115\2a&H00&\pos(154.2,40)}Su{\k116}ng {\k58}visi{\k115}ble
 Dialogue: 0,0:00:00.00,0:00:07.01,Soft shadow box,,0,0,0,,{\k115\pos(244.8,40.8)}Co{\k116}lo{\c&H00FF00&}r {\k58\r}cha{\k115}nge
 Dialogue: 0,0:00:00.00,0:00:07.01,KaraokeHilight,,0,0,0,,{\k115\2aFF\pos(332.4,41.8)}Wo{\k116}rd {\k58}hi{\k115}light
-Dialogue: 0,0:00:00.00,0:00:07.01,KaraokeNoHilight,,0,0,0,,{\k115\ytruby\2aFF\pos(156,62.2)}[Ru/び]{\k116}[by/び] {\k58}te{\k115}xt
+Dialogue: 0,0:00:00.00,0:00:07.01,KaraokeNoHilight,,0,0,0,,{\k115\ytruby\2aFF\pos(156,62.2)}[Ru/る]{\k116}[by/び] {\k58}te{\k115}xt
 Dialogue: 0,0:00:00.00,0:00:07.01,KaraokeHilight,,0,0,0,,{\k115\ytruby\2aFF\pos(245.4,63.4)}[Ru/る]{\k116}[by/び] {\k58}hi{\k115}light
 Dialogue: 0,0:00:00.00,0:00:07.01,KaraokeHilight,,0,0,0,,{\k115\2aFF\pos(332.4,63.4)}Pau{\k116\b0}{\k58\b0}se
 Dialogue: 0,0:00:00.00,0:00:07.01,Default,,0,0,0,,{\an5\pos(189,118.2)}Fade

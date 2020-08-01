@@ -8,7 +8,7 @@ namespace Arc.YTSubConverter.Util
     {
         public static Color ChangeColorAlpha(Color color, int alpha)
         {
-            return Color.FromArgb(alpha, color.R, color.G, color.B);
+            return Color.FromArgb((alpha << 24) | (color.ToArgb() & 0xFFFFFF));
         }
 
         public static bool IsDark(Color color)
@@ -26,33 +26,29 @@ namespace Arc.YTSubConverter.Util
             float factor = 255f / highestComponent;
             return Color.FromArgb(
                 color.A,
-                (byte)(r * factor),
-                (byte)(g * factor),
-                (byte)(b * factor)
+                (byte)Math.Round(r * factor),
+                (byte)Math.Round(g * factor),
+                (byte)Math.Round(b * factor)
             );
         }
 
         public static Color FromHtml(string html)
         {
-            if (html == null || html.Length != 7 || !html.StartsWith("#"))
+            if (string.IsNullOrEmpty(html))
                 return Color.Empty;
 
-            if (!int.TryParse(html.Substring(1, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int r) ||
-                !int.TryParse(html.Substring(3, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int g) ||
-                !int.TryParse(html.Substring(5, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int b))
-            {
-                return Color.Empty;
-            }
+            if (html.Length != 7 || !html.StartsWith("#"))
+                throw new FormatException();
 
-            return Color.FromArgb(255, r, g, b);
+            if (!int.TryParse(html.Substring(1), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out int rgb))
+                throw new FormatException();
+
+            return Color.FromArgb((0xFF << 24) | rgb);
         }
 
         public static string ToHtml(Color color)
         {
-            if (color.IsEmpty)
-                return string.Empty;
-
-            return $"#{color.R:X02}{color.G:X02}{color.B:X02}";
+            return $"#{color.ToArgb() & 0xFFFFFF:X06}";
         }
     }
 }

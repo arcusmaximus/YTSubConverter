@@ -6,10 +6,11 @@ namespace Arc.YTSubConverter.Animations
 {
     internal abstract class Animation : ICloneable
     {
-        protected Animation(DateTime startTime, DateTime endTime)
+        protected Animation(DateTime startTime, DateTime endTime, float acceleration)
         {
             StartTime = startTime;
             EndTime = endTime;
+            Acceleration = acceleration;
         }
 
         public DateTime StartTime
@@ -18,6 +19,11 @@ namespace Arc.YTSubConverter.Animations
         }
 
         public DateTime EndTime
+        {
+            get;
+        }
+
+        public float Acceleration
         {
             get;
         }
@@ -31,17 +37,17 @@ namespace Arc.YTSubConverter.Animations
 
         public abstract void Apply(AssLine line, AssSection section, float t);
 
-        protected static int Interpolate(int from, int to, float t)
+        protected int Interpolate(int from, int to, float t)
         {
-            return from + (int)((to - from) * t);
+            return from + (int)((to - from) * Math.Pow(t, Acceleration));
         }
 
-        protected static float Interpolate(float from, float to, float t)
+        protected float Interpolate(float from, float to, float t)
         {
-            return from + (to - from) * t;
+            return from + (to - from) * (float)Math.Pow(t, Acceleration);
         }
 
-        protected static Color Interpolate(Color from, Color to, float t)
+        protected Color Interpolate(Color from, Color to, float t)
         {
             return Color.FromArgb(
                 Interpolate(from.A, to.A, t),

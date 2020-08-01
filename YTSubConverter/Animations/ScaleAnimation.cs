@@ -5,8 +5,8 @@ namespace Arc.YTSubConverter.Animations
 {
     internal class ScaleAnimation : Animation
     {
-        public ScaleAnimation(DateTime startTime, float startScale, DateTime endTime, float endScale)
-            : base(startTime, endTime)
+        public ScaleAnimation(DateTime startTime, float startScale, DateTime endTime, float endScale, float acceleration)
+            : base(startTime, endTime, acceleration)
         {
             StartScale = startScale;
             EndScale = endScale;
@@ -31,7 +31,7 @@ namespace Arc.YTSubConverter.Animations
 
         public override object Clone()
         {
-            return new ScaleAnimation(StartTime, StartScale, EndTime, EndScale);
+            return new ScaleAnimation(StartTime, StartScale, EndTime, EndScale, Acceleration);
         }
     }
 }

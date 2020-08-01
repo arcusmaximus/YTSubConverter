@@ -6,8 +6,8 @@ namespace Arc.YTSubConverter.Animations
 {
     internal class SecondaryColorAnimation : ColorAnimation
     {
-        public SecondaryColorAnimation(DateTime startTime, Color startColor, DateTime endTime, Color endColor)
-            : base(startTime, startColor, endTime, endColor)
+        public SecondaryColorAnimation(DateTime startTime, Color startColor, DateTime endTime, Color endColor, float acceleration)
+            : base(startTime, startColor, endTime, endColor, acceleration)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Arc.YTSubConverter.Animations
 
         public override object Clone()
         {
-            return new SecondaryColorAnimation(StartTime, StartColor, EndTime, EndColor);
+            return new SecondaryColorAnimation(StartTime, StartColor, EndTime, EndColor, Acceleration);
         }
     }
 }

@@ -5,8 +5,8 @@ namespace Arc.YTSubConverter.Animations
 {
     internal abstract class ColorAnimation : Animation
     {
-        protected ColorAnimation(DateTime startTime, Color startColor, DateTime endTime, Color endColor)
-            : base(startTime, endTime)
+        protected ColorAnimation(DateTime startTime, Color startColor, DateTime endTime, Color endColor, float acceleration)
+            : base(startTime, endTime, acceleration)
         {
             StartColor = startColor;
             EndColor = endColor;

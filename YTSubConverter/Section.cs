@@ -7,9 +7,18 @@ namespace Arc.YTSubConverter
 {
     internal class Section : ICloneable
     {
+        public Section()
+        {
+        }
+
         public Section(string text)
         {
             Text = text;
+        }
+
+        public Section(Section other)
+        {
+            Assign(other);
         }
 
         public string Text
@@ -99,9 +108,7 @@ namespace Arc.YTSubConverter
 
         public virtual object Clone()
         {
-            Section newSection = new Section(Text);
-            newSection.Assign(this);
-            return newSection;
+            return new Section(this);
         }
 
         protected virtual void Assign(Section section)
