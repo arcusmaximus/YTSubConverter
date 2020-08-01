@@ -210,9 +210,9 @@ Then do the following for each video:
 * Upload the .ytt to YouTube and contact the channel owner for publishing.
 
 ## Reverse conversion
-YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, which is the same) to .ass. What's more, for any given .ytt file it can produce two different .ass files for two different purposes.
+YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, which is the same) to .ass. What's more, it can do this for two different purposes: editing and archiving.
   * By default, it'll produce an .ass file that you can edit and convert back to .ytt, getting the exact same look with different text. Example use cases: fixing a mistake in your own published subtitles if you already deleted the .ass, or translating someone else's published subtitles for which you never had the .ass in the first place.
-  * By calling the converter from the command line, passing it the .ytt/.srv3 path along with the `--visual` option, you'll get an .ass that accurately emulates (visualizes) how the subtitles look on YouTube. While this .ass can't be converted back to .ytt, it does give you (almost) the same visual experience in a local media player (VLC, Media Player Classic...) as you would on YouTube. Example use case: archiving videos so you can keep watching them, with visually accurate subtitles, even if they get taken down.
+  * You can also get an .ass that emulates how the subtitles look on YouTube. To do this, you need to call the converter from the command line, passing it the .ytt/.srv3 path along with the `--visual` option. While the resulting .ass can't be converted back to .ytt, it does give you (almost) the same visual experience in a local media player as on YouTube. Example use case: archiving videos so you can keep watching them, with visually accurate subtitles, even if they get taken down.
 
 You can download a video along with its published .ytt/.srv3 subtitles by using youtube-dl with the following options: `--write-sub --all-subs --sub-format=srv3`
 
