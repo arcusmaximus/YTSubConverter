@@ -70,7 +70,7 @@ namespace Arc.YTSubConverter
                 {
                     switch (arg)
                     {
-                        case "-viz":
+                        case "--visual":
                             parsedArgs.ForVisualization = true;
                             break;
                     }
