@@ -169,6 +169,8 @@ Then upload your .ytt file through the "Actions" dropdown:
 
 Once the upload is complete, click "Submit contribution" while making sure not to change *anything* in the built-in editor. If you do, all styling information will be lost. (YouTube warns you about this when uploading to your own channel, but not when uploading to others').
 
+Also note that the preview in the built-in editor doesn't show the styling. This is normal; as long as you don't change anything after uploading, the styling will show up in the "real" video player.
+
 ## Publishing
 Subtitles won't appear on the video right away after uploading - they also need to be published. For your own channel, you can of course do this yourself.
 
