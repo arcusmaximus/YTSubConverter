@@ -65,7 +65,7 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 return false;
 
             if (args.Count >= 5)
-                alpha = ParseHex(args[args.Count - 5]);
+                alpha = ParseHex(args[args.Count - 5]) & 255;
 
             if (args.Count >= 4 && !int.TryParse(args[args.Count - 4], out maxOffsetX))
                 return false;
