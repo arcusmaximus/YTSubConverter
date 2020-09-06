@@ -8,22 +8,25 @@
     <pen id="2" i="1" />            <!-- Italic     -->
     <pen id="3" u="1" />            <!-- Underline  -->
     
-    <!-- Foreground color/opacity. The iOS app supports both, while the Android app only supports color.              -->
-    <!-- Specifying fo="255" will result in the loss of the attribute after upload. Specifying fc="#FFFFFF" fo="255"  -->
-    <!-- will result in the loss of both attributes. Lost attributes, in turn, mean the viewer's custom settings      -->
-    <!-- (if any) will take effect. Because most viewers change these settings by accident rather than intentionaly   -->
-    <!-- (all it takes is a single keypress, e.g. O for opacity), it's recommended to go no higher than fo="254",     -->
-    <!-- thereby always overruling these accidental settings and ensuring the subtitles look how they're supposed to. -->
+    <!-- Foreground color/opacity. The iOS app supports both, while the Android app only supports color.               -->
+    <!-- Specifying fo="255" will result in the loss of the attribute after upload. Specifying fc="#FFFFFF" fo="255"   -->
+    <!-- will result in the loss of both attributes. Lost attributes, in turn, mean the viewer's custom settings       -->
+    <!-- (if any) will take effect. Because most viewers change these settings by accident rather than intentionaly    -->
+    <!-- (all it takes is a single keypress, e.g. O for opacity), it's recommended to go no higher than fo="254",      -->
+    <!-- thereby always overruling these accidental settings and ensuring the subtitles look how they're supposed to.  -->
+    <!-- In addition, even if the fc="#FFFFFF" attribute is not removed, the Android app will still act as though it's -->
+    <!-- not there and the pen will not cause a color change: the span will use the same color as the previous one.    -->
+    <!-- Therefore it's recommended to always use #FEFEFE instead of #FFFFFF for the "fc" attribute.                   -->
     <pen id="4" fc="#FF0000" fo="40"  bo="0" />
     <pen id="5" fc="#00FF00" fo="127" bo="0" />
     <pen id="6" fc="#0000FF" fo="254" bo="0" />
     
-    <!-- Background color/opacity. In theory, the iOS app supports both, but only if the well-hidden "Video Override" -->
-    <!-- option is turned on in the iOS accessibility settings. In practice, neither Android nor iOS support custom   -->
-    <!-- backgrounds.                                                                                                 -->
-    <!-- Similar to "fo", the "bo" attribute is lost if it's set to 255 (even though the default background opacity   -->
-    <!-- is 191 on PC). And similar to fc/fo, bc/bo are lost if they're set to #000000/255 (even though the default   -->
-    <!-- background color is #080808 on PC).                                                                          -->
+    <!-- Background color/opacity. In theory, the iOS app supports both, but only if the well-hidden "Video Override"  -->
+    <!-- option is turned on in the iOS accessibility settings. In practice, neither Android nor iOS support custom    -->
+    <!-- backgrounds.                                                                                                  -->
+    <!-- Similar to "fo", the "bo" attribute is lost if it's set to 255 (even though the default background opacity    -->
+    <!-- is 191 on PC). And similar to fc/fo, bc/bo are lost if they're set to #000000/255 (even though the default    -->
+    <!-- background color is #080808 on PC).                                                                           -->
     <pen id="7"  fc="#FFFFFF" bc="#FF0000" bo="40"  />
     <pen id="8"  fc="#FFFFFF" bc="#00FF00" bo="127" />
     <pen id="9"  fc="#FFFFFF" bc="#0000FF" bo="254" />
@@ -35,16 +38,16 @@
     <pen id="13" fc="#FE0000" ec="#0000FF" et="3" />        <!-- Glow/Outline   -->
     <pen id="14" fc="#FEFEFE" ec="#FF00FF" et="4" />        <!-- Soft shadow    -->
     
-    <!-- Font styles. Android doesn't support custom fonts at all, while iOS "supports" them as in using non-default    -->
-    <!-- fonts which are however completely different than on PC. The comments below show the PC fonts.                 -->
-    <pen id="15" fs="0" />                     <!-- Default (same as 4).                                                -->
-    <pen id="16" fs="1" />                     <!-- Monospaced Serif           (Courier New)                            -->
-    <pen id="17" fs="2" />                     <!-- Proportional Serif         (Times New Roman)                        -->
-    <pen id="18" fs="3" />                     <!-- Monospaced Sans-Serif      (Lucida Console)                         -->
-    <pen id="19" fs="4" />                     <!-- Proportional Sans-Serif    (Roboto)                                 -->
-    <pen id="20" fs="5" />                     <!-- Casual                     (Comic Saaans!)                          -->
-    <pen id="21" fs="6" />                     <!-- Cursive                    (Monotype Corsiva)                       -->
-    <pen id="22" fs="7" />                     <!-- Small Capitals             (Arial with font-variant: small-caps)    -->
+    <!-- Font styles. Android doesn't support custom fonts at all, while iOS "supports" them as in using non-default   -->
+    <!-- fonts which however look completely different than on PC. The comments below show the PC fonts.               -->
+    <pen id="15" fs="0" />                     <!-- Default (same as 4).                                               -->
+    <pen id="16" fs="1" />                     <!-- Monospaced Serif           (Courier New)                           -->
+    <pen id="17" fs="2" />                     <!-- Proportional Serif         (Times New Roman)                       -->
+    <pen id="18" fs="3" />                     <!-- Monospaced Sans-Serif      (Lucida Console)                        -->
+    <pen id="19" fs="4" />                     <!-- Proportional Sans-Serif    (Roboto)                                -->
+    <pen id="20" fs="5" />                     <!-- Casual                     (Comic Saaans!)                         -->
+    <pen id="21" fs="6" />                     <!-- Cursive                    (Monotype Corsiva)                      -->
+    <pen id="22" fs="7" />                     <!-- Small Capitals             (Arial with font-variant: small-caps)   -->
     
     <!-- Font sizes (supported on iOS but not Android)                              -->
     <!-- The value is a virtual percentage of the default size; the real            -->

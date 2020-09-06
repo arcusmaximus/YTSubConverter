@@ -367,15 +367,20 @@ namespace Arc.YTSubConverter.Formats
         /// default settings... which may not match what we want. For example, if the background opacity is lost because
         /// we set it to 255, the PC player will use its default setting of 191. What's more, YouTube allows users to
         /// customize the default settings - in a small window that nobody knows about, with keyboard shortcuts that are
-        /// easy to trigger by accident. The result is that some users accidentally configured a low, hard-to-read opacity
-        /// and don't know how to change it back.
-        /// In short, plenty of reasons to avoid the default opacities.
+        /// easy to trigger by accident. The result is that some users accidentally configured a low, hard-to-read
+        /// foreground opacity and don't know how to change it back.
+        /// In addition, we need to avoid pure white (#FFFFFF) for the foreground color because, even though this will
+        /// remain in the file after uploading (if the foreground opacity is &lt; 255), the Android app will still
+        /// ignore it and use the foreground color of the preceding section.
         /// </summary>
         private void LimitColors(int lineIndex)
         {
             Line line = Lines[lineIndex];
             foreach (Section section in line.Sections)
             {
+                if ((section.ForeColor.ToArgb() & 0xFFFFFF) == 0xFFFFFF)
+                    section.ForeColor = Color.FromArgb(section.ForeColor.A << 24 | 0xFEFEFE);
+
                 if (section.ForeColor.A == 255)
                     section.ForeColor = ColorUtil.ChangeColorAlpha(section.ForeColor, 254);
 

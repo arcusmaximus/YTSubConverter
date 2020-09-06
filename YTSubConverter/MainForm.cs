@@ -196,13 +196,13 @@ namespace Arc.YTSubConverter
             }
             else
             {
-                _chkGlow.Checked = options.ShadowTypes.Contains(ShadowType.Glow);
+                _chkGlow.Checked = style.HasShadow && options.ShadowTypes.Contains(ShadowType.Glow);
                 _chkGlow.Enabled = true;
             }
 
-            _chkBevel.Checked = options.ShadowTypes.Contains(ShadowType.Bevel);
-            _chkSoftShadow.Checked = options.ShadowTypes.Contains(ShadowType.SoftShadow);
-            _chkHardShadow.Checked = options.ShadowTypes.Contains(ShadowType.HardShadow);
+            _chkBevel.Checked = style.HasShadow && options.ShadowTypes.Contains(ShadowType.Bevel);
+            _chkSoftShadow.Checked = style.HasShadow && options.ShadowTypes.Contains(ShadowType.SoftShadow);
+            _chkHardShadow.Checked = style.HasShadow && options.ShadowTypes.Contains(ShadowType.HardShadow);
 
             Color currentWordTextColor = options.CurrentWordTextColor;
             Color currentWordOutlineColor = options.CurrentWordOutlineColor;
