@@ -22,6 +22,9 @@ class Handlers
         
         var config: Hashtable = JSON.JsonDecode(responseMatch.Groups[1].Value).JSONObject;
         var playerResponse: Hashtable = JSON.JsonDecode(config["args"]["player_response"]).JSONObject;
+        if (playerResponse["captions"] != null)
+            return;
+        
         var videoId: String = playerResponse["videoDetails"]["videoId"];
         playerResponse["captions"] = CreateCaptionsObject(videoId);
         config["args"]["player_response"] = JSON.JsonEncode(playerResponse);
