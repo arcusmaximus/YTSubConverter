@@ -44,12 +44,16 @@
         RubyBelow
     }
 
+    public enum HorizontalTextDirection
+    {
+        LeftToRight,
+        RightToLeft
+    }
+
     public enum VerticalTextType
     {
         None,
-        VerticalRtl,
-        VerticalLtr,
-        RotatedLtr,
-        RotatedRtl
+        Positioned,
+        Rotated
     }
 }

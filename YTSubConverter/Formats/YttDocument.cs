@@ -11,6 +11,7 @@ namespace Arc.YTSubConverter.Formats
     internal class YttDocument : SubtitleDocument
     {
         private const string ZeroWidthSpace = "\x200B";
+        private const string PaddingSpace = "\x200B \x200B"; // Surround with zwsp's so we can recognize and remove it during reverse conversion
 
         private static readonly Size ReferenceVideoDimensions = new Size(1280, 720);
 
@@ -47,6 +48,7 @@ namespace Arc.YTSubConverter.Formats
                     {
                         continue;
                     }
+
                     prevLine.AndroidDarkTextHackAllowed = false;
                 }
 
@@ -72,13 +74,12 @@ namespace Arc.YTSubConverter.Formats
             MergeIdenticallyFormattedSections();
             ApplyEnhancements();
             MergeIdenticallyFormattedSections();
-            PreventOverlapFlickering();
 
             Dictionary<Line, int> positions = ExtractAttributes(Lines, new LinePositionComparer(this));
             Dictionary<Line, int> windowStyles = ExtractAttributes(Lines, new LineAlignmentComparer());
             Dictionary<Section, int> pens = ExtractAttributes(Lines.SelectMany(l => l.Sections), new NormalizedSectionFormatComparer());
 
-            // Use LF instead of CRLF as the latter seems to cause the iOS app to bug out
+            // Use LF instead of CRLF as the latter reportedly causes the iOS app to bug out
             using XmlWriter writer = XmlWriter.Create(filePath, new XmlWriterSettings { NewLineChars = "\n" });
             writer.WriteStartElement("timedtext");
             writer.WriteAttributeString("format", "3");
@@ -100,15 +101,15 @@ namespace Arc.YTSubConverter.Formats
                 switch (elem.LocalName)
                 {
                     case "wp":
-                        AddItemAtIndex(positions, ReadWindowPosition(elem));
+                        SetItemAtIndexSafe(positions, ReadWindowPosition(elem));
                         break;
 
                     case "ws":
-                        AddItemAtIndex(windowStyles, ReadWindowStyle(elem));
+                        SetItemAtIndexSafe(windowStyles, ReadWindowStyle(elem));
                         break;
 
                     case "pen":
-                        AddItemAtIndex(pens, ReadPen(elem));
+                        SetItemAtIndexSafe(pens, ReadPen(elem));
                         break;
                 }
             }
@@ -133,16 +134,12 @@ namespace Arc.YTSubConverter.Formats
             Line windowStyle = new Line(TimeBase, TimeBase);
 
             int printDirection = elem.GetIntAttribute("pd") ?? 0;
-            bool scrollDirection = Convert.ToBoolean(elem.GetIntAttribute("sd") ?? 0);
-            if (printDirection == 2)
-                windowStyle.VerticalTextType = scrollDirection ? VerticalTextType.VerticalLtr : VerticalTextType.VerticalRtl;
-            else if (printDirection == 3)
-                windowStyle.VerticalTextType = scrollDirection ? VerticalTextType.RotatedRtl : VerticalTextType.RotatedLtr;
-
+            int scrollDirection = elem.GetIntAttribute("sd") ?? 0;
+            (windowStyle.HorizontalTextDirection, windowStyle.VerticalTextType) = GetTextDirections(printDirection, scrollDirection);
             return (id, windowStyle);
         }
 
-        private (int, Section) ReadPen(XmlElement elem)
+        private static (int, Section) ReadPen(XmlElement elem)
         {
             int id = elem.GetIntAttribute("id") ?? 0;
             Section pen = new Section();
@@ -197,20 +194,59 @@ namespace Arc.YTSubConverter.Formats
             DateTime end = start.AddMilliseconds(d);
             Line line = new Line(start, end);
 
-            Line position = GetItemAtIndex(positions, elem.GetIntAttribute("wp"));
+            Line position = GetItemAtIndexSafe(positions, elem.GetIntAttribute("wp"));
             if (position != null)
             {
                 line.AnchorPoint = position.AnchorPoint;
                 line.Position = position.Position;
             }
 
-            Line windowStyle = GetItemAtIndex(windowStyles, elem.GetIntAttribute("ws"));
+            Line windowStyle = GetItemAtIndexSafe(windowStyles, elem.GetIntAttribute("ws"));
             if (windowStyle != null)
+            {
+                line.HorizontalTextDirection = windowStyle.HorizontalTextDirection;
                 line.VerticalTextType = windowStyle.VerticalTextType;
+            }
 
-            Section linePen = GetItemAtIndex(pens, elem.GetIntAttribute("p"));
-            line.Sections.AddRange(ReadSections(elem, pens, linePen).Where(s => s.Text.Length > 0 || s.StartOffset > TimeSpan.Zero));
+            Section linePen = GetItemAtIndexSafe(pens, elem.GetIntAttribute("p"));
+            line.Sections.AddRange(ReadSections(elem, pens, linePen));
+            UndoWorkarounds(line);
             return line;
+        }
+
+        private static void UndoWorkarounds(Line line)
+        {
+            int i = 0;
+            TimeSpan prevStartOffset = TimeSpan.Zero;
+            while (i < line.Sections.Count)
+            {
+                Section section = line.Sections[i];
+                if (i > 0 && Regex.IsMatch(section.Text, @"^[\r\n]+$"))
+                {
+                    line.Sections[i - 1].Text += section.Text;
+                    section.Text = "";
+                }
+
+                if ((section.StartOffset - prevStartOffset).TotalMilliseconds < 10)
+                {
+                    section.StartOffset = prevStartOffset;
+                    if (i > 0 && line.Sections[i - 1].Text.Length == 0)
+                    {
+                        line.Sections.RemoveAt(i - 1);
+                        continue;
+                    }
+                    if (section.Text.Length == 0)
+                    {
+                        line.Sections.RemoveAt(i);
+                        continue;
+                    }
+                }
+                else
+                {
+                    prevStartOffset = section.StartOffset;
+                }
+                i += section.RubyPart == RubyPart.Text ? 4 : 1;
+            }
         }
 
         private static IEnumerable<Section> ReadSections(XmlElement lineElem, List<Section> pens, Section linePen)
@@ -227,16 +263,16 @@ namespace Arc.YTSubConverter.Formats
         private static Section ReadTextSection(XmlNode node, Section linePen)
         {
             Section section = (Section)linePen?.Clone() ?? new Section();
-            section.Text = node.Value.Replace(ZeroWidthSpace, "").Replace("\n", "\r\n");
+            section.Text = node.Value.Replace(PaddingSpace, "").Replace(ZeroWidthSpace, "").ToCrlf();
             return section;
         }
 
         private static Section ReadElementSection(XmlElement elem, List<Section> pens, Section linePen)
         {
             int? penId = elem.GetIntAttribute("p");
-            Section pen = GetItemAtIndex(pens, penId) ?? linePen;
+            Section pen = GetItemAtIndexSafe(pens, penId) ?? linePen;
             Section section = (Section)pen?.Clone() ?? new Section();
-            section.Text = elem.InnerText.Replace(ZeroWidthSpace, "").Replace("\n", "\r\n");
+            section.Text = elem.InnerText.Replace(PaddingSpace, "").Replace(ZeroWidthSpace, "").ToCrlf();
 
             int? startOffsetMs = elem.GetIntAttribute("t");
             if (startOffsetMs != null)
@@ -251,13 +287,14 @@ namespace Arc.YTSubConverter.Formats
             for (int i = 0; i < Lines.Count; i++)
             {
                 MakeInvisibleTextBlack(i);
-                PreventItalicShadowClipping(i);
-                PreventBackgroundBoxClipping(i);
+                PreventShadowClipping(i);
                 HardenSpaces(i);
                 LimitColors(i);
                 i += ExpandLineForMultiShadows(i) - 1;
                 i += ExpandLineForDarkText(i) - 1;
             }
+
+            ApplyManualLinePadding();
         }
 
         /// <summary>
@@ -272,7 +309,7 @@ namespace Arc.YTSubConverter.Formats
                 return;
 
             Line italicLine =
-                new Line(TimeBase.AddMilliseconds(5000), TimeBase.AddMilliseconds(5100))
+                new Line(TimeUtil.RoundTimeToFrameCenter(TimeBase.AddMilliseconds(5000)), TimeUtil.RoundTimeToFrameCenter(TimeBase.AddMilliseconds(5100)))
                 {
                     Position = new PointF(0, 0),
                     AnchorPoint = AnchorPoint.BottomRight
@@ -280,7 +317,7 @@ namespace Arc.YTSubConverter.Formats
             Section section =
                 new Section(ZeroWidthSpace)
                 {
-                    ForeColor = Color.FromArgb(1, 0, 0, 0),
+                    ForeColor = Color.FromArgb(1, 255, 255, 255),
                     BackColor = Color.Empty,
                     Italic = true
                 };
@@ -302,50 +339,51 @@ namespace Arc.YTSubConverter.Formats
         }
 
         /// <summary>
-        /// Italicized words, such as in "This {\i1}word{\i0} is important", get their shadow cut off
-        /// on the right hand side. As a workaround, move the space so we get "This {\i1}word {\i0}is important",
-        /// giving the shadow room to fall into.
+        /// If a section has a soft shadow and doesn't have a space at the end (like in "This {\i1}word{\i0} is important"),
+        /// the shadow will get cut off which doesn't look pretty. To fix this, steal the starting space of the next section
+        /// (if available) so we get "This {\i1}word {\i0}is important", giving the shadow room to fall into.
+        /// For RTL languages, we should steal the ending space of the preceding section instead.
         /// </summary>
-        private void PreventItalicShadowClipping(int lineIndex)
+        private void PreventShadowClipping(int lineIndex)
         {
             Line line = Lines[lineIndex];
-            for (int i = 0; i < line.Sections.Count - 1; i++)
+
+            for (int i = 0; i < line.Sections.Count; i++)
             {
                 Section currSection = line.Sections[i];
-                Section nextSection = line.Sections[i + 1];
-                if (currSection.Italic && !currSection.Text.EndsWith(" ") && !nextSection.Italic && nextSection.Text.StartsWith(" "))
+                if (currSection.RubyPart == RubyPart.Text)
                 {
-                    currSection.Text += " ";
-                    nextSection.Text = nextSection.Text.Substring(1);
+                    i += 3;
+                    continue;
                 }
-            }
-        }
 
-        /// <summary>
-        /// Despite several code revisions spanning multiple years, YouTube still doesn't get line breaks in subtitles right.
-        /// Even now, having a line break at the beginning or end of a section results in another section losing part of
-        /// its background box. The best they could do was apparently getting rid of the rounded corners to make it
-        /// less obvious (-> now everything has sharp corners, not just the clipped parts).
-        /// The asymmetry in box padding remains visible, however, so we apply a workaround involving zero-width spaces
-        /// to fix it where possible.
-        /// </summary>
-        private void PreventBackgroundBoxClipping(int lineIndex)
-        {
-            Line line = Lines[lineIndex];
-            for (int i = 0; i < line.Sections.Count - 1; i++)
-            {
-                Section thisSection = line.Sections[i];
-                Section nextSection = line.Sections[i + 1];
-                if (thisSection.BackColor != nextSection.BackColor ||
-                    thisSection.Font != nextSection.Font ||
-                    thisSection.Offset != nextSection.Offset ||
-                    thisSection.Scale != nextSection.Scale)
+                if (!currSection.ShadowColors.ContainsKey(ShadowType.SoftShadow))
                     continue;
 
-                if (thisSection.Text.EndsWith("\r\n"))
-                    thisSection.Text = thisSection.Text + ZeroWidthSpace;
-                else if (nextSection.Text.StartsWith("\r\n"))
-                    nextSection.Text = ZeroWidthSpace + nextSection.Text;
+                if (currSection.Text.Any(Util.CharacterRange.IsRightToLeft))
+                {
+                    if (currSection.Text.StartsWith(" ") || i == 0)
+                        continue;
+
+                    Section prevSection = line.Sections[i - 1];
+                    if (prevSection.RubyPart == RubyPart.Parenthesis || !prevSection.Text.EndsWith(" "))
+                        continue;
+
+                    prevSection.Text = prevSection.Text.Substring(0, prevSection.Text.Length - 1);
+                    currSection.Text = " " + currSection.Text;
+                }
+                else
+                {
+                    if (currSection.Text.EndsWith(" ") || i == line.Sections.Count - 1)
+                        continue;
+
+                    Section nextSection = line.Sections[i + 1];
+                    if (nextSection.RubyPart == RubyPart.Text || !nextSection.Text.StartsWith(" "))
+                        continue;
+
+                    currSection.Text = currSection.Text + " ";
+                    nextSection.Text = nextSection.Text.Substring(1);
+                }
             }
         }
 
@@ -387,7 +425,10 @@ namespace Arc.YTSubConverter.Formats
                 if (section.BackColor.A == 255)
                     section.BackColor = ColorUtil.ChangeColorAlpha(section.BackColor, 254);
 
-                // YouTube doesn't have a shadow opacity attribute, so explicitly set the opacity to 255 to avoid creating
+                // Remove invisible shadows
+                section.ShadowColors.RemoveAll((t, c) => c.A == 0);
+
+                // YouTube doesn't have a shadow opacity attribute, so explicitly set the opacity to 254 to avoid creating
                 // superfluous <pen>s later on (pens that only differ in shadow opacity). The exception is #222222 which
                 // does support opacity, in a way.
                 List<ShadowType> shadowTypesToChange = null;
@@ -427,6 +468,7 @@ namespace Arc.YTSubConverter.Formats
                     if (section.ShadowColors.ContainsKey(shadowType))
                         sectionLayerShadowTypes.Add(shadowType);
                 }
+
                 lineLayerShadowTypes.Add(sectionLayerShadowTypes);
             }
 
@@ -448,6 +490,7 @@ namespace Arc.YTSubConverter.Formats
                     else
                         section.ShadowColors.Clear();
                 }
+
                 Lines.Insert(lineIndex + layerIdx, shadowLine);
             }
 
@@ -484,15 +527,28 @@ namespace Arc.YTSubConverter.Formats
         }
 
         /// <summary>
-        /// In May of 2020, YouTube introduced a new regression: single-section subtitles that are in the same position
-        /// at the same time flicker or are not shown at all on PC. As a workaround, make all single-section subtitles
-        /// multi-section by splicing in an empty section.
+        /// YouTube's horizontal subtitle padding has several problems:
+        /// - When a section starts or ends with a line break, the section before or after it loses its padding on one side.
+        ///   (Originally this was especially visible with rounded corners getting cut off. After reporting it, the best
+        ///   thing they could apparently do was to get rid of rounded corners entirely, which made the problem less
+        ///   obvious but didn't actually fix it.)
+        /// - It's not RTL-aware. Padding that's supposed to be on the outer sides ends up in the middle instead,
+        ///   leaving the subtitle with not just cut-off ends but also unwanted gaps.
+        /// For this reason, we hide YouTube's padding and make our own with spaces instead. We need to do this in
+        /// two cases:
+        /// - The subtitle has a background box.
+        /// - The subtitle overlaps another in time and position. (In this case, having manual padding on one
+        ///   subtitle but not the other might very well result in them getting misaligned. Also, this is a
+        ///   two-birds-in-one-stone workaround for a new bug YouTube introduced in May 2020, where overlapping
+        ///   subtitles flicker horribly or don't show up at all: the bug only affects lines with a single
+        ///   section, and applying manual padding ensures we have multiple.
         /// </summary>
-        private void PreventOverlapFlickering()
+        private void ApplyManualLinePadding()
         {
             List<Line> sortedLines = Lines.ToList();
             sortedLines.Sort((x, y) => x.Start.CompareTo(y.Start));
 
+            HashSet<Line> linesToPad = new HashSet<Line>();
             for (int i = 0; i < sortedLines.Count; i++)
             {
                 Line line1 = sortedLines[i];
@@ -507,55 +563,91 @@ namespace Arc.YTSubConverter.Formats
                     if (GetYouTubePosition(line2) != line1Position)
                         continue;
 
-                    PreventOverlapFlickering(line1);
-                    PreventOverlapFlickering(line2);
+                    linesToPad.Add(line1);
+                    linesToPad.Add(line2);
                 }
+
+                if (line1.Sections.Any(s => s.BackColor.A > 0))
+                    linesToPad.Add(line1);
+            }
+
+            foreach (Line line in linesToPad)
+            {
+                ApplyManualLinePadding(line);
+                AvoidZeroDurationKaraoke(line);
             }
         }
 
-        private void PreventOverlapFlickering(Line line)
+        private void ApplyManualLinePadding(Line line)
         {
-            if (line.Sections.Count != 1)
+            if (line.VerticalTextType == VerticalTextType.Positioned)
                 return;
 
-            Section leftSection = line.Sections[0];
-            if (string.IsNullOrEmpty(leftSection.Text))
-                return;
+            MoveLineBreaksToSeparateSections(line);
 
-            // We need to be quite careful when selecting the split point:
-            int spliceIndex;
-            // If there's taller-than-usual text, we need to make sure both sections get some of it, as otherwise their background boxes won't align
-            if ((spliceIndex = leftSection.Text.IndexOf(HasTallBackgroundBox)) >= 0)
-                spliceIndex++;
-            // Otherwise, we try to splice after a space to prevent cutting off any shadows
-            else if ((spliceIndex = leftSection.Text.IndexOf(' ')) >= 0)
-                spliceIndex++;
-            // If we can't do either of those, we just append the splice section at the end
-            else
-                spliceIndex = leftSection.Text.Length;
+            // Use a (hopefully) unique color combination so the padding sections won't be merged with others during upload.
+            // (This is important for working around the May 2020 bug described above)
+            Section hiddenSectionTemplate =
+                new Section
+                {
+                    BackColor = Color.FromArgb(0, 130, 140, 150),
+                    ForeColor = Color.FromArgb(0, 160, 170, 180),
+                    Scale = 0.1f
+                };
 
-            Section spliceSection = (Section)leftSection.Clone();
-            spliceSection.Text = ZeroWidthSpace;
-            spliceSection.ForeColor = Color.FromArgb(0, 130, 140, 150);
-            line.Sections.Add(spliceSection);
-
-            if (leftSection.Text.Length > spliceIndex)
+            int i = 0;
+            while (i < line.Sections.Count)
             {
-                Section rightSection = (Section)leftSection.Clone();
-                line.Sections.Add(rightSection);
+                Section section = line.Sections[i];
+                int nextSectionIdx = i + (section.RubyPart == RubyPart.Text ? 4 : 1);
 
-                leftSection.Text = leftSection.Text.Substring(0, spliceIndex);
-                rightSection.Text = rightSection.Text.Substring(spliceIndex);
+                if (section.Text.Contains("\r\n"))
+                {
+                    line.Sections[i] = CreatePaddingSection(hiddenSectionTemplate, section.Text, section.StartOffset);
+                    i = nextSectionIdx;
+                    continue;
+                }
+
+                if (i == 0 || line.Sections[i - 1].Text.EndsWith("\r\n"))
+                {
+                    line.Sections.Insert(i + 0, CreatePaddingSection(hiddenSectionTemplate, ZeroWidthSpace, section.StartOffset));
+                    line.Sections.Insert(i + 1, CreatePaddingSection(section, PaddingSpace, section.StartOffset));
+                    nextSectionIdx += 2;
+                }
+
+                if (nextSectionIdx == line.Sections.Count || line.Sections[nextSectionIdx].Text.StartsWith("\r\n"))
+                {
+                    line.Sections.Insert(nextSectionIdx + 0, CreatePaddingSection(section, PaddingSpace, section.StartOffset));
+                    line.Sections.Insert(nextSectionIdx + 1, CreatePaddingSection(hiddenSectionTemplate, ZeroWidthSpace, section.StartOffset));
+                    nextSectionIdx += 2;
+                }
+
+                i = nextSectionIdx;
             }
 
-            static bool HasTallBackgroundBox(char c)
+            static Section CreatePaddingSection(Section template, string text, TimeSpan startOffset)
             {
-                return Util.CharacterRange.HiraganaRange.Contains(c) ||
-                       Util.CharacterRange.KatakanaRange.Contains(c) ||
-                       Util.CharacterRange.IdeographRange.Contains(c) ||
-                       Util.CharacterRange.IdeographExtensionRange.Contains(c) ||
-                       Util.CharacterRange.IdeographCompatibilityRange.Contains(c) ||
-                       Util.CharacterRange.HangulRange.Contains(c);
+                Section paddingSection = (Section)template.Clone();
+                paddingSection.Text = text;
+                paddingSection.RubyPart = RubyPart.None;
+                paddingSection.Underline = false;
+                paddingSection.StartOffset = startOffset;
+                return paddingSection;
+            }
+        }
+
+        /// <summary>
+        /// While YouTube's player supports zero-duration karaoke segments (where the next segment starts at
+        /// the same time) just fine, the upload process breaks them, so give them a 1ms duration instead.
+        /// </summary>
+        private void AvoidZeroDurationKaraoke(Line line)
+        {
+            for (int i = 1; i < line.Sections.Count; i++)
+            {
+                Section prevSection = line.Sections[i - 1];
+                Section section = line.Sections[i];
+                if (section.StartOffset > TimeSpan.Zero && prevSection.StartOffset >= section.StartOffset)
+                    section.StartOffset = prevSection.StartOffset + TimeSpan.FromMilliseconds(1);
             }
         }
 
@@ -604,8 +696,9 @@ namespace Arc.YTSubConverter.Formats
             writer.WriteStartElement("ws");
             writer.WriteAttributeString("id", styleId.ToString());
             writer.WriteAttributeString("ju", GetJustificationId(style.AnchorPoint).ToString());
-            writer.WriteAttributeString("pd", GetTextDirectionId(style.VerticalTextType).ToString());
-            writer.WriteAttributeString("sd", IsLineFlowInverted(style.VerticalTextType) ? "1" : "0");
+            (int pd, int sd) = GetPrintAndScrollDirectionIds(style.HorizontalTextDirection, style.VerticalTextType);
+            writer.WriteAttributeString("pd", pd.ToString());
+            writer.WriteAttributeString("sd", sd.ToString());
             writer.WriteEndElement();
         }
 
@@ -712,7 +805,7 @@ namespace Arc.YTSubConverter.Formats
 
             if (line.Sections.Count == 1)
             {
-                writer.WriteValue(AddLineHeightEqualizers(line.Sections[0].Text));
+                WriteSectionValue(writer, line, line.Sections[0]);
             }
             else
             {
@@ -721,7 +814,7 @@ namespace Arc.YTSubConverter.Formats
                 int multiSectionWorkaroundIdx = line.Sections[0].RubyPart == RubyPart.None ? 0 : 3;
                 for (int i = 0; i < line.Sections.Count; i++)
                 {
-                    WriteSection(writer, line.Sections[i], penIds);
+                    WriteSection(writer, line, line.Sections[i], penIds);
                     if (i == multiSectionWorkaroundIdx)
                         writer.WriteValue(ZeroWidthSpace);
                 }
@@ -730,7 +823,7 @@ namespace Arc.YTSubConverter.Formats
             writer.WriteEndElement();
         }
 
-        private void WriteSection(XmlWriter writer, Section section, Dictionary<Section, int> penIds)
+        private void WriteSection(XmlWriter writer, Line line, Section section, Dictionary<Section, int> penIds)
         {
             writer.WriteStartElement("s");
             writer.WriteAttributeString("p", penIds[section].ToString());
@@ -738,8 +831,17 @@ namespace Arc.YTSubConverter.Formats
             if (section.StartOffset > TimeSpan.Zero)
                 writer.WriteAttributeString("t", ((int)section.StartOffset.TotalMilliseconds).ToString());
 
-            writer.WriteValue(AddLineHeightEqualizers(section.Text));
+            WriteSectionValue(writer, line, section);
             writer.WriteEndElement();
+        }
+
+        private void WriteSectionValue(XmlWriter writer, Line line, Section section)
+        {
+            string text = section.Text;
+            if (line.VerticalTextType != VerticalTextType.Positioned)
+                text = AddLineHeightEqualizers(text);
+
+            writer.WriteValue(text);
         }
 
         // In order to work around YouTube's age-old multisection bug (see WriteLine())
@@ -813,18 +915,18 @@ namespace Arc.YTSubConverter.Formats
             return (int)Math.Round(yttScale * 100);
         }
 
-        private static void AddItemAtIndex<T>(IList<T> list, (int, T) item)
+        private static T GetItemAtIndexSafe<T>(IList<T> list, int? index)
+        {
+            return index != null && index >= 0 && index < list.Count ? list[index.Value] : default;
+        }
+
+        private static void SetItemAtIndexSafe<T>(IList<T> list, (int, T) item)
         {
             while (list.Count <= item.Item1)
             {
                 list.Add(default);
             }
             list[item.Item1] = item.Item2;
-        }
-
-        private static T GetItemAtIndex<T>(IList<T> list, int? index)
-        {
-            return index != null && index >= 0 && index < list.Count ? list[index.Value] : default;
         }
 
         private static Dictionary<T, int> ExtractAttributes<T>(IEnumerable<T> objects,  IEqualityComparer<T> comparer)
@@ -896,27 +998,25 @@ namespace Arc.YTSubConverter.Formats
             }
         }
 
-        private static int GetTextDirectionId(VerticalTextType type)
+        private static (int, int) GetPrintAndScrollDirectionIds(HorizontalTextDirection hor, VerticalTextType ver)
         {
-            switch (type)
-            {
-                case VerticalTextType.VerticalRtl:
-                case VerticalTextType.VerticalLtr:
-                    return 2;
-
-                case VerticalTextType.RotatedLtr:
-                case VerticalTextType.RotatedRtl:
-                    return 3;
-
-                default:
-                    return 0;
-            }
+            return ver switch
+                   {
+                       VerticalTextType.Positioned => (2, hor == HorizontalTextDirection.RightToLeft ? 0 : 1),
+                       VerticalTextType.Rotated => (3, hor == HorizontalTextDirection.LeftToRight ? 0 : 1),
+                       _ => (hor == HorizontalTextDirection.LeftToRight ? 0 : 1, 0)
+                   };
         }
 
-        private static bool IsLineFlowInverted(VerticalTextType type)
+        private static (HorizontalTextDirection, VerticalTextType) GetTextDirections(int printDirectionId, int scrollDirectionId)
         {
-            return type == VerticalTextType.VerticalLtr ||
-                   type == VerticalTextType.RotatedRtl;
+            return printDirectionId switch
+                   {
+                       1 => (HorizontalTextDirection.RightToLeft, VerticalTextType.None),
+                       2 => (scrollDirectionId == 0 ? HorizontalTextDirection.RightToLeft : HorizontalTextDirection.LeftToRight, VerticalTextType.Positioned),
+                       3 => (scrollDirectionId == 0 ? HorizontalTextDirection.LeftToRight : HorizontalTextDirection.RightToLeft, VerticalTextType.Rotated),
+                       _ => (HorizontalTextDirection.LeftToRight, VerticalTextType.None)
+                   };
         }
 
         private static int GetEdgeTypeId(ShadowType type)
@@ -1076,12 +1176,14 @@ namespace Arc.YTSubConverter.Formats
             public bool Equals(Line x, Line y)
             {
                 return GetJustificationId(x.AnchorPoint) == GetJustificationId(y.AnchorPoint) &&
+                       x.HorizontalTextDirection == y.HorizontalTextDirection &&
                        x.VerticalTextType == y.VerticalTextType;
             }
 
             public int GetHashCode(Line line)
             {
                 return GetJustificationId(line.AnchorPoint) ^
+                       line.HorizontalTextDirection.GetHashCode() ^
                        line.VerticalTextType.GetHashCode();
             }
         }

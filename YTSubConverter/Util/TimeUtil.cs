@@ -3,7 +3,7 @@ using Arc.YTSubConverter.Formats;
 
 namespace Arc.YTSubConverter.Util
 {
-    internal static class TimeUtil
+    public static class TimeUtil
     {
         public static DateTime Min(DateTime date1, DateTime date2)
         {

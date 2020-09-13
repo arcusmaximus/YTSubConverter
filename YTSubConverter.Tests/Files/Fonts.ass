@@ -13,7 +13,8 @@ YCbCr Matrix: TV.601
 Last Style Storage: Default
 Video File: ?dummy:30.000000:40000:640:480:218:216:214:
 Video AR Value: 1.333333
-Active Line: 8
+Scroll Position: 10
+Active Line: 24
 Video Position: 121
 
 [V4+ Styles]
@@ -54,4 +55,7 @@ Dialogue: 0,0:00:00.00,0:00:05.01,Default,,0,0,0,,{\an5\pos(31.2,200.4)}Line\N{\
 Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\fs7 . 5\pos(192,53.8)}\fs ( 7 . 5 ) {\fs}\fs {\fs7.5}\fs7.5 {\fsX}\fsX {\fs30}\fs30 {\r}\r
 Dialogue: 0,0:00:05.01,0:00:10.05,small,,0,0,0,,{\pos(192,108.2)}small{\rDefault}\rDefault{\rbig}\rbig{\r}\r{\fs15}\fs15
 Dialogue: 0,0:00:05.01,0:00:10.05,Plain,,0,0,0,,{\an5\pos(192,157)}Line\N{\fs30}break
-Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\pos(192,225.4)}Line\N{\fs30}break
+Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\pos(105.6,225.4)}Line{\fs30}\Nbreak
+Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\pos(167.1,225.4)}Line\N{\fs30}break
+Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\pos(227.7,225.4)}Line{\fs10}\Nbreak
+Dialogue: 0,0:00:05.01,0:00:10.05,Default,,0,0,0,,{\an5\pos(259.8,225.4)}Line\N{\fs10}break

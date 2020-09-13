@@ -11,8 +11,12 @@ YCbCr Matrix: TV.601
 
 [Aegisub Project Garbage]
 Last Style Storage: Default
-Video File: ?dummy:30.000000:40000:640:480:204:202:200:
-Video AR Value: 1.333333
+Video File: ?dummy:23.976000:40000:1280:720:205:201:202:
+Video AR Value: 1.777778
+Video Zoom Percent: 0.875000
+Scroll Position: 27
+Active Line: 38
+Video Position: 562
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -25,6 +29,8 @@ Style: KaraokeHilight,Arial,15,&H00FFFFFF,&H00C0C0C0,&H00FF0000,&H000000FF,0,0,0
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:00:00.00,0:00:07.01,Default,,0,0,0,,{\pos(52.8,16.8)}Simple - native
 Dialogue: 0,0:00:00.00,0:00:07.01,Soft shadow box,,0,0,0,,{\k115\pos(49.2,46.6)}Ka{\k116}ra{\k58\c&H00FF00&}o{\k115}ke
+Dialogue: 0,0:00:00.00,0:00:07.01,Soft shadow box,,0,0,0,,{\k115\pos(49.2,79)}Ka{\k116}r\Na{\k58\c&H00FF00&}o{\k115}ke
+Dialogue: 0,0:00:00.00,0:00:07.01,Soft shadow box,,0,0,0,,{\k115\pos(49.2,122.6)}Ka{\k116}ra\N{\k58\c&H00FF00&}o{\k115}ke
 Dialogue: 0,0:00:00.00,0:00:07.01,Default,,0,0,0,,{\an5\pos(286.2,19.2)}Simple - emulated
 Dialogue: 0,0:00:00.00,0:00:07.01,Soft shadow box,,0,0,0,,{\k115\2a&H00&\pos(154.2,40)}Su{\k116}ng {\k58}visi{\k115}ble
 Dialogue: 0,0:00:00.00,0:00:07.01,Soft shadow box,,0,0,0,,{\k115\pos(244.8,40.8)}Co{\k116}lo{\c&H00FF00&}r {\k58\r}cha{\k115}nge
@@ -55,3 +61,9 @@ Dialogue: 0,0:00:07.01,0:00:17.71,Default,,0,0,0,,{\an4\k182\pos(255,151.8)}{\yt
 Dialogue: 0,0:00:07.01,0:00:17.71,Default,,0,0,0,,{\an4\k182\pos(27.6,187.8)}{\ytkt(Cursor,400,\cFF,-,\cFF00,\,\cFF0000,|,\cFFFF)}\yt{\k122}kt{\k183}(Cur{\k183}sor,400,\cFF,-,\cFF00,\,\cFF0000,|,\cFFFF)
 Dialogue: 0,0:00:07.01,0:00:17.71,Default,,0,0,0,,{\k82}{\an4}{\pos(28.2,219.6)}{\ytkt(Cursor,200,\cFF,-,\cFF00,\,\cFF0000,|,\cFFFF,/)}\yt{\k71}kt{\k47}(Cur{\k67}sor,{\k57}200,{\k55}\cFF,{\k68}-,{\k45}\cFF00,{\k44}\,{\k45}\cFF0000,{\k40}|,{\k25}\cFFFF,{\k24}/)
 Dialogue: 0,0:00:07.01,0:00:17.71,Default,,0,0,0,,{\an4\k182\pos(27.6,248.4)}{\ytkt(Cursor,A,\cFF,-,\cFF00,\,\cFF0000,|,\cFFFF,/)}\yt{\k122}kt{\k183}(Cur{\k183}sor,A,\cFF,-,\cFF00,\,\cFF0000,|,\cFFFF,/)
+Dialogue: 0,0:00:17.71,0:00:20.69,KaraokeNoHilight,,0,0,0,,{\an8}Fixed
+Dialogue: 0,0:00:17.71,0:00:20.69,KaraokeNoHilight,,0,0,0,,{\k33}{\an2}No{\k66}pos {\k16}o{\k49}ver{\k66}lap {\k66}test
+Dialogue: 0,0:00:20.69,0:00:23.42,KaraokeNoHilight,,0,0,0,,{\an8}Fixed
+Dialogue: 0,0:00:20.69,0:00:23.42,KaraokeNoHilight,,0,0,0,,{\k33}{\an2}No{\k66}pos {\k16}o{\k49}ver{\k66}lap {\k66}test
+Dialogue: 0,0:00:23.42,0:00:26.42,KaraokeNoHilight,,0,0,0,,{\an8}Fixed
+Dialogue: 0,0:00:23.42,0:00:26.42,KaraokeNoHilight,,0,0,0,,{\k33}{\an2}No{\k66}pos {\k16}o{\k49}ver{\k66}lap {\k66}test

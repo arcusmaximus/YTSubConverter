@@ -105,6 +105,18 @@ namespace Arc.YTSubConverter.Util
             return keys.Count;
         }
 
+        public static int RemoveAll<TKey, TValue>(this IDictionary<TKey, TValue> dict, Func<TKey, TValue, bool> predicate)
+        {
+            List<TKey> keys = dict.Where(p => predicate(p.Key, p.Value))
+                                  .Select(p => p.Key)
+                                  .ToList();
+            foreach (TKey key in keys)
+            {
+                dict.Remove(key);
+            }
+            return keys.Count;
+        }
+
         private class Grouping<TKey, TItem> : IGrouping<TKey, TItem>
         {
             public Grouping(TKey key)

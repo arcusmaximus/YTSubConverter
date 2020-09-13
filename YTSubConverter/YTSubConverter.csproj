@@ -113,6 +113,7 @@
     <Compile Include="Formats\Ass\Tags\AssSubscriptTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssSuperscriptTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssTagHandlerBase.cs" />
+    <Compile Include="Formats\Ass\Tags\AssHorizontalTextDirectionTag.cs" />
     <Compile Include="Formats\Ass\Tags\AssTransformTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssUnderlineTagHandler.cs" />
     <Compile Include="Formats\Ass\Tags\AssVerticalTypeTagHandler.cs" />

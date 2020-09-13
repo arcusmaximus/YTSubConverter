@@ -1,9 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Arc.YTSubConverter.Util
 {
     internal static class StringExtensions
     {
+        public static string ToCrlf(this string str)
+        {
+            str = Regex.Replace(str, @"(?<!\r)\n", "\r\n");
+            str = Regex.Replace(str, @"\r(?!\n)", "\r\n");
+            return str;
+        }
+
         public static List<string> Split(this string str, string separator, int? maxItems = null)
         {
             List<string> result = new List<string>();

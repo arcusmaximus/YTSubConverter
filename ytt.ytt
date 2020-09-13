@@ -175,6 +175,8 @@ line</p>
 aligned line</p>
 
     <!-- Karaoke. Each span's "t" attribute gives its relative appearance time in ms.   -->
+    <!-- While the player supports two consecutive spans with the same "t", the upload  -->
+    <!-- process will remove the "t" of the second one and break the effect.            -->
     <p t="36000" d="4000" wp="5" p="15"><s>Ka</s><s t="1000">ra</s><s t="2000">o</s><s t="3000">ke</s></p>
     
     <!-- Line breaks at section start/end (note the asymmetric background box in the last case - YouTube bug) -->

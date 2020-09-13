@@ -13,7 +13,8 @@ YCbCr Matrix: None
 Last Style Storage: Default
 Video File: ?dummy:23.976000:40000:640:480:150:150:150:
 Video AR Value: 1.333333
-Active Line: 17
+Scroll Position: 6
+Active Line: 11
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -32,6 +33,7 @@ Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an4\c&H0000F6&}Top 4
 Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an4}Bottom 4
 Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an5\3c&H0000F6&}Top 5
 Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an5}Bottom 5
+Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an6\fs12}Top 6
 Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an6\fs18}Top 6
 Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an6}Bottom 6
 Dialogue: 0,0:00:00.00,0:00:04.01,Default,,0,0,0,,{\an1}Bottom 1

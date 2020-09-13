@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 
@@ -155,6 +156,25 @@ namespace Arc.YTSubConverter.Formats
                 else
                 {
                     i++;
+                }
+            }
+        }
+
+        protected static void MoveLineBreaksToSeparateSections(Line line)
+        {
+            for (int sectionIdx = line.Sections.Count - 1; sectionIdx >= 0; sectionIdx--)
+            {
+                Section section = line.Sections[sectionIdx];
+                Match match = Regex.Match(section.Text, @"([\r\n]+|[^\r\n]+)+");
+                if (!match.Success || match.Groups[1].Captures.Count == 1)
+                    continue;
+
+                line.Sections.RemoveAt(sectionIdx);
+                for (int i = 0; i < match.Groups[1].Captures.Count; i++)
+                {
+                    Section subSection = (Section)section.Clone();
+                    subSection.Text = match.Groups[1].Captures[i].Value;
+                    line.Sections.Insert(sectionIdx + i, subSection);
                 }
             }
         }

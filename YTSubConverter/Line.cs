@@ -63,6 +63,12 @@ namespace Arc.YTSubConverter
             set;
         }
 
+        public HorizontalTextDirection HorizontalTextDirection
+        {
+            get;
+            set;
+        }
+
         public VerticalTextType VerticalTextType
         {
             get;
@@ -91,6 +97,7 @@ namespace Arc.YTSubConverter
             End = line.End;
             AnchorPoint = line.AnchorPoint;
             Position = line.Position;
+            HorizontalTextDirection = line.HorizontalTextDirection;
             VerticalTextType = line.VerticalTextType;
             AndroidDarkTextHackAllowed = line.AndroidDarkTextHackAllowed;
 

@@ -74,25 +74,6 @@ namespace Arc.YTSubConverter.Formats.Ass
             base.WriteLine(CreateTextVisualizationLine(line), writer);
         }
 
-        private static void MoveLineBreaksToSeparateSections(AssLine line)
-        {
-            for (int sectionIdx = line.Sections.Count - 1; sectionIdx >= 0; sectionIdx--)
-            {
-                AssSection section = (AssSection)line.Sections[sectionIdx];
-                Match match = Regex.Match(section.Text, @"((?:\r\n)+|[^\r\n]+)+");
-                if (!match.Success || match.Groups[1].Captures.Count == 1)
-                    continue;
-
-                line.Sections.RemoveAt(sectionIdx);
-                for (int i = 0; i < match.Groups[1].Captures.Count; i++)
-                {
-                    AssSection subSection = (AssSection)section.Clone();
-                    subSection.Text = match.Groups[1].Captures[i].Value;
-                    line.Sections.Insert(sectionIdx + i, subSection);
-                }
-            }
-        }
-
         // Aegisub's background boxes can have padding just like on YouTube, and the horizontal and vertical padding
         // can even be different. The big downside of this feature, however, is that background boxes of adjacent
         // sections overlap each other which looks like a mess. Therefore we don't use it at all (all the styles

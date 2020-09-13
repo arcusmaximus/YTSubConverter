@@ -126,6 +126,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             RegisterTagHandler(new AssForeAlphaTagHandler());
             RegisterTagHandler(new AssForeColorTagHandler("c"));
             RegisterTagHandler(new AssForeColorTagHandler("1c"));
+            RegisterTagHandler(new AssHorizontalTextDirectionTag());
             RegisterTagHandler(new AssItalicTagHandler());
             RegisterTagHandler(new AssKaraokeTagHandler());
             RegisterTagHandler(new AssKaraokeTypeTagHandler());
@@ -201,7 +202,14 @@ namespace Arc.YTSubConverter.Formats.Ass
 
         private List<AssLine> ParseLine(AssDialogue dialogue, AssStyle style, AssStyleOptions styleOptions)
         {
-            AssLine line = new AssLine(dialogue.Start, dialogue.End) { AnchorPoint = style.AnchorPoint };
+            AssLine line =
+                new AssLine(
+                    TimeUtil.RoundTimeToFrameCenter(dialogue.Start),
+                    TimeUtil.RoundTimeToFrameCenter(dialogue.End)
+                )
+                {
+                    AnchorPoint = style.AnchorPoint
+                };
             
             string[] effects = dialogue.Effect.Split(';');
             if (effects.Contains(EffectNames.NoAndroidDarkTextHack))
@@ -690,7 +698,9 @@ namespace Arc.YTSubConverter.Formats.Ass
                 lineContent.AppendTag("pos", line.Position.Value.X, line.Position.Value.Y);
 
             if (line.VerticalTextType != VerticalTextType.None)
-                lineContent.AppendTag("ytvert", AssVerticalTypeTagHandler.GetVerticalTextTypeId(line.VerticalTextType));
+                lineContent.AppendTag("ytvert", AssVerticalTypeTagHandler.GetVerticalTextTypeId(line.HorizontalTextDirection, line.VerticalTextType));
+            else if (line.HorizontalTextDirection != HorizontalTextDirection.LeftToRight)
+                lineContent.AppendTag("ytdir", AssHorizontalTextDirectionTag.GetHorizontalTextDirectionId(line.HorizontalTextDirection));
         }
 
         private void AppendSectionTags(AssSection section, AssSection prevSection, AssLineContentBuilder lineContent)

@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Arc.YTSubConverter;
 using Arc.YTSubConverter.Formats;
 using Arc.YTSubConverter.Formats.Ass;
+using Arc.YTSubConverter.Util;
 using NUnit.Framework;
 
 namespace YTSubConverter.Tests
@@ -82,7 +83,7 @@ namespace YTSubConverter.Tests
         private static string DllFolderPath => Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).AbsolutePath);
 
         /// <summary>
-        /// Rounds timestamps in the expected YTT file to hundredths of seconds for comparing against the round-tripped actual YTT file.
+        /// Rounds timestamps in the expected YTT file to the center of the frame for comparing against the round-tripped actual YTT file.
         /// (The milliseconds part is lost during the conversion to .ass)
         /// </summary>
         private static string RoundYttTimestamps(string xml)
@@ -96,13 +97,20 @@ namespace YTSubConverter.Tests
                     int oldDuration = int.Parse(m.Groups[2].Value);
                     int oldEnd = oldStart + oldDuration;
 
-                    int newStart = oldStart <= 1 ? oldStart : oldStart / 10 * 10;        // Special case: don't round t="1" as this is an Android workaround from the YttDocument class
-                    int newEnd = oldEnd / 10 * 10;
+                    // Special case: don't round t="1" as this is an Android workaround from the YttDocument class    
+                    int newStart = oldStart <= 1 ? oldStart : RoundTimeToFrameCenter(oldStart);
+                    int newEnd = RoundTimeToFrameCenter(oldEnd);
                     int newDuration = newEnd - newStart;
 
                     return $@"<p t=""{newStart}"" d=""{newDuration}""";
                 }
             );
+        }
+
+        private static int RoundTimeToFrameCenter(int ms)
+        {
+            DateTime timestamp = SubtitleDocument.TimeBase + TimeSpan.FromMilliseconds(ms);
+            return (int)(TimeUtil.RoundTimeToFrameCenter(timestamp) - SubtitleDocument.TimeBase).TotalMilliseconds;
         }
     }
 }

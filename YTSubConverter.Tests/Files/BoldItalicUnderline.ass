@@ -11,11 +11,10 @@ YCbCr Matrix: None
 
 [Aegisub Project Garbage]
 Last Style Storage: Default
-Video File: ?dummy:30.000000:40000:640:480:204:202:200:
-Video AR Value: 1.333333
+Video File: ?dummy:23.976000:40000:1280:720:205:201:202:
+Video AR Value: 1.777778
 Video Zoom Percent: 0.750000
-Active Line: 6
-Video Position: 119
+Active Line: 5
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
@@ -27,10 +26,9 @@ Style: Soft shadow box,Arial,15,&H00FFFFFF,&HFFFFFFFF,&H00000000,&H00828282,0,0,
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,,Default {\\b ( 1 ) }\\b ( 1 ) {\b}\b {\b1}\b1 {\b0}\b0 {\b1}\b1 {\b2}\b2 {\b1}\b1 {\bX}\bX
-Dialogue: 0,0:00:00.00,0:00:05.00,Bold,,0,0,0,,Bold {\rDefault}\rDefault {\b}\b {\b0}\b0 {\b1}\b1 {\b0}\b0 {\b2}\b2 {\b0}\b0 {\bX}\bX
-Dialogue: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,,Default {\\i ( 1 ) }\\i ( 1 ) {\i}\i {\i1}\i1 {\i0}\i0 {\i1}\i1 {\i2}\i2 {\i1}\i1 {\iX}\iX
-Dialogue: 0,0:00:00.00,0:00:05.00,Italic,,0,0,0,,Italic {\rDefault}\rDefault {\i}\i {\i0}\i0 {\i1}\i1 {\i0}\i0 {\i2}\i2 {\i0}\i0 {\iX}\iX
-Dialogue: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,,Default {\\u ( 1 )}\\u ( 1 ) {\u}\u {\u1}\u1 {\u0}\u0 {\u1}\u1 {\u2}\u2 {\u1}\u1 {\uX}\uX
-Dialogue: 0,0:00:00.00,0:00:05.00,Underline,,0,0,0,,Underline {\rDefault}\rDefault {\u}\u {\u0}\u0 {\u1}\u1 {\u0}\u0 {\u2}\u2 {\u0}\u0 {\uX}\uX
-Dialogue: 0,0:00:00.00,0:00:05.00,Soft shadow box,,0,0,0,,{\pos(192,177.6)}Shadow {\i1}clipping{\i0} prevention
+Dialogue: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,,Default {\\b ( 1 ) }\\b ( 1 ) {\b}\b {\b1}\b1 {\b0}\b0 {\b1}\b1 {\b2}\b2 {\b1}\b1 {\bX}\bX {\r}\r
+Dialogue: 0,0:00:00.00,0:00:05.00,Bold,,0,0,0,,Bold {\rDefault}\rDefault {\b}\b {\b0}\b0 {\b1}\b1 {\b0}\b0 {\b2}\b2 {\b0}\b0 {\bX}\bX {\r}\r
+Dialogue: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,,Default {\\i ( 1 ) }\\i ( 1 ) {\i}\i {\i1}\i1 {\i0}\i0 {\i1}\i1 {\i2}\i2 {\i1}\i1 {\iX}\iX {\r}\r
+Dialogue: 0,0:00:00.00,0:00:05.00,Italic,,0,0,0,,Italic {\rDefault}\rDefault {\i}\i {\i0}\i0 {\i1}\i1 {\i0}\i0 {\i2}\i2 {\i0}\i0 {\iX}\iX {\r}\r
+Dialogue: 0,0:00:00.00,0:00:05.00,Default,,0,0,0,,Default {\\u ( 1 )}\\u ( 1 ) {\u}\u {\u1}\u1 {\u0}\u0 {\u1}\u1 {\u2}\u2 {\u1}\u1 {\uX}\uX {\r}\r
+Dialogue: 0,0:00:00.00,0:00:05.00,Underline,,0,0,0,,Underline {\rDefault}\rDefault {\u}\u {\u0}\u0 {\u1}\u1 {\u0}\u0 {\u2}\u2 {\u0}\u0 {\uX}\uX {\r}\r
