@@ -1,4 +1,9 @@
-﻿import System;
+﻿// Fiddler script for enabling subtitle preview on YouTube videos that have no subtitles yet.
+// To use, simply place it in My Documents\Fiddler2\Scripts.
+// Should it start to cause errors someday because YouTube changed something,
+// you can just delete it again.
+
+import System;
 import System.Collections;
 import System.Collections.Specialized
 import System.Text;
