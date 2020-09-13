@@ -116,6 +116,7 @@ Fortunately, there's an easier way to test your subtitles - one which doesn't re
 
 While this approach can save you a lot of time, it does require some initial setup:
 * Download and install [Fiddler](https://www.telerik.com/download/fiddler).
+* Place the script [CustomRules.js](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/CustomRules.js) in the folder Documents\Fiddler2\Scripts. This will later enable previewing subtitles on videos that don't have any subtitles yet. (If it causes problems, you can just delete it again.)
 * Launch the program.
 * Open the menu Tools → Options.
   * On the "HTTPS" tab, enable "Capture HTTPS CONNECTs" as well as "Decrypt HTTPS traffic."
