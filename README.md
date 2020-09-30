@@ -137,29 +137,16 @@ Once this initial setup is done, you only need to do the following whenever you 
 
 As long as Fiddler is running (and the rule is enabled), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it; simply disable and re-enable subtitles in the video, which will cause the YouTube player to "redownload" them.
 
-## Uploading
-Styled subtitles work on your own videos, but also on those made by others: if a content creator enabled community subtitles on a video, you can upload styled subtitles to it.
-
-First access the subtitle editor as follows:
-
-![Open editor](images/upload1.png)
-
-Then upload your .ytt file through the "Actions" dropdown:
+## Uploading to the video
+For your own videos, you can add the subtitle language in YouTube Studio, open it in the classic editor, and upload the .ytt file:
 
 ![Upload menu](images/upload2.png)
 
-Once the upload is complete, click "Submit contribution" while making sure not to change *anything* in the built-in editor. If you do, all styling information will be lost. (YouTube warns you about this when uploading to your own channel, but not when uploading to others').
+Once the upload is complete, simply click "Save changes."
 
-Also note that you won't see the styling in the built-in editor's preview pane. This is normal; as long as you don't change anything after uploading, the styling will show up in the "real" video player afterwards.
+Note that after uploading, you won't see the styling in the editor's preview pane. This is normal; as long as you don't change anything in the editor, the styling will show up in the "real" video player afterwards. If you make any change, no matter how small, all styling information will be lost and you'll have to upload the file again.
 
-## Publishing
-Subtitles won't appear on the video right away after uploading - they also need to be published. For your own channel, you can of course do this yourself.
-
-For others' channels, there used to be a community approval feature: if enough community members clicked the "Looks good" button, the subtitles would get published automatically, without intervention of the channel owner. As of August 2019, however, this is no longer possible. The hasty change YouTube made in response to spam complaints from top creators means that while the "Looks good" button is still there, it no longer does anything: the subtitles won't get published no matter how many people click it.
-
-The result is that only channel owners can publish community subtitles now. However, YouTube didn't inform them of this change and also doesn't notify them about subtitles awaiting approval. Chances of them noticing and publishing your subtitles are therefore next to zero.
-
-This means that, after you submit your subtitles, you need to contact the channel owner and ask them to publish - each and every time. The first time you contact them, you can point them to YouTube's help page on the topic ([English](https://support.google.com/youtube/answer/7300578?hl=en)/[Japanese](https://support.google.com/youtube/answer/7300578?hl=ja)) to explain the situation.
+For videos on someone else's channel, things aren't as easy. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 30 2020, however, the feature was made inaccessible. This means users now have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it manually.
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
