@@ -140,7 +140,7 @@ As long as Fiddler is running (and the rule is enabled), any YouTube video you v
 ## Uploading to the video
 For your own videos, you can add the subtitle language in YouTube Studio, open it in the classic editor, and upload the .ytt file:
 
-![Upload menu](images/upload2.png)
+![Upload menu](images/upload.png)
 
 Once the upload is complete, simply click "Save changes."
 
