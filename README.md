@@ -146,13 +146,9 @@ Once the upload is complete, simply click "Save changes."
 
 Note that after uploading, you won't see the styling in the editor's preview pane. This is normal; as long as you don't change anything in the editor, the styling will show up in the "real" video player afterwards. If you make any change, no matter how small, all styling information will be lost and you'll have to upload the file again.
 
-For videos on someone else's channel, things are a bit trickier. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 28 2020, however, the feature was officially deprecated.
+For videos on someone else's channel, things are a bit trickier. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 28 2020, however, the feature was officially deprecated. While the editor can still be accessed by manually browsing to `https://www.youtube.com/timedtext_editor?action_mde_edit_form=1&v=<video ID>`, the channel owner won't see your submission anymore.
 
-For now, there's a loophole that still allows accessing the feature by browsing to the editor manually: `https://www.youtube.com/timedtext_editor?action_mde_edit_form=1&v=<video ID>`
-
-YouTube doesn't notify the channel owner about newly submitted subtitles, so after clicking "Submit contribution" (again making sure not to change anything in the editor), you'll have to contact them and ask them to publish the subtitles for you.
-
-Once this loophole gets closed or the editor gets replaced by the upcoming YouTube Studio caption editor, users will have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it on their behalf.
+Therefore, users now have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it on their behalf.
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
