@@ -172,8 +172,7 @@ First do some initial setup:
 * Choose a marker (ideally a single, special character) for each style and link these markers to their styles inside the script. The script contains some examples, and as you'll see, it's in fact possible to register multiple marker sets for different YouTube channels.
 
 Then do the following for each video:
-* Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f<number>` to download a smaller file.)
-  * If you're planning on doing karaoke timing, you may want to check if the video has Opus-encoded audio and explicitly download that - reason being that the m4a audio you normally get is ever so slightly shifted in time. Example: `-f137+251`
+* Download the video using one of the many available tools and websites.
 * Open the locally saved video in a player that supports global hotkeys (e.g. VLC). If you haven't yet, set up hotkeys for pausing, resuming and rewinding the video.
 * Open Notepad and type out the subtitles, using the global hotkeys to control the video without having to switch between windows.
 * While typing, prefix each line with the marker of the style it should get later on. (e.g. `*Hello, Darling!`)
