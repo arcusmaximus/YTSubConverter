@@ -51,12 +51,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\YTSubConverter\YTSubConverter.csproj">
-      <Project>{fe339cad-14bd-43db-a700-5ddc8b75f43b}</Project>
-      <Name>YTSubConverter</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Files\Alignment.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -13,37 +13,44 @@ namespace Arc.YTSubConverter.Formats
 
         public SbvDocument(string filePath)
         {
-            using (StreamReader reader = new StreamReader(filePath))
+            using StreamReader reader = new StreamReader(filePath);
+
+            string fileLine;
+            Line subLine = null;
+            while ((fileLine = reader.ReadLine()) != null)
             {
-                string fileLine;
-                Line subLine = null;
-                while ((fileLine = reader.ReadLine()) != null)
+                if (TryParseTimestamps(fileLine, out DateTime startTime, out DateTime endTime))
                 {
-                    if (TryParseTimestamps(fileLine, out DateTime startTime, out DateTime endTime))
-                    {
-                        if (subLine != null && subLine.Sections.Count > 0)
-                        {
-                            subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
-                            Lines.Add(subLine);
-                        }
-
-                        subLine = new Line(startTime, endTime);
-                    }
-                    else if (subLine != null)
-                    {
-                        if (subLine.Sections.Count == 0)
-                            subLine.Sections.Add(new Section(fileLine) { ForeColor = Color.White, BackColor = Color.FromArgb(192, 8, 8, 8) });
-                        else
-                            subLine.Sections[0].Text += "\r\n" + fileLine;
-                    }
+                    AddLine(subLine);
+                    subLine = new Line(startTime, endTime);
                 }
-
-                if (subLine != null && subLine.Sections.Count > 0)
+                else
                 {
-                    subLine.Sections[0].Text = subLine.Sections[0].Text.TrimEnd();
-                    Lines.Add(subLine);
+                    AppendToLine(subLine, fileLine);
                 }
             }
+
+            AddLine(subLine);
+        }
+
+        private static void AppendToLine(Line line, string text)
+        {
+            if (line == null || text == null)
+                return;
+
+            if (line.Sections.Count == 0)
+                line.Sections.Add(new Section(text) { ForeColor = Color.White, BackColor = Color.FromArgb(192, 8, 8, 8) });
+            else
+                line.Sections[0].Text += "\r\n" + text;
+        }
+
+        private void AddLine(Line line)
+        {
+            if (line == null || line.Sections.Count == 0)
+                return;
+
+            line.Sections[0].Text = line.Sections[0].Text.TrimEnd();
+            Lines.Add(line);
         }
 
         private static bool TryParseTimestamps(string timestamps, out DateTime startTime, out DateTime endTime)
@@ -64,7 +71,7 @@ namespace Arc.YTSubConverter.Formats
                     int.Parse(match.Groups[1].Value),
                     int.Parse(match.Groups[2].Value),
                     int.Parse(match.Groups[3].Value),
-                    int.Parse(match.Groups[4].Value)
+                    int.Parse(match.Groups[4].Value.PadRight(3, '0'))
                 );
             endTime =
                 new DateTime(
@@ -74,7 +81,7 @@ namespace Arc.YTSubConverter.Formats
                     int.Parse(match.Groups[5].Value),
                     int.Parse(match.Groups[6].Value),
                     int.Parse(match.Groups[7].Value),
-                    int.Parse(match.Groups[8].Value)
+                    int.Parse(match.Groups[8].Value.PadRight(3, '0'))
                 );
             return true;
         }
