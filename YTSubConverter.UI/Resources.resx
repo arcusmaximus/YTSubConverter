@@ -133,12 +133,6 @@
   <data name="Convert" xml:space="preserve">
     <value>Convert</value>
   </data>
-  <data name="DefaultStyleOptions" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\StyleOptions.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
-  </data>
-  <data name="DefaultStyles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\defaultstyles.ass;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="DragNDropTip" xml:space="preserve">
     <value>Drag&amp;drop .ass/.sbv file or click the "..." button</value>
   </data>
@@ -162,12 +156,6 @@
   </data>
   <data name="ImageFileFilter" xml:space="preserve">
     <value>Images|*.gif;*.jpg;*.jpeg;*.png</value>
-  </data>
-  <data name="IsNotAValidColor" xml:space="preserve">
-    <value>{0} is not a valid color</value>
-  </data>
-  <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>{0} is not a valid timestamp</value>
   </data>
   <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>Outline color:</value>

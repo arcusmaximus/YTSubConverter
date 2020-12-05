@@ -1,4 +1,4 @@
-﻿namespace Arc.YTSubConverter
+﻿namespace Arc.YTSubConverter.UI
 {
     partial class MainForm
     {
@@ -334,7 +334,7 @@
             // 
             // _txtInputFile
             // 
-            this._txtInputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this._txtInputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._txtInputFile.Location = new System.Drawing.Point(20, 6);
             this._txtInputFile.Name = "_txtInputFile";
@@ -344,8 +344,8 @@
             // 
             // _grpStyleOptions
             // 
-            this._grpStyleOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this._grpStyleOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this._grpStyleOptions.Controls.Add(this._spltStyleOptions);
             this._grpStyleOptions.Location = new System.Drawing.Point(15, 39);

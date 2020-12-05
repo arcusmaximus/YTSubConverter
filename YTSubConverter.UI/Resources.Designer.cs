@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Arc.YTSubConverter {
+namespace Arc.YTSubConverter.UI {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Arc.YTSubConverter {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Arc.YTSubConverter.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Arc.YTSubConverter.UI.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -103,40 +103,6 @@ namespace Arc.YTSubConverter {
         internal static string Convert {
             get {
                 return ResourceManager.GetString("Convert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   &lt;?xml version=&quot;1.0&quot;?&gt;
-        ///&lt;StyleOptions xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
-        ///  &lt;Style&gt;
-        ///    &lt;Name&gt;YTPlain&lt;/Name&gt;
-        ///    &lt;ShadowType&gt;None&lt;/ShadowType&gt;
-        ///    &lt;IsKaraoke&gt;false&lt;/IsKaraoke&gt;
-        ///    &lt;CurrentWordTextColor /&gt;
-        ///    &lt;CurrentWordOutlineColor /&gt;
-        ///    &lt;CurrentWordShadowColor /&gt;
-        ///  &lt;/Style&gt;
-        ///  &lt;Style&gt;
-        ///    &lt;Name&gt;YTPlainBox&lt;/Name&gt;
-        ///    &lt;ShadowType&gt;None&lt;/ShadowType&gt;
-        ///    &lt;IsKaraoke&gt;false&lt;/IsKaraoke&gt;
-        ///    &lt;CurrentWordTextColor /&gt;
-        ///    &lt;CurrentWordOutlin [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string DefaultStyleOptions {
-            get {
-                return ResourceManager.GetString("DefaultStyleOptions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   型 System.Byte[] のローカライズされたリソースを検索します。
-        /// </summary>
-        internal static byte[] DefaultStyles {
-            get {
-                object obj = ResourceManager.GetObject("DefaultStyles", resourceCulture);
-                return ((byte[])(obj));
             }
         }
         
@@ -209,24 +175,6 @@ namespace Arc.YTSubConverter {
         internal static string ImageFileFilter {
             get {
                 return ResourceManager.GetString("ImageFileFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   {0} is not a valid color に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string IsNotAValidColor {
-            get {
-                return ResourceManager.GetString("IsNotAValidColor", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   {0} is not a valid timestamp に類似しているローカライズされた文字列を検索します。
-        /// </summary>
-        internal static string IsNotAValidTimestamp {
-            get {
-                return ResourceManager.GetString("IsNotAValidTimestamp", resourceCulture);
             }
         }
         

@@ -7,9 +7,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Arc.YTSubConverter</RootNamespace>
-    <AssemblyName>YTSubConverter</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>Arc.YTSubConverter.UI</RootNamespace>
+    <AssemblyName>YTSubConverter.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -57,102 +57,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Animations\Animation.cs" />
-    <Compile Include="Animations\Animator.cs" />
-    <Compile Include="Animations\BackColorAnimation.cs" />
-    <Compile Include="Animations\ColorAnimation.cs" />
-    <Compile Include="Animations\FadeAnimation.cs" />
-    <Compile Include="Animations\ForeColorAnimation.cs" />
-    <Compile Include="Animations\GlitchingCharAnimation.cs" />
-    <Compile Include="Animations\MoveAnimation.cs" />
-    <Compile Include="Animations\ScaleAnimation.cs" />
-    <Compile Include="Animations\SecondaryColorAnimation.cs" />
-    <Compile Include="Animations\ShadowColorAnimation.cs" />
-    <Compile Include="Animations\ShakeAnimation.cs" />
-    <Compile Include="Formats\Ass\AssDialogue.cs" />
-    <Compile Include="Formats\Ass\AssDocument.cs" />
-    <Compile Include="Formats\Ass\AssDocumentItem.cs" />
-    <Compile Include="Formats\Ass\AssFileSection.cs" />
-    <Compile Include="Formats\Ass\AssKaraokeStepContext.cs" />
-    <Compile Include="Formats\Ass\AssLine.cs" />
-    <Compile Include="Formats\Ass\AssSection.cs" />
-    <Compile Include="Formats\Ass\AssStyle.cs" />
-    <Compile Include="Formats\Ass\AssTagContext.cs" />
-    <Compile Include="Formats\Ass\AssLineContentBuilder.cs" />
-    <Compile Include="Formats\Ass\KaraokeTypes\CursorKaraokeType.cs" />
-    <Compile Include="Formats\Ass\KaraokeTypes\FadeKaraokeType.cs" />
-    <Compile Include="Formats\Ass\KaraokeTypes\GlitchKaraokeType.cs" />
-    <Compile Include="Formats\Ass\KaraokeTypes\IKaraokeType.cs" />
-    <Compile Include="Formats\Ass\KaraokeTypes\SimpleKaraokeType.cs" />
-    <Compile Include="Formats\Ass\Tags\AssAlignmentTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssAlphaTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssBoldTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssChromaTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssComplexFadeTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssFontSizeTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssFontTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssForeAlphaTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssForeColorTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssItalicTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssKaraokeTypeTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssKaraokeTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssMoveTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssOutlineAlphaTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssOutlineColorTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssPackTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssPositionTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssRegularScriptTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssResetTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssRubyTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssSecondaryAlphaTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssSecondaryColorTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssShadowAlphaTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssShadowColorTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssShakeTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssSimpleFadeTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssSubscriptTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssSuperscriptTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssTagHandlerBase.cs" />
-    <Compile Include="Formats\Ass\Tags\AssHorizontalTextDirectionTag.cs" />
-    <Compile Include="Formats\Ass\Tags\AssTransformTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssUnderlineTagHandler.cs" />
-    <Compile Include="Formats\Ass\Tags\AssVerticalTypeTagHandler.cs" />
-    <Compile Include="Formats\Ass\VisualizingAssDocument.cs" />
-    <Compile Include="Formats\SbvDocument.cs" />
-    <Compile Include="Formats\SrtDocument.cs" />
-    <Compile Include="Formats\SubtitleDocument.cs" />
-    <Compile Include="Formats\YttDocument.cs" />
-    <Compile Include="NativeMethods.cs" />
-    <Compile Include="SectionFormatComparer.cs" />
-    <Compile Include="Util\AnchorPointUtil.cs" />
-    <Compile Include="AssStyleOptions.cs" />
-    <Compile Include="AssStyleOptionsList.cs" />
-    <Compile Include="Util\CharacterRange.cs" />
-    <Compile Include="Util\CollectionExtensions.cs" />
-    <Compile Include="Util\ColorUtil.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Enumerations.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="StylePreviewGenerator.cs" />
-    <Compile Include="Util\FontSizeMapper.cs" />
-    <Compile Include="Util\Range.cs" />
-    <Compile Include="Util\StringExtensions.cs" />
-    <Compile Include="Util\TimeRange.cs" />
-    <Compile Include="Util\TimeUtil.cs" />
-    <Compile Include="Section.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Line.cs" />
-    <Compile Include="Util\XmlExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
@@ -174,10 +92,12 @@
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Resources\checkers.png_" />
-    <None Include="Resources\defaultstyles.ass" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\StyleOptions.xml" />
+    <ProjectReference Include="..\YTSubConverter\YTSubConverter.csproj">
+      <Project>{73afae63-f3bd-402f-92ac-4bd3d319c906}</Project>
+      <Name>YTSubConverter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -186,15 +106,20 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\ILMerge.3.0.29\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.29\build\ILMerge.props'))" />
   </Target>
-  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp1.exe&quot; &quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)ja\YTSubConverter.resources.dll&quot;" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp2.exe&quot; &quot;$(TargetDir)YTSubConverter-temp1.exe&quot; &quot;$(TargetDir)ko\YTSubConverter.resources.dll&quot;" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)YTSubConverter-temp2.exe&quot; &quot;$(TargetDir)ms\YTSubConverter.resources.dll&quot;" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp4.exe&quot; &quot;$(TargetDir)YTSubConverter-temp3.exe&quot; &quot;$(TargetDir)ru\YTSubConverter.resources.dll&quot;" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-temp5.exe&quot; &quot;$(TargetDir)YTSubConverter-temp4.exe&quot; &quot;$(TargetDir)zh-Hans\YTSubConverter.resources.dll&quot;" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter-merged.exe&quot; &quot;$(TargetDir)YTSubConverter-temp5.exe&quot; &quot;$(TargetDir)zh-Hant\YTSubConverter.resources.dll&quot;" />
-    <Delete Files="$(TargetDir)YTSubConverter.exe;$(TargetDir)YTSubConverter-temp1.exe;$(TargetDir)YTSubConverter-temp2.exe;$(TargetDir)YTSubConverter-temp3.exe;$(TargetDir)YTSubConverter-temp4.exe;$(TargetDir)YTSubConverter-temp5.exe" />
-    <RemoveDir Directories="$(TargetDir)ja;$(TargetDir)ms;$(TargetDir)ko;$(TargetDir)ru;$(TargetDir)zh-Hans;$(TargetDir)zh-Hant" />
-    <Move SourceFiles="$(TargetDir)YTSubConverter-merged.exe" DestinationFiles="$(TargetDir)YTSubConverter.exe" />
+  <Target Name="YTSC_MergeLogicDLL">
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)YTSubConverter.UI.exe&quot; &quot;$(TargetDir)YTSubConverter.dll&quot;" />
+    <Delete Files="$(TargetDir)YTSubConverter.UI.exe;$(TargetDir)YTSubConverter.dll" />
+  </Target>
+  <Target Name="YTSC_GetResourceDLLs">
+    <ItemGroup>
+      <YTSC_ResourceFile Include="$(TargetDir)*\*.resources.dll" />
+    </ItemGroup>
+  </Target>
+  <Target Name="YTSC_MergeResourceDLLs" DependsOnTargets="YTSC_GetResourceDLLs" Outputs="%(YTSC_ResourceFile.Identity)">
+    <Move SourceFiles="$(TargetDir)YTSubConverter.exe" DestinationFiles="$(TargetDir)YTSubConverter.UI.exe" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)YTSubConverter.UI.exe&quot; &quot;%(YTSC_ResourceFile.Identity)&quot;" />
+    <Delete Files="$(TargetDir)YTSubConverter.UI.exe;%(YTSC_ResourceFile.Identity)" />
+  </Target>
+  <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'" DependsOnTargets="YTSC_MergeLogicDLL;YTSC_MergeResourceDLLs">
   </Target>
 </Project>

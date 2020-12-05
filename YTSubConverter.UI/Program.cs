@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using Arc.YTSubConverter.Formats;
 using Arc.YTSubConverter.Formats.Ass;
 
-namespace Arc.YTSubConverter
+namespace Arc.YTSubConverter.UI
 {
     internal static class Program
     {
@@ -119,13 +119,19 @@ namespace Arc.YTSubConverter
         /// </summary>
         private static void PreloadResources()
         {
+            PreloadResources<YTSubConverter.Resources>(YTSubConverter.Resources.ResourceManager);
+            PreloadResources<Resources>(Resources.ResourceManager);
+        }
+
+        private static void PreloadResources<TResources>(ResourceManager resourceManager)
+        {
             Assembly assembly = Assembly.GetEntryAssembly();
             FieldInfo resourceSetsField = typeof(ResourceManager).GetField("_resourceSets", BindingFlags.NonPublic | BindingFlags.Instance);
-            Dictionary<string, ResourceSet> resourceSets = (Dictionary<string, ResourceSet>)resourceSetsField.GetValue(Resources.ResourceManager);
+            Dictionary<string, ResourceSet> resourceSets = (Dictionary<string, ResourceSet>)resourceSetsField.GetValue(resourceManager);
 
             foreach (string resourceName in assembly.GetManifestResourceNames())
             {
-                Match match = Regex.Match(resourceName, "^" + Regex.Escape(typeof(Resources).FullName) + @"\.([-\w]+)\.resources$");
+                Match match = Regex.Match(resourceName, Regex.Escape(typeof(TResources).FullName) + @"\.([-\w]+)\.resources$");
                 if (!match.Success)
                     continue;
 

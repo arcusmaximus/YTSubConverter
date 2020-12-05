@@ -153,12 +153,6 @@
   <data name="ImageFileFilter" xml:space="preserve">
     <value>画像ファイル|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
-  <data name="IsNotAValidColor" xml:space="preserve">
-    <value>{0}は無効なカラーコードです。</value>
-  </data>
-  <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>{0}は無効なタイムスタンプです。</value>
-  </data>
   <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>輪郭色</value>
   </data>

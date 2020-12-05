@@ -153,12 +153,6 @@
   <data name="ImageFileFilter" xml:space="preserve">
     <value>图像文件|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
-  <data name="IsNotAValidColor" xml:space="preserve">
-    <value>({0})不是有效的颜色代码。</value>
-  </data>
-  <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>({0})不是有效的时间代码。</value>
-  </data>
   <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>轮廓颜色</value>
   </data>

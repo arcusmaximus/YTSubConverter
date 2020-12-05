@@ -153,12 +153,6 @@
   <data name="ImageFileFilter" xml:space="preserve">
     <value>Imej|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
-  <data name="IsNotAValidColor" xml:space="preserve">
-    <value>Warna {0} tidak sah</value>
-  </data>
-  <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>Cap masa {0} tidak sah</value>
-  </data>
   <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>Warna garis luar:</value>
   </data>

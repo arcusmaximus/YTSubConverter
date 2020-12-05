@@ -153,12 +153,6 @@
   <data name="ImageFileFilter" xml:space="preserve">
     <value>이미지|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
-  <data name="IsNotAValidColor" xml:space="preserve">
-    <value>{0} 유효한 색이 아닙니다</value>
-  </data>
-  <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>{0} 유효한 시간대가 아닙니다</value>
-  </data>
   <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>윤곽 색</value>
   </data>

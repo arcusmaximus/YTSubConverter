@@ -8,7 +8,7 @@ using System.Text;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 
-namespace Arc.YTSubConverter
+namespace Arc.YTSubConverter.UI
 {
     internal static class StylePreviewGenerator
     {

@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Arc.YTSubConverter;
 using Arc.YTSubConverter.Formats;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 using NUnit.Framework;
 
-namespace YTSubConverter.Tests
+namespace Arc.YTSubConverter.Tests
 {
     [TestFixture]
     public class TestRunner
@@ -65,7 +64,7 @@ namespace YTSubConverter.Tests
             List<AssStyleOptions> options = AssStyleOptionsList.LoadFromFile(Path.Combine(DllFolderPath, "StyleOptions.xml"));
             foreach (string assFilePath in Directory.EnumerateFiles(Path.Combine(DllFolderPath, "Files"), "*.ass"))
             {
-                string name = Path.GetFileNameWithoutExtension(assFilePath);
+                string name = Path.GetFileNameWithoutExtension(assFilePath) + " (Forward)";
                 string yttFilePath = Path.ChangeExtension(assFilePath, ".ytt");
                 yield return new TestCaseData(assFilePath, options, yttFilePath).SetName(name);
             }
@@ -75,7 +74,7 @@ namespace YTSubConverter.Tests
         {
             foreach (string yttFilePath in Directory.EnumerateFiles(Path.Combine(DllFolderPath, "Files"), "*.ytt"))
             {
-                string name = Path.GetFileNameWithoutExtension(yttFilePath);
+                string name = Path.GetFileNameWithoutExtension(yttFilePath) + " (Reverse)";
                 yield return new TestCaseData(yttFilePath).SetName(name);
             }
         }

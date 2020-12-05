@@ -150,12 +150,6 @@
   <data name="ImageFileFilter" xml:space="preserve">
     <value>Изображения|*.gif;*.jpg;*.jpeg;*.png</value>
   </data>
-  <data name="IsNotAValidColor" xml:space="preserve">
-    <value>{0} не является правильным цветом</value>
-  </data>
-  <data name="IsNotAValidTimestamp" xml:space="preserve">
-    <value>{0} не является правильной отметкой времени</value>
-  </data>
   <data name="KaraokeOutlineColor" xml:space="preserve">
     <value>Цвет обводки:</value>
   </data>
