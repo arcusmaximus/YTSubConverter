@@ -140,13 +140,19 @@ As long as Fiddler is running (and the rule is enabled), any YouTube video you v
 ## Uploading to the video
 For your own videos, you can add the subtitle language in YouTube Studio, open it in the classic editor, and upload the .ytt file:
 
-![Upload menu](images/upload2.png)
+![Upload menu](images/upload.png)
 
 Once the upload is complete, simply click "Save changes."
 
 Note that after uploading, you won't see the styling in the editor's preview pane. This is normal; as long as you don't change anything in the editor, the styling will show up in the "real" video player afterwards. If you make any change, no matter how small, all styling information will be lost and you'll have to upload the file again.
 
-For videos on someone else's channel, things aren't as easy. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 30 2020, however, the feature was made inaccessible. This means users now have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it manually.
+For videos on someone else's channel, things are a bit trickier. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 28 2020, however, the feature was officially deprecated.
+
+For now, there's a loophole that still allows accessing the feature by browsing to the editor manually: `https://www.youtube.com/timedtext_editor?action_mde_edit_form=1&v=<video ID>`
+
+YouTube doesn't notify the channel owner about newly submitted subtitles, so after clicking "Submit contribution" (again making sure not to change anything in the editor), you'll have to contact them and ask them to publish the subtitles for you. They won't see your submission in YouTube Studio, so you'll have to direct them to the same timedtext_editor URL as above.
+
+Once this loophole gets closed or the editor gets replaced by the upcoming YouTube Studio caption editor, users will have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it on their behalf.
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
@@ -166,8 +172,7 @@ First do some initial setup:
 * Choose a marker (ideally a single, special character) for each style and link these markers to their styles inside the script. The script contains some examples, and as you'll see, it's in fact possible to register multiple marker sets for different YouTube channels.
 
 Then do the following for each video:
-* Download the video using e.g. [youtube-dl](http://yt-dl.org). (Tip: because YT-DL picks the highest resolution by default, you can save time by using `-F` to discover the available video resolutions and then downloading with `-f<number>` to download a smaller file.)
-  * If you're planning on doing karaoke timing, you may want to check if the video has Opus-encoded audio and explicitly download that - reason being that the m4a audio you normally get is ever so slightly shifted in time. Example: `-f137+251`
+* Download the video using one of the many available tools and websites.
 * Open the locally saved video in a player that supports global hotkeys (e.g. VLC). If you haven't yet, set up hotkeys for pausing, resuming and rewinding the video.
 * Open Notepad and type out the subtitles, using the global hotkeys to control the video without having to switch between windows.
 * While typing, prefix each line with the marker of the style it should get later on. (e.g. `*Hello, Darling!`)
@@ -184,7 +189,7 @@ YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, 
   * By default, it'll produce an .ass file that you can edit and convert back to .ytt, getting the exact same look with different text. Example use cases: fixing a mistake in your own published subtitles if you already deleted the .ass, or translating someone else's published subtitles for which you never had the .ass in the first place.
   * You can also get an .ass that emulates how the subtitles look on YouTube. To do this, you need to call the converter from the command line, passing it the .ytt/.srv3 path along with the `--visual` option. While the resulting .ass can't be converted back to .ytt, it does give you (almost) the same visual experience in a local media player as on YouTube. Example use case: archiving videos so you can keep watching them, with visually accurate subtitles, even if they get taken down.
 
-You can download a video along with its published .ytt/.srv3 subtitles by using youtube-dl with the following options: `--write-sub --all-subs --sub-format=srv3`
+You can download a video's subtitles in the .ytt/.srv3 format by browsing to `https://www.youtube.com/api/timedtext?v=<video ID>&lang=<language code>&fmt=srv3` (you can look up language codes [here](http://www.lingoes.net/en/translator/langcode.htm)).
 
 ## Credits
 Thanks to the following people for providing the UI translations:
