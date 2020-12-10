@@ -79,6 +79,7 @@
     <EmbeddedResource Include="Resources.ja.resx" />
     <EmbeddedResource Include="Resources.ko.resx" />
     <EmbeddedResource Include="Resources.ms.resx" />
+    <EmbeddedResource Include="Resources.pl.resx" />
     <EmbeddedResource Include="Resources.ru.resx" />
     <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
