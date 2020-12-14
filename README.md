@@ -198,3 +198,4 @@ Thanks to the following people for providing the UI translations:
 * Mali (@mali_5157) - Chinese
 * Saiv46 - Russian
 * tototo (@vvto33) - Japanese
+* XDgierman - Polish
