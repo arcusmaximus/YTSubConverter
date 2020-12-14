@@ -107,7 +107,7 @@ Unsupported tags are ignored.
 ## Examples
 The repository contains two sample .ass files:
 * [Color-coded dialogue sample](sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=sc3-z_2aNX0))
-* [Karaoke sample](sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=oxjwYtJkxG4))
+* [Karaoke sample](sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=XDRC9VcU1Vo))
 
 ## Testing on PC
 After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the "real" player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
