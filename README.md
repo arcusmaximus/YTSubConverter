@@ -138,21 +138,19 @@ Once this initial setup is done, you only need to do the following whenever you 
 As long as Fiddler is running (and the rule is enabled), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it; simply disable and re-enable subtitles in the video, which will cause the YouTube player to "redownload" them.
 
 ## Uploading to the video
-For your own videos, you can add the subtitle language in YouTube Studio, open it in the classic editor, and upload the .ytt file:
+For your own videos, you can add styled subtitles as follows:
+* Go to YouTube Studio.
+* Select the "Subtitles" tab on the left.
+* Click the video you want to add subtitles to.
+* If necessary, click the "Add Language" button to add the subtitle language to the list.
+* If the "Subtitles" column already contains a draft, click the three dots and choose "Delete."
+* Click "Add" in the "Subtitles" column to open the caption editor.
+* Click "Upload file", ensure "With timing" is selected and click "Continue".
+* Select the .ytt file and click the "Publish" button.
 
-![Upload menu](images/upload.png)
+Note that after uploading the file, you won't see the styling in the editor's preview pane. This is normal; as long as you don't change anything in the editor, the styling will show up in the "real" video player afterwards. If you make any change, no matter how small, all styling information will be lost and you'll have to upload the file again.
 
-Once the upload is complete, simply click "Save changes."
-
-Note that after uploading, you won't see the styling in the editor's preview pane. This is normal; as long as you don't change anything in the editor, the styling will show up in the "real" video player afterwards. If you make any change, no matter how small, all styling information will be lost and you'll have to upload the file again.
-
-For videos on someone else's channel, things are a bit trickier. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 28 2020, however, the feature was officially deprecated.
-
-For now, there's a loophole that still allows accessing the feature by browsing to the editor manually: `https://www.youtube.com/timedtext_editor?action_mde_edit_form=1&v=<video ID>`
-
-YouTube doesn't notify the channel owner about newly submitted subtitles, so after clicking "Submit contribution" (again making sure not to change anything in the editor), you'll have to contact them and ask them to publish the subtitles for you. They won't see your submission in YouTube Studio, so you'll have to direct them to the same timedtext_editor URL as above.
-
-Once this loophole gets closed or the editor gets replaced by the upcoming YouTube Studio caption editor, users will have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it on their behalf.
+For videos on someone else's channel, things are a bit trickier. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 28 2020, however, the feature was officially deprecated and later removed entirely. This means users have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it on their behalf.
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
