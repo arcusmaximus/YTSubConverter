@@ -150,7 +150,7 @@ For your own videos, you can add styled subtitles as follows:
 
 Note that after uploading the file, you won't see the styling in the editor's preview pane. This is normal; as long as you don't change anything in the editor, the styling will show up in the "real" video player afterwards. If you make any change, no matter how small, all styling information will be lost and you'll have to upload the file again.
 
-For videos on someone else's channel, things are a bit trickier. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 28 2020, however, the feature was officially deprecated and later removed entirely. This means users have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it on their behalf.
+For videos on someone else's channel, things are a bit trickier. YouTube used to have a community subtitling feature that allowed anyone to submit captions for videos; channel owners could then review the submission and publish it with the click of a button. On September 28 2020, however, the feature was deprecated and later removed. This means users have to follow the more primitive route of contacting the channel owner, sending them the subtitle file, and asking them to upload it on their behalf.
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
@@ -180,7 +180,7 @@ Then do the following for each video:
   * If the video has hardsubs, you can save a lot of time by using the "Align subtitle to video" feature of this [unofficial Aegisub version](https://github.com/wangqr/Aegisub/releases). Simply select the softsub, activate the feature from the toolbar, click a point in the hardsub and click OK; the timing of the softsub will be automatically updated to match. To work even faster, set up a hotkey for this feature using the `time/align` command name.
 * Save the subtitles as an .ass file.
 * Convert the .ass to .ytt using YTSubConverter.
-* Upload the .ytt to YouTube and contact the channel owner for publishing.
+* Send the .ytt to the channel owner for uploading and publishing.
 
 ## Reverse conversion
 YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, which is the same) to .ass. What's more, it can do this for two different purposes: editing and archiving.
