@@ -95,8 +95,8 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
   * `{\ytchroma(offsetX, offsetY, intime, outtime)}` - the first copy starts at `offsetX` pixels to the left of and `offsetY` pixels above the subtitle position. (The last copy starts at the same distance in the opposite direction.) Both offsets can be negative.
   * `{\ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)}` - replace the default red/green/blue by any number of custom colors. Both the colors and the alpha value should be specified in hexadecimal (`&H...&`).
 * `{\ytkt}` - enables advanced Karaoke Types.
-  * `{\ytktFade}` - Configure the line to use fading karaoke ([example video](https://www.youtube.com/watch?v=eB90el6Zb_k)).
-  * `{\ytktGlitch}` - Configure the line to use karaoke with glitching text ([example video](https://www.youtube.com/watch?v=9_IKgqsnfco)). Looks for Latin, Chinese, Japanese and Korean characters in each syllable and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
+  * `{\ytktFade}` - Configure the line to use fading karaoke.
+  * `{\ytktGlitch}` - Configure the line to use karaoke with glitching text. Looks for Latin, Chinese, Japanese and Korean characters in each syllable and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
   * `{\ytkt(Cursor,text)}` - Places the specified text after the word that's currently being sung.
   * `{\ytkt(Cursor,formatting tags,text)}` - Like the above, but you can customize the look of the cursor with override tags (similar to `\t`).
   * `{\ytkt(Cursor,interval,tags1,text1,tags2,text2,...)}` - Defines an animated cursor where each "frame" lasts `interval` milliseconds.
@@ -107,7 +107,7 @@ Unsupported tags are ignored.
 ## Examples
 The repository contains two sample .ass files:
 * [Color-coded dialogue sample](sample1.ass) ([YouTube video](https://www.youtube.com/watch?v=sc3-z_2aNX0))
-* [Karaoke sample](sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=XDRC9VcU1Vo))
+* [Karaoke sample](sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=eB90el6Zb_k))
 
 ## Testing on PC
 After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the "real" player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).

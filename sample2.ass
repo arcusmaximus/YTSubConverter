@@ -13,121 +13,97 @@ YCbCr Matrix: TV.601
 Last Style Storage: Default
 Video AR Mode: 4
 Video AR Value: 1.777778
-Video Zoom Percent: 1.000000
-Scroll Position: 3
-Active Line: 19
-Video Position: 1781
+Active Line: 7
+Video Position: 7972
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Plain,Roboto,15,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,0,2,10,10,10,1
-Style: JP,Arial,20,&H00FFFFFF,&H009A9A9A,&H14FFFFFF,&H00000000,0,0,0,0,100,100,0,0,1,0,2,7,10,10,10,1
-Style: EN,Arial,20,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,0,2,3,10,10,10,1
+Style: JP1,Roboto,15,&H00FFFFFF,&H00808080,&H00FFFFFF,&H00222222,0,0,0,0,100,100,0,0,1,0,2,7,10,10,10,1
+Style: JP2,Roboto,15,&H00FFFFFF,&H00A0A0A0,&H00FFFFFF,&H006A4D74,0,0,0,0,100,100,0,0,1,0,2,7,10,10,10,1
+Style: JP3,Roboto,15,&H00FFFFFF,&H00A8A8A8,&H00FFFFFF,&H006F63E8,0,0,0,0,100,100,0,0,1,0,2,7,10,10,10,1
+Style: EN1,Roboto,15,&H00FFFFFF,&HFFFFFFFF,&H00FFFFFF,&H00222222,0,0,0,0,100,100,0,0,1,0,2,3,10,10,10,1
+Style: EN2,Roboto,15,&H00FFFFFF,&HFFFFFFFF,&H00FFFFFF,&H006A4D74,0,0,0,0,100,100,0,0,1,0,2,3,10,10,10,1
+Style: EN3,Roboto,15,&H00FFFFFF,&HFFFFFFFF,&H00FFFFFF,&H006F63E8,0,0,0,0,100,100,0,0,1,0,2,3,10,10,10,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:21.01,0:00:25.95,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,290,\2c&H9A9A9A&\4c&H000000&)\t(4750,4890,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k57}Al{\k37}ways {\k26}you’re {\k31}there {\k16}with {\k32}me {\k53}when {\k49}my {\k21}real {\k37}sto{\k32}ry {\k47}moves {\k56}on
-Dialogue: 0,0:00:21.01,0:00:25.95,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,290,\2c&H9A9A9A&\4c&H000000&)\t(4750,4890,\2c&HA1FFFD&\4c&H2EFFFD&)}Always you’re there with me when my real story moves on
-Dialogue: 0,0:00:25.95,0:00:30.65,JP,,0,0,0,,{\t(3010,3050,\2c&H6365F2&\4c&H2B23EB&)\t(3180,3310,\2c&HA1FFFD&\4c&H2EFFFD&)\t(3310,3410,\2c&H9A9A9A&\4c&H000000&)\t(4380,4410,\2c&H6365F2&\4c&H2B23EB&)\t(4510,4650,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k43}We {\k32}will {\k36}keep {\k29}on {\k54}figh{\k51}ting {\k27}all {\k19}the {\k59}time {\k35}star{\k18}ting {\k67}now
-Dialogue: 0,0:00:25.95,0:00:30.65,EN,,0,0,0,,{\t(3010,3050,\2c&H6365F2&\4c&H2B23EB&)\t(3180,3310,\2c&HA1FFFD&\4c&H2EFFFD&)\t(3310,3410,\2c&H9A9A9A&\4c&H000000&)\t(4380,4410,\2c&H6365F2&\4c&H2B23EB&)\t(4510,4650,\2c&HA1FFFD&\4c&H2EFFFD&)}We will keep on fighting all the time starting now
-Dialogue: 0,0:00:30.65,0:00:35.55,JP,,0,0,0,,{\t(2080,2210,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2250,2310,\2c&H9A9A9A&\4c&H000000&)\t(4480,4510,\2c&H6365F2&\4c&H2B23EB&)\t(4610,4750,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4780,4850,\2c&H9A9A9A&\4c&H000000&)}{\k53}nan{\k36}kai {\k25}dat{\k15}te {\k12}u{\k25}shi{\k26}nat{\k59}ta {\k44}mo{\k35}no {\k15}ni {\k13}ta{\k17}chi{\k12}mu{\k49}ka{\k54}tte
-Dialogue: 0,0:00:30.65,0:00:35.55,EN,,0,0,0,,{\t(2080,2210,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2250,2310,\2c&H9A9A9A&\4c&H000000&)\t(4480,4510,\2c&H6365F2&\4c&H2B23EB&)\t(4610,4750,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4780,4850,\2c&H9A9A9A&\4c&H000000&)}How many times I have to face what I lost?
-Dialogue: 0,0:00:35.55,0:00:40.41,JP,,0,0,0,,{\t(4580,4850,\4c&HFFFFFF&)}{\k48}zen{\k25}bu {\k30}ke{\k27}shi{\k59}sa{\k57}tte {\k14}o{\k62}mo{\k52}i{\k63}dashi{\k49}ta
-Dialogue: 0,0:00:35.55,0:00:40.41,EN,,0,0,0,,{\t(4580,4850,\4c&HFFFFFF&)}All the things I erased come back to me
-Dialogue: 0,0:00:40.41,0:00:42.85,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,290,\2c&H9A9A9A&\4c&H000000&)\t(2250,2350,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k63}There’s {\k31}no{\k23}thing {\k16}to {\k41}change {\k30}in {\k40}me
-Dialogue: 0,0:00:40.41,0:00:42.85,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,290,\2c&H9A9A9A&\4c&H000000&)\t(2250,2350,\2c&HFFFFFF&\4c&HFFFFFF&)}There’s nothing to change in me
-Dialogue: 0,0:00:42.85,0:00:45.15,JP,,0,0,0,,{\t(600,710,\2c&H6365F2&\4c&H2B23EB&)\t(880,1010,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1010,1110,\2c&H9A9A9A&\4c&H000000&)\t(1410,1450,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1610,1810,\2c&H9A9A9A&\4c&H000000&)}{\k41}There’s {\k34}no{\k33}thing {\k23}to {\k40}change {\k33}in {\k36}you
-Dialogue: 0,0:00:42.85,0:00:45.15,EN,,0,0,0,,{\t(600,710,\2c&H6365F2&\4c&H2B23EB&)\t(880,1010,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1010,1110,\2c&H9A9A9A&\4c&H000000&)\t(1410,1450,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1610,1810,\2c&H9A9A9A&\4c&H000000&)}There’s nothing to change in you
-Dialogue: 0,0:00:45.25,0:00:47.41,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,120,\2c&H9A9A9A&\4c&H000000&)}{\k27}What {\k30}is {\k27}the {\k31}cor{\k25}rect {\k22}ans{\k54}wer?
-Dialogue: 0,0:00:45.25,0:00:47.41,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,120,\2c&H9A9A9A&\4c&H000000&)}What is the correct answer?
-Dialogue: 0,0:00:47.41,0:00:49.35,JP,,0,0,0,,{\t(1820,1920,\4c&HFFFFFF&)}{\k27}ka{\k56}na{\k68}ra{\k43}zu...
-Dialogue: 0,0:00:47.41,0:00:49.35,EN,,0,0,0,,{\t(1820,1920,\4c&HFFFFFF&)}Definitely...
-Dialogue: 0,0:00:49.35,0:00:58.98,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,120,\2c&H9A9A9A&\4c&H000000&)\t(510,550,\2c&HFFFFFF&\4c&HFFFFFF&)\t(610,650,\2c&H9A9A9A&\4c&H000000&)\t(4410,4450,\2c&H646BF3&\4c&H2D24EB&)\t(4610,4650,\2c&H9AFFFF&\4c&H6AE4F8&)\t(4780,4810,\2c&H9A9A9A&\4c&H000000&)\t(6880,6910,\2c&HFFFFFF&\4c&HFFFFFF&)\t(7010,7050,\2c&H8886DF&\4c&H4F4E97&)\t(7080,7110,\2c&H9A9A9A&\4c&H000000&)\t(9410,9650,\c&H000000&)}{\k38}i{\k22}ma {\k47}ku{\k29}chi{\k30}ha{\k29}te{\k58}ta {\k21}sa{\k20}da{\k50}me {\k32}no {\k27}na{\k33}ka {\k57}de {\k21}ta{\k23}ta{\k51}ka{\k29}i {\k28}na{\k23}ga{\k65}ra {\k52}te {\k83}ni {\k17}i{\k15}re{\k70}ta
-Dialogue: 0,0:00:49.35,0:00:58.98,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,120,\2c&H9A9A9A&\4c&H000000&)\t(510,550,\2c&HFFFFFF&\4c&HFFFFFF&)\t(610,650,\2c&H9A9A9A&\4c&H000000&)\t(4410,4450,\2c&H646BF3&\4c&H2D24EB&)\t(4610,4650,\2c&H9AFFFF&\4c&H6AE4F8&)\t(4780,4810,\2c&H9A9A9A&\4c&H000000&)\t(6880,6910,\2c&HFFFFFF&\4c&HFFFFFF&)\t(7010,7050,\2c&H8886DF&\4c&H4F4E97&)\t(7080,7110,\2c&H9A9A9A&\4c&H000000&)\t(9410,9650,\c&H000000&)}In this rotten fate, I fight to obtain something
-Dialogue: 0,0:00:58.98,0:01:03.75,JP,,0,0,0,,{\c&H000000&\2c&H000000&\t(0,280,\c&HFFFFFF&\2c&H9A9A9A&)}{\k29}bo{\k23}ku {\k49}no {\k33}i{\k28}no{\k28}chi {\k62}wo {\k19}sa{\k26}sa{\k50}ge{\k25}ru {\k29}hi {\k32}ma{\k44}de
-Dialogue: 0,0:00:58.98,0:01:03.75,EN,,0,0,0,,{\c&H000000&\2c&H000000&\t(0,280,\c&HFFFFFF&\2c&H9A9A9A&)}Until the day I end up sacrificing my life
-Dialogue: 0,0:01:03.75,0:01:07.58,JP,,0,0,0,,{\k50}This {\k75}is {\k49}my {\k70}on{\k51}ly {\k88}way
-Dialogue: 0,0:01:03.75,0:01:07.58,EN,,0,0,0,,This is my only way
-Dialogue: 0,0:01:07.58,0:01:09.08,JP,,0,0,0,,{\t(1350,1480,\4c&HFFFFFF)}{\k49}ko{\k37}no {\k23}ma{\k41}ma
-Dialogue: 0,0:01:07.58,0:01:09.08,EN,,0,0,0,,{\t(1350,1480,\4c&HFFFFFF)}That’s it
-Dialogue: 0,0:01:09.08,0:01:18.58,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,220,\2c&H9A9A9A&\4c&H000000&)\t(9250,9280,\4c&H3D31E3&)}{\k79}I {\k51}will {\k77}stay {\k42}a{\k242}live {\k74}pray{\k58}ing {\k58}for {\k43}my{\k229}self
-Dialogue: 0,0:01:09.08,0:01:18.58,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,220,\2c&H9A9A9A&\4c&H000000&)\t(9250,9280,\4c&H3D31E3&)}I will stay alive praying for myself
-Dialogue: 0,0:01:18.58,0:01:28.48,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(80,120,\2c&H88FFFE&\4c&H65D2F9&)\t(150,180,\2c&H9A9A9A\4c&H000000&)\t(4580,4620,\2c&H5C5FF2&\4c&H3B2CEE&)\t(4780,4820,\2c&HFFFFFF&\4c&HFFFFFF&)\t(4980,5020,\2c&H9A9A9A\4c&H000000&)\t(9650,9680,\2c&H5C5FF2&\4c&H3B2CEE&)}{\k93}I {\k50}will {\k71}stay {\k39}a{\k237}live {\k79}pray{\k51}ing {\k67}for {\k43}my{\k260}self
-Dialogue: 0,0:01:18.58,0:01:28.48,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(80,120,\2c&H88FFFE&\4c&H65D2F9&)\t(150,180,\2c&H9A9A9A\4c&H000000&)\t(4580,4620,\2c&H5C5FF2&\4c&H3B2CEE&)\t(4780,4820,\2c&HFFFFFF&\4c&HFFFFFF&)\t(4980,5020,\2c&H9A9A9A\4c&H000000&)\t(9650,9680,\2c&H5C5FF2&\4c&H3B2CEE&)}I will stay alive praying for myself
-Dialogue: 0,0:01:37.88,0:01:42.65,JP,,0,0,0,,{\fad(380,0)\t(950,980,\2c&H6C5CF2&\4c&H5440F1&)\t(1050,1080,\2c&H9A9A9A\4c&H000000&)\t(1150,1180,\2c&H90DBF8&\4c&H4B9DF7&)\t(1280,1320,\2c&H9A9A9A\4c&H000000&)\t(1680,1750,\2c&H90DBF8&\4c&H4B9DF7&)\t(1880,1950,\2c&H6C5CF2&\4c&H5440F1&)\t(1980,2080,\2c&H9A9A9A\4c&H000000&)\t(3680,3750,\2c&HFFFFFF&\4c&HFFFFFF&)\t(3850,3920,\2c&H9A9A9A\4c&H000000&)}{\k53}Some{\k34}day {\k30}I {\k28}will {\k18}on{\k17}ly {\k71}stop {\k45}when {\k25}you’re {\k34}com{\k25}plete{\k46}ly {\k60}gone
-Dialogue: 0,0:01:37.88,0:01:42.65,EN,,0,0,0,,{\fad(380,0)}Someday I will only stop when you’re completely gone
-Dialogue: 0,0:01:42.71,0:01:47.48,JP,,0,0,0,,{\2c&HFFFFFF&4\4c&HFFFFFF&\t(0,150,\2c&H9A9A9A\4c&H000000&)\t(1990,2050,\2c&H6D7AF1&\4c&H2C1BED&)\t(2120,2220,\2c&H9A9A9A\4c&H000000&)\t(2220,2350,\2c&H90FFFE&\4c&H52FFFD&)\t(2390,2450,\2c&H9A9A9A\4c&H000000&)}{\k49}Where {\k28}do {\k28}you {\k31}then {\k64}go {\k35}and {\k34}what {\k19}are {\k75}you {\k35}loo{\k16}king {\k63}for?
-Dialogue: 0,0:01:42.71,0:01:47.48,EN,,0,0,0,,{\2c&HFFFFFF&4\4c&HFFFFFF&\t(0,150,\2c&H9A9A9A\4c&H000000&)\t(1990,2050,\2c&H6D7AF1&\4c&H2C1BED&)\t(2120,2220,\2c&H9A9A9A\4c&H000000&)\t(2220,2350,\2c&H90FFFE&\4c&H52FFFD&)\t(2390,2450,\2c&H9A9A9A\4c&H000000&)}Where do you then go and what are you looking for?
-Dialogue: 0,0:01:47.48,0:01:52.38,JP,,0,0,0,,{\t(2150,2220,\2c&H6365F2&\4c&H2B23EB&)\t(2420,2520,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2520,2620,\2c&H9A9A9A&\4c&H000000&)\t(4280,4350,\2c&H6365F2&\4c&H2B23EB&)\t(4520,4650,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4650,4750,\2c&H9A9A9A&\4c&H000000&)}{\k50}too{\k32}ku {\k25}nat{\k31}ta {\k20}mi{\k31}rai {\k60}no {\k48}boku {\k25}wo {\k27}oi{\k35}koshi{\k30}ta{\k19}ku{\k57}te
-Dialogue: 0,0:01:47.48,0:01:52.38,EN,,0,0,0,,{\t(2150,2220,\2c&H6365F2&\4c&H2B23EB&)\t(2420,2520,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2520,2620,\2c&H9A9A9A&\4c&H000000&)\t(4280,4350,\2c&H6365F2&\4c&H2B23EB&)\t(4520,4650,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4650,4750,\2c&H9A9A9A&\4c&H000000&)}I want to overtake the me of that distant future
-Dialogue: 0,0:01:52.38,0:01:57.35,JP,,0,0,0,,{\t(4550,4580,\2c&H6365F2&\4c&H2B23EB&)\t(4750,4880,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k40}o{\k35}na{\k32}ji {\k20}i{\k68}ro {\k17}ni {\k37}so{\k71}ma{\k52}ri {\k63}dashi{\k55}ta
-Dialogue: 0,0:01:52.38,0:01:57.35,EN,,0,0,0,,{\t(4550,4580,\2c&H6365F2&\4c&H2B23EB&)\t(4750,4880,\2c&HA1FFFD&\4c&H2EFFFD&)}I’ve started to be dyed in his same color
-Dialogue: 0,0:01:57.35,0:01:59.68,JP,,0,0,0,,{\t(2150,2180,\2c&H6365F2&\4c&H2B23EB&)\t(2220,2310,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2310,2380,\2c&H9A9A9A&\4c&H000000&)}{\k39}There’s {\k31}no{\k30}thing {\k28}to {\k37}change {\k31}in {\k44}me
-Dialogue: 0,0:01:57.35,0:01:59.68,EN,,0,0,0,,{\t(2150,2180,\2c&H6365F2&\4c&H2B23EB&)\t(2220,2310,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2310,2380,\2c&H9A9A9A&\4c&H000000&)}There’s nothing to change in me
-Dialogue: 0,0:01:59.68,0:02:02.08,JP,,0,0,0,,{\k38}There’s {\k31}no{\k32}thing {\k29}to {\k36}change {\k30}in {\k284}you
-Dialogue: 0,0:01:59.68,0:02:02.08,EN,,0,0,0,,There’s nothing to change in you
-Dialogue: 0,0:02:02.08,0:02:04.18,JP,,0,0,0,,{\t(580,620,\2c&H6365F2&\4c&H2B23EB&)\t(750,780,\2c&HA1FFFD&\4c&H2EFFFD&)\t(880,980,\2c&H9A9A9A&\4c&H000000&)\t(1480,1520,\2c&H6365F2&\4c&H2B23EB&)\t(1650,1680,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1750,1850,\2c&H9A9A9A&\4c&H000000&)}{\k27}What {\k23}is {\k31}the {\k24}cor{\k26}rect {\k30}ans{\k49}wer?
-Dialogue: 0,0:02:02.08,0:02:04.18,EN,,0,0,0,,{\t(580,620,\2c&H6365F2&\4c&H2B23EB&)\t(750,780,\2c&HA1FFFD&\4c&H2EFFFD&)\t(880,980,\2c&H9A9A9A&\4c&H000000&)\t(1480,1520,\2c&H6365F2&\4c&H2B23EB&)\t(1650,1680,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1750,1850,\2c&H9A9A9A&\4c&H000000&)}What is the correct answer?
-Dialogue: 0,0:02:04.18,0:02:06.11,JP,,0,0,0,,{\t(1750,1920,\4c&HFFFFFF&)}{\k27}i{\k64}chi{\k62}do {\k40}wa...
-Dialogue: 0,0:02:04.18,0:02:06.11,EN,,0,0,0,,{\t(1750,1920,\4c&HFFFFFF&)}The right time is...
-Dialogue: 0,0:02:06.11,0:02:11.05,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,190,\2c&H9A9A9A&\4c&H000000&)}{\k38}ha{\k24}ka{\k44}na{\k28}ku {\k30}sa{\k29}i{\k67}ta {\k15}to{\k24}wa {\k43}no {\k35}chi{\k35}ka{\k28}i {\k54}ga
-Dialogue: 0,0:02:06.11,0:02:11.05,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,190,\2c&H9A9A9A&\4c&H000000&)}The eternal vow that used to be in full bloom
-Dialogue: 0,0:02:11.05,0:02:15.68,JP,,0,0,0,,{\t(4380,4410,\2c&H6365F2&\4c&H2B23EB&)\t(4510,4650,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k28}ka{\k20}re{\k44}ha{\k32}te{\k33}ta {\k22}ma{\k68}ma {\k58}na{\k80}i{\k32}te{\k46}ru
-Dialogue: 0,0:02:11.05,0:02:15.68,EN,,0,0,0,,{\t(4380,4410,\2c&H6365F2&\4c&H2B23EB&)\t(4510,4650,\2c&HA1FFFD&\4c&H2EFFFD&)}is now withering, and I cry
-Dialogue: 0,0:02:15.68,0:02:20.38,JP,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(50,120,\2c&H9A9A9A&\4c&H000000&)}{\k41}a{\k26}o{\k41}i {\k29}ka{\k36}ke{\k25}ra {\k64}wo {\k17}a{\k26}tsu{\k48}me{\k25}ru {\k30}hi {\k32}ma{\k30}de
-Dialogue: 0,0:02:15.68,0:02:20.38,EN,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(50,120,\2c&H9A9A9A&\4c&H000000&)}Until the day I gather the blue fragments
-Dialogue: 0,0:02:20.38,0:02:24.55,JP,,0,0,0,,{\t(850,880,\2c&H6365F2&\4c&H2B23EB&)\t(1050,1180,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1180,1280,\2c&H9A9A9A&\4c&H000000&)}{\k63}This {\k88}is {\k44}you {\k67}& {\k47}me {\k108}now
-Dialogue: 0,0:02:20.38,0:02:24.55,EN,,0,0,0,,{\t(850,880,\2c&H6365F2&\4c&H2B23EB&)\t(1050,1180,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1180,1280,\2c&H9A9A9A&\4c&H000000&)}This is you & me now
-Dialogue: 0,0:02:24.55,0:02:25.81,JP,,0,0,0,,{\t(880,1280,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k35}ko{\k30}re {\k27}ka{\k34}ra
-Dialogue: 0,0:02:24.55,0:02:25.81,EN,,0,0,0,,{\t(880,1280,\2c&HFFFFFF&\4c&HFFFFFF&)}from now on...
-Dialogue: 0,0:02:25.88,0:02:35.25,JP,,0,0,0,,{\k81}I {\k52}will {\k73}stay {\k43}a{\k235}live {\k77}pray{\k59}ing {\k57}for {\k47}my{\k213}self
-Dialogue: 0,0:02:25.88,0:02:35.25,EN,,0,0,0,,I will stay alive praying for myself
-Dialogue: 0,0:02:35.51,0:02:46.05,JP,,0,0,0,,{\k81}I {\k50}will {\k70}stay {\k43}a{\k237}live {\k80}pray{\k53}ing {\k64}for {\k40}my{\k336}self
-Dialogue: 0,0:02:35.51,0:02:46.05,EN,,0,0,0,,I will stay alive praying for myself
-Dialogue: 0,0:02:52.68,0:02:54.98,JP,,0,0,0,,{\k17}One {\k18}day {\k10}I {\k21}just {\k20}kept {\k27}loo{\k19}king {\k25}up {\k23}to {\k17}the {\k33}sky
-Dialogue: 0,0:02:52.68,0:02:54.98,EN,,0,0,0,,One day I just kept looking up to the sky
-Dialogue: 0,0:02:54.98,0:02:57.38,JP,,0,0,0,,{\k24}What {\k19}do {\k11}you {\k26}take {\k18}and {\k29}what {\k15}do {\k33}you {\k15}lose {\k14}a{\k36}gain
-Dialogue: 0,0:02:54.98,0:02:57.38,EN,,0,0,0,,What do you take and what do you lose again
-Dialogue: 0,0:02:57.38,0:02:58.78,JP,,0,0,0,,{\k19}You {\k29}know? {\k24}You {\k24}know? {\k14}You {\k30}know?
-Dialogue: 0,0:02:57.38,0:02:58.78,EN,,0,0,0,,You know? You know? You know?
-Dialogue: 0,0:02:58.78,0:02:59.35,JP,,0,0,0,,{\k26}I {\k31}know!!
-Dialogue: 0,0:02:58.78,0:02:59.35,EN,,0,0,0,,I know!!
-Dialogue: 0,0:02:59.35,0:03:02.18,JP,,0,0,0,,{\t(2480,2550,\2c&H6365F2&\4c&H2B23EB&)\t(2710,2850,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k11}‘Cause {\k16}I {\k13}will {\k13}need {\k16}to {\k23}pro{\k30}tect {\k23}some{\k10}one {\k26}now for {\k21}sure. {\k81}Right?
-Dialogue: 0,0:02:59.35,0:03:02.18,EN,,0,0,0,,{\t(2480,2550,\2c&H6365F2&\4c&H2B23EB&)\t(2710,2850,\2c&HA1FFFD&\4c&H2EFFFD&)}‘Cause I will need to protect someone now for sure. Right?
-Dialogue: 0,0:03:02.18,0:03:04.68,JP,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(0,120,\2c&H9A9A9A&\4c&H000000&)}{\k21}This {\k15}de{\k22}ci{\k15}sion {\k27}needs {\k23}to be {\k43}made {\k30}on {\k19}to{\k35}day
-Dialogue: 0,0:03:02.18,0:03:04.68,EN,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(0,120,\2c&H9A9A9A&\4c&H000000&)}This decision needs to be made on today
-Dialogue: 0,0:03:04.68,0:03:06.98,JP,,0,0,0,,{\t(1250,1320,\2c&H6365F2&\4c&H2B23EB&)\t(1350,1480,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1480,1580,\2c&H9A9A9A&\4c&H000000&)\t(2050,2150,\2c&H6365F2&\4c&H2B23EB&)\t(2150,2280,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k15}I’ve {\k17}tried {\k12}to i{\k15}ma{\k15}gi{\k16}ne {\k28}it {\k24}o{\k16}ver {\k21}hun{\k15}dred {\k39}times
-Dialogue: 0,0:03:04.68,0:03:06.98,EN,,0,0,0,,{\t(1250,1320,\2c&H6365F2&\4c&H2B23EB&)\t(1350,1480,\2c&HA1FFFD&\4c&H2EFFFD&)\t(1480,1580,\2c&H9A9A9A&\4c&H000000&)\t(2050,2150,\2c&H6365F2&\4c&H2B23EB&)\t(2150,2280,\2c&HA1FFFD&\4c&H2EFFFD&)}I’ve tried to imagine it over hundred times
-Dialogue: 0,0:03:07.01,0:03:09.28,JP,,0,0,0,,{\k16}No{\k22}bo{\k15}dy {\k29}knows {\k17}this {\k26}sto{\k17}ry {\k32}that {\k14}I {\k15}will {\k26}put
-Dialogue: 0,0:03:07.01,0:03:09.28,EN,,0,0,0,,Nobody knows this story that I will put
-Dialogue: 0,0:03:09.28,0:03:11.88,JP,,0,0,0,,{\t(1780,2580,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k21}in{\k16}to {\k29}an {\k39}end {\k35}start {\k12}it {\k16}o{\k14}ver a{\k22}gain {\k12}and {\k12}a{\k39}gain
-Dialogue: 0,0:03:09.28,0:03:11.88,EN,,0,0,0,,{\t(1780,2580,\2c&HFFFFFF&\4c&HFFFFFF&)}into an end start it over again and again
-Dialogue: 0,0:03:20.65,0:03:25.38,JP,,0,0,0,,{\k25}a{\k20}no {\k49}hi {\k32}no {\k21}bo{\k27}ku {\k66}wa {\k21}do{\k32}ko {\k36}ka {\k37}to{\k17}o{\k97}ku
-Dialogue: 0,0:03:20.65,0:03:25.38,EN,,0,0,0,,The me of that day woke up
-Dialogue: 0,0:03:25.38,0:03:30.18,JP,,0,0,0,,{\t(2720,2780,\2c&H6365F2&\4c&H2B23EB&)\t(2950,3080,\2c&HA1FFFD&\4c&H2EFFFD&)\t(3080,3180,\2c&H9A9A9A&\4c&H000000&)\t(3480,3580,\2c&HA1FFFD&\4c&H2EFFFD&)\t(3650,3820,\2c&H9A9A9A&\4c&H000000&)}{\k34}shi{\k28}ra{\k34}na{\k38}i {\k18}ba{\k30}sho {\k69}de {\k58}me{\k85}za{\k28}me{\k58}ta
-Dialogue: 0,0:03:25.38,0:03:30.18,EN,,0,0,0,,{\t(2720,2780,\2c&H6365F2&\4c&H2B23EB&)\t(2950,3080,\2c&HA1FFFD&\4c&H2EFFFD&)\t(3080,3180,\2c&H9A9A9A&\4c&H000000&)\t(3480,3580,\2c&HA1FFFD&\4c&H2EFFFD&)\t(3650,3820,\2c&H9A9A9A&\4c&H000000&)}in a distant place I didn’t know
-Dialogue: 0,0:03:30.18,0:03:34.91,JP,,0,0,0,,{\t(150,180,\2c&H6365F2&\4c&H2B23EB&)\t(350,480,\2c&HA1FFFD&\4c&H2EFFFD&)\t(480,580,\2c&H9A9A9A&\4c&H000000&)\t(1880,1950,\2c&H6365F2&\4c&H2B23EB&)\t(2120,2250,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2250,2350,\2c&H9A9A9A&\4c&H000000&)\t(4380,4480,\2c&H6365F2&\4c&H2B23EB&)\t(4650,4750,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k31}ma{\k31}ta {\k39}o{\k37}mo{\k19}i{\k26}de {\k68}no {\k17}na{\k27}ka {\k40}wo {\k35}sa{\k19}ga{\k23}su {\k61}no
-Dialogue: 0,0:03:30.18,0:03:34.91,EN,,0,0,0,,{\t(150,180,\2c&H6365F2&\4c&H2B23EB&)\t(350,480,\2c&HA1FFFD&\4c&H2EFFFD&)\t(480,580,\2c&H9A9A9A&\4c&H000000&)\t(1880,1950,\2c&H6365F2&\4c&H2B23EB&)\t(2120,2250,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2250,2350,\2c&H9A9A9A&\4c&H000000&)\t(4380,4480,\2c&H6365F2&\4c&H2B23EB&)\t(4650,4750,\2c&HA1FFFD&\4c&H2EFFFD&)}Again, I’m looking for those memories
-Dialogue: 0,0:03:34.91,0:03:39.25,JP,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(0,150,\2c&H9A9A9A&\4c&H000000&)}{\k73}“ta{\k36}tta {\k29}hi{\k30}to{\k32}tsu {\k32}no {\k22}i{\k35}no{\k33}chi {\k112}de...”
-Dialogue: 0,0:03:34.91,0:03:39.25,EN,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(0,150,\2c&H9A9A9A&\4c&H000000&)}“I only have one life...”
-Dialogue: 0,0:03:41.05,0:03:50.55,JP,,0,0,0,,{\k30}nu{\k23}re{\k42}ta {\k29}se{\k34}ka{\k31}i {\k46}wa {\k26}bo{\k25}ku {\k43}hi{\k37}to{\k25}ri {\k33}da {\k63}to {\k12}o{\k37}mo{\k30}i {\k36}tsu{\k31}zu{\k29}ke{\k73}te{\k45}i{\k89}ta {\k32}ka{\k49}ra
-Dialogue: 0,0:03:41.05,0:03:50.55,EN,,0,0,0,,I kept thinking I was alone in this soaked world,
-Dialogue: 0,0:03:50.55,0:03:55.08,JP,,0,0,0,,{\t(4250,4520,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k34}bo{\k27}ku {\k44}no {\k31}su{\k27}be{\k36}te {\k61}wo {\k14}u{\k30}ke{\k46}i{\k31}re{\k26}ru {\k28}na{\k25}ra...
-Dialogue: 0,0:03:50.55,0:03:55.08,EN,,0,0,0,,{\t(4250,4520,\2c&HFFFFFF&\4c&HFFFFFF&)}so if only you could accept all of me...
-Dialogue: 0,0:03:55.15,0:04:01.01,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(-20,150,\2c&H9A9A9A&\4c&H000000&)\t(800,910,\2c&H7F7C98&\4c&H726B8C&)\t(1080,1210,\2c&HDAF2F5&\4c&HD4F1F5&)\t(1210,1310,\2c&H9A9A9A&\4c&H000000&)\t(1610,1710,\2c&HDAF2F5&\4c&HD4F1F5&)\t(1810,2010,\2c&H9A9A9A&\4c&H000000&)\t(3610,3710,\2c&HFFFFFF&\4c&HFFFFFF&)\t(3780,3850,\2c&H9A9A9A&\4c&H000000&)\t(4110,4210,\2c&HB9FAFD&\4c&H65FFFB&)\t(4280,4450,\2c&H9A9A9A&\4c&H000000&)\t(4580,4650,\2c&HFFFFFF&\4c&HFFFFFF&)\t(4680,4750,\2c&H9A9A9A&\4c&H000000&)\t(5780,5850,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k80}nan{\k73}sen, {\k45}nan{\k68}byaku, {\k52}nan{\k105}juu, {\k32}nan{\k29}nen {\k33}dat{\k69}te
-Dialogue: 0,0:03:55.15,0:04:01.01,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(-20,150,\2c&H9A9A9A&\4c&H000000&)\t(800,910,\2c&H7F7C98&\4c&H726B8C&)\t(1080,1210,\2c&HDAF2F5&\4c&HD4F1F5&)\t(1210,1310,\2c&H9A9A9A&\4c&H000000&)\t(1610,1710,\2c&HDAF2F5&\4c&HD4F1F5&)\t(1810,2010,\2c&H9A9A9A&\4c&H000000&)\t(3610,3710,\2c&HFFFFFF&\4c&HFFFFFF&)\t(3780,3850,\2c&H9A9A9A&\4c&H000000&)\t(4110,4210,\2c&HB9FAFD&\4c&H65FFFB&)\t(4280,4450,\2c&H9A9A9A&\4c&H000000&)\t(4580,4650,\2c&HFFFFFF&\4c&HFFFFFF&)\t(4680,4750,\2c&H9A9A9A&\4c&H000000&)\t(5780,5850,\2c&HFFFFFF&\4c&HFFFFFF&)}for thousands, hundreds, dozens of years
-Dialogue: 0,0:04:01.38,0:04:06.15,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,220,\2c&H9A9A9A&\4c&H000000&)\t(1980,2020,\2c&H6365F2&\4c&H2B23EB&)\t(2150,2280,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2350,2380,\2c&H9A9A9A&\4c&H000000&)}{\k35}ka{\k20}na{\k49}ra{\k30}zu {\k29}mi{\k31}chi {\k56}no {\k22}sa{\k22}ki {\k49}ni {\k33}a{\k21}ru {\k31}ka{\k49}ra
-Dialogue: 0,0:04:01.38,0:04:06.15,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,220,\2c&H9A9A9A&\4c&H000000&)\t(1980,2020,\2c&H6365F2&\4c&H2B23EB&)\t(2150,2280,\2c&HA1FFFD&\4c&H2EFFFD&)\t(2350,2380,\2c&H9A9A9A&\4c&H000000&)}I will reach the end of the road,
-Dialogue: 0,0:04:06.15,0:04:10.98,JP,,0,0,0,,{\t(3710,3750,\2c&H6365F2&\4c&H2B23EB&)\t(3910,4050,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4080,4150,\2c&H9A9A9A&\4c&H000000&)\t(4680,4810,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k34}a{\k27}ki{\k46}ra{\k26}me{\k36}na{\k24}i {\k60}to {\k56}ki{\k96}me{\k22}ta{\k56}yo
-Dialogue: 0,0:04:06.15,0:04:10.98,EN,,0,0,0,,{\t(3710,3750,\2c&H6365F2&\4c&H2B23EB&)\t(3910,4050,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4080,4150,\2c&H9A9A9A&\4c&H000000&)\t(4680,4810,\2c&HFFFFFF&\4c&HFFFFFF&)}because I decided not to give up
-Dialogue: 0,0:04:10.98,0:04:15.81,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,180,\2c&H9A9A9A&\4c&H000000&)\t(4550,4580,\2c&H6365F2&\4c&H2B23EB&)\t(4680,4820,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k36}sa{\k22}i{\k45}go {\k33}no {\k28}yu{\k27}me {\k59}wo {\k21}ka{\k30}na{\k44}e{\k32}ru {\k24}hi {\k33}ma{\k49}de
-Dialogue: 0,0:04:10.98,0:04:15.81,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,180,\2c&H9A9A9A&\4c&H000000&)\t(4550,4580,\2c&H6365F2&\4c&H2B23EB&)\t(4680,4820,\2c&HA1FFFD&\4c&H2EFFFD&)}Until my last dream comes true
-Dialogue: 0,0:04:15.81,0:04:19.58,JP,,0,0,0,,{\t(3620,3750,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k43}This {\k80}is {\k48}my {\k70}on{\k45}ly {\k94}way
-Dialogue: 0,0:04:15.81,0:04:19.58,EN,,0,0,0,,{\t(3620,3750,\2c&HFFFFFF&\4c&HFFFFFF&)}This is my only way
-Dialogue: 0,0:04:19.61,0:04:21.11,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,150,\2c&H9A9A9A&\4c&H000000&)\t(1350,1520,\2c&HFFFFFF&\4c&HFFFFFF&)}{\k42}ko{\k39}no {\k24}ma{\k45}ma...
-Dialogue: 0,0:04:19.61,0:04:21.11,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,150,\2c&H9A9A9A&\4c&H000000&)\t(1350,1520,\2c&HFFFFFF&\4c&HFFFFFF&)}That’s it...
-Dialogue: 0,0:04:21.11,0:04:30.78,JP,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,220,\2c&H9A9A9A&\4c&H000000&)\t(9490,9650,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k80}I {\k48}will {\k81}stay {\k39}a{\k234}live {\k82}pray{\k46}ing {\k68}for {\k44}my{\k245}self
-Dialogue: 0,0:04:21.11,0:04:30.78,EN,,0,0,0,,{\2c&HFFFFFF&\4c&HFFFFFF&\t(0,220,\2c&H9A9A9A&\4c&H000000&)\t(9490,9650,\2c&HA1FFFD&\4c&H2EFFFD&)}I will stay alive praying for myself
-Dialogue: 0,0:04:30.78,0:04:40.38,JP,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(0,80,\2c&H9A9A9A&\4c&H000000&)\t(4550,4750,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4750,4850,\2c&H9A9A9A&\4c&H000000&)\t(9350,9380,\2c&H6365F2&\4c&H2B23EB&)\t(9380,9650,\2c&HA1FFFD&\4c&H2EFFFD&)}{\k73}I {\k50}will {\k73}stay {\k45}a{\k236}live {\k75}pray{\k58}ing {\k63}for {\k44}my{\k243}self
-Dialogue: 0,0:04:30.78,0:04:40.38,EN,,0,0,0,,{\2c&HA1FFFD&\4c&H2EFFFD&\t(0,80,\2c&H9A9A9A&\4c&H000000&)\t(4550,4750,\2c&HA1FFFD&\4c&H2EFFFD&)\t(4750,4850,\2c&H9A9A9A&\4c&H000000&)\t(9350,9380,\2c&H6365F2&\4c&H2B23EB&)\t(9380,9650,\2c&HA1FFFD&\4c&H2EFFFD&)}I will stay alive praying for myself
-Dialogue: 0,0:04:43.45,0:04:47.75,Plain,,0,0,0,,{\an5\fad(480,480)\pos(192,205.2)}Cocoa Music
+Dialogue: 0,0:00:00.18,0:00:05.48,JP1,,0,0,0,,{\ytktFade}{\k34}me{\k43}shi{\k39}i{\k38}ta {\k78}me {\k30}o {\k49}shi{\k108}te {\k43}i{\k68}ru
+Dialogue: 0,0:00:00.18,0:00:05.48,EN1,,0,0,0,,Alone in this room without windows,
+Dialogue: 0,0:00:05.48,0:00:10.85,JP1,,0,0,0,,{\ytktFade}{\fad(0,1000)}{\k32}ma{\k45}do {\k149}no {\k46}na{\k33}i {\k38}he{\k38}ya {\k156}de
+Dialogue: 0,0:00:05.48,0:00:11.11,EN1,,0,0,0,,{\fad(0,500)}Here I am—I can’t see a thing
+Dialogue: 0,0:00:12.18,0:00:17.48,JP1,,0,0,0,,{\ytktFade}{\k47}ka{\k44}ta{\k35}re{\k30}ba {\k85}ha{\k30}na {\k34}ga {\k157}sai{\k68}ta
+Dialogue: 0,0:00:12.18,0:00:17.48,EN1,,0,0,0,,It’s not really much of a story,
+Dialogue: 0,0:00:17.48,0:00:23.11,JP1,,0,0,0,,{\ytktFade}{\fad(0,500)}{\k36}fu{\k41}ta{\k77}ri {\k34}yo{\k36}ru {\k80}o {\k33}mi{\k36}te{\k190}ta
+Dialogue: 0,0:00:17.48,0:00:23.11,EN1,,0,0,0,,{\fad(0,500)}but we saw every flower that spring
+Dialogue: 0,0:00:24.21,0:00:29.28,JP1,,0,0,0,,{\ytktFade}{\fad(0,500)}{\k45}ka{\k73}wa{\k41}tte{\k68}nai {\k35}da{\k61}rou {\k171}ka
+Dialogue: 0,0:00:24.21,0:00:29.28,EN1,,0,0,0,,{\fad(0,500)}I wonder how you have changed
+Dialogue: 0,0:00:30.28,0:00:34.88,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k39}ka{\k69}wa{\k40}tte{\k77}run {\k34}da{\k46}rou {\k155}na
+Dialogue: 0,0:00:30.28,0:00:34.88,EN1,,0,0,0,,{\fad(0,500)}I know it can’t be the same
+Dialogue: 0,0:00:36.61,0:00:42.65,JP1,,0,0,0,,{\ytktFade}{\k48}ha{\k34}ru {\k37}o {\k36}ma{\k78}tsu {\k33}mu{\k38}ne {\k39}ga {\k40}ku{\k28}ru{\k75}shii {\k46}no {\k72}da
+Dialogue: 0,0:00:36.61,0:00:42.65,EN1,,0,0,0,,Spring will come again, and till then I can bear this pain
+Dialogue: 0,0:00:42.65,0:00:48.58,JP1,,0,0,0,,{\ytktFade}{\k39}a{\k32}ke{\k40}ta {\k42}me {\k70}ni {\k34}ha{\k44}na {\k29}wa {\k44}shi{\k44}gu{\k175}re
+Dialogue: 0,0:00:42.65,0:00:48.58,EN1,,0,0,0,,Opening my eyes, flowers falling like rain
+Dialogue: 0,0:00:48.58,0:00:54.68,JP1,,0,0,0,,{\ytktFade}{\k41}sa{\k36}yo{\k38}na{\k43}ra {\k71}ga {\k36}ki{\k41}mi {\k45}to {\k34}i{\k37}ta {\k75}tai{\k41}ka {\k72}da
+Dialogue: 0,0:00:48.58,0:00:54.68,EN1,,0,0,0,,Telling you goodbye was the price that I had to pay
+Dialogue: 0,0:00:54.68,0:01:02.38,JP1,,0,0,0,,{\ytktFade\fad(0,120)}{\k41}so{\k32}no {\k31}tsu{\k48}mi {\k71}ga {\k34}bo{\k45}ku {\k68}no {\k40}ba{\k37}tsu {\k323}da
+Dialogue: 0,0:00:54.68,0:01:02.38,EN1,,0,0,0,,{\fad(0,120)}Guilty of my crimes, this repentance of mine
+Dialogue: 0,0:01:22.78,0:01:28.05,JP1,,0,0,0,,{\ytktFade}{\k30}me{\k39}shi{\k43}i{\k36}ta {\k73}me {\k36}o {\k35}shi{\k124}te {\k39}i{\k72}ru
+Dialogue: 0,0:01:22.78,0:01:28.05,EN1,,0,0,0,,Alone in this room without windows,
+Dialogue: 0,0:01:28.05,0:01:33.35,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k30}bo{\k43}ku {\k151}wa {\k37}ki{\k29}mi {\k46}ga {\k32}mi{\k162}tai
+Dialogue: 0,0:01:28.05,0:01:33.35,EN1,,0,0,0,,{\fad(0,500)}Here I am—I wanna see you
+Dialogue: 0,0:01:34.71,0:01:40.05,JP1,,0,0,0,,{\ytktFade}{\k46}so{\k39}re{\k35}de{\k37}mo {\k78}ma{\k32}do {\k30}ga {\k162}nai {\k75}to
+Dialogue: 0,0:01:34.71,0:01:40.05,EN1,,0,0,0,,There’s not really much I can do, though
+Dialogue: 0,0:01:40.05,0:01:45.25,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k34}yu{\k31}u{\k83}hi {\k38}su{\k35}ra {\k76}mo {\k38}mi{\k31}e{\k154}nai
+Dialogue: 0,0:01:40.05,0:01:45.25,EN1,,0,0,0,,{\fad(0,500)}In these walls without any view
+Dialogue: 0,0:01:46.68,0:01:51.35,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k48}ko{\k73}do{\k37}mo {\k74}no {\k44}ko{\k35}ro {\k156}wa
+Dialogue: 0,0:01:46.68,0:01:51.35,EN1,,0,0,0,,{\fad(0,500)}The best is all in the past
+Dialogue: 0,0:01:52.71,0:01:57.98,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k46}tsu{\k36}ki {\k71}da{\k80}tte {\k34}i{\k56}ke{\k204}ta
+Dialogue: 0,0:01:52.71,0:01:57.98,EN1,,0,0,0,,{\fad(0,500)}We held the moon in our grasp
+Dialogue: 0,0:01:58.75,0:02:03.38,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k42}yu{\k75}me {\k38}no {\k70}na{\k42}ka {\k37}na{\k159}ra
+Dialogue: 0,0:01:58.75,0:02:03.38,EN1,,0,0,0,,{\fad(0,500)}The sky was always in reach
+Dialogue: 0,0:02:04.68,0:02:10.41,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k52}so{\k31}ra {\k79}da{\k65}tte {\k48}to{\k30}be{\k80}tan {\k188}da
+Dialogue: 0,0:02:04.68,0:02:10.41,EN1,,0,0,0,,{\fad(0,500)}In all our wildest dreams
+Dialogue: 0,0:02:11.11,0:02:17.08,JP1,,0,0,0,,{\ytktFade}{\k44}bo{\k35}ku {\k38}no {\k37}me {\k73}ni {\k39}ki{\k38}mi {\k37}ga {\k29}mi{\k46}e{\k43}na{\k35}i {\k30}na{\k73}ra
+Dialogue: 0,0:02:11.11,0:02:17.08,EN1,,0,0,0,,If my eyes go blind and I find I can’t see your face
+Dialogue: 0,0:02:17.08,0:02:23.08,JP1,,0,0,0,,{\ytktFade}{\k50}na{\k32}ni {\k41}ga {\k37}ba{\k69}tsu {\k40}ni {\k37}na{\k40}ru {\k37}no {\k35}da{\k182}rou
+Dialogue: 0,0:02:17.08,0:02:23.08,EN1,,0,0,0,,What else will be left when I have hell to pay?
+Dialogue: 0,0:02:23.08,0:02:29.15,JP1,,0,0,0,,{\ytktFade}{\k48}ka{\k31}mi{\k43}sa{\k39}ma {\k72}ga {\k37}na{\k36}ni{\k43}mo {\k35}i{\k37}wa{\k75}nai {\k41}na{\k70}ra
+Dialogue: 0,0:02:23.08,0:02:29.15,EN1,,0,0,0,,God might save me yet, but I don’t hear him when I pray
+Dialogue: 0,0:02:29.15,0:02:36.28,JP1,,0,0,0,,{\fad(0,500)}{\ytktFade}{\k44}da{\k28}re {\k43}ga {\k36}bo{\k71}ku {\k39}o {\k42}yu{\k25}ru{\k46}su {\k37}no {\k302}ka
+Dialogue: 0,0:02:29.15,0:02:36.28,EN1,,0,0,0,,{\fad(0,500)}How am I to live if no one will forgive?
+Dialogue: 0,0:02:51.65,0:02:54.28,JP2,,0,0,0,,{\ytktFade}{\k20}ma{\k19}do {\k18}no {\k30}nai {\k23}sa{\k21}ba{\k21}ku {\k18}no {\k19}na{\k16}ka {\k58}de
+Dialogue: 0,0:02:51.65,0:02:54.28,EN2,,0,0,0,,I’m waiting alone for someone to behold
+Dialogue: 0,0:02:54.28,0:02:57.48,JP2,,0,0,0,,{\ytktFade}{\k19}bo{\k20}ku {\k60}wa {\k17}da{\k16}re{\k23}ka {\k33}o {\k37}ma{\k22}tte {\k17}i{\k56}te
+Dialogue: 0,0:02:54.28,0:02:57.48,EN2,,0,0,0,,This dry, deserted landscape with me
+Dialogue: 0,0:02:57.48,0:03:00.45,JP2,,0,0,0,,{\ytktFade}{\k20}a{\k20}i{\k22}ta {\k34}hai{\k20}za{\k17}ra {\k19}ya {\k34}bii{\k22}ru {\k16}no {\k24}ka{\k14}n {\k35}ga
+Dialogue: 0,0:02:57.48,0:03:00.45,EN2,,0,0,0,,These empty beer cans and cigarette ashes
+Dialogue: 0,0:03:00.45,0:03:03.31,JP2,,0,0,0,,{\ytktFade}{\k21}shi{\k17}me{\k21}shi{\k36}ta {\k41}shin{\k35}shou {\k39}fuu{\k36}kei {\k40}wa
+Dialogue: 0,0:03:00.45,0:03:03.31,EN2,,0,0,0,,Are all that’s left for me to see
+Dialogue: 0,0:03:03.31,0:03:10.21,JP2,,0,0,0,,{\t(6720,6890,\4c&HFFFFFF&)}{\ytktFade}{\k20}ko{\k18}no {\k33}jin{\k32}sei {\k26}tte {\k21}ta{\k21}ka{\k69}i {\k22}ta{\k23}ka{\k32}i {\k23}to{\k20}u {\k21}no {\k17}u{\k15}e {\k36}no {\k38}hou {\k55}ka{\k148}ra
+Dialogue: 0,0:03:03.31,0:03:10.21,EN2,,0,0,0,,{\t(6720,6890,\4c&HFFFFFF&)}I have held my life so high, so high at the top of a tower in the sky
+Dialogue: 0,0:03:10.21,0:03:15.35,JP2,,0,0,0,,{\ytktFade}{\k21}ko{\k25}ko{\k35}ro {\k17}tte {\k17}ya{\k20}tsu {\k78}o {\k33}ip{\k54}pon {\k23}ta{\k35}rashi{\k156}te
+Dialogue: 0,0:03:10.21,0:03:15.35,EN2,,0,0,0,,{\4c&HFFFFFF&\t(0,150,\4c&H6A4D74&)}I let down my heart to you, but just a single strand
+Dialogue: 0,0:03:15.35,0:03:18.11,JP2,,0,0,0,,{\ytktFade}{\k33}yat{\k50}to {\k19}da{\k30}re{\k27}ka {\k23}no{\k26}bot{\k26}te {\k23}ki{\k19}ta
+Dialogue: 0,0:03:15.35,0:03:18.11,EN2,,0,0,0,,At last, you climbed all the way to this room
+Dialogue: 0,0:03:18.11,0:03:21.45,JP2,,0,0,0,,{\ytktFade}{\k50}soi{\k26}tsu {\k20}ga {\k16}ki{\k18}mi {\k39}dat{\k165}ta
+Dialogue: 0,0:03:18.11,0:03:21.45,EN2,,0,0,0,,And you took my heart in your hand
+Dialogue: 0,0:03:26.08,0:03:32.18,JP2,,0,0,0,,{\ytktFade}{\k51}ha{\k31}ru {\k33}o {\k43}ma{\k80}tsu {\k36}mu{\k40}ne {\k27}ga {\k45}ku{\k27}ru{\k76}shii {\k47}no {\k74}da
+Dialogue: 0,0:03:26.08,0:03:32.18,EN2,,0,0,0,,Spring will come again, and till then I can bear this pain
+Dialogue: 0,0:03:32.18,0:03:37.95,JP2,,0,0,0,,{\ytktFade}{\k42}ku{\k24}ru{\k45}shi{\k41}ma{\k71}gi{\k30}re {\k46}no {\k37}ha{\k27}na{\k46}da {\k168}da
+Dialogue: 0,0:03:32.18,0:03:37.95,EN2,,0,0,0,,Falling from my eyes, flowers leaving their stain
+Dialogue: 0,0:03:37.95,0:03:44.01,JP2,,0,0,0,,{\ytktFade}{\k62}sa{\k28}yo{\k42}na{\k44}ra {\k73}o {\k27}bo{\k48}ku{\k41}ra {\k35}wa {\k39}i{\k74}wa{\k17}na{\k17}ku{\k59}cha
+Dialogue: 0,0:03:37.95,0:03:44.01,EN2,,0,0,0,,Leaving you behind, ‘cause we’d said everything left to say
+Dialogue: 0,0:03:44.01,0:03:51.48,JP2,,0,0,0,,{\ytktFade}{\k60}so{\k24}re {\k37}da{\k53}ke {\k67}de {\k32}wa{\k47}ka{\k70}ru {\k39}ha{\k30}zu {\k215}da
+Dialogue: 0,0:03:44.01,0:03:51.48,EN2,,0,0,0,,You should understand it’s too late to go back
+Dialogue: 0,0:03:54.58,0:04:00.61,JP3,,0,0,0,,{\ytktFade}{\k59}ha{\k25}ru {\k36}o {\k37}ma{\k77}tsu {\k37}mu{\k36}ne {\k36}ga {\k42}ku{\k34}ru{\k80}shii {\k28}no {\k76}da
+Dialogue: 0,0:03:54.58,0:04:00.61,EN3,,0,0,0,,Spring will come again, and till then I can bear this pain
+Dialogue: 0,0:04:00.61,0:04:06.51,JP3,,0,0,0,,{\ytktFade}{\k44}a{\k30}ke{\k41}ta {\k41}me {\k70}ni {\k39}ha{\k37}na {\k34}wa {\k43}shi{\k41}gu{\k170}re
+Dialogue: 0,0:04:00.61,0:04:06.51,EN3,,0,0,0,,Opening my eyes, flowers falling like rain
+Dialogue: 0,0:04:06.51,0:04:12.61,JP3,,0,0,0,,{\ytktFade}{\k55}sa{\k33}yo{\k42}na{\k38}ra {\k72}ga {\k38}ki{\k35}mi {\k45}to {\k33}i{\k34}ta {\k74}tai{\k42}ka {\k69}da
+Dialogue: 0,0:04:06.51,0:04:12.61,EN3,,0,0,0,,Telling you goodbye was the price that I had to pay
+Dialogue: 0,0:04:12.61,0:04:18.48,JP3,,0,0,0,,{\ytktFade}{\k43}so{\k35}no {\k36}ba{\k44}tsu {\k72}ga {\k37}ko{\k38}no {\k39}yo{\k24}wa{\k51}sa {\k168}da
+Dialogue: 0,0:04:12.61,0:04:18.48,EN3,,0,0,0,,Guilty of my crimes and this weakness of mine
+Dialogue: 0,0:04:18.48,0:04:23.68,JP3,,0,0,0,,{\ytktFade}{\k61}ha{\k29}ru {\k37}o {\k40}ma{\k74}tsu {\k36}bo{\k44}ku {\k32}no {\k37}yu{\k30}me {\k323}da
+Dialogue: 0,0:04:18.48,0:04:23.68,EN3,,0,0,0,,Spring will come again, let me dream until then
+Dialogue: 0,0:04:23.68,0:04:25.75,JP3,,0,0,0,,{\t(\4c&HFFFFFF&)}haru o matsu boku no yume da
+Dialogue: 0,0:04:23.68,0:04:25.75,EN3,,0,0,0,,{\t(\4c&HFFFFFF&)}Spring will come again, let me dream until then
