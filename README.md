@@ -65,7 +65,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\4a}` - shadow transparency. Due to YouTube limitations, this only works if the shadow color is &H222222& and the shadow transparency equals the text transparency.
 * `{\alpha}` - set all transparencies at the same time
 * `{\pos}` - position
-* `{\an}` - alignment
+* `{\an}` - alignment. Note that, apart from the usual effect on the subtitle's position, the alignment also influences how subtitles move when users hover their mouse over the video on PC: top-aligned subtitles (`\an7`, `\an8`, `\an9`) will move downwards, center-aligned subtitles (`\an4`, `\an5`, `\an6`) will stay in place, and bottom-aligned subtitles (`\an1`, `\an2`, `\an3`) will move upwards.
 * `{\k}` - karaoke segment duration
 * `{\r}` - reset to current or specified style
 * `{\fad}` - simple fade. Due to YouTube limitations, shadows don't fade along unless their color is &H222222&.
