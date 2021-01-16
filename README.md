@@ -46,7 +46,7 @@ YTSubConverter supports the following .ass style features:
 * Font size. The "Default" style (or the first style if there is no "Default") always gets the standard YouTube font size no matter what you pick, while the other styles are relative to it. For example, if the "Default" style has size 15 in Aegisub and the "Header" style has 30, these will be respectively at 100% and 200% of the standard size in YouTube. Note that you can't go lower than 75% and that Android doesn't support custom sizes.
 * Bold, italic, underline
 * Primary, secondary, outline and shadow color
-* Alignment
+* Alignment. Note that on YouTube, apart from the usual effect on the subtitle's position, the alignment also influences how subtitles move when users hover their mouse over the video: top-aligned subtitles (alignments 7, 8 and 9) will move downwards, center-aligned subtitles (alignments 4, 5 and 6) will stay in place, and bottom-aligned subtitles (alignments 1, 2 and 3) will move upwards.
 * Outline thickness and shadow distance (only checking whether the value is 0 or greater than 0)
 
 It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_Tags/):
@@ -65,7 +65,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\4a}` - shadow transparency. Due to YouTube limitations, this only works if the shadow color is &H222222& and the shadow transparency equals the text transparency.
 * `{\alpha}` - set all transparencies at the same time
 * `{\pos}` - position
-* `{\an}` - alignment. Note that, apart from the usual effect on the subtitle's position, the alignment also influences how subtitles move when users hover their mouse over the video on PC: top-aligned subtitles (`\an7`, `\an8`, `\an9`) will move downwards, center-aligned subtitles (`\an4`, `\an5`, `\an6`) will stay in place, and bottom-aligned subtitles (`\an1`, `\an2`, `\an3`) will move upwards.
+* `{\an}` - alignment. The same rules for subtitle movement on mouseover apply as described above.
 * `{\k}` - karaoke segment duration
 * `{\r}` - reset to current or specified style
 * `{\fad}` - simple fade. Due to YouTube limitations, shadows don't fade along unless their color is &H222222&.
