@@ -170,7 +170,7 @@ First do some initial setup:
 * Choose a marker (ideally a single, special character) for each style and link these markers to their styles inside the script. The script contains some examples, and as you'll see, it's in fact possible to register multiple marker sets for different YouTube channels.
 
 Then do the following for each video:
-* Download the video using one of the many available tools and websites.
+* Download the video using e.g. [youtube-dl](https://youtube-dl.org/).
 * Open the locally saved video in a player that supports global hotkeys (e.g. VLC). If you haven't yet, set up hotkeys for pausing, resuming and rewinding the video.
 * Open Notepad and type out the subtitles, using the global hotkeys to control the video without having to switch between windows.
 * While typing, prefix each line with the marker of the style it should get later on. (e.g. `*Hello, Darling!`)
