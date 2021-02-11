@@ -43,7 +43,7 @@ YTSubConverter supports the following .ass style features:
 ![Fonts](images/fonts.png)
 
 (Roboto is the YouTube default; the tool will automatically pick this if the specified font is not allowed)
-* Font size. The "Default" style (or the first style if there is no "Default") always gets the standard YouTube font size no matter what you pick, while the other styles are relative to it. For example, if the "Default" style has size 15 in Aegisub and the "Header" style has 30, these will be respectively at 100% and 200% of the standard size in YouTube. Note that you can't go lower than 75% and that Android doesn't support custom sizes.
+* Font size. The "Default" style (or the first style if there is no "Default") always gets the standard YouTube font size no matter what you pick, while the other styles are relative to it. For example, if the "Default" style has size 15 in Aegisub and the "Header" style has 30, these will be respectively at 100% and 200% of the standard size in YouTube. Note that you can't go lower than 75% and that Android always uses the same size no matter what you specify.
 * Bold, italic, underline
 * Primary, secondary, outline and shadow color
 * Alignment. Note that on YouTube, apart from the usual effect on the subtitle's position, the alignment also influences how subtitles move when users hover their mouse over the video: top-aligned subtitles (alignments 7, 8 and 9) will move downwards, center-aligned subtitles (alignments 4, 5 and 6) will stay in place, and bottom-aligned subtitles (alignments 1, 2 and 3) will move upwards.
@@ -54,7 +54,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\i}` - italic
 * `{\u}` - underline
 * `{\fn}` - font. (See above for list of allowed fonts)
-* `{\fs}` - font size. This tag is relative to the size of the "Default" style (or the first style if there is no "Default"). For example, if the "Default" style has size 15 and you put `{\fs30}`, the YouTube subtitle will be twice the standard size. Note that you can't go lower than 75% and that Android doesn't support custom sizes.
+* `{\fs}` - font size. This tag is relative to the size of the "Default" style (or the first style if there is no "Default"). For example, if the "Default" style has size 15 and you put `{\fs30}`, the YouTube subtitle will be twice the standard size. Note that you can't go lower than 75% and that Android always uses the same size no matter what you specify.
 * `{\c}` or `{\1c}` - regular text color
 * `{\2c}` - unsung karaoke text color
 * `{\3c}` - outline color
@@ -154,10 +154,11 @@ For videos on someone else's channel, things are a bit trickier. YouTube used to
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
-* Subtitles positioned off-center will move out towards the sides in theater mode, possibly even hanging out of the video frame.
-* Custom positions and alignments don't work during a premiere; subtitles are always displayed in the default position, being the bottom center of the video (bug). Once the premiere is over, however, they'll be displayed correctly.
+* Subtitles positioned off-center will move out towards the sides in PC theater mode, possibly even hanging out of the video frame.
+* Custom positions and alignments don't work during a premiere; subtitles are always displayed in the default position, being the bottom center of the video. Once the premiere is over, however, they'll be displayed correctly.
 * The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
   * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
+* The mobile apps have unpredictable bugs where subtitles sometimes appear in the wrong place, appear and then disappear a second later, or never appear at all.
 
 ![Mobile limitation](images/mobile.png)
 
