@@ -43,7 +43,7 @@ YTSubConverter supports the following .ass style features:
 ![Fonts](images/fonts.png)
 
 (Roboto is the YouTube default; the tool will automatically pick this if the specified font is not allowed)
-* Font size. The "Default" style (or the first style if there is no "Default") always gets the standard YouTube font size no matter what you pick, while the other styles are relative to it. For example, if the "Default" style has size 15 in Aegisub and the "Header" style has 30, these will be respectively at 100% and 200% of the standard size in YouTube. Note that you can't go lower than 75% and that Android always uses the same size no matter what you specify.
+* Font size. The "Default" style (or the first style if there is no "Default") always gets the standard YouTube font size no matter what you pick, while the other styles are relative to it. For example, if the "Default" style has size 15 in Aegisub and the "Header" style has 30, these will be respectively at 100% and 200% of the standard size in YouTube. Note that you can't go lower than 75% and that the Android app always uses the same size no matter what you specify.
 * Bold, italic, underline
 * Primary, secondary, outline and shadow color
 * Alignment. Note that on YouTube, apart from the usual effect on the subtitle's position, the alignment also influences how subtitles move when users hover their mouse over the video: top-aligned subtitles (alignments 7, 8 and 9) will move downwards, center-aligned subtitles (alignments 4, 5 and 6) will stay in place, and bottom-aligned subtitles (alignments 1, 2 and 3) will move upwards.
@@ -54,7 +54,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
 * `{\i}` - italic
 * `{\u}` - underline
 * `{\fn}` - font. (See above for list of allowed fonts)
-* `{\fs}` - font size. This tag is relative to the size of the "Default" style (or the first style if there is no "Default"). For example, if the "Default" style has size 15 and you put `{\fs30}`, the YouTube subtitle will be twice the standard size. Note that you can't go lower than 75% and that Android always uses the same size no matter what you specify.
+* `{\fs}` - font size. This tag is relative to the size of the "Default" style (or the first style if there is no "Default"). For example, if the "Default" style has size 15 and you put `{\fs30}`, the YouTube subtitle will be twice the standard size. Note that you can't go lower than 75% and that the Android app always uses the same size no matter what you specify.
 * `{\c}` or `{\1c}` - regular text color
 * `{\2c}` - unsung karaoke text color
 * `{\3c}` - outline color
