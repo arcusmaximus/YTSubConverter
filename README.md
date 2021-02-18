@@ -135,7 +135,9 @@ Once this initial setup is done, you only need to do the following whenever you 
 * Put the path to your local .ytt file in the bottom textbox in the "Rule Editor"
 * Click "Save."
 
-As long as Fiddler is running (and the rule is enabled), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it; simply disable and re-enable subtitles in the video, which will cause the YouTube player to "redownload" them.
+As long as Fiddler is running (and the rule is enabled), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it: simply disable and re-enable CCs in the video to make the YouTube player "redownload" them.
+
+To save even more time while testing and tweaking, you can click the "Autoconvert" button in the converter GUI. As long as this button is enabled, YTSubConverter will automatically convert the currently selected .ass file whenever it detects a change. This means you can make a change in Aegisub, save the .ass, and reload the subtitles in YouTube to see the result without ever having to pass by the converter.
 
 ## Uploading to the video
 For your own videos, you can add styled subtitles as follows:
