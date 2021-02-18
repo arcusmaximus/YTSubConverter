@@ -30,7 +30,7 @@ The program tries to approximate the look of the Aegisub subtitles as closely as
 
 ![Outlines](images/outlines.png)
 
-You'll notice that each .ass shadow can turn into one of four different YouTube shadow types: glow (same as outline), bevel, soft shadow and hard shadow. You can even combine multiple shadow types if you want - just choose from the checkboxes in the conversion UI. This is also where you can configure current word highlighting for karaoke ([example video](https://www.youtube.com/watch?v=il4cAeVzZwI)).
+You'll notice that each .ass shadow can turn into one of four different YouTube shadow types: glow (same as outline), bevel, soft shadow and hard shadow. You can even combine multiple shadow types if you want - just choose from the checkboxes in the conversion UI. This is also where you can configure current word highlighting for karaoke.
 
 ![Style options](images/style-options.png)
 
