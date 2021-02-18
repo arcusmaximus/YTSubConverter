@@ -175,7 +175,7 @@ Apart from the usual .ass -> .ytt, YTSubConverter can also convert in the opposi
 
 You can download a video along with its published .ytt/.srv3 subtitles by using [youtube-dl](https://youtube-dl.org/) with the following options: `--write-sub --all-subs --sub-format=srv3`
 
-Alternatively, you can download just the subtitles by browsing to `https://www.youtube.com/api/timedtext?v=<video ID>&lang=<language code>&fmt=srv3` (you can look up language codes [here](http://www.lingoes.net/en/translator/langcode.htm)).
+Alternatively, you can download just the subtitles by browsing to `https://www.youtube.com/api/timedtext?v=<video ID>&lang=<language code>&fmt=srv3` (you can refer to this [language code table](http://www.lingoes.net/en/translator/langcode.htm)).
 
 ## Example workflow for quick style assignment
 Subtitles for a certain channel will often have recurring looks. For example, Kizuna AI's gaming channel has pink subtitles for talking, red for screaming and yellow for explanations. To avoid having to put tags everywhere, you should of course define these recurring looks as Aegisub styles. Assigning these styles to the individual subtitles can be quite a hassle, however. This section offers a quicker way.
