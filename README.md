@@ -157,9 +157,9 @@ YouTube has some bugs and limitations when it comes to styled subtitles. Please 
 * Subtitles positioned off-center will move out towards the sides in PC theater mode, possibly even hanging out of the video frame.
 * The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
   * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
-* The mobile apps have unpredictable bugs where subtitles sometimes appear in the wrong place, appear and then disappear a second later, or never appear at all. These mainly occur when using karaoke or a nonstandard position/alignment (that is, anything that's not in the bottom center).
 
 ![Mobile limitation](images/mobile.png)
+* The mobile apps have unpredictable bugs where subtitles sometimes appear in the wrong place, appear and then disappear a second later, or never appear at all. These mainly occur when using karaoke or a nonstandard position/alignment (that is, anything that's not in the bottom center).
 
 ## Command line
 YTSubConverter can be run from the command line. There are two ways of calling it:
