@@ -166,10 +166,10 @@ YTSubConverter can be run from the command line. There are two ways of calling i
 * `YTSubConverter <infile>` - converts the given input file, automatically selecting the output format and file name. An .ass file will be converted to .ytt, a .ytt or .srv3 to .ass, and an .sbv to .srt.
 * `YTSubConverter <infile> <outfile>` - converts the given input file to a user-specified output format and file name. The output format is determined through the file extension. You can freely convert between any of the supported formats (.ass/.sbv/.srt/.srv3/.ytt).
 
-In addition, you can specify the `--visual` option for visually accurate .ytt/.srv3 -> .ass conversion (see following section).
+In addition, you can specify the `--visual` option for visually accurate .ytt/.srv3 → .ass conversion (see following section).
 
 ## Reverse conversion
-Apart from the usual .ass -> .ytt, YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, which is the same) to .ass. What's more, it can do this for two different purposes: editing and archiving.
+Apart from the usual .ass → .ytt, YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, which is the same) to .ass. What's more, it can do this for two different purposes: editing and archiving.
   * By default, it'll produce an .ass file that you can edit and convert back to .ytt, getting the exact same look with different text. Example use cases: fixing a mistake in your own published subtitles if you already deleted the .ass, or translating someone else's published subtitles for which you never had the .ass in the first place.
   * You can also get an .ass that emulates how the subtitles look on YouTube. To do this, you need to call the converter from the command line, passing it the .ytt/.srv3 path along with the `--visual` option. While the resulting .ass can't be converted back to .ytt, it does give you (almost) the same visual experience in a local media player as on YouTube. Example use case: archiving videos so you can keep watching them, with visually accurate subtitles, even if they get taken down.
 
