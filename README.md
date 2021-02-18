@@ -4,7 +4,7 @@ A tool for creating styled YouTube subtitles.
 ![Sample image](images/sample.png)
 
 ## About this tool
-YouTube's built-in subtitle editor doesn't support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called YTT (YouTube Timed Text, also known as SRV3). It supports the following:
+YouTube's built-in subtitle editor doesn't support styling of any kind. If you want formatting such as bold, italic and coloring, you need to upload a subtitle file instead. The site accepts a number of file formats such as RealText, WebVTT and TTML, but all of these come with their own limitations - and most importantly, none of them give access to the full array of features offered by the YouTube player. For that, you need to use a YouTube-specific format called SRV3 (also referred to as YTT for "YouTube Timed Text"). It supports the following:
 * Bold/italic/underline
 * Text coloring and transparency
 * Background coloring and transparency (including hiding the background box completely)
@@ -102,7 +102,7 @@ It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_T
   * `{\ytkt(Cursor,interval,tags1,text1,tags2,text2,...)}` - Defines an animated cursor where each "frame" lasts `interval` milliseconds.
   * `{\ytkt(LCursor,text)}` and other variants - Like `Cursor`, except the cursor is placed before (to the Left of) the word that's currently being sung.
 
-Unsupported tags are ignored.
+Tags that are not in the above list are not supported. You can use them, but they won't do anything.
 
 ## Examples
 The repository contains two sample .ass files:
@@ -112,7 +112,7 @@ The repository contains two sample .ass files:
 ## Testing on PC
 After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the "real" player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
 
-Fortunately, there's an easier way to test your subtitles - one which doesn't require you to upload them at all. It works by using Fiddler, a program which can intercept web requests from your browser and send back a file from your hard drive (rather than one from YouTube's servers). By redirecting your browser's request for subtitles to your local .ytt file, you can see those local subtitles in your browser *as though* you uploaded them. Since you're not *actually* uploading them, you can test your changes much more quickly.
+Fortunately, there's an easier way to test your subtitles - one that doesn't require you to upload them at all. It works by using Fiddler, a program that can intercept web requests from your browser and send back a file from your hard drive (rather than one from YouTube's servers). By redirecting your browser's request for subtitles to your local .ytt file, you can see those local subtitles in your browser *as though* you uploaded them. Since you're not *actually* uploading them, you can test your changes much more quickly.
 
 While this approach can save you a lot of time, it does require some initial setup:
 * Download and install [Fiddler](https://www.telerik.com/download/fiddler).
