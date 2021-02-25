@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Arc.YTSubConverter.Util;
@@ -15,10 +17,37 @@ namespace Arc.YTSubConverter.Formats
 
         private static readonly Size ReferenceVideoDimensions = new Size(1280, 720);
 
+        public YttDocument()
+        {
+        }
+
+        public YttDocument(SubtitleDocument doc)
+            : base(doc)
+        {
+            Lines.RemoveAll(l => !l.Sections.Any(s => s.Text.Length > 0));
+        }
+
         public YttDocument(string filePath)
         {
+            using StreamReader reader = new StreamReader(filePath);
+            Load(reader);
+        }
+
+        public YttDocument(Stream stream)
+        {
+            using StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            Load(reader);
+        }
+
+        public YttDocument(TextReader reader)
+        {
+            Load(reader);
+        }
+
+        private void Load(TextReader reader)
+        {
             XmlDocument doc = new XmlDocument { PreserveWhitespace = true };
-            doc.Load(filePath);
+            doc.Load(reader);
 
             VideoDimensions = ReferenceVideoDimensions;
 
@@ -61,13 +90,7 @@ namespace Arc.YTSubConverter.Formats
             MergeIdenticallyFormattedSections();
         }
 
-        public YttDocument(SubtitleDocument doc)
-            : base(doc)
-        {
-            Lines.RemoveAll(l => !l.Sections.Any(s => s.Text.Length > 0));
-        }
-
-        public override void Save(string filePath)
+        public override void Save(TextWriter textWriter)
         {
             CloseGaps();
             MergeSimultaneousLines();
@@ -80,7 +103,7 @@ namespace Arc.YTSubConverter.Formats
             Dictionary<Section, int> pens = ExtractAttributes(Lines.SelectMany(l => l.Sections), new NormalizedSectionFormatComparer());
 
             // Use LF instead of CRLF as the latter reportedly causes the iOS app to bug out
-            using XmlWriter writer = XmlWriter.Create(filePath, new XmlWriterSettings { NewLineChars = "\n" });
+            using XmlWriter writer = XmlWriter.Create(textWriter, new XmlWriterSettings { NewLineChars = "\n", CloseOutput = false });
             writer.WriteStartElement("timedtext");
             writer.WriteAttributeString("format", "3");
 
@@ -95,6 +118,8 @@ namespace Arc.YTSubConverter.Formats
             positions = new List<Line>();
             windowStyles = new List<Line>();
             pens = new List<Section>();
+            if (headElement == null)
+                return;
 
             foreach (XmlElement elem in headElement.ChildNodes.OfType<XmlElement>())
             {
@@ -262,7 +287,7 @@ namespace Arc.YTSubConverter.Formats
 
         private static Section ReadTextSection(XmlNode node, Section linePen)
         {
-            Section section = (Section)linePen?.Clone() ?? new Section();
+            Section section = (Section)linePen?.Clone() ?? CreateDefaultSection();
             section.Text = node.Value.Replace(PaddingSpace, "").Replace(ZeroWidthSpace, "").ToCrlf();
             return section;
         }
@@ -271,7 +296,7 @@ namespace Arc.YTSubConverter.Formats
         {
             int? penId = elem.GetIntAttribute("p");
             Section pen = GetItemAtIndexSafe(pens, penId) ?? linePen;
-            Section section = (Section)pen?.Clone() ?? new Section();
+            Section section = (Section)pen?.Clone() ?? CreateDefaultSection();
             section.Text = elem.InnerText.Replace(PaddingSpace, "").Replace(ZeroWidthSpace, "").ToCrlf();
 
             int? startOffsetMs = elem.GetIntAttribute("t");
@@ -279,6 +304,16 @@ namespace Arc.YTSubConverter.Formats
                 section.StartOffset = TimeSpan.FromMilliseconds(startOffsetMs.Value);
 
             return section;
+        }
+
+        private static Section CreateDefaultSection()
+        {
+            return new Section
+                   {
+                       Font = "Roboto",
+                       BackColor = Color.FromArgb(192, 8, 8, 8),
+                       ForeColor = Color.FromArgb(255, 255, 255)
+                   };
         }
 
         private void ApplyEnhancements()

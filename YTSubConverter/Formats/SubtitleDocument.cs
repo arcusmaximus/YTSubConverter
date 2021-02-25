@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
@@ -249,7 +250,19 @@ namespace Arc.YTSubConverter.Formats
             }
         }
 
-        public virtual void Save(string filePath)
+        public void Save(string filePath)
+        {
+            using Stream stream = File.Open(filePath, FileMode.Create, FileAccess.Write);
+            Save(stream);
+        }
+
+        public void Save(Stream stream)
+        {
+            using StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, 1024, true);
+            Save(writer);
+        }
+
+        public virtual void Save(TextWriter writer)
         {
             throw new NotImplementedException();
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Arc.YTSubConverter.Formats
@@ -19,7 +20,17 @@ namespace Arc.YTSubConverter.Formats
         public SrtDocument(string filePath)
         {
             using StreamReader reader = new StreamReader(filePath);
+            Load(reader);
+        }
 
+        public SrtDocument(Stream stream)
+        {
+            using StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            Load(reader);
+        }
+
+        private void Load(TextReader reader)
+        {
             string fileLine;
             Line subLine = null;
             string lineNumber = null;
@@ -49,10 +60,8 @@ namespace Arc.YTSubConverter.Formats
             AddLine(subLine);
         }
 
-        public override void Save(string filePath)
+        public override void Save(TextWriter writer)
         {
-            using StreamWriter writer = new StreamWriter(filePath);
-
             int index = 1;
             foreach (Line line in Lines)
             {

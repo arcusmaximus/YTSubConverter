@@ -51,7 +51,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             return FontSizeMapper.FontSizeToLineHeight(font, fontSize);
         }
 
-        protected override void WriteLine(AssLine line, StreamWriter writer)
+        protected override void WriteLine(AssLine line, TextWriter writer)
         {
             MoveLineBreaksToSeparateSections(line);
             EmulateBorders(line);

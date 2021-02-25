@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Arc.YTSubConverter.Formats
@@ -11,10 +12,30 @@ namespace Arc.YTSubConverter.Formats
         {
         }
 
+        public SbvDocument(SubtitleDocument doc)
+            : base(doc)
+        {
+        }
+
         public SbvDocument(string filePath)
         {
             using StreamReader reader = new StreamReader(filePath);
+            Load(reader);
+        }
 
+        public SbvDocument(Stream stream)
+        {
+            using StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            Load(reader);
+        }
+
+        public SbvDocument(TextReader reader)
+        {
+            Load(reader);
+        }
+
+        private void Load(TextReader reader)
+        {
             string fileLine;
             Line subLine = null;
             while ((fileLine = reader.ReadLine()) != null)

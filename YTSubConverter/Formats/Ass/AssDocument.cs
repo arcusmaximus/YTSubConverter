@@ -22,17 +22,14 @@ namespace Arc.YTSubConverter.Formats.Ass
         }
 
         private readonly Dictionary<string, AssTagHandlerBase> _tagHandlers = new Dictionary<string, AssTagHandlerBase>();
-        private readonly Dictionary<string, AssStyle> _styles;
-        private readonly Dictionary<string, AssStyleOptions> _styleOptions;
-
-        public AssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
-            : this(File.OpenRead(filePath), styleOptions)
-        {
-        }
+        private Dictionary<string, AssStyle> _styles;
+        private Dictionary<string, AssStyleOptions> _styleOptions;
 
         public AssDocument(SubtitleDocument doc)
-            : this(new MemoryStream(Resources.DefaultStyles), AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions))
         {
+            using StreamReader reader = new StreamReader(new MemoryStream(Resources.DefaultStyles));
+            Load(reader, AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions));
+
             float sizeFactor = (float)doc.VideoDimensions.Height / VideoDimensions.Height;
             foreach (AssStyle style in _styles.Values)
             {
@@ -45,11 +42,28 @@ namespace Arc.YTSubConverter.Formats.Ass
             Lines.AddRange(doc.Lines.Select(l => l as AssLine ?? new AssLine(l)));
         }
 
-        private AssDocument(Stream stream, List<AssStyleOptions> styleOptions)
+        public AssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
+        {
+            using StreamReader reader = new StreamReader(filePath);
+            Load(reader, styleOptions);
+        }
+
+        public AssDocument(Stream stream, List<AssStyleOptions> styleOptions = null)
+        {
+            using StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            Load(reader, styleOptions);
+        }
+
+        public AssDocument(TextReader reader, List<AssStyleOptions> styleOptions = null)
+        {
+            Load(reader, styleOptions);
+        }
+
+        private void Load(TextReader reader, List<AssStyleOptions> styleOptions)
         {
             RegisterTagHandlers();
 
-            Dictionary<string, AssDocumentSection> fileSections = ReadDocument(stream);
+            Dictionary<string, AssDocumentSection> fileSections = ReadDocument(reader);
 
             AssDocumentSection infoSection = fileSections["Script Info"];
             VideoDimensions = new Size(infoSection.GetItemInt("PlayResX", 384), infoSection.GetItemInt("PlayResY", 288));
@@ -84,6 +98,7 @@ namespace Arc.YTSubConverter.Formats.Ass
         public AssStyle DefaultStyle
         {
             get;
+            private set;
         }
 
         public IEnumerable<AssStyle> Styles
@@ -106,9 +121,8 @@ namespace Arc.YTSubConverter.Formats.Ass
             return _styleOptions?.GetOrDefault(name);
         }
 
-        public override void Save(string filePath)
+        public override void Save(TextWriter writer)
         {
-            using StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8);
             WriteHeader(writer);
             WriteStyles(writer);
             WriteLines(writer);
@@ -156,13 +170,12 @@ namespace Arc.YTSubConverter.Formats.Ass
             _tagHandlers.Add(handler.Tag, handler);
         }
 
-        private Dictionary<string, AssDocumentSection> ReadDocument(Stream stream)
+        private Dictionary<string, AssDocumentSection> ReadDocument(TextReader reader)
         {
             Dictionary<string, AssDocumentSection> sections = new Dictionary<string, AssDocumentSection>();
             AssDocumentSection currentSection = null;
             string line;
 
-            using StreamReader reader = new StreamReader(stream);
             while ((line = reader.ReadLine()) != null)
             {
                 if (string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
@@ -540,7 +553,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             return stepLine.KaraokeType.Apply(context);
         }
 
-        private void WriteHeader(StreamWriter writer)
+        private void WriteHeader(TextWriter writer)
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
             writer.WriteLine("[Script Info]");
@@ -554,7 +567,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             writer.WriteLine();
         }
 
-        private void WriteStyles(StreamWriter writer)
+        private void WriteStyles(TextWriter writer)
         {
             writer.WriteLine("[V4+ Styles]");
             writer.WriteLine(
@@ -590,7 +603,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             return $"&H{255 - color.A:X02}{color.B:X02}{color.G:X02}{color.R:X02}";
         }
 
-        protected void WriteLines(StreamWriter writer)
+        protected void WriteLines(TextWriter writer)
         {
             writer.WriteLine("[Events]");
             writer.WriteLine("Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text");
@@ -601,7 +614,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             }
         }
 
-        protected virtual void WriteLine(AssLine line, StreamWriter writer)
+        protected virtual void WriteLine(AssLine line, TextWriter writer)
         {
             if (line.Sections.Count == 0)
                 return;
@@ -657,7 +670,7 @@ namespace Arc.YTSubConverter.Formats.Ass
             writer.WriteLine(lineContent);
         }
 
-        private void WriteLineMetadata(AssLine line, AssStyle style, StreamWriter writer)
+        private void WriteLineMetadata(AssLine line, AssStyle style, TextWriter writer)
         {
             string effects = !line.AndroidDarkTextHackAllowed ? EffectNames.NoAndroidDarkTextHack : string.Empty;
             writer.Write($"Dialogue: 0,{line.Start:H:mm:ss.ff},{line.End:H:mm:ss.ff},{style.Name},,0,0,0,{effects},");
