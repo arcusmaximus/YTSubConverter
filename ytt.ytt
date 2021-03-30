@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <timedtext format="3">
 <head>
-    <!-- The elements in the <head> *must* appear in order of increasing ID's or the server will renumber them and screw everything up. -->
+    <!-- The elements in the <head> *must* appear in order of increasing ID's or YouTube will renumber them,           -->
+    <!-- causing them to be assigned to the wrong <body> elements.                                                     -->
     
     <!-- Text styles -->
     <pen id="1" b="1" />            <!-- Bold       -->
