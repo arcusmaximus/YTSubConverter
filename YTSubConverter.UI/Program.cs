@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Arc.YTSubConverter.Formats;
@@ -30,6 +31,8 @@ namespace Arc.YTSubConverter.UI
 
         private static void RunCommandLine(string[] args)
         {
+            AttachConsole(ATTACH_PARENT_PROCESS);
+
             CommandLineArguments parsedArgs = ParseArguments(args);
             if (parsedArgs == null)
                 return;
@@ -55,7 +58,7 @@ namespace Arc.YTSubConverter.UI
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error occurred: {ex}");
+                Console.WriteLine($"Error occurred: {ex.Message}");
             }
         }
 
@@ -141,6 +144,11 @@ namespace Arc.YTSubConverter.UI
                 resourceSets.Add(culture, resSet);
             }
         }
+
+        [DllImport("kernel32.dll")]
+        private static extern bool AttachConsole(int dwProcessId);
+
+        private const int ATTACH_PARENT_PROCESS = -1;
 
         private class CommandLineArguments
         {
