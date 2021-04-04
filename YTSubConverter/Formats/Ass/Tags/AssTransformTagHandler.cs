@@ -222,6 +222,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
                 return;
 
             AssSection section = context.Section;
+            section.Animations.RemoveAll(a => a is ScaleAnimation && a.StartTime >= startTime);
+
             ScaleAnimation prevAnim = section.Animations.OfType<ScaleAnimation>().LastOrDefault();
             float startScale = prevAnim?.EndScale ?? context.Section.Scale;
             float endScale = lineHeight / context.Document.DefaultStyle.LineHeight;
@@ -250,6 +252,8 @@ namespace Arc.YTSubConverter.Formats.Ass.Tags
         )
             where T : ColorAnimation
         {
+            context.Section.Animations.RemoveAll(a => a is T && a.StartTime > startTime);
+
             AssSection section = context.Section;
             IEnumerable<T> existingAnims = section.Animations.OfType<T>().Where(a => a.StartTime == startTime && a.EndTime == endTime);
             if (predicate != null)
