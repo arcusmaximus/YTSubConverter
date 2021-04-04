@@ -21,20 +21,18 @@ class Handlers
         
         oSession.utilDecodeResponse();
         var html: String = Encoding.UTF8.GetString(oSession.responseBodyBytes);
-        var responseMatch: Match = Regex.Match(html, "ytplayer.config = (.+?);ytplayer.web_player_context_config");
+        var responseMatch: Match = Regex.Match(html, "var ytInitialPlayerResponse = (.+?);var meta = ");
         if (!responseMatch.Success)
             return;
         
-        var config: Hashtable = JSON.JsonDecode(responseMatch.Groups[1].Value).JSONObject;
-        var playerResponse: Hashtable = JSON.JsonDecode(config["args"]["player_response"]).JSONObject;
+        var playerResponse: Hashtable = JSON.JsonDecode(responseMatch.Groups[1].Value).JSONObject;
         if (playerResponse["captions"] != null)
             return;
         
         var videoId: String = playerResponse["videoDetails"]["videoId"];
         playerResponse["captions"] = CreateCaptionsObject(videoId);
-        config["args"]["player_response"] = JSON.JsonEncode(playerResponse);
         html = html.Substring(0, responseMatch.Groups[1].Index) +
-               JSON.JsonEncode(config) +
+               JSON.JsonEncode(playerResponse) +
                html.Substring(responseMatch.Groups[1].Index + responseMatch.Groups[1].Length);
         
         oSession.utilSetResponseBody(html);
