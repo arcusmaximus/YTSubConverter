@@ -49,7 +49,7 @@ YTSubConverter supports the following .ass style features:
 * Alignment. Note that on YouTube, apart from the usual effect on the subtitle's position, the alignment also influences how subtitles move when users hover their mouse over the video: top-aligned subtitles (alignments 7, 8 and 9) will move downwards, center-aligned subtitles (alignments 4, 5 and 6) will stay in place, and bottom-aligned subtitles (alignments 1, 2 and 3) will move upwards.
 * Outline thickness and shadow distance (only checking whether the value is 0 or greater than 0)
 
-It also supports the following [override tags](http://docs.aegisub.org/3.2/ASS_Tags/):
+It also supports the following [override tags](https://aegi.vmoe.info/docs/3.0/ASS_Tags/):
 * `{\b}` - bold
 * `{\i}` - italic
 * `{\u}` - underline
