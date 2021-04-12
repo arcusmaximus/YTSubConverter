@@ -22,7 +22,7 @@ The current version is **1.5.2**. You can find the change history on the [Releas
 [![Download](images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases/latest/download/YTSubConverter.exe)
 
 ## Usage
-YTSubConverter is an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](http://www.aegisub.org/).
+YTSubConverter is an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](https://github.com/Aegisub/Aegisub/releases/tag/v3.2.2).
 
 Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe. In both cases, you'll get a .ytt file that's ready for upload.
 
