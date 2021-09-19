@@ -31,7 +31,7 @@ namespace Arc.YTSubConverter.UI
 
             LocalizeUI();
 
-            List<AssStyleOptions> builtinStyleOptions = AssStyleOptionsList.LoadFromString(YTSubConverter.Resources.DefaultStyleOptions);
+            List<AssStyleOptions> builtinStyleOptions = AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions);
             List<AssStyleOptions> customStyleOptions = AssStyleOptionsList.LoadFromFile();
             _styleOptions = customStyleOptions.Concat(builtinStyleOptions).ToDictionaryOverwrite(o => o.Name);
             _builtinStyleNames = builtinStyleOptions.Select(o => o.Name).ToHashSet();

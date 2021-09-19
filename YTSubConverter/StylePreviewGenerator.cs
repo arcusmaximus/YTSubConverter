@@ -8,9 +8,9 @@ using System.Text;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 
-namespace Arc.YTSubConverter.UI
+namespace Arc.YTSubConverter
 {
-    internal static class StylePreviewGenerator
+    public static class StylePreviewGenerator
     {
         private static readonly string[][] FontLists =
             {

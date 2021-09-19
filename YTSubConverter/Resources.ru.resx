@@ -117,10 +117,85 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Autoconvert" xml:space="preserve">
+    <value>Автоконвертация</value>
+  </data>
+  <data name="Bevel" xml:space="preserve">
+    <value>Наклон</value>
+  </data>
+  <data name="ClearBackgroundImage" xml:space="preserve">
+    <value>Очистить задний план</value>
+  </data>
+  <data name="Convert" xml:space="preserve">
+    <value>Конвертировать</value>
+  </data>
+  <data name="DragNDropTip" xml:space="preserve">
+    <value>Переместите&amp;отпустите файл .ass/.sbv или нажмите кнопку "..."</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="FailedToLoadFile0" xml:space="preserve">
+    <value>Не удалось загрузить файл: {0}</value>
+  </data>
+  <data name="Glow" xml:space="preserve">
+    <value>Подсветка</value>
+  </data>
+  <data name="HardShadow" xml:space="preserve">
+    <value>Жёсткая тень</value>
+  </data>
+  <data name="HighlightCurrentWord" xml:space="preserve">
+    <value>Подсвечивать текущее слово</value>
+  </data>
+  <data name="ImageFileFilter" xml:space="preserve">
+    <value>Изображения|*.gif;*.jpg;*.jpeg;*.png</value>
+  </data>
   <data name="IsNotAValidColor" xml:space="preserve">
     <value>{0} не является правильным цветом</value>
   </data>
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>{0} не является правильной отметкой времени</value>
+  </data>
+  <data name="KaraokeOutlineColor" xml:space="preserve">
+    <value>Цвет обводки:</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>Цвет тени:</value>
+  </data>
+  <data name="KaraokeTextColor" xml:space="preserve">
+    <value>Цвет текста:</value>
+  </data>
+  <data name="PreviewSampleKaraoke1" xml:space="preserve">
+    <value>Это лишь </value>
+  </data>
+  <data name="PreviewSampleKaraoke2" xml:space="preserve">
+    <value>пример </value>
+  </data>
+  <data name="PreviewSampleKaraoke3" xml:space="preserve">
+    <value>текста</value>
+  </data>
+  <data name="PreviewSampleRegular" xml:space="preserve">
+    <value>Пример текста</value>
+  </data>
+  <data name="SelectBackgroundImage" xml:space="preserve">
+    <value>Выбрать задний план...</value>
+  </data>
+  <data name="ShadowTypes" xml:space="preserve">
+    <value>Тип теней:</value>
+  </data>
+  <data name="SoftShadow" xml:space="preserve">
+    <value>Мягкая тень</value>
+  </data>
+  <data name="StyleOptions" xml:space="preserve">
+    <value>Настройки стиля</value>
+  </data>
+  <data name="SubtitleFileFilter" xml:space="preserve">
+    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt</value>
+  </data>
+  <data name="SuccessfullyCreated0" xml:space="preserve">
+    <value>{0} успешно создано</value>
+  </data>
+  <data name="UseForKaraoke" xml:space="preserve">
+    <value>Использовать для караоке</value>
   </data>
 </root>

@@ -61,6 +61,52 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
+        ///   Autoconvert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Autoconvert {
+            get {
+                return ResourceManager.GetString("Autoconvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Bevel に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Bevel {
+            get {
+                return ResourceManager.GetString("Bevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Byte[] のローカライズされたリソースを検索します。
+        /// </summary>
+        public static byte[] Checkers {
+            get {
+                object obj = ResourceManager.GetObject("Checkers", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Clear background image に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ClearBackgroundImage {
+            get {
+                return ResourceManager.GetString("ClearBackgroundImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Convert に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Convert {
+            get {
+                return ResourceManager.GetString("Convert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   &lt;?xml version=&quot;1.0&quot;?&gt;
         ///&lt;StyleOptions xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
         ///  &lt;Style&gt;
@@ -95,6 +141,78 @@ namespace Arc.YTSubConverter {
         }
         
         /// <summary>
+        ///   Drag&amp;drop .ass/.sbv file or click the &quot;...&quot; button に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string DragNDropTip {
+            get {
+                return ResourceManager.GetString("DragNDropTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Error に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Failed to load file: {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FailedToLoadFile0 {
+            get {
+                return ResourceManager.GetString("FailedToLoadFile0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FontName {
+            get {
+                return ResourceManager.GetString("FontName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Glow に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Glow {
+            get {
+                return ResourceManager.GetString("Glow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hard shadow に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string HardShadow {
+            get {
+                return ResourceManager.GetString("HardShadow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Highlight current word に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string HighlightCurrentWord {
+            get {
+                return ResourceManager.GetString("HighlightCurrentWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Images|*.gif;*.jpg;*.jpeg;*.png に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ImageFileFilter {
+            get {
+                return ResourceManager.GetString("ImageFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} is not a valid color に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string IsNotAValidColor {
@@ -109,6 +227,132 @@ namespace Arc.YTSubConverter {
         public static string IsNotAValidTimestamp {
             get {
                 return ResourceManager.GetString("IsNotAValidTimestamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Outline color: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string KaraokeOutlineColor {
+            get {
+                return ResourceManager.GetString("KaraokeOutlineColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shadow color: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string KaraokeShadowColor {
+            get {
+                return ResourceManager.GetString("KaraokeShadowColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Text color: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string KaraokeTextColor {
+            get {
+                return ResourceManager.GetString("KaraokeTextColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   This is a  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string PreviewSampleKaraoke1 {
+            get {
+                return ResourceManager.GetString("PreviewSampleKaraoke1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   sample  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string PreviewSampleKaraoke2 {
+            get {
+                return ResourceManager.GetString("PreviewSampleKaraoke2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   text に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string PreviewSampleKaraoke3 {
+            get {
+                return ResourceManager.GetString("PreviewSampleKaraoke3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sample text に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string PreviewSampleRegular {
+            get {
+                return ResourceManager.GetString("PreviewSampleRegular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select background image... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SelectBackgroundImage {
+            get {
+                return ResourceManager.GetString("SelectBackgroundImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Shadow types: に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string ShadowTypes {
+            get {
+                return ResourceManager.GetString("ShadowTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Soft shadow に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SoftShadow {
+            get {
+                return ResourceManager.GetString("SoftShadow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Style options に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string StyleOptions {
+            get {
+                return ResourceManager.GetString("StyleOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SubtitleFileFilter {
+            get {
+                return ResourceManager.GetString("SubtitleFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Successfully created {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string SuccessfullyCreated0 {
+            get {
+                return ResourceManager.GetString("SuccessfullyCreated0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use for karaoke に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string UseForKaraoke {
+            get {
+                return ResourceManager.GetString("UseForKaraoke", resourceCulture);
             }
         }
     }

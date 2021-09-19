@@ -117,10 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Autoconvert" xml:space="preserve">
+    <value>自動変換</value>
+  </data>
+  <data name="Bevel" xml:space="preserve">
+    <value>沈み彫り</value>
+  </data>
+  <data name="ClearBackgroundImage" xml:space="preserve">
+    <value>背景をリセットします</value>
+  </data>
+  <data name="Convert" xml:space="preserve">
+    <value>変換</value>
+  </data>
+  <data name="DragNDropTip" xml:space="preserve">
+    <value>字幕ファイル(.ass, .sbv)をドラッグ＆ドロップするか、「...」ボタンをクリックしてください。</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>エラー</value>
+  </data>
+  <data name="FailedToLoadFile0" xml:space="preserve">
+    <value>読み込みに失敗しました。{0}</value>
+  </data>
+  <data name="FontName" xml:space="preserve">
+    <value>Meiryo</value>
+  </data>
+  <data name="Glow" xml:space="preserve">
+    <value>アウトライン</value>
+  </data>
+  <data name="HardShadow" xml:space="preserve">
+    <value>浮き彫り</value>
+  </data>
+  <data name="HighlightCurrentWord" xml:space="preserve">
+    <value>現在の文字のハイライト</value>
+  </data>
+  <data name="ImageFileFilter" xml:space="preserve">
+    <value>画像ファイル|*.gif;*.jpg;*.jpeg;*.png</value>
+  </data>
   <data name="IsNotAValidColor" xml:space="preserve">
     <value>{0}は無効なカラーコードです。</value>
   </data>
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>{0}は無効なタイムスタンプです。</value>
+  </data>
+  <data name="KaraokeOutlineColor" xml:space="preserve">
+    <value>輪郭色</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>影色</value>
+  </data>
+  <data name="KaraokeTextColor" xml:space="preserve">
+    <value>文字色</value>
+  </data>
+  <data name="PreviewSampleKaraoke1" xml:space="preserve">
+    <value>これは</value>
+  </data>
+  <data name="PreviewSampleKaraoke2" xml:space="preserve">
+    <value>サンプル</value>
+  </data>
+  <data name="PreviewSampleKaraoke3" xml:space="preserve">
+    <value>です</value>
+  </data>
+  <data name="PreviewSampleRegular" xml:space="preserve">
+    <value>これはサンプルです</value>
+  </data>
+  <data name="SelectBackgroundImage" xml:space="preserve">
+    <value>背景画像を変更します</value>
+  </data>
+  <data name="ShadowTypes" xml:space="preserve">
+    <value>影</value>
+  </data>
+  <data name="SoftShadow" xml:space="preserve">
+    <value>ドロップシャドウ</value>
+  </data>
+  <data name="StyleOptions" xml:space="preserve">
+    <value>スタイルオプション</value>
+  </data>
+  <data name="SubtitleFileFilter" xml:space="preserve">
+    <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv;*.srv3;*.ytt</value>
+  </data>
+  <data name="SuccessfullyCreated0" xml:space="preserve">
+    <value>{0}の作成に成功しました。</value>
+  </data>
+  <data name="UseForKaraoke" xml:space="preserve">
+    <value>カラオケ用</value>
   </data>
 </root>

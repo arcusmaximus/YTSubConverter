@@ -117,17 +117,98 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Autoconvert" xml:space="preserve">
+    <value>Autoconvert</value>
+  </data>
+  <data name="Bevel" xml:space="preserve">
+    <value>Bevel</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Checkers" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\checkers.png_;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ClearBackgroundImage" xml:space="preserve">
+    <value>Clear background image</value>
+  </data>
+  <data name="Convert" xml:space="preserve">
+    <value>Convert</value>
+  </data>
   <data name="DefaultStyleOptions" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\StyleOptions.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
   </data>
   <data name="DefaultStyles" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\defaultstyles.ass;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="DragNDropTip" xml:space="preserve">
+    <value>Drag&amp;drop .ass/.sbv file or click the "..." button</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FailedToLoadFile0" xml:space="preserve">
+    <value>Failed to load file: {0}</value>
+  </data>
+  <data name="FontName" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Glow" xml:space="preserve">
+    <value>Glow</value>
+  </data>
+  <data name="HardShadow" xml:space="preserve">
+    <value>Hard shadow</value>
+  </data>
+  <data name="HighlightCurrentWord" xml:space="preserve">
+    <value>Highlight current word</value>
+  </data>
+  <data name="ImageFileFilter" xml:space="preserve">
+    <value>Images|*.gif;*.jpg;*.jpeg;*.png</value>
+  </data>
   <data name="IsNotAValidColor" xml:space="preserve">
     <value>{0} is not a valid color</value>
   </data>
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>{0} is not a valid timestamp</value>
+  </data>
+  <data name="KaraokeOutlineColor" xml:space="preserve">
+    <value>Outline color:</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>Shadow color:</value>
+  </data>
+  <data name="KaraokeTextColor" xml:space="preserve">
+    <value>Text color:</value>
+  </data>
+  <data name="PreviewSampleKaraoke1" xml:space="preserve">
+    <value>This is a </value>
+  </data>
+  <data name="PreviewSampleKaraoke2" xml:space="preserve">
+    <value>sample </value>
+  </data>
+  <data name="PreviewSampleKaraoke3" xml:space="preserve">
+    <value>text</value>
+  </data>
+  <data name="PreviewSampleRegular" xml:space="preserve">
+    <value>Sample text</value>
+  </data>
+  <data name="SelectBackgroundImage" xml:space="preserve">
+    <value>Select background image...</value>
+  </data>
+  <data name="ShadowTypes" xml:space="preserve">
+    <value>Shadow types:</value>
+  </data>
+  <data name="SoftShadow" xml:space="preserve">
+    <value>Soft shadow</value>
+  </data>
+  <data name="StyleOptions" xml:space="preserve">
+    <value>Style options</value>
+  </data>
+  <data name="SubtitleFileFilter" xml:space="preserve">
+    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt</value>
+  </data>
+  <data name="SuccessfullyCreated0" xml:space="preserve">
+    <value>Successfully created {0}</value>
+  </data>
+  <data name="UseForKaraoke" xml:space="preserve">
+    <value>Use for karaoke</value>
   </data>
 </root>

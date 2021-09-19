@@ -117,10 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Autoconvert" xml:space="preserve">
+    <value>自动转换</value>
+  </data>
+  <data name="Bevel" xml:space="preserve">
+    <value>斜面</value>
+  </data>
+  <data name="ClearBackgroundImage" xml:space="preserve">
+    <value>清空背景</value>
+  </data>
+  <data name="Convert" xml:space="preserve">
+    <value>转换</value>
+  </data>
+  <data name="DragNDropTip" xml:space="preserve">
+    <value>拖曳字幕文件(.ass,.sbv)，或点击「…」按钮。</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="FailedToLoadFile0" xml:space="preserve">
+    <value>无法载入文件。{0}</value>
+  </data>
+  <data name="FontName" xml:space="preserve">
+    <value>Microsoft YaHei</value>
+  </data>
+  <data name="Glow" xml:space="preserve">
+    <value>轮廓</value>
+  </data>
+  <data name="HardShadow" xml:space="preserve">
+    <value>清晰阴影</value>
+  </data>
+  <data name="HighlightCurrentWord" xml:space="preserve">
+    <value>使当前文字发光</value>
+  </data>
+  <data name="ImageFileFilter" xml:space="preserve">
+    <value>图像文件|*.gif;*.jpg;*.jpeg;*.png</value>
+  </data>
   <data name="IsNotAValidColor" xml:space="preserve">
     <value>({0})不是有效的颜色代码。</value>
   </data>
   <data name="IsNotAValidTimestamp" xml:space="preserve">
     <value>({0})不是有效的时间代码。</value>
+  </data>
+  <data name="KaraokeOutlineColor" xml:space="preserve">
+    <value>轮廓颜色</value>
+  </data>
+  <data name="KaraokeShadowColor" xml:space="preserve">
+    <value>阴影颜色</value>
+  </data>
+  <data name="KaraokeTextColor" xml:space="preserve">
+    <value>文字颜色</value>
+  </data>
+  <data name="PreviewSampleKaraoke1" xml:space="preserve">
+    <value>这是</value>
+  </data>
+  <data name="PreviewSampleKaraoke2" xml:space="preserve">
+    <value>范例</value>
+  </data>
+  <data name="PreviewSampleKaraoke3" xml:space="preserve">
+    <value>文字</value>
+  </data>
+  <data name="PreviewSampleRegular" xml:space="preserve">
+    <value>范例文字</value>
+  </data>
+  <data name="SelectBackgroundImage" xml:space="preserve">
+    <value>选择背景文件</value>
+  </data>
+  <data name="ShadowTypes" xml:space="preserve">
+    <value>阴影</value>
+  </data>
+  <data name="SoftShadow" xml:space="preserve">
+    <value>柔和阴影</value>
+  </data>
+  <data name="StyleOptions" xml:space="preserve">
+    <value>样式选择</value>
+  </data>
+  <data name="SubtitleFileFilter" xml:space="preserve">
+    <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv;*.srv3;*.ytt</value>
+  </data>
+  <data name="SuccessfullyCreated0" xml:space="preserve">
+    <value>({0})转换成功。</value>
+  </data>
+  <data name="UseForKaraoke" xml:space="preserve">
+    <value>卡啦OK用</value>
   </data>
 </root>
