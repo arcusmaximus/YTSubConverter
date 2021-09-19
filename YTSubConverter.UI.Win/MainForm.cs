@@ -11,7 +11,7 @@ using Arc.YTSubConverter.Formats;
 using Arc.YTSubConverter.Formats.Ass;
 using Arc.YTSubConverter.Util;
 
-namespace Arc.YTSubConverter.UI
+namespace Arc.YTSubConverter.UI.Win
 {
     public partial class MainForm : Form
     {

@@ -7,8 +7,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Arc.YTSubConverter.UI</RootNamespace>
-    <AssemblyName>YTSubConverter.UI</AssemblyName>
+    <RootNamespace>Arc.YTSubConverter.UI.Win</RootNamespace>
+    <AssemblyName>YTSubConverter.UI.Win</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -89,8 +89,8 @@
     <Error Condition="!Exists('..\packages\ILMerge.3.0.29\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.29\build\ILMerge.props'))" />
   </Target>
   <Target Name="YTSC_MergeLogicDLL">
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)YTSubConverter.UI.exe&quot; &quot;$(TargetDir)YTSubConverter.dll&quot;" />
-    <Delete Files="$(TargetDir)YTSubConverter.UI.exe;$(TargetDir)YTSubConverter.dll" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)YTSubConverter.UI.Win.exe&quot; &quot;$(TargetDir)YTSubConverter.dll&quot;" />
+    <Delete Files="$(TargetDir)YTSubConverter.UI.Win.exe;$(TargetDir)YTSubConverter.dll" />
   </Target>
   <Target Name="YTSC_GetResourceDLLs">
     <ItemGroup>
@@ -98,9 +98,9 @@
     </ItemGroup>
   </Target>
   <Target Name="YTSC_MergeResourceDLLs" DependsOnTargets="YTSC_GetResourceDLLs" Outputs="%(YTSC_ResourceFile.Identity)">
-    <Move SourceFiles="$(TargetDir)YTSubConverter.exe" DestinationFiles="$(TargetDir)YTSubConverter.UI.exe" />
-    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)YTSubConverter.UI.exe&quot; &quot;%(YTSC_ResourceFile.Identity)&quot;" />
-    <Delete Files="$(TargetDir)YTSubConverter.UI.exe;%(YTSC_ResourceFile.Identity)" />
+    <Move SourceFiles="$(TargetDir)YTSubConverter.exe" DestinationFiles="$(TargetDir)YTSubConverter.UI.Win.exe" />
+    <Exec Command="$(ILMergeConsolePath) /ndebug /out:&quot;$(TargetDir)YTSubConverter.exe&quot; &quot;$(TargetDir)YTSubConverter.UI.Win.exe&quot; &quot;%(YTSC_ResourceFile.Identity)&quot;" />
+    <Delete Files="$(TargetDir)YTSubConverter.UI.Win.exe;%(YTSC_ResourceFile.Identity)" />
   </Target>
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'" DependsOnTargets="YTSC_MergeLogicDLL;YTSC_MergeResourceDLLs">
   </Target>

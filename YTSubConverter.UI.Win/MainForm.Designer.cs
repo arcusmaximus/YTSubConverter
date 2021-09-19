@@ -1,4 +1,4 @@
-﻿namespace Arc.YTSubConverter.UI
+﻿namespace Arc.YTSubConverter.UI.Win
 {
     partial class MainForm
     {

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Arc.YTSubConverter.Formats;
 using Arc.YTSubConverter.Formats.Ass;
 
-namespace Arc.YTSubConverter.UI
+namespace Arc.YTSubConverter.UI.Win
 {
     internal static class Program
     {
@@ -122,13 +122,12 @@ namespace Arc.YTSubConverter.UI
         /// </summary>
         private static void PreloadResources()
         {
-            PreloadResources<YTSubConverter.Resources>(YTSubConverter.Resources.ResourceManager);
             PreloadResources<Resources>(Resources.ResourceManager);
         }
 
         private static void PreloadResources<TResources>(ResourceManager resourceManager)
         {
-            Assembly assembly = Assembly.GetEntryAssembly();
+            Assembly assembly = typeof(TResources).Assembly;
             FieldInfo resourceSetsField = typeof(ResourceManager).GetField("_resourceSets", BindingFlags.NonPublic | BindingFlags.Instance);
             Dictionary<string, ResourceSet> resourceSets = (Dictionary<string, ResourceSet>)resourceSetsField.GetValue(resourceManager);
 

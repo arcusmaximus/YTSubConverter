@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YTSubConverter", "YTSubConverter\YTSubConverter.csproj", "{73AFAE63-F3BD-402F-92AC-4BD3D319C906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.UI", "YTSubConverter.UI\YTSubConverter.UI.csproj", "{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.Tests", "YTSubConverter.Tests\YTSubConverter.Tests.csproj", "{1A6D0829-801D-428B-B04B-65DD35B9F4F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.UI.Win", "YTSubConverter.UI.Win\YTSubConverter.UI.Win.csproj", "{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{73AFAE63-F3BD-402F-92AC-4BD3D319C906}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73AFAE63-F3BD-402F-92AC-4BD3D319C906}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73AFAE63-F3BD-402F-92AC-4BD3D319C906}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A6D0829-801D-428B-B04B-65DD35B9F4F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A6D0829-801D-428B-B04B-65DD35B9F4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A6D0829-801D-428B-B04B-65DD35B9F4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A6D0829-801D-428B-B04B-65DD35B9F4F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
