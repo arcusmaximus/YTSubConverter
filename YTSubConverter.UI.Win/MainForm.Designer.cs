@@ -29,15 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this._spltStyleOptions = new System.Windows.Forms.SplitContainer();
             this._lstStyles = new System.Windows.Forms.ListBox();
             this._btnBackgroundImage = new System.Windows.Forms.Button();
             this._brwPreview = new System.Windows.Forms.WebBrowser();
             this._pnlOptions = new System.Windows.Forms.Panel();
             this._pnlKaraokeType = new System.Windows.Forms.Panel();
-            this._btnPickShadowColor = new System.Windows.Forms.Button();
-            this._btnPickOutlineColor = new System.Windows.Forms.Button();
-            this._btnPickTextColor = new System.Windows.Forms.Button();
+            this._btnCurrentWordShadowColor = new System.Windows.Forms.Button();
+            this._btnCurrentWordOutlineColor = new System.Windows.Forms.Button();
+            this._btnCurrentWordTextColor = new System.Windows.Forms.Button();
             this._txtCurrentWordShadowColor = new System.Windows.Forms.TextBox();
             this._txtCurrentWordOutlineColor = new System.Windows.Forms.TextBox();
             this._txtCurrentWordTextColor = new System.Windows.Forms.TextBox();
@@ -142,9 +143,9 @@
             // 
             // _pnlKaraokeType
             // 
-            this._pnlKaraokeType.Controls.Add(this._btnPickShadowColor);
-            this._pnlKaraokeType.Controls.Add(this._btnPickOutlineColor);
-            this._pnlKaraokeType.Controls.Add(this._btnPickTextColor);
+            this._pnlKaraokeType.Controls.Add(this._btnCurrentWordShadowColor);
+            this._pnlKaraokeType.Controls.Add(this._btnCurrentWordOutlineColor);
+            this._pnlKaraokeType.Controls.Add(this._btnCurrentWordTextColor);
             this._pnlKaraokeType.Controls.Add(this._txtCurrentWordShadowColor);
             this._pnlKaraokeType.Controls.Add(this._txtCurrentWordOutlineColor);
             this._pnlKaraokeType.Controls.Add(this._txtCurrentWordTextColor);
@@ -159,35 +160,38 @@
             this._pnlKaraokeType.Size = new System.Drawing.Size(304, 126);
             this._pnlKaraokeType.TabIndex = 6;
             // 
-            // _btnPickShadowColor
+            // _btnCurrentWordShadowColor
             // 
-            this._btnPickShadowColor.Location = new System.Drawing.Point(190, 99);
-            this._btnPickShadowColor.Name = "_btnPickShadowColor";
-            this._btnPickShadowColor.Size = new System.Drawing.Size(35, 19);
-            this._btnPickShadowColor.TabIndex = 10;
-            this._btnPickShadowColor.Text = "...";
-            this._btnPickShadowColor.UseVisualStyleBackColor = true;
-            this._btnPickShadowColor.Click += new System.EventHandler(this._btnPickShadowColor_Click);
+            this._btnCurrentWordShadowColor.Enabled = false;
+            this._btnCurrentWordShadowColor.Location = new System.Drawing.Point(190, 99);
+            this._btnCurrentWordShadowColor.Name = "_btnCurrentWordShadowColor";
+            this._btnCurrentWordShadowColor.Size = new System.Drawing.Size(35, 19);
+            this._btnCurrentWordShadowColor.TabIndex = 10;
+            this._btnCurrentWordShadowColor.Text = "...";
+            this._btnCurrentWordShadowColor.UseVisualStyleBackColor = true;
+            this._btnCurrentWordShadowColor.Click += new System.EventHandler(this._btnCurrentWordShadowColor_Click);
             // 
-            // _btnPickOutlineColor
+            // _btnCurrentWordOutlineColor
             // 
-            this._btnPickOutlineColor.Location = new System.Drawing.Point(190, 73);
-            this._btnPickOutlineColor.Name = "_btnPickOutlineColor";
-            this._btnPickOutlineColor.Size = new System.Drawing.Size(35, 19);
-            this._btnPickOutlineColor.TabIndex = 8;
-            this._btnPickOutlineColor.Text = "...";
-            this._btnPickOutlineColor.UseVisualStyleBackColor = true;
-            this._btnPickOutlineColor.Click += new System.EventHandler(this._btnPickOutlineColor_Click);
+            this._btnCurrentWordOutlineColor.Enabled = false;
+            this._btnCurrentWordOutlineColor.Location = new System.Drawing.Point(190, 73);
+            this._btnCurrentWordOutlineColor.Name = "_btnCurrentWordOutlineColor";
+            this._btnCurrentWordOutlineColor.Size = new System.Drawing.Size(35, 19);
+            this._btnCurrentWordOutlineColor.TabIndex = 8;
+            this._btnCurrentWordOutlineColor.Text = "...";
+            this._btnCurrentWordOutlineColor.UseVisualStyleBackColor = true;
+            this._btnCurrentWordOutlineColor.Click += new System.EventHandler(this._btnCurrentWordOutlineColor_Click);
             // 
-            // _btnPickTextColor
+            // _btnCurrentWordTextColor
             // 
-            this._btnPickTextColor.Location = new System.Drawing.Point(190, 47);
-            this._btnPickTextColor.Name = "_btnPickTextColor";
-            this._btnPickTextColor.Size = new System.Drawing.Size(35, 19);
-            this._btnPickTextColor.TabIndex = 6;
-            this._btnPickTextColor.Text = "...";
-            this._btnPickTextColor.UseVisualStyleBackColor = true;
-            this._btnPickTextColor.Click += new System.EventHandler(this._btnPickTextColor_Click);
+            this._btnCurrentWordTextColor.Enabled = false;
+            this._btnCurrentWordTextColor.Location = new System.Drawing.Point(190, 47);
+            this._btnCurrentWordTextColor.Name = "_btnCurrentWordTextColor";
+            this._btnCurrentWordTextColor.Size = new System.Drawing.Size(35, 19);
+            this._btnCurrentWordTextColor.TabIndex = 6;
+            this._btnCurrentWordTextColor.Text = "...";
+            this._btnCurrentWordTextColor.UseVisualStyleBackColor = true;
+            this._btnCurrentWordTextColor.Click += new System.EventHandler(this._btnCurrentWordTextColor_Click);
             // 
             // _txtCurrentWordShadowColor
             // 
@@ -219,6 +223,7 @@
             // _lblCurrentWordShadowColor
             // 
             this._lblCurrentWordShadowColor.AutoSize = true;
+            this._lblCurrentWordShadowColor.Enabled = false;
             this._lblCurrentWordShadowColor.Location = new System.Drawing.Point(31, 102);
             this._lblCurrentWordShadowColor.Name = "_lblCurrentWordShadowColor";
             this._lblCurrentWordShadowColor.Size = new System.Drawing.Size(75, 12);
@@ -228,6 +233,7 @@
             // _lblCurrentWordOutlineColor
             // 
             this._lblCurrentWordOutlineColor.AutoSize = true;
+            this._lblCurrentWordOutlineColor.Enabled = false;
             this._lblCurrentWordOutlineColor.Location = new System.Drawing.Point(31, 76);
             this._lblCurrentWordOutlineColor.Name = "_lblCurrentWordOutlineColor";
             this._lblCurrentWordOutlineColor.Size = new System.Drawing.Size(72, 12);
@@ -237,6 +243,7 @@
             // _lblCurrentWordTextColor
             // 
             this._lblCurrentWordTextColor.AutoSize = true;
+            this._lblCurrentWordTextColor.Enabled = false;
             this._lblCurrentWordTextColor.Location = new System.Drawing.Point(31, 52);
             this._lblCurrentWordTextColor.Name = "_lblCurrentWordTextColor";
             this._lblCurrentWordTextColor.Size = new System.Drawing.Size(59, 12);
@@ -334,7 +341,7 @@
             // 
             // _txtInputFile
             // 
-            this._txtInputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this._txtInputFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._txtInputFile.Location = new System.Drawing.Point(20, 6);
             this._txtInputFile.Name = "_txtInputFile";
@@ -344,8 +351,8 @@
             // 
             // _grpStyleOptions
             // 
-            this._grpStyleOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this._grpStyleOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._grpStyleOptions.Controls.Add(this._spltStyleOptions);
             this._grpStyleOptions.Location = new System.Drawing.Point(15, 39);
@@ -446,6 +453,7 @@
             this.Controls.Add(this._txtInputFile);
             this.Controls.Add(this._lblConversionSuccess);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "YTSubConverter";
@@ -496,9 +504,9 @@
         private System.Windows.Forms.CheckBox _chkStyleOptions;
         private System.Windows.Forms.TextBox _txtCurrentWordShadowColor;
         private System.Windows.Forms.Label _lblCurrentWordShadowColor;
-        private System.Windows.Forms.Button _btnPickShadowColor;
-        private System.Windows.Forms.Button _btnPickOutlineColor;
-        private System.Windows.Forms.Button _btnPickTextColor;
+        private System.Windows.Forms.Button _btnCurrentWordShadowColor;
+        private System.Windows.Forms.Button _btnCurrentWordOutlineColor;
+        private System.Windows.Forms.Button _btnCurrentWordTextColor;
         private System.Windows.Forms.ColorDialog _dlgColor;
         private System.Windows.Forms.CheckBox _chkBevel;
         private System.Windows.Forms.OpenFileDialog _dlgOpenImage;

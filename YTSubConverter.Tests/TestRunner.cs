@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Arc.YTSubConverter.Formats;
-using Arc.YTSubConverter.Formats.Ass;
-using Arc.YTSubConverter.Util;
+using Arc.YTSubConverter.Shared;
+using Arc.YTSubConverter.Shared.Formats;
+using Arc.YTSubConverter.Shared.Formats.Ass;
+using Arc.YTSubConverter.Shared.Util;
 using NUnit.Framework;
 
 namespace Arc.YTSubConverter.Tests

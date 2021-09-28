@@ -6,8 +6,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Arc.YTSubConverter.Formats;
-using Arc.YTSubConverter.Formats.Ass;
+using Arc.YTSubConverter.Shared;
 
 namespace Arc.YTSubConverter.UI.Win
 {
@@ -20,101 +19,14 @@ namespace Arc.YTSubConverter.UI.Win
 
             if (args.Length > 0)
             {
-                RunCommandLine(args);
+                AttachConsole(ATTACH_PARENT_PROCESS);
+                CommandLineHandler.Handle(args);
                 return;
             }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
-        }
-
-        private static void RunCommandLine(string[] args)
-        {
-            AttachConsole(ATTACH_PARENT_PROCESS);
-
-            CommandLineArguments parsedArgs = ParseArguments(args);
-            if (parsedArgs == null)
-                return;
-
-            if (!File.Exists(parsedArgs.SourceFilePath))
-            {
-                Console.WriteLine("Specified source file not found");
-                return;
-            }
-
-            try
-            {
-                SubtitleDocument sourceDoc = SubtitleDocument.Load(parsedArgs.SourceFilePath);
-                SubtitleDocument destinationDoc =
-                    Path.GetExtension(parsedArgs.DestinationFilePath).ToLower() switch
-                    {
-                        ".ass" => parsedArgs.ForVisualization ? new VisualizingAssDocument(sourceDoc) : new AssDocument(sourceDoc),
-                        ".srv3" => new YttDocument(sourceDoc),
-                        ".ytt" => new YttDocument(sourceDoc),
-                        _ => new SrtDocument(sourceDoc)
-                    };
-                destinationDoc.Save(parsedArgs.DestinationFilePath);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error occurred: {ex.Message}");
-            }
-        }
-
-        private static CommandLineArguments ParseArguments(string[] args)
-        {
-            CommandLineArguments parsedArgs = new CommandLineArguments();
-
-            List<string> filePaths = new List<string>();
-            foreach (string arg in args)
-            {
-                if (arg.StartsWith("-"))
-                {
-                    switch (arg)
-                    {
-                        case "--visual":
-                            parsedArgs.ForVisualization = true;
-                            break;
-                    }
-                }
-                else
-                {
-                    filePaths.Add(arg);
-                }
-            }
-
-            if (filePaths.Count == 0)
-            {
-                Console.WriteLine("Please specify a source file.");
-                return null;
-            }
-
-            if (filePaths.Count > 2)
-            {
-                Console.WriteLine("Too many file paths specified.");
-                return null;
-            }
-
-            parsedArgs.SourceFilePath = filePaths[0];
-            if (filePaths.Count == 1)
-            {
-                string destinationExtension =
-                    Path.GetExtension(parsedArgs.SourceFilePath).ToLower() switch
-                    {
-                        ".ass" => ".ytt",
-                        ".ytt" => ".reverse.ass",
-                        ".srv3" => ".ass",
-                        _ => ".srt"
-                    };
-                parsedArgs.DestinationFilePath = Path.ChangeExtension(parsedArgs.SourceFilePath, destinationExtension);
-            }
-            else
-            {
-                parsedArgs.DestinationFilePath = filePaths[1];
-            }
-
-            return parsedArgs;
         }
 
         /// <summary>
@@ -148,27 +60,5 @@ namespace Arc.YTSubConverter.UI.Win
         private static extern bool AttachConsole(int dwProcessId);
 
         private const int ATTACH_PARENT_PROCESS = -1;
-
-        private class CommandLineArguments
-        {
-            public bool ForVisualization
-            {
-                get;
-                set;
-            }
-
-            public string SourceFilePath
-            {
-                get;
-                set;
-            }
-
-
-            public string DestinationFilePath
-            {
-                get;
-                set;
-            }
-        }
     }
 }

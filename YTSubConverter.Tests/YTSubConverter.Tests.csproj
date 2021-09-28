@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Arc.YTSubConverter.Tests</RootNamespace>
-    <AssemblyName>YTSubConverter.Tests</AssemblyName>
+    <AssemblyName>Arc.YTSubConverter.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -49,12 +49,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestRunner.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\YTSubConverter\YTSubConverter.csproj">
-      <Project>{73afae63-f3bd-402f-92ac-4bd3d319c906}</Project>
-      <Name>YTSubConverter</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Files\Alignment.ass">
@@ -169,7 +163,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\YTSubConverter.Shared\YTSubConverter.Shared.csproj">
+      <Project>{9f7caefd-cd21-431a-b0f9-66efd27526a9}</Project>
+      <Name>YTSubConverter.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

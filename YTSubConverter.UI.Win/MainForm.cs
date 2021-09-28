@@ -7,9 +7,10 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Arc.YTSubConverter.Formats;
-using Arc.YTSubConverter.Formats.Ass;
-using Arc.YTSubConverter.Util;
+using Arc.YTSubConverter.Shared;
+using Arc.YTSubConverter.Shared.Formats;
+using Arc.YTSubConverter.Shared.Formats.Ass;
+using Arc.YTSubConverter.Shared.Util;
 
 namespace Arc.YTSubConverter.UI.Win
 {
@@ -68,9 +69,9 @@ namespace Arc.YTSubConverter.UI.Win
                 AutoScaleMode = AutoScaleMode.None;
                 Font = new Font(Resources.FontName, Font.Size);
                 _btnBrowse.Height = _txtInputFile.Height;
-                _btnPickTextColor.Height = _txtCurrentWordTextColor.Height;
-                _btnPickOutlineColor.Height = _txtCurrentWordOutlineColor.Height;
-                _btnPickShadowColor.Height = _txtCurrentWordShadowColor.Height;
+                _btnCurrentWordTextColor.Height = _txtCurrentWordTextColor.Height;
+                _btnCurrentWordOutlineColor.Height = _txtCurrentWordOutlineColor.Height;
+                _btnCurrentWordShadowColor.Height = _txtCurrentWordShadowColor.Height;
             }
         }
 
@@ -209,19 +210,19 @@ namespace Arc.YTSubConverter.UI.Win
             Color currentWordShadowColor = options.CurrentWordShadowColor;
 
             _chkKaraoke.Checked = options.IsKaraoke;
-            _chkHighlightCurrentWord.Checked = !currentWordTextColor.IsEmpty;
+            _chkHighlightCurrentWord.Checked = options.IsKaraoke && !currentWordTextColor.IsEmpty;
 
             _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
             _txtCurrentWordTextColor.Text = _txtCurrentWordTextColor.Enabled ? ColorUtil.ToHtml(currentWordTextColor) : string.Empty;
-            _btnPickTextColor.Enabled = _txtCurrentWordTextColor.Enabled;
+            _btnCurrentWordTextColor.Enabled = _txtCurrentWordTextColor.Enabled;
 
             _txtCurrentWordOutlineColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasOutline && !style.HasOutlineBox;
             _txtCurrentWordOutlineColor.Text = _txtCurrentWordOutlineColor.Enabled ? ColorUtil.ToHtml(currentWordOutlineColor) : string.Empty;
-            _btnPickOutlineColor.Enabled = _txtCurrentWordOutlineColor.Enabled;
+            _btnCurrentWordOutlineColor.Enabled = _txtCurrentWordOutlineColor.Enabled;
 
             _txtCurrentWordShadowColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasShadow;
             _txtCurrentWordShadowColor.Text = _txtCurrentWordShadowColor.Enabled ? ColorUtil.ToHtml(currentWordShadowColor) : string.Empty;
-            _btnPickShadowColor.Enabled = _txtCurrentWordShadowColor.Enabled;
+            _btnCurrentWordShadowColor.Enabled = _txtCurrentWordShadowColor.Enabled;
 
             UpdateBackgroundImageButton();
 
@@ -265,20 +266,26 @@ namespace Arc.YTSubConverter.UI.Win
 
         private void _chkHighlightCurrentWord_CheckedChanged(object sender, EventArgs e)
         {
-            AssStyle style = _styles?[SelectedStyleOptions.Name];
+            AssStyle style = _styles[SelectedStyleOptions.Name];
             _previewSuspended = true;
 
-            _txtCurrentWordTextColor.Enabled = _chkHighlightCurrentWord.Checked;
-            _txtCurrentWordTextColor.Text = _txtCurrentWordTextColor.Enabled ? ColorUtil.ToHtml(style.PrimaryColor) : string.Empty;
-            _btnPickTextColor.Enabled = _txtCurrentWordTextColor.Enabled;
+            bool textColorEnabled = _chkHighlightCurrentWord.Checked;
+            _lblCurrentWordTextColor.Enabled = textColorEnabled;
+            _txtCurrentWordTextColor.Enabled = textColorEnabled;
+            _txtCurrentWordTextColor.Text = textColorEnabled ? ColorUtil.ToHtml(style.PrimaryColor) : string.Empty;
+            _btnCurrentWordTextColor.Enabled = textColorEnabled;
 
-            _txtCurrentWordOutlineColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasOutline && !style.HasOutlineBox;
-            _txtCurrentWordOutlineColor.Text = _txtCurrentWordOutlineColor.Enabled ? ColorUtil.ToHtml(style.OutlineColor) : string.Empty;
-            _btnPickOutlineColor.Enabled = _txtCurrentWordOutlineColor.Enabled;
+            bool outlineColorEnabled = _chkHighlightCurrentWord.Checked && style.HasOutline && !style.HasOutlineBox;
+            _lblCurrentWordOutlineColor.Enabled = outlineColorEnabled;
+            _txtCurrentWordOutlineColor.Enabled = outlineColorEnabled;
+            _txtCurrentWordOutlineColor.Text = outlineColorEnabled ? ColorUtil.ToHtml(style.OutlineColor) : string.Empty;
+            _btnCurrentWordOutlineColor.Enabled = outlineColorEnabled;
 
-            _txtCurrentWordShadowColor.Enabled = _chkHighlightCurrentWord.Checked && style.HasShadow;
-            _txtCurrentWordShadowColor.Text = _txtCurrentWordShadowColor.Enabled ? ColorUtil.ToHtml(style.ShadowColor) : string.Empty;
-            _btnPickShadowColor.Enabled = _txtCurrentWordShadowColor.Enabled;
+            bool shadowColorEnabled = _chkHighlightCurrentWord.Checked && style.HasShadow;
+            _lblCurrentWordShadowColor.Enabled = shadowColorEnabled;
+            _txtCurrentWordShadowColor.Enabled = shadowColorEnabled;
+            _txtCurrentWordShadowColor.Text = shadowColorEnabled ? ColorUtil.ToHtml(style.ShadowColor) : string.Empty;
+            _btnCurrentWordShadowColor.Enabled = shadowColorEnabled;
 
             _previewSuspended = false;
             UpdateStylePreview();
@@ -290,7 +297,7 @@ namespace Arc.YTSubConverter.UI.Win
             UpdateStylePreview();
         }
 
-        private void _btnPickTextColor_Click(object sender, EventArgs e)
+        private void _btnCurrentWordTextColor_Click(object sender, EventArgs e)
         {
             _dlgColor.Color = ColorUtil.FromHtml(_txtCurrentWordTextColor.Text);
             if (_dlgColor.ShowDialog() == DialogResult.OK)
@@ -303,7 +310,7 @@ namespace Arc.YTSubConverter.UI.Win
             UpdateStylePreview();
         }
 
-        private void _btnPickOutlineColor_Click(object sender, EventArgs e)
+        private void _btnCurrentWordOutlineColor_Click(object sender, EventArgs e)
         {
             _dlgColor.Color = ColorUtil.FromHtml(_txtCurrentWordOutlineColor.Text);
             if (_dlgColor.ShowDialog() == DialogResult.OK)
@@ -316,7 +323,7 @@ namespace Arc.YTSubConverter.UI.Win
             UpdateStylePreview();
         }
 
-        private void _btnPickShadowColor_Click(object sender, EventArgs e)
+        private void _btnCurrentWordShadowColor_Click(object sender, EventArgs e)
         {
             _dlgColor.Color = ColorUtil.FromHtml(_txtCurrentWordShadowColor.Text);
             if (_dlgColor.ShowDialog() == DialogResult.OK)
