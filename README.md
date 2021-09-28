@@ -17,14 +17,14 @@ YouTube's built-in subtitle editor doesn't support styling of any kind. If you w
 
 YTSubConverter can produce this file format for you.
 
-The current version is **1.5.3**. You can find the change history on the [Releases](https://github.com/arcusmaximus/YTSubConverter/releases) tab.
+The current version is **1.5.3** and is available for Windows and macOS (Linux users currently need to run the Windows version using Mono). You can find the change history on the [Releases](https://github.com/arcusmaximus/YTSubConverter/releases) tab.
 
 [![Download](images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases/latest/download/YTSubConverter.exe)
 
 ## Usage
 YTSubConverter is an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](https://github.com/Aegisub/Aegisub/releases/tag/v3.2.2).
 
-Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe. In both cases, you'll get a .ytt file that's ready for upload.
+Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe (Windows only). In both cases, you'll get a .ytt file that's ready for upload.
 
 The program tries to approximate the look of the Aegisub subtitles as closely as possible on YouTube:
 
@@ -115,7 +115,7 @@ After you upload a subtitle file, YouTube gives you a preview so you can try it 
 Fortunately, there's an easier way to test your subtitles - one that doesn't require you to upload them at all. It works by using Fiddler, a program that can intercept web requests from your browser and send back a file from your hard drive (rather than one from YouTube's servers). By redirecting your browser's request for subtitles to your local .ytt file, you can see those local subtitles in your browser *as though* you uploaded them. Since you're not *actually* uploading them, you can test your changes much more quickly.
 
 While this approach can save you a lot of time, it does require some initial setup:
-* Download and install [Fiddler](https://www.telerik.com/download/fiddler).
+* Download and install [Fiddler](https://www.telerik.com/download/fiddler). (Note that the link points to the "Classic" version, which is free but only runs on Windows. The "Everywhere" version also runs on macOS and Linux, but requires a monthly subscription.)
 * Place the script [CustomRules.js](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/CustomRules.js) in the folder Documents\Fiddler2\Scripts. This will later enable previewing subtitles on videos that don't have any subtitles yet. (If it causes problems, you can just delete it again.)
 * Launch the program.
 * Open the menu Tools → Options.
@@ -168,6 +168,8 @@ YTSubConverter can be run from the command line. There are two ways of calling i
 * `YTSubConverter <infile> <outfile>` - converts the given input file to a user-specified output format and file name. The output format is determined through the file extension. You can freely convert between any of the supported formats (.ass/.sbv/.srt/.srv3/.ytt).
 
 In addition, you can specify the `--visual` option for visually accurate .ytt/.srv3 → .ass conversion (see following section).
+
+On macOS, you can run `YTSubConverter.app/Contents/MacOS/YTSubConverter` from the terminal. While it's also possible to run YTSubConverter.app itself using the `open` command, you won't get any console output in this case.
 
 ## Reverse conversion
 Apart from the usual .ass → .ytt, YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, which is the same) to .ass. What's more, it can do this for two different purposes: editing and archiving.
