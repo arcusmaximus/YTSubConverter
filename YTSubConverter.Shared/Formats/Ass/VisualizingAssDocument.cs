@@ -18,7 +18,51 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
         public VisualizingAssDocument(SubtitleDocument doc)
             : base(doc)
         {
+            ClearExplicitDefaultPositions();
+            AssignLayers();
             EmulateKaraokeForLinesWithBackgroundOrShadow();
+        }
+
+        // If a line has an explicit position that's the same as the default position for its alignment,
+        // clear the position so that video players can recognize it as the default-positioned line it is
+        // (and potentially make changes to the line like display it in a larger font).
+        private void ClearExplicitDefaultPositions()
+        {
+            foreach (AssLine line in Lines)
+            {
+                if (line.Position == null)
+                    continue;
+
+                PointF defaultPosition = GetDefaultPosition(line.AnchorPoint);
+                if (Math.Abs(defaultPosition.X - line.Position.Value.X) < 1.0f &&
+                    Math.Abs(defaultPosition.Y - line.Position.Value.Y) < 1.0f)
+                {
+                    line.Position = null;
+                }
+            }
+        }
+
+        // Assign layers to prevent time-overlapping, default-positioned lines from stacking
+        private void AssignLayers()
+        {
+            List<AssLine> sortedLines = Lines.Where(l => l.Position == null)
+                                             .OrderBy(l => l.Start)
+                                             .Cast<AssLine>()
+                                             .ToList();
+            DateTime endTime = DateTime.MinValue;
+            int layer = 0;
+            foreach (AssLine line in sortedLines)
+            {
+                if (line.Start < endTime)
+                    layer++;
+                else
+                    layer = 0;
+
+                line.Layer = layer;
+
+                if (line.End > endTime)
+                    endTime = line.End;
+            }
         }
 
         /// <summary>

@@ -221,6 +221,7 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
                     TimeUtil.RoundTimeToFrameCenter(dialogue.End)
                 )
                 {
+                    Layer = dialogue.Layer,
                     AnchorPoint = style.AnchorPoint
                 };
             
@@ -592,7 +593,7 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
                 writer.Write(style.OutlineThickness.ToString(CultureInfo.InvariantCulture) + ",");
                 writer.Write(style.ShadowDistance.ToString(CultureInfo.InvariantCulture) + ",");
                 writer.Write(GetAlignment(style.AnchorPoint) + ",");
-                writer.Write("10,10,10,1");
+                writer.Write("25,25,15,1");
                 writer.WriteLine();
             }
             writer.WriteLine();
@@ -673,7 +674,7 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
         private void WriteLineMetadata(AssLine line, AssStyle style, TextWriter writer)
         {
             string effects = !line.AndroidDarkTextHackAllowed ? EffectNames.NoAndroidDarkTextHack : string.Empty;
-            writer.Write($"Dialogue: 0,{line.Start:H:mm:ss.ff},{line.End:H:mm:ss.ff},{style.Name},,0,0,0,{effects},");
+            writer.Write($"Dialogue: {line.Layer},{line.Start:H:mm:ss.ff},{line.End:H:mm:ss.ff},{style.Name},,0,0,0,{effects},");
         }
 
         private AssStyle GetStyleMatchingStructure(AssSection section)

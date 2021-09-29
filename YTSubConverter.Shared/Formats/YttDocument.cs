@@ -760,7 +760,7 @@ namespace Arc.YTSubConverter.Shared.Formats
             if (format.Underline)
                 writer.WriteAttributeString("u", "1");
 
-            writer.WriteAttributeString("fc", ColorUtil.ToHtml(format.ForeColor));
+            writer.WriteAttributeString("fc", ColorUtil.ToHtml(format.ForeColor.IsEmpty ? Color.Black : format.ForeColor));
             writer.WriteAttributeString("fo", format.ForeColor.A.ToString());
 
             if (format.BackColor.A > 0)

@@ -6,11 +6,17 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
     {
         public AssDialogue(AssDocumentItem item)
         {
+            Layer = item.GetInt("Layer");
             Start = item.GetTimestamp("Start");
             End = item.GetTimestamp("End");
             Style = item.GetString("Style");
             Effect = item.GetString("Effect");
             Text = item.GetString("Text");
+        }
+
+        public int Layer
+        {
+            get;
         }
 
         public DateTime Start

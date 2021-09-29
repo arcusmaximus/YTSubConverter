@@ -30,6 +30,8 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
             lastSection.Duration = End - Start - lastSection.StartOffset;
         }
 
+        public int Layer { get; set; }
+
         public int Alpha { get; set; } = 255;
 
         public List<Animation> Animations { get; } = new List<Animation>();
