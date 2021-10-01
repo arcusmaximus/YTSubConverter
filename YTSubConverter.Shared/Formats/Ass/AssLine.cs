@@ -75,6 +75,7 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
             if (!(line is AssLine assLine))
                 return;
 
+            Layer = assLine.Layer;
             Alpha = assLine.Alpha;
             Animations.Clear();
             Animations.AddRange(assLine.Animations.Select(a => (Animation)a.Clone()));

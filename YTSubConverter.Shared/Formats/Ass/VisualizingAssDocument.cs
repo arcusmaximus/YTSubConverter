@@ -110,12 +110,16 @@ namespace Arc.YTSubConverter.Shared.Formats.Ass
             if (line.Sections.Any(s => s.BackColor.A > 0))
                 base.WriteLine(CreateBackgroundVisualizationLine(line), writer);
 
+            int layerOffset = 1000;
             foreach (AssLine shadowLine in CreateShadowVisualizationLines(line))
             {
+                shadowLine.Layer += layerOffset++;
                 base.WriteLine(shadowLine, writer);
             }
 
-            base.WriteLine(CreateTextVisualizationLine(line), writer);
+            AssLine textLine = CreateTextVisualizationLine(line);
+            textLine.Layer += layerOffset;
+            base.WriteLine(textLine, writer);
         }
 
         // Aegisub's background boxes can have padding just like on YouTube, and the horizontal and vertical padding

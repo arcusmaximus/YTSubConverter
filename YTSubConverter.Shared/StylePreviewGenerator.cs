@@ -59,6 +59,8 @@ namespace Arc.YTSubConverter.Shared
                               background-position: {GetBackgroundImagePosition(options)};
                               background-repeat: {GetBackgroundImageRepeat(options)};
                               -ms-user-select: none;
+                              -webkit-user-select: none;
+                              user-select: none;
                           }}
                           #wrapper
                           {{
@@ -92,7 +94,7 @@ namespace Arc.YTSubConverter.Shared
             html.Append(@"
                       </style>
                   </head>
-                  <body>
+                  <body oncontextmenu=""return false;"">
                       <div id=""wrapper"">
             ");
 
