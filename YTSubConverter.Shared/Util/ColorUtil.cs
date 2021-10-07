@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Globalization;
 
-namespace Arc.YTSubConverter.Shared.Util
+namespace YTSubConverter.Shared.Util
 {
     public static class ColorUtil
     {

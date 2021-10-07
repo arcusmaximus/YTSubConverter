@@ -8,8 +8,8 @@
     <ProjectGuid>{1A6D0829-801D-428B-B04B-65DD35B9F4F0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Arc.YTSubConverter.Tests</RootNamespace>
-    <AssemblyName>Arc.YTSubConverter.Tests</AssemblyName>
+    <RootNamespace>YTSubConverter.Tests</RootNamespace>
+    <AssemblyName>YTSubConverter.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

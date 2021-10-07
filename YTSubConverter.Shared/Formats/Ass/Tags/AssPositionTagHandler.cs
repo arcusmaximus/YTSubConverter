@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass.Tags
+namespace YTSubConverter.Shared.Formats.Ass.Tags
 {
     internal class AssPositionTagHandler : AssTagHandlerBase
     {

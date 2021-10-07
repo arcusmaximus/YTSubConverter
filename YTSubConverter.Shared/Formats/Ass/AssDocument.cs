@@ -7,12 +7,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using Arc.YTSubConverter.Shared.Animations;
-using Arc.YTSubConverter.Shared.Formats.Ass.KaraokeTypes;
-using Arc.YTSubConverter.Shared.Formats.Ass.Tags;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Animations;
+using YTSubConverter.Shared.Formats.Ass.KaraokeTypes;
+using YTSubConverter.Shared.Formats.Ass.Tags;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass
+namespace YTSubConverter.Shared.Formats.Ass
 {
     public class AssDocument : SubtitleDocument
     {

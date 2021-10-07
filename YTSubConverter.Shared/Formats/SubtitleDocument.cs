@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Arc.YTSubConverter.Shared.Formats.Ass;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Formats
+namespace YTSubConverter.Shared.Formats
 {
     public abstract class SubtitleDocument
     {

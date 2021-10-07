@@ -1,7 +1,7 @@
 ﻿using System;
-using Arc.YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Formats.Ass;
 
-namespace Arc.YTSubConverter.Shared.Animations
+namespace YTSubConverter.Shared.Animations
 {
     public class ScaleAnimation : Animation
     {

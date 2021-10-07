@@ -1,4 +1,4 @@
-﻿namespace Arc.YTSubConverter.Shared.Formats.Ass.Tags
+﻿namespace YTSubConverter.Shared.Formats.Ass.Tags
 {
     internal class AssHorizontalTextDirectionTag : AssTagHandlerBase
     {

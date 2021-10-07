@@ -1,4 +1,4 @@
-﻿namespace Arc.YTSubConverter.Shared
+﻿namespace YTSubConverter.Shared
 {
     public enum AnchorPoint
     {

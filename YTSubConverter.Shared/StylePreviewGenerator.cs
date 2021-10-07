@@ -4,15 +4,16 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using Arc.YTSubConverter.Shared.Formats.Ass;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared
+namespace YTSubConverter.Shared
 {
-    public static class StylePreviewGenerator
+    public abstract class StylePreviewGenerator
     {
-        private static readonly string[][] FontLists =
+        protected static readonly string[][] FontLists =
             {
                 new[] { "Courier New", "Courier", "Nimbus Mono L", "Cutive Mono", "monospace" },
                 new[] { "Times New Roman", "Times", "Georgia", "Cambria", "PT Serif Caption", "serif" },
@@ -23,7 +24,7 @@ namespace Arc.YTSubConverter.Shared
                 new[] { "Roboto", "YouTube Noto", "Arial Unicode Ms", "Arial", "Helvetica", "Verdana", "PT Sans Caption", "sans-serif" }
             };
 
-        private static readonly Dictionary<string, string> ExtensionToMimeType =
+        protected static readonly Dictionary<string, string> ExtensionToMimeType =
             new Dictionary<string, string>
             {
                 { ".bmp", "image/bmp" },
@@ -35,130 +36,51 @@ namespace Arc.YTSubConverter.Shared
                 { ".tiff", "image/tiff" }
             };
 
-        public static string GenerateHtml(AssStyle style, AssStyleOptions options, AssStyle defaultStyle, float windowsScaleFactor)
+        protected static void GenerateBackgroundImageCss(StringBuilder css, string selector, AssStyleOptions options, bool useDataUrl)
         {
-            StringBuilder html = new StringBuilder();
-            html.Append($@"
-                  <!DOCTYPE html>
-                  <html>
-                  <head>
-                      <meta http-equiv=""X-UA-Compatible"" content=""IE=edge"" />
-                      <style>
-                          html, body
-                          {{
-                              width: 100%;
-                              height: 100%;
-                              padding: 0;
-                              margin: 0;
-                              cursor: default;
-                          }}
-                          body
-                          {{
-                              display: table;
-                              background-image: url({GetBackgroundImageUrl(options)});
-                              background-position: {GetBackgroundImagePosition(options)};
-                              background-repeat: {GetBackgroundImageRepeat(options)};
-                              -ms-user-select: none;
-                              -webkit-user-select: none;
-                              user-select: none;
-                          }}
-                          #wrapper
-                          {{
-                              display: table-cell;
-                              height: 100%;
-                              padding: 10px;
-                              text-align: {GetTextAlign(style, options)};
-                              vertical-align: {GetVerticalAlign(style, options)};
-                          }}
-            ");
-
-            if (options != null)
-            {
-                GenerateBackgroundCss(html, "#background", style, defaultStyle, windowsScaleFactor);
-                GenerateForegroundCss(html, "#regular", style, style.PrimaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
-                if (options.IsKaraoke)
-                {
-                    GenerateForegroundCss(
-                        html,
-                        "#singing",
-                        style,
-                        !options.CurrentWordTextColor.IsEmpty ? options.CurrentWordTextColor : style.PrimaryColor,
-                        !options.CurrentWordOutlineColor.IsEmpty ? options.CurrentWordOutlineColor : style.OutlineColor,
-                        !options.CurrentWordShadowColor.IsEmpty ? options.CurrentWordShadowColor : style.ShadowColor,
-                        options.ShadowTypes
-                    );
-                    GenerateForegroundCss(html, "#unsung", style, style.SecondaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
-                }
-            }
-
-            html.Append(@"
-                      </style>
-                  </head>
-                  <body oncontextmenu=""return false;"">
-                      <div id=""wrapper"">
-            ");
-
-            if (options != null)
-            {
-                html.Append(@"<span id=""background"">");
-
-                if (options.IsKaraoke)
-                {
-                    html.Append($@"<span id=""regular"">{Resources.PreviewSampleKaraoke1}</span>");
-                    html.Append($@"<span id=""singing"">{Resources.PreviewSampleKaraoke2}</span>");
-                    html.Append($@"<span id=""unsung"">{Resources.PreviewSampleKaraoke3}</span>");
-                }
-                else
-                {
-                    html.Append($@"<span id=""regular"">{Resources.PreviewSampleRegular}</span>");
-                }
-
-                html.Append(@"</span>");
-            }
-
-            html.Append(@"
-                      </div>
-                  </body>
-                  </html>
-            ");
-            return html.ToString();
-        }
-
-        private static void GenerateBackgroundCss(StringBuilder html, string selector, AssStyle style, AssStyle defaultStyle, float windowsScaleFactor)
-        {
-            html.Append($@"
+            css.Append($@"
                 {selector}
                 {{
-                    padding: 1px 8px;
-                    font-size: {(int)(Math.Max(32 * style.LineHeight / defaultStyle.LineHeight, 24) * windowsScaleFactor)}px;
+                    background-image: url({GetBackgroundImageUrl(options, useDataUrl)});
+                    background-position: {GetBackgroundImagePosition(options)};
+                    background-repeat: {GetBackgroundImageRepeat(options)};
+                }}
+            ");
+        }
+
+        protected static void GenerateBackgroundCss(StringBuilder css, string selector, AssStyle style, AssStyle defaultStyle, float windowsScaleFactor)
+        {
+            if (selector != null)
+                css.Append(selector + " {");
+
+            css.Append($@"
+                padding: 1px 8px;
+                font-size: {(int)(Math.Max(32 * style.LineHeight / defaultStyle.LineHeight, 24) * windowsScaleFactor)}px;
             ");
 
             if (style.HasOutline && style.OutlineIsBox)
-                html.Append($"background-color: {ToRgba(style.OutlineColor)};");
+                css.Append($"background-color: {ToRgba(style.OutlineColor)};");
 
-            html.Append(@"
-                }
-            ");
+            if (selector != null)
+                css.Append("}");
         }
 
-        private static void GenerateForegroundCss(StringBuilder html, string selector, AssStyle style, Color foreColor, Color outlineColor, Color shadowColor, List<ShadowType> shadowTypes)
+        protected static void GenerateForegroundCss(StringBuilder css, string selector, AssStyle style, Color foreColor, Color outlineColor, Color shadowColor, List<ShadowType> shadowTypes)
         {
-            html.Append($@"
-                {selector}
-                {{
-            ");
+            if (selector != null)
+                css.Append(selector + " {");
 
             if (style.Bold)
-                html.Append("font-weight: bold;");
+                css.Append("font-weight: bold;");
 
             if (style.Italic)
-                html.Append("font-style: italic;");
+                css.Append("font-style: italic;");
 
             if (style.Underline)
-                html.Append("text-decoration: underline;");
+                css.Append("text-decoration: underline;");
 
-            html.Append($"font-family: {string.Join(", ", GetFontListContaining(style.Font).Select(f => "\"" + f + "\""))};");
-            html.Append($"color: {ToRgba(foreColor)};");
+            css.Append($"font-family: {string.Join(", ", GetFontListContaining(style.Font).Select(f => "\"" + f + "\""))};");
+            css.Append($"color: {ToRgba(foreColor)};");
 
             List<string> shadows = new List<string>();
 
@@ -186,14 +108,29 @@ namespace Arc.YTSubConverter.Shared
             }
 
             if (shadows.Count > 0)
-                html.Append($"text-shadow: {string.Join(", ", shadows)};");
+                css.Append($"text-shadow: {string.Join(", ", shadows)};");
 
-            html.AppendLine(@"
-                }
-            ");
+            if (selector != null)
+                css.Append("}");
         }
 
-        private static string GetBackgroundImageUrl(AssStyleOptions options)
+        protected static string GetBackgroundImageUrl(AssStyleOptions options, bool useDataUrl)
+        {
+            return useDataUrl ? GetBackgroundImageDataUrl(options) : GetBackgroundImageFileUrl(options);
+        }
+
+        protected static string GetBackgroundImageFileUrl(AssStyleOptions options)
+        {
+            string filePath;
+            if (options?.HasExistingBackgroundImage ?? false)
+                filePath = options.BackgroundImagePath;
+            else
+                filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "checkers.png");
+
+            return $"'{filePath}'";
+        }
+
+        protected static string GetBackgroundImageDataUrl(AssStyleOptions options)
         {
             byte[] imageData;
             string mimeType;
@@ -219,17 +156,17 @@ namespace Arc.YTSubConverter.Shared
             return $"data:{mimeType};base64,{Convert.ToBase64String(imageData)}";
         }
 
-        private static string GetBackgroundImagePosition(AssStyleOptions options)
+        protected static string GetBackgroundImagePosition(AssStyleOptions options)
         {
             return options?.HasExistingBackgroundImage ?? false ? "center center" : "left top";
         }
 
-        private static string GetBackgroundImageRepeat(AssStyleOptions options)
+        protected static string GetBackgroundImageRepeat(AssStyleOptions options)
         {
             return options?.HasExistingBackgroundImage ?? false ? "no-repeat" : "repeat";
         }
 
-        private static string GetTextAlign(AssStyle style, AssStyleOptions options)
+        protected static string GetTextAlign(AssStyle style, AssStyleOptions options)
         {
             if (!(options?.HasExistingBackgroundImage ?? false))
                 return "center";
@@ -243,7 +180,7 @@ namespace Arc.YTSubConverter.Shared
             return "center";
         }
 
-        private static string GetVerticalAlign(AssStyle style, AssStyleOptions options)
+        protected static string GetVerticalAlign(AssStyle style, AssStyleOptions options)
         {
             if (!(options?.HasExistingBackgroundImage ?? false))
                 return "middle";
@@ -257,7 +194,7 @@ namespace Arc.YTSubConverter.Shared
             return "middle";
         }
 
-        private static string[] GetFontListContaining(string font)
+        protected static string[] GetFontListContaining(string font)
         {
             if (string.IsNullOrEmpty(font))
                 return GetFontListContaining("Roboto");
@@ -270,12 +207,12 @@ namespace Arc.YTSubConverter.Shared
             return GetFontListContaining("Roboto");
         }
 
-        private static string ToRgba(Color color)
+        protected static string ToRgba(Color color)
         {
             return $"rgba({color.R}, {color.G}, {color.B}, {(color.A / 255f).ToString(CultureInfo.InvariantCulture)})";
         }
 
-        private static string ToHex(Color color)
+        protected static string ToHex(Color color)
         {
             return $"#{color.R:X02}{color.G:X02}{color.B:X02}";
         }

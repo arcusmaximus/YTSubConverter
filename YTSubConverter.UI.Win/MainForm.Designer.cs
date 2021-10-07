@@ -1,4 +1,4 @@
-﻿namespace Arc.YTSubConverter.UI.Win
+﻿namespace YTSubConverter.UI.Win
 {
     partial class MainForm
     {
@@ -93,8 +93,8 @@
             this._spltStyleOptions.Panel2.Controls.Add(this._btnBackgroundImage);
             this._spltStyleOptions.Panel2.Controls.Add(this._brwPreview);
             this._spltStyleOptions.Panel2.Controls.Add(this._pnlOptions);
-            this._spltStyleOptions.Size = new System.Drawing.Size(763, 328);
-            this._spltStyleOptions.SplitterDistance = 257;
+            this._spltStyleOptions.Size = new System.Drawing.Size(692, 328);
+            this._spltStyleOptions.SplitterDistance = 233;
             this._spltStyleOptions.TabIndex = 5;
             // 
             // _lstStyles
@@ -105,13 +105,13 @@
             this._lstStyles.ItemHeight = 12;
             this._lstStyles.Location = new System.Drawing.Point(0, 0);
             this._lstStyles.Name = "_lstStyles";
-            this._lstStyles.Size = new System.Drawing.Size(257, 328);
+            this._lstStyles.Size = new System.Drawing.Size(233, 328);
             this._lstStyles.TabIndex = 0;
             this._lstStyles.SelectedIndexChanged += new System.EventHandler(this._lstStyles_SelectedIndexChanged);
             // 
             // _btnBackgroundImage
             // 
-            this._btnBackgroundImage.Location = new System.Drawing.Point(469, 131);
+            this._btnBackgroundImage.Location = new System.Drawing.Point(418, 141);
             this._btnBackgroundImage.Name = "_btnBackgroundImage";
             this._btnBackgroundImage.Size = new System.Drawing.Size(29, 21);
             this._btnBackgroundImage.TabIndex = 7;
@@ -124,10 +124,10 @@
             this._brwPreview.AllowWebBrowserDrop = false;
             this._brwPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this._brwPreview.IsWebBrowserContextMenuEnabled = false;
-            this._brwPreview.Location = new System.Drawing.Point(0, 126);
+            this._brwPreview.Location = new System.Drawing.Point(0, 134);
             this._brwPreview.MinimumSize = new System.Drawing.Size(20, 18);
             this._brwPreview.Name = "_brwPreview";
-            this._brwPreview.Size = new System.Drawing.Size(502, 202);
+            this._brwPreview.Size = new System.Drawing.Size(455, 194);
             this._brwPreview.TabIndex = 0;
             this._brwPreview.WebBrowserShortcutsEnabled = false;
             // 
@@ -138,7 +138,7 @@
             this._pnlOptions.Dock = System.Windows.Forms.DockStyle.Top;
             this._pnlOptions.Location = new System.Drawing.Point(0, 0);
             this._pnlOptions.Name = "_pnlOptions";
-            this._pnlOptions.Size = new System.Drawing.Size(502, 126);
+            this._pnlOptions.Size = new System.Drawing.Size(455, 134);
             this._pnlOptions.TabIndex = 6;
             // 
             // _pnlKaraokeType
@@ -157,46 +157,43 @@
             this._pnlKaraokeType.Dock = System.Windows.Forms.DockStyle.Fill;
             this._pnlKaraokeType.Location = new System.Drawing.Point(198, 0);
             this._pnlKaraokeType.Name = "_pnlKaraokeType";
-            this._pnlKaraokeType.Size = new System.Drawing.Size(304, 126);
+            this._pnlKaraokeType.Size = new System.Drawing.Size(257, 134);
             this._pnlKaraokeType.TabIndex = 6;
             // 
             // _btnCurrentWordShadowColor
             // 
             this._btnCurrentWordShadowColor.Enabled = false;
-            this._btnCurrentWordShadowColor.Location = new System.Drawing.Point(190, 99);
+            this._btnCurrentWordShadowColor.Location = new System.Drawing.Point(210, 103);
             this._btnCurrentWordShadowColor.Name = "_btnCurrentWordShadowColor";
             this._btnCurrentWordShadowColor.Size = new System.Drawing.Size(35, 19);
             this._btnCurrentWordShadowColor.TabIndex = 10;
-            this._btnCurrentWordShadowColor.Text = "...";
             this._btnCurrentWordShadowColor.UseVisualStyleBackColor = true;
             this._btnCurrentWordShadowColor.Click += new System.EventHandler(this._btnCurrentWordShadowColor_Click);
             // 
             // _btnCurrentWordOutlineColor
             // 
             this._btnCurrentWordOutlineColor.Enabled = false;
-            this._btnCurrentWordOutlineColor.Location = new System.Drawing.Point(190, 73);
+            this._btnCurrentWordOutlineColor.Location = new System.Drawing.Point(210, 77);
             this._btnCurrentWordOutlineColor.Name = "_btnCurrentWordOutlineColor";
             this._btnCurrentWordOutlineColor.Size = new System.Drawing.Size(35, 19);
             this._btnCurrentWordOutlineColor.TabIndex = 8;
-            this._btnCurrentWordOutlineColor.Text = "...";
             this._btnCurrentWordOutlineColor.UseVisualStyleBackColor = true;
             this._btnCurrentWordOutlineColor.Click += new System.EventHandler(this._btnCurrentWordOutlineColor_Click);
             // 
             // _btnCurrentWordTextColor
             // 
             this._btnCurrentWordTextColor.Enabled = false;
-            this._btnCurrentWordTextColor.Location = new System.Drawing.Point(190, 47);
+            this._btnCurrentWordTextColor.Location = new System.Drawing.Point(210, 51);
             this._btnCurrentWordTextColor.Name = "_btnCurrentWordTextColor";
             this._btnCurrentWordTextColor.Size = new System.Drawing.Size(35, 19);
             this._btnCurrentWordTextColor.TabIndex = 6;
-            this._btnCurrentWordTextColor.Text = "...";
             this._btnCurrentWordTextColor.UseVisualStyleBackColor = true;
             this._btnCurrentWordTextColor.Click += new System.EventHandler(this._btnCurrentWordTextColor_Click);
             // 
             // _txtCurrentWordShadowColor
             // 
             this._txtCurrentWordShadowColor.Enabled = false;
-            this._txtCurrentWordShadowColor.Location = new System.Drawing.Point(119, 99);
+            this._txtCurrentWordShadowColor.Location = new System.Drawing.Point(139, 103);
             this._txtCurrentWordShadowColor.Name = "_txtCurrentWordShadowColor";
             this._txtCurrentWordShadowColor.Size = new System.Drawing.Size(65, 19);
             this._txtCurrentWordShadowColor.TabIndex = 9;
@@ -205,7 +202,7 @@
             // _txtCurrentWordOutlineColor
             // 
             this._txtCurrentWordOutlineColor.Enabled = false;
-            this._txtCurrentWordOutlineColor.Location = new System.Drawing.Point(119, 73);
+            this._txtCurrentWordOutlineColor.Location = new System.Drawing.Point(139, 77);
             this._txtCurrentWordOutlineColor.Name = "_txtCurrentWordOutlineColor";
             this._txtCurrentWordOutlineColor.Size = new System.Drawing.Size(65, 19);
             this._txtCurrentWordOutlineColor.TabIndex = 7;
@@ -214,7 +211,7 @@
             // _txtCurrentWordTextColor
             // 
             this._txtCurrentWordTextColor.Enabled = false;
-            this._txtCurrentWordTextColor.Location = new System.Drawing.Point(119, 47);
+            this._txtCurrentWordTextColor.Location = new System.Drawing.Point(139, 51);
             this._txtCurrentWordTextColor.Name = "_txtCurrentWordTextColor";
             this._txtCurrentWordTextColor.Size = new System.Drawing.Size(65, 19);
             this._txtCurrentWordTextColor.TabIndex = 5;
@@ -224,7 +221,7 @@
             // 
             this._lblCurrentWordShadowColor.AutoSize = true;
             this._lblCurrentWordShadowColor.Enabled = false;
-            this._lblCurrentWordShadowColor.Location = new System.Drawing.Point(31, 102);
+            this._lblCurrentWordShadowColor.Location = new System.Drawing.Point(31, 106);
             this._lblCurrentWordShadowColor.Name = "_lblCurrentWordShadowColor";
             this._lblCurrentWordShadowColor.Size = new System.Drawing.Size(75, 12);
             this._lblCurrentWordShadowColor.TabIndex = 4;
@@ -234,7 +231,7 @@
             // 
             this._lblCurrentWordOutlineColor.AutoSize = true;
             this._lblCurrentWordOutlineColor.Enabled = false;
-            this._lblCurrentWordOutlineColor.Location = new System.Drawing.Point(31, 76);
+            this._lblCurrentWordOutlineColor.Location = new System.Drawing.Point(31, 80);
             this._lblCurrentWordOutlineColor.Name = "_lblCurrentWordOutlineColor";
             this._lblCurrentWordOutlineColor.Size = new System.Drawing.Size(72, 12);
             this._lblCurrentWordOutlineColor.TabIndex = 3;
@@ -244,7 +241,7 @@
             // 
             this._lblCurrentWordTextColor.AutoSize = true;
             this._lblCurrentWordTextColor.Enabled = false;
-            this._lblCurrentWordTextColor.Location = new System.Drawing.Point(31, 52);
+            this._lblCurrentWordTextColor.Location = new System.Drawing.Point(31, 56);
             this._lblCurrentWordTextColor.Name = "_lblCurrentWordTextColor";
             this._lblCurrentWordTextColor.Size = new System.Drawing.Size(59, 12);
             this._lblCurrentWordTextColor.TabIndex = 2;
@@ -283,7 +280,7 @@
             this._pnlShadowType.Dock = System.Windows.Forms.DockStyle.Left;
             this._pnlShadowType.Location = new System.Drawing.Point(0, 0);
             this._pnlShadowType.Name = "_pnlShadowType";
-            this._pnlShadowType.Size = new System.Drawing.Size(198, 126);
+            this._pnlShadowType.Size = new System.Drawing.Size(198, 134);
             this._pnlShadowType.TabIndex = 5;
             // 
             // _chkHardShadow
@@ -346,7 +343,7 @@
             this._txtInputFile.Location = new System.Drawing.Point(20, 6);
             this._txtInputFile.Name = "_txtInputFile";
             this._txtInputFile.ReadOnly = true;
-            this._txtInputFile.Size = new System.Drawing.Size(721, 19);
+            this._txtInputFile.Size = new System.Drawing.Size(650, 19);
             this._txtInputFile.TabIndex = 2;
             // 
             // _grpStyleOptions
@@ -358,7 +355,7 @@
             this._grpStyleOptions.Location = new System.Drawing.Point(15, 39);
             this._grpStyleOptions.Name = "_grpStyleOptions";
             this._grpStyleOptions.Padding = new System.Windows.Forms.Padding(5, 9, 5, 5);
-            this._grpStyleOptions.Size = new System.Drawing.Size(773, 354);
+            this._grpStyleOptions.Size = new System.Drawing.Size(702, 354);
             this._grpStyleOptions.TabIndex = 4;
             this._grpStyleOptions.TabStop = false;
             // 
@@ -369,7 +366,7 @@
             // _btnConvert
             // 
             this._btnConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._btnConvert.Location = new System.Drawing.Point(659, 399);
+            this._btnConvert.Location = new System.Drawing.Point(588, 399);
             this._btnConvert.Name = "_btnConvert";
             this._btnConvert.Size = new System.Drawing.Size(129, 38);
             this._btnConvert.TabIndex = 5;
@@ -381,7 +378,7 @@
             // 
             this._lblConversionSuccess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._lblConversionSuccess.ForeColor = System.Drawing.Color.Green;
-            this._lblConversionSuccess.Location = new System.Drawing.Point(15, 399);
+            this._lblConversionSuccess.Location = new System.Drawing.Point(-56, 399);
             this._lblConversionSuccess.Name = "_lblConversionSuccess";
             this._lblConversionSuccess.Size = new System.Drawing.Size(503, 38);
             this._lblConversionSuccess.TabIndex = 6;
@@ -392,7 +389,7 @@
             // _btnBrowse
             // 
             this._btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this._btnBrowse.Location = new System.Drawing.Point(744, 6);
+            this._btnBrowse.Location = new System.Drawing.Point(673, 6);
             this._btnBrowse.Name = "_btnBrowse";
             this._btnBrowse.Size = new System.Drawing.Size(44, 19);
             this._btnBrowse.TabIndex = 0;
@@ -416,7 +413,7 @@
             // 
             this._chkAutoConvert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this._chkAutoConvert.Appearance = System.Windows.Forms.Appearance.Button;
-            this._chkAutoConvert.Location = new System.Drawing.Point(524, 399);
+            this._chkAutoConvert.Location = new System.Drawing.Point(453, 399);
             this._chkAutoConvert.Name = "_chkAutoConvert";
             this._chkAutoConvert.Size = new System.Drawing.Size(129, 38);
             this._chkAutoConvert.TabIndex = 7;
@@ -444,7 +441,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 449);
+            this.ClientSize = new System.Drawing.Size(729, 449);
             this.Controls.Add(this._chkAutoConvert);
             this.Controls.Add(this._btnConvert);
             this.Controls.Add(this._chkStyleOptions);

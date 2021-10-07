@@ -1,7 +1,7 @@
 ﻿using System;
-using Arc.YTSubConverter.Shared.Formats;
+using YTSubConverter.Shared.Formats;
 
-namespace Arc.YTSubConverter.Shared.Util
+namespace YTSubConverter.Shared.Util
 {
     public static class TimeUtil
     {

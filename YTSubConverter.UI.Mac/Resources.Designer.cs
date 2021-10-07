@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Arc.YTSubConverter.UI.Mac {
+namespace YTSubConverter.UI.Mac {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Arc.YTSubConverter.UI.Mac {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Arc.YTSubConverter.UI.Mac.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("YTSubConverter.UI.Mac.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

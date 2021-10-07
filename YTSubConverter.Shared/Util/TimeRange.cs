@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Arc.YTSubConverter.Shared.Util
+namespace YTSubConverter.Shared.Util
 {
     public class TimeRange : Range<DateTime>
     {

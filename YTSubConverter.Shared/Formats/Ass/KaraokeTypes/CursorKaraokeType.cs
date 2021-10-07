@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass.KaraokeTypes
+namespace YTSubConverter.Shared.Formats.Ass.KaraokeTypes
 {
     public class CursorKaraokeType : SimpleKaraokeType
     {

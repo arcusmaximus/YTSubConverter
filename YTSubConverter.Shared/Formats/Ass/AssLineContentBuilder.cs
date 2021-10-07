@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass
+namespace YTSubConverter.Shared.Formats.Ass
 {
     internal class AssLineContentBuilder
     {

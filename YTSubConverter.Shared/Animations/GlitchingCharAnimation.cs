@@ -1,9 +1,9 @@
 ﻿using System;
-using Arc.YTSubConverter.Shared.Formats;
-using Arc.YTSubConverter.Shared.Formats.Ass;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Formats;
+using YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Animations
+namespace YTSubConverter.Shared.Animations
 {
     public class GlitchingCharAnimation : Animation
     {

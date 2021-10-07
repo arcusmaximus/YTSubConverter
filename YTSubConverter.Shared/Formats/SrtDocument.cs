@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Arc.YTSubConverter.Shared.Formats
+namespace YTSubConverter.Shared.Formats
 {
     public class SrtDocument : SubtitleDocument
     {

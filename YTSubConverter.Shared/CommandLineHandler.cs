@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Arc.YTSubConverter.Shared.Formats;
-using Arc.YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Formats;
+using YTSubConverter.Shared.Formats.Ass;
 
-namespace Arc.YTSubConverter.Shared
+namespace YTSubConverter.Shared
 {
     public static class CommandLineHandler
     {

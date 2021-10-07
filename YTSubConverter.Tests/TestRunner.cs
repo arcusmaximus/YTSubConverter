@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Arc.YTSubConverter.Shared;
-using Arc.YTSubConverter.Shared.Formats;
-using Arc.YTSubConverter.Shared.Formats.Ass;
-using Arc.YTSubConverter.Shared.Util;
 using NUnit.Framework;
+using YTSubConverter.Shared;
+using YTSubConverter.Shared.Formats;
+using YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Tests
+namespace YTSubConverter.Tests
 {
     [TestFixture]
     public class TestRunner

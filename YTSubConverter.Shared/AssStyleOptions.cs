@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
-using Arc.YTSubConverter.Shared.Formats.Ass;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared
+namespace YTSubConverter.Shared
 {
     public class AssStyleOptions
     {

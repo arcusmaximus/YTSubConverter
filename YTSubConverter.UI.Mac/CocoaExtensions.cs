@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using AppKit;
 
-namespace Arc.YTSubConverter.UI.Mac
+namespace YTSubConverter.UI.Mac
 {
     internal static class CocoaExtensions
     {

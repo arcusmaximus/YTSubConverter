@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Arc.YTSubConverter.Shared.Animations;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Animations;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass.Tags
+namespace YTSubConverter.Shared.Formats.Ass.Tags
 {
     internal class AssShadowAlphaTagHandler : AssTagHandlerBase
     {

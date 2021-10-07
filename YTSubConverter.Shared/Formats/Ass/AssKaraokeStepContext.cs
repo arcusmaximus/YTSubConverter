@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass
+namespace YTSubConverter.Shared.Formats.Ass
 {
     public class AssKaraokeStepContext
     {

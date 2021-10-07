@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass
+namespace YTSubConverter.Shared.Formats.Ass
 {
     public class AssStyle
     {

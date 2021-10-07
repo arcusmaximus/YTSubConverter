@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Arc.YTSubConverter.Shared.Util
+namespace YTSubConverter.Shared.Util
 {
     public class Range<T> : IComparable<Range<T>>
         where T : IComparable<T>

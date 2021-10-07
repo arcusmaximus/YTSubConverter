@@ -2,7 +2,7 @@
 using AppKit;
 using Foundation;
 
-namespace Arc.YTSubConverter.UI.Mac
+namespace YTSubConverter.UI.Mac
 {
     [Register("View")]
     public class View : NSView

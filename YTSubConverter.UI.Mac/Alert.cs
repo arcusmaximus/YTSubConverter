@@ -1,6 +1,6 @@
 ﻿using AppKit;
 
-namespace Arc.YTSubConverter.UI.Mac
+namespace YTSubConverter.UI.Mac
 {
     internal static class Alert
     {

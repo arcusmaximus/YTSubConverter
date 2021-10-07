@@ -1,4 +1,4 @@
-﻿namespace Arc.YTSubConverter.Shared.Util
+﻿namespace YTSubConverter.Shared.Util
 {
     public static class AnchorPointUtil
     {

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Formats
+namespace YTSubConverter.Shared.Formats
 {
     public class YttDocument : SubtitleDocument
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass
+namespace YTSubConverter.Shared.Formats.Ass
 {
     internal class AssDocumentSection
     {

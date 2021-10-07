@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using Arc.YTSubConverter.Shared.Animations;
-using Arc.YTSubConverter.Shared.Formats.Ass.KaraokeTypes;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Animations;
+using YTSubConverter.Shared.Formats.Ass.KaraokeTypes;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass
+namespace YTSubConverter.Shared.Formats.Ass
 {
     public class AssLine : Line
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 
-namespace Arc.YTSubConverter.Shared
+namespace YTSubConverter.Shared
 {
     [XmlRoot("StyleOptions")]
     public class AssStyleOptionsList

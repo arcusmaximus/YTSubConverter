@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared
+namespace YTSubConverter.Shared
 {
     public class Section : ICloneable
     {

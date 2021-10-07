@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using Arc.YTSubConverter.Shared.Animations;
-using Arc.YTSubConverter.Shared.Util;
+using YTSubConverter.Shared.Animations;
+using YTSubConverter.Shared.Util;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass.Tags
+namespace YTSubConverter.Shared.Formats.Ass.Tags
 {
     /// <summary>
     /// Nonstandard tag: \ytchroma(intime, outtime), \ytchroma(offsetX, offsetY, intime, outtime), \ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)

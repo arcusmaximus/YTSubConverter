@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Arc.YTSubConverter.Shared.Animations
+namespace YTSubConverter.Shared.Animations
 {
     public abstract class ColorAnimation : Animation
     {

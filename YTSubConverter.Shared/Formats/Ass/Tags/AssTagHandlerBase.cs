@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Globalization;
 using System.Linq;
 
-namespace Arc.YTSubConverter.Shared.Formats.Ass.Tags
+namespace YTSubConverter.Shared.Formats.Ass.Tags
 {
     internal abstract class AssTagHandlerBase
     {

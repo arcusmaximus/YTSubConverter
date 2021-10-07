@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using Arc.YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Formats.Ass;
 
-namespace Arc.YTSubConverter.Shared.Animations
+namespace YTSubConverter.Shared.Animations
 {
     public class MoveAnimation : Animation
     {

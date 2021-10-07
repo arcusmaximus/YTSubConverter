@@ -6,9 +6,9 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Arc.YTSubConverter.Shared;
+using YTSubConverter.Shared;
 
-namespace Arc.YTSubConverter.UI.Win
+namespace YTSubConverter.UI.Win
 {
     internal static class Program
     {
