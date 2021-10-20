@@ -445,7 +445,7 @@ namespace YTSubConverter.UI.Linux
             if (!uri.IsFile)
                 return;
 
-            string filePath = uri.AbsolutePath;
+            string filePath = uri.LocalPath;
             string extension = (System.IO.Path.GetExtension(filePath) ?? string.Empty).ToLower();
             if (extension != ".ass" &&
                 extension != ".ytt" &&
