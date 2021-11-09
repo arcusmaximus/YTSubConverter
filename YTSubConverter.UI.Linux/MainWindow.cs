@@ -83,6 +83,8 @@ namespace YTSubConverter.UI.Linux
             ClearUI();
 
             Drag.DestSet(this, DestDefaults.All, new[] { new TargetEntry("text/uri-list", 0, 0) }, Gdk.DragAction.Copy);
+
+            KeyPressEvent += HandleKeyPress;
         }
 
         private void LocalizeUI()
@@ -432,6 +434,50 @@ namespace YTSubConverter.UI.Linux
             catch (Exception ex)
             {
                 MessageDialogHelper.Show(ex.Message, MessageType.Error, ButtonsType.Ok, this);
+            }
+        }
+
+
+        private void HandleKeyPress(object o, KeyPressEventArgs args)
+        {
+            if ((args.Event.State & Gdk.ModifierType.ControlMask) == 0)
+                return;
+
+            switch (args.Event.Key)
+            {
+                case Gdk.Key.o:
+                    string title = (string)_btnInputFile.GetProperty("title");
+                    FileChooserNative dialog = new FileChooserNative(title, this, FileChooserAction.Open, null, null);
+                    dialog.SetCurrentFolder(_btnInputFile.CurrentFolder);
+                    foreach (FileFilter filter in _btnInputFile.Filters)
+                    {
+                        dialog.AddFilter(filter);
+                    }
+                    if (dialog.Run() == (int)ResponseType.Accept)
+                    {
+                        _btnInputFile.UnselectAll();
+                        _btnInputFile.SelectFilename(dialog.Filename);
+                        _btnInputFile.SetCurrentFolder(dialog.CurrentFolder);
+                        _btnInputFile_FileSet(_btnInputFile, EventArgs.Empty);
+                    }
+                    dialog.Destroy();
+                    break;
+
+                case Gdk.Key.s:
+                    if (_btnConvert.Sensitive)
+                        _btnConvert_Clicked(_btnConvert, EventArgs.Empty);
+
+                    break;
+
+                case Gdk.Key.a:
+                    if (_chkAutoConvert.Sensitive)
+                        _chkAutoConvert.Active = !_chkAutoConvert.Active;
+
+                    break;
+
+                case Gdk.Key.q:
+                    Close();
+                    break;
             }
         }
 

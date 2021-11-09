@@ -43,13 +43,34 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="File" id="x26-kC-gKD">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="File" autoenablesItems="NO" id="LnF-0V-yh3">
+                                    <items>
+                                        <menuItem title="Open" keyEquivalent="o" id="C9h-o6-gWL"/>
+                                        <menuItem title="Convert" keyEquivalent="s" id="3Pr-Wt-FTu"/>
+                                        <menuItem title="Autoconvert" keyEquivalent="a" id="3Z7-ve-mm7"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
                         </items>
                     </menu>
                     <connections>
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
+                    <connections>
+                        <outlet property="_miAutoconvert" destination="3Z7-ve-mm7" id="1SC-YS-1Wh"/>
+                        <outlet property="_miConvert" destination="3Pr-Wt-FTu" id="Aqw-mh-PJE"/>
+                        <outlet property="_miHide" destination="Olw-nP-bQN" id="U6k-YU-KSo"/>
+                        <outlet property="_miHideOthers" destination="Vdr-fp-XzO" id="ol3-en-gQW"/>
+                        <outlet property="_miOpen" destination="C9h-o6-gWL" id="EAZ-Pj-t5F"/>
+                        <outlet property="_miQuit" destination="4sb-4s-VLi" id="5aI-lk-CNZ"/>
+                        <outlet property="_miShowAll" destination="Kd2-mp-pUS" id="Ko1-w7-HGi"/>
+                        <outlet property="_mnuFile" destination="LnF-0V-yh3" id="TFw-k5-mET"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -49,6 +49,10 @@ namespace YTSubConverter.UI.Mac
             Version version = Assembly.GetEntryAssembly().GetName().Version;
             View.Window.Title = $"YTSubConverter {version.Major}.{version.Minor}.{version.Build}";
 
+            Application.OpenMenuItem.Activated += (s, e) => _btnBrowse_Click(null);
+            Application.ConvertMenuItem.Activated += (s, e) => _btnConvert_Click(null);
+            Application.AutoconvertMenuItem.Activated += (s, e) => _chkAutoConvert.SetChecked(!_chkAutoConvert.IsChecked());
+
             _dlgOpenSubtitles = NSOpenPanel.OpenPanel;
             _dlgOpenSubtitles.CanChooseDirectories = false;
             _dlgOpenSubtitles.AllowsMultipleSelection = false;
@@ -73,12 +77,6 @@ namespace YTSubConverter.UI.Mac
 
         private void LocalizeUI()
         {
-            NSMenuItem[] menuItems = NSApplication.SharedApplication.MainMenu.Items[0].Submenu.Items;
-            menuItems[0].Title = Resources.HideApplication;
-            menuItems[1].Title = Resources.HideOthers;
-            menuItems[2].Title = Resources.ShowAll;
-            menuItems[4].Title = Resources.QuitApplication;
-
             _grpStyleOptions.Title = Shared.Resources.StyleOptions;
             _lblShadowTypes.StringValue = Shared.Resources.ShadowTypes;
             _chkGlow.Title = Shared.Resources.Glow;
@@ -93,6 +91,8 @@ namespace YTSubConverter.UI.Mac
             _chkAutoConvert.Title = Shared.Resources.Autoconvert;
             _btnConvert.Title = Shared.Resources.Convert;
         }
+
+        private AppDelegate Application => (AppDelegate)NSApplication.SharedApplication.Delegate;
 
         private AssStyleOptions SelectedStyleOptions
         {
@@ -142,6 +142,7 @@ namespace YTSubConverter.UI.Mac
                 RefreshStyleList(assDoc);
             }
 
+            Application.AutoconvertMenuItem.Enabled = true;
             _chkAutoConvert.SetEnabled(true);
             _chkAutoConvert.SetChecked(false);
 
@@ -155,6 +156,7 @@ namespace YTSubConverter.UI.Mac
             _subtitleRenameWatcher.Path = Path.GetDirectoryName(filePath);
             _subtitleRenameWatcher.Filter = Path.GetFileNameWithoutExtension(filePath) + "_tmp_*" + Path.GetExtension(filePath);
 
+            Application.ConvertMenuItem.Enabled = true;
             _btnConvert.SetEnabled(true);
         }
 
@@ -200,8 +202,10 @@ namespace YTSubConverter.UI.Mac
             _lblCurrentWordShadowColor.SetEnabled(false);
             _btnCurrentWordShadowColor.SetColor(Color.Empty);
             UpdateStylePreview();
+            Application.AutoconvertMenuItem.Enabled = false;
             _chkAutoConvert.SetEnabled(false);
             _chkAutoConvert.SetChecked(false);
+            Application.ConvertMenuItem.Enabled = false;
             _btnConvert.SetEnabled(false);
         }
 

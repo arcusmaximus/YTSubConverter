@@ -462,6 +462,30 @@ namespace YTSubConverter.UI.Win
             }
         }
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Control | Keys.O:
+                    _btnBrowse_Click(_btnBrowse, EventArgs.Empty);
+                    return true;
+
+                case Keys.Control | Keys.S:
+                    if (_btnConvert.Enabled)
+                        _btnConvert_Click(_btnConvert, EventArgs.Empty);
+
+                    return true;
+
+                case Keys.Control | Keys.A:
+                    if (_chkAutoConvert.Enabled)
+                        _chkAutoConvert.Checked = !_chkAutoConvert.Checked;
+
+                    return true;
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private void MainForm_DragEnter(object sender, DragEventArgs e)
         {
             if (GetDroppedFilePath(e) != null)

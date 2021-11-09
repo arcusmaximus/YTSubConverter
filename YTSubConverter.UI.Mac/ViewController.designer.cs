@@ -93,15 +93,6 @@ namespace YTSubConverter.UI.Mac
 		[Action ("_btnCurrentWordTextColor_ColorChanged:")]
 		partial void _btnCurrentWordTextColor_ColorChanged (Foundation.NSObject sender);
 
-		[Action ("_btnPickOutlineColor_ColorChanged:")]
-		partial void _btnPickOutlineColor_ColorChanged (Foundation.NSObject sender);
-
-		[Action ("_btnPickShadowColor_ColorChanged:")]
-		partial void _btnPickShadowColor_ColorChanged (Foundation.NSObject sender);
-
-		[Action ("_btnPickTextColor_ColorChanged:")]
-		partial void _btnPickTextColor_ColorChanged (Foundation.NSObject sender);
-
 		[Action ("_chkAutoConvert_CheckedChanged:")]
 		partial void _chkAutoConvert_CheckedChanged (Foundation.NSObject sender);
 

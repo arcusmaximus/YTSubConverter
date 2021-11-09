@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="File" xml:space="preserve">
+    <value>ファイル</value>
+  </data>
   <data name="HideApplication" xml:space="preserve">
     <value>YTSubConverterを隠す</value>
   </data>
   <data name="HideOthers" xml:space="preserve">
     <value>ほかを隠す</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>開く...</value>
   </data>
   <data name="QuitApplication" xml:space="preserve">
     <value>YTSubConverterを終了</value>

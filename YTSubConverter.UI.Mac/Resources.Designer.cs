@@ -61,6 +61,15 @@ namespace YTSubConverter.UI.Mac {
         }
         
         /// <summary>
+        ///   File に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string File {
+            get {
+                return ResourceManager.GetString("File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hide YTSubConverter に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HideApplication {
@@ -75,6 +84,15 @@ namespace YTSubConverter.UI.Mac {
         internal static string HideOthers {
             get {
                 return ResourceManager.GetString("HideOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Open... に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Open {
+            get {
+                return ResourceManager.GetString("Open", resourceCulture);
             }
         }
         
