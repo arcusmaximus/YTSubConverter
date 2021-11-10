@@ -83,8 +83,6 @@ namespace YTSubConverter.UI.Linux
             ClearUI();
 
             Drag.DestSet(this, DestDefaults.All, new[] { new TargetEntry("text/uri-list", 0, 0) }, Gdk.DragAction.Copy);
-
-            KeyPressEvent += HandleKeyPress;
         }
 
         private void LocalizeUI()
@@ -437,8 +435,7 @@ namespace YTSubConverter.UI.Linux
             }
         }
 
-
-        private void HandleKeyPress(object o, KeyPressEventArgs args)
+        private void MainWindow_KeyPressEvent(object o, KeyPressEventArgs args)
         {
             if ((args.Event.State & Gdk.ModifierType.ControlMask) == 0)
                 return;
@@ -446,13 +443,13 @@ namespace YTSubConverter.UI.Linux
             switch (args.Event.Key)
             {
                 case Gdk.Key.o:
-                    string title = (string)_btnInputFile.GetProperty("title");
-                    FileChooserNative dialog = new FileChooserNative(title, this, FileChooserAction.Open, null, null);
+                    FileChooserNative dialog = new FileChooserNative(null, this, FileChooserAction.Open, null, null);
                     dialog.SetCurrentFolder(_btnInputFile.CurrentFolder);
                     foreach (FileFilter filter in _btnInputFile.Filters)
                     {
                         dialog.AddFilter(filter);
                     }
+
                     if (dialog.Run() == (int)ResponseType.Accept)
                     {
                         _btnInputFile.UnselectAll();
