@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling">
+  <body>
+    <div>
+        <p begin="0s" end="5s">Visibility: <span tts:visibility="hidden">Hidden <span tts:visibility="visible">Visible</span></span></p>
+        <p begin="5s" end="10s">Display: <span tts:display="none">None <span tts:display="auto">Auto</span> <span tts:display="inlineBlock">InlineBlock</span></span></p>
+        <p begin="10s" end="15s" tts:display="none">Completely hidden line</p>
+    </div>
+  </body>
+</tt>

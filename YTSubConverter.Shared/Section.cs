@@ -83,12 +83,6 @@ namespace YTSubConverter.Shared
             set;
         }
 
-        public RubyPosition RubyPosition
-        {
-            get;
-            set;
-        }
-
         public bool Packed
         {
             get;
@@ -125,7 +119,6 @@ namespace YTSubConverter.Shared
             ShadowColors.Clear();
             ShadowColors.AddRange(section.ShadowColors);
             RubyPart = section.RubyPart;
-            RubyPosition = section.RubyPosition;
             Packed = section.Packed;
             StartOffset = section.StartOffset;
         }

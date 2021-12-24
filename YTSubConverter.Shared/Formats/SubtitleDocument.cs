@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using YTSubConverter.Shared.Formats.Ass;
+using YTSubConverter.Shared.Formats.Ttml;
 using YTSubConverter.Shared.Util;
 
 namespace YTSubConverter.Shared.Formats
@@ -35,30 +36,50 @@ namespace YTSubConverter.Shared.Formats
 
         public static SubtitleDocument Load(string filePath)
         {
-            switch (Path.GetExtension(filePath)?.ToLower())
+            Func<string, SubtitleDocument> loader = GetLoader(Path.GetExtension(filePath));
+            if (loader == null)
+                throw new NotSupportedException();
+
+            return loader(filePath);
+        }
+
+        public static bool IsExtensionSupported(string extension)
+        {
+            return GetLoader(extension) != null;
+        }
+
+        private static Func<string, SubtitleDocument> GetLoader(string extension)
+        {
+            switch (extension?.ToLower())
             {
                 case ".ass":
-                    return new AssDocument(filePath, AssStyleOptionsList.LoadFromFile().Concat(AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions)).ToList());
+                    return filePath => new AssDocument(filePath, AssStyleOptionsList.LoadFromFile().Concat(AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions)).ToList());
 
                 case ".sbv":
-                    return new SbvDocument(filePath);
+                    return filePath => new SbvDocument(filePath);
 
                 case ".srt":
-                    return new SrtDocument(filePath);
+                    return filePath => new SrtDocument(filePath);
 
                 case ".srv3":
                 case ".ytt":
-                    return new YttDocument(filePath);
+                    return filePath => new YttDocument(filePath);
+
+                case ".xml":
+                case ".ttml":
+                case ".dfxp":
+                    return filePath => new TtmlDocument(filePath);
 
                 default:
-                    throw new NotSupportedException();
+                    return null;
             }
         }
 
         public void MergeSimultaneousLines()
         {
             List<Line> lines = Lines.Where(l => l.Start < l.End)
-                                    .OrderBy(l => l.Start).ToList();     // Use OrderBy to get a stable sort (List.Sort() is unstable)
+                                    .OrderBy(l => l.Start)     // Use OrderBy to get a stable sort (List.Sort() is unstable)
+                                    .ToList();
 
             int i = 0;
             while (i < lines.Count)

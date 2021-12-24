@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,118 +48,184 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ass\AssIntegrationTests.cs" />
+    <Compile Include="IntegrationTestsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestRunner.cs" />
+    <Compile Include="Ttml\TtmlColorTests.cs" />
+    <Compile Include="Ttml\TtmlIntegrationTests.cs" />
+    <Compile Include="Ttml\TtmlLengthTests.cs" />
+    <Compile Include="Ttml\TtmlOutlineTests.cs" />
+    <Compile Include="Ttml\TtmlPositionTests.cs" />
+    <Compile Include="Ttml\TtmlShadowTests.cs" />
+    <Compile Include="Ttml\TtmlSizeTests.cs" />
+    <Compile Include="Ttml\TtmlTimeTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Files\Alignment.ass">
+    <Content Include="Ttml\Files\Alignment.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Alignment.ytt">
+    <Content Include="Ttml\Files\BoldItalicUnderline.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\BoldItalicUnderline.ass">
+    <Content Include="Ttml\Files\Colors.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\BoldItalicUnderline.ytt">
+    <Content Include="Ttml\Files\Fonts.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Chroma.ass">
+    <Content Include="Ttml\Files\Positioning.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Chroma.ytt">
+    <Content Include="Ttml\Files\Ruby.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Colors.ass">
+    <Content Include="Ttml\Files\Shadows.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Colors.ytt">
+    <Content Include="Ttml\Files\StyleDerivation.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Fade.ass">
+    <Content Include="Ttml\Files\TextDirection.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Fade.ytt">
+    <Content Include="Ttml\Files\Visibility.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\FaultTolerance.ass">
+    <Content Include="Ass\Files\Alignment.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\FaultTolerance.ytt">
+    <Content Include="Ass\Files\Alignment.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Fonts.ass">
+    <Content Include="Ass\Files\BoldItalicUnderline.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Fonts.ytt">
+    <Content Include="Ass\Files\BoldItalicUnderline.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Karaoke.ass">
+    <Content Include="Ass\Files\Chroma.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Karaoke.ytt">
+    <Content Include="Ass\Files\Chroma.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Move.ass">
+    <Content Include="Ass\Files\Colors.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Move.ytt">
+    <Content Include="Ass\Files\Colors.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\NoDefaultScale.ass">
+    <Content Include="Ass\Files\Fade.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\NoDefaultScale.ytt">
+    <Content Include="Ass\Files\Fade.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Offset.ass">
+    <Content Include="Ass\Files\FaultTolerance.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Offset.ytt">
+    <Content Include="Ass\Files\FaultTolerance.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Ruby.ass">
+    <Content Include="Ass\Files\Fonts.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Ruby.ytt">
+    <Content Include="Ass\Files\Fonts.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Shadows.ass">
+    <Content Include="Ass\Files\Karaoke.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Shadows.ytt">
+    <Content Include="Ass\Files\Karaoke.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Shake.ass">
+    <Content Include="Ass\Files\Move.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Shake.ytt">
+    <Content Include="Ass\Files\Move.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Simultaneous.ass">
+    <Content Include="Ass\Files\NoDefaultScale.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Simultaneous.ytt">
+    <Content Include="Ass\Files\NoDefaultScale.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\TextDirection.ass">
+    <Content Include="Ass\Files\Offset.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\TextDirection.ytt">
+    <Content Include="Ass\Files\Offset.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Transform.ass">
+    <Content Include="Ass\Files\Ruby.ass">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\Transform.ytt">
+    <Content Include="Ass\Files\Ruby.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Shadows.ass">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Shadows.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Shake.ass">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Shake.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Simultaneous.ass">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Simultaneous.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\TextDirection.ass">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\TextDirection.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Transform.ass">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ass\Files\Transform.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Files\StyleOptions.xml">
+    <Content Include="Ttml\Files\Alignment.ytt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Ttml\Files\BoldItalicUnderline.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\Colors.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\Fonts.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\Positioning.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\Ruby.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\Shadows.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\StyleDerivation.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\TextDirection.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ttml\Files\Visibility.ytt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="StyleOptions.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

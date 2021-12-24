@@ -80,10 +80,10 @@ namespace YTSubConverter.Shared
                 string destinationExtension =
                     Path.GetExtension(parsedArgs.SourceFilePath).ToLower() switch
                     {
-                        ".ass" => ".ytt",
+                        ".sbv" => ".srt",
                         ".ytt" => ".reverse.ass",
                         ".srv3" => ".ass",
-                        _ => ".srt"
+                        _ => ".ytt"
                     };
                 parsedArgs.DestinationFilePath = Path.ChangeExtension(parsedArgs.SourceFilePath, destinationExtension);
             }
@@ -108,7 +108,6 @@ namespace YTSubConverter.Shared
                 get;
                 set;
             }
-
 
             public string DestinationFilePath
             {

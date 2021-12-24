@@ -25,7 +25,7 @@ namespace YTSubConverter.Shared.Formats.Ass.KaraokeTypes
 
         public override IEnumerable<AssLine> Apply(AssKaraokeStepContext context)
         {
-            AssSection singingSection = context.SingingSections.LastOrDefault(s => s.RubyPart == RubyPart.None || s.RubyPart == RubyPart.Text);
+            AssSection singingSection = context.SingingSections.LastOrDefault(s => s.RubyPart == RubyPart.None || s.RubyPart == RubyPart.Base);
             if (singingSection == null || singingSection.Text.Length == 0)
                 return new List<AssLine> { context.StepLine };
 

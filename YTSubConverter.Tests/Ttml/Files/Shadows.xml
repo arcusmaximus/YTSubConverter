@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling">
+  <body>
+    <div>
+        <p begin="0s" end="5s" tts:color="red">Outline: <span tts:textOutline="0px">0px</span>|<span tts:textOutline="4px">4px</span>|<span tts:textOutline="4px 2px">4px 2px</span>|<span tts:textOutline="blue 4px">blue 4px<span tts:textOutline="none">|none</span></span></p>
+        <p begin="5s" end="10s" tts:color="red">Shadow: <span tts:textShadow="0px 0px">0px 0px</span>|<span tts:textShadow="0px 0px 2px">0px 0px 2px</span>|<span tts:textShadow="4px 4px">4px 4px</span>|<span tts:textShadow="4px 4px blue">4px 4px blue</span>|<span tts:textShadow="4px 4px 2px blue">4px 4px 2px blue<span tts:textShadow="none">|none</span></span></p>
+        <p begin="10s" end="15s" tts:textOutline="blue 4px" tts:textShadow="4px 4px 2px red">Outline + shadow</p>
+        <p begin="15s" end="20s" tts:textShadow="0px 0px 2px rgb(255,0,0), 4px 4px 2px green, 4px 4px blue">Multishadow</p>
+    </div>
+  </body>
+</tt>

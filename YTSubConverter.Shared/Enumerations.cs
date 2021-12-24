@@ -28,20 +28,13 @@
         Superscript
     }
 
-    public enum RubyPosition
-    {
-        None,
-        Above,
-        Below
-    }
-
     public enum RubyPart
     {
         None,
-        Text,
+        Base,
         Parenthesis,
-        RubyAbove,
-        RubyBelow
+        TextBefore,
+        TextAfter
     }
 
     public enum HorizontalTextDirection

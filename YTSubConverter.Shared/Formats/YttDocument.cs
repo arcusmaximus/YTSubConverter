@@ -270,7 +270,7 @@ namespace YTSubConverter.Shared.Formats
                 {
                     prevStartOffset = section.StartOffset;
                 }
-                i += section.RubyPart == RubyPart.Text ? 4 : 1;
+                i += section.RubyPart == RubyPart.Base ? 4 : 1;
             }
         }
 
@@ -386,7 +386,7 @@ namespace YTSubConverter.Shared.Formats
             for (int i = 0; i < line.Sections.Count; i++)
             {
                 Section currSection = line.Sections[i];
-                if (currSection.RubyPart == RubyPart.Text)
+                if (currSection.RubyPart == RubyPart.Base)
                 {
                     i += 3;
                     continue;
@@ -395,7 +395,7 @@ namespace YTSubConverter.Shared.Formats
                 if (!currSection.ShadowColors.ContainsKey(ShadowType.SoftShadow))
                     continue;
 
-                if (currSection.Text.Any(Util.CharacterRange.IsRightToLeft))
+                if (currSection.Text.Any(CharacterRange.IsRightToLeft))
                 {
                     if (currSection.Text.StartsWith(" ") || i == 0)
                         continue;
@@ -413,7 +413,7 @@ namespace YTSubConverter.Shared.Formats
                         continue;
 
                     Section nextSection = line.Sections[i + 1];
-                    if (nextSection.RubyPart == RubyPart.Text || !nextSection.Text.StartsWith(" "))
+                    if (nextSection.RubyPart == RubyPart.Base || !nextSection.Text.StartsWith(" "))
                         continue;
 
                     currSection.Text = currSection.Text + " ";
@@ -634,7 +634,7 @@ namespace YTSubConverter.Shared.Formats
             while (i < line.Sections.Count)
             {
                 Section section = line.Sections[i];
-                int nextSectionIdx = i + (section.RubyPart == RubyPart.Text ? 4 : 1);
+                int nextSectionIdx = i + (section.RubyPart == RubyPart.Base ? 4 : 1);
 
                 if (section.Text.Contains("\r\n"))
                 {
@@ -1105,10 +1105,10 @@ namespace YTSubConverter.Shared.Formats
             return part switch
                    {
                        RubyPart.None => 0,
-                       RubyPart.Text => 1,
+                       RubyPart.Base => 1,
                        RubyPart.Parenthesis => 2,
-                       RubyPart.RubyAbove => 4,
-                       RubyPart.RubyBelow => 5,
+                       RubyPart.TextBefore => 4,
+                       RubyPart.TextAfter => 5,
                        _ => throw new ArgumentOutOfRangeException()
                    };
         }
@@ -1118,10 +1118,10 @@ namespace YTSubConverter.Shared.Formats
             return id switch
                    {
                        0 => RubyPart.None,
-                       1 => RubyPart.Text,
+                       1 => RubyPart.Base,
                        2 => RubyPart.Parenthesis,
-                       4 => RubyPart.RubyAbove,
-                       5 => RubyPart.RubyBelow,
+                       4 => RubyPart.TextBefore,
+                       5 => RubyPart.TextAfter,
                        _ => throw new ArgumentOutOfRangeException()
                    };
         }

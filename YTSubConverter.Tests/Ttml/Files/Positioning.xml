@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling" tts:extent="1920px 1080px">
+  <head>
+    <layout>
+      <region xml:id="origin_400px_200px" tts:origin="400px 200px" />
+      <region xml:id="origin_20pc_50pc" tts:origin="20% 50%" />
+      
+      <region xml:id="position_left_10pc_top_10pc" tts:position="left 10% top 10%" />
+      <region xml:id="position_center_top_10pc" tts:position="center top 10%" />
+      <region xml:id="position_right_10pc_top_10pc" tts:position="right 10% top 10%" />
+      <region xml:id="position_left_10pc_center" tts:position="left 10% center" />
+      <region xml:id="position_center" tts:position="center" />
+      <region xml:id="position_right_10pc_center" tts:position="right 10% center" />
+      <region xml:id="position_left_10pc_bottom_10pc" tts:position="left 10% bottom 10%" />
+      <region xml:id="position_center_bottom_10pc" tts:position="center bottom 10%" />
+      <region xml:id="position_right_10pc_bottom_10pc" tts:position="right 10% bottom 10%" />
+    </layout>
+  </head>
+  <body>
+    <div>
+        <p begin="0s" end="5s" region="origin_400px_200px">origin=400px 200px</p>
+        <p begin="0s" end="5s" region="origin_20pc_50pc">origin=20% 50%</p>
+        
+        <p begin="5s" end="10s" region="position_left_10pc_top_10pc">Left top</p>
+        <p begin="5s" end="10s" region="position_center_top_10pc">Center top</p>
+        <p begin="5s" end="10s" region="position_right_10pc_top_10pc">Right top</p>
+        <p begin="5s" end="10s" region="position_left_10pc_center">Left center</p>
+        <p begin="5s" end="10s" region="position_center">Center</p>
+        <p begin="5s" end="10s" region="position_right_10pc_center">Right center</p>
+        <p begin="5s" end="10s" region="position_left_10pc_bottom_10pc">Left bottom</p>
+        <p begin="5s" end="10s" region="position_center_bottom_10pc">Center bottom</p>
+        <p begin="5s" end="10s" region="position_right_10pc_bottom_10pc">Right bottom</p>
+    </div>
+  </body>
+</tt>

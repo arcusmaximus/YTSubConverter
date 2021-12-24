@@ -34,15 +34,6 @@ namespace YTSubConverter.UI.Mac
 
 		[Outlet]
 		AppKit.NSMenu _mnuFile { get; set; }
-
-		[Action ("_miAutoconvert_Click:")]
-		partial void _miAutoconvert_Click (Foundation.NSObject sender);
-
-		[Action ("_miConvert_Click:")]
-		partial void _miConvert_Click (Foundation.NSObject sender);
-
-		[Action ("_miOpen_Click:")]
-		partial void _miOpen_Click (Foundation.NSObject sender);
 		
 		void ReleaseDesignerOutlets ()
 		{

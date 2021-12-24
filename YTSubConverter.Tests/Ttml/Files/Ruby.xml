@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling" tts:extent="1920px 1080px">
+  <body>
+    <div>
+        <!-- Simple ruby container without delimiters -->
+        <p begin="0s" end="5s">
+            <span tts:ruby="container">
+                <span tts:ruby="base">漢</span>
+                <span tts:ruby="text">かん</span>
+            </span>
+            <span tts:ruby="container">
+                <span tts:ruby="base">字</span>
+                <span tts:ruby="text">じ</span>
+            </span>
+        </p>
+        <!-- Simple ruby container with delimiters -->
+        <p begin="5s" end="10s">
+            <span tts:ruby="container">
+                <span tts:ruby="base">漢</span>
+                <span tts:ruby="delimiter">[</span>
+                <span tts:ruby="text">かん</span>
+                <span tts:ruby="delimiter">]</span>
+            </span>
+            <span tts:ruby="container">
+                <span tts:ruby="base">字</span>
+                <span tts:ruby="delimiter">[</span>
+                <span tts:ruby="text">じ</span>
+                <span tts:ruby="delimiter">]</span>
+            </span>
+        </p>
+        <!-- Simple ruby container with more bases than texts -->
+        <p begin="10s" end="15s">
+            <span tts:ruby="container">
+                <span tts:ruby="baseContainer">
+                    <span tts:ruby="base">漢</span>
+                    <span tts:ruby="base">字</span>
+                </span>
+                <span tts:ruby="textContainer">
+                    <span tts:ruby="text">かん</span>
+                </span>
+            </span>
+        </p>
+        <!-- Simple ruby container with more texts than bases -->
+        <p begin="15s" end="20s">
+            <span tts:ruby="container">
+                <span tts:ruby="baseContainer">
+                    <span tts:ruby="base">漢</span>
+                </span>
+                <span tts:ruby="textContainer">
+                    <span tts:ruby="text">かん</span>
+                    <span tts:ruby="text">じ</span>
+                </span>
+            </span>
+        </p>
+        <!-- Complex ruby container with two text containers -->
+        <p begin="20s" end="25s">
+            <span tts:ruby="container" tts:rubyPosition="after">
+                <span tts:ruby="baseContainer">
+                    <span tts:ruby="base">&lt;<span tts:color="red">漢</span>&gt;</span>
+                    <span tts:ruby="base">&lt;<span tts:color="red">字</span>&gt;</span>
+                </span>
+                <span tts:ruby="textContainer">
+                    <span tts:ruby="text">&lt;<span tts:color="blue">かん</span>&gt;</span>
+                    <span tts:ruby="text">&lt;<span tts:color="blue">じ</span>&gt;</span>
+                </span>
+                <span tts:ruby="textContainer" tts:rubyPosition="before">
+                    <span tts:ruby="text">カン</span>
+                    <span tts:ruby="text">ジ</span>
+                </span>
+            </span>
+        </p>
+    </div>
+  </body>
+</tt>

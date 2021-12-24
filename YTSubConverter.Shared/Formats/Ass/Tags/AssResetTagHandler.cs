@@ -12,7 +12,7 @@
             context.StyleOptions = context.Document.GetStyleOptions(arg) ?? context.InitialStyleOptions;
             context.Document.ApplyStyle(context.Section, context.Style, context.StyleOptions);
             context.Section.Offset = OffsetType.Regular;
-            context.Section.RubyPosition = RubyPosition.None;
+            context.Section.RubyPart = RubyPart.None;
             context.Section.Animations.Clear();
         }
     }

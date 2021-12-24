@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling" tts:extent="1920px 1080px">
+  <head>
+    <layout>
+      <region xml:id="parentRegion" style="parentRegionStyle" tts:backgroundColor="black">
+        <style tts:backgroundColor="yellow" tts:color="orange" />
+      </region>
+      <region xml:id="childRegion" style="childRegionStyle" />
+    </layout>
+    <styling>
+      <style xml:id="parentRegionStyle" tts:backgroundColor="red" tts:color="green" tts:textOutline="blue 2px" />
+      <style xml:id="childRegionStyle" tts:textOutline="cyan 2px" />
+      <style xml:id="baseStyle" tts:fontFamily="monospaceSansSerif" tts:fontWeight="bold" />
+      <style xml:id="derivedStyle" style="baseStyle" tts:fontFamily="monospaceSerif" />
+    </styling>
+  </head>
+  <body region="parentRegion">
+    <div>
+      <p begin="0s" end="5s">Parent region</p>
+    </div>
+    <div region="childRegion">
+      <p begin="5s" end="10s">Parent region &gt; child region</p>
+    </div>
+    <div tts:textOutline="white 2px">
+      <p begin="10s" end="15s" region="childRegion">Parent region &gt; inline style &gt; child region</p>
+    </div>
+    <div>
+      <p begin="15s" end="20s" style="derivedStyle">Derived style</p>
+    </div>
+  </body>
+</tt>

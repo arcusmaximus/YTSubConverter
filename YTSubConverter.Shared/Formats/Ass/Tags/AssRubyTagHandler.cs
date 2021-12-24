@@ -9,7 +9,7 @@
         public override void Handle(AssTagContext context, string arg)
         {
             int.TryParse(arg, out int rubyPos);
-            context.Section.RubyPosition = rubyPos == 2 ? RubyPosition.Below : RubyPosition.Above;
+            context.Section.RubyPart = rubyPos == 2 ? RubyPart.TextAfter : RubyPart.TextBefore;
         }
     }
 }

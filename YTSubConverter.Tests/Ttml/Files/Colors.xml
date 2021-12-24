@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling">
+  <body>
+    <div>
+        <p begin="0s" end="5s" tts:backgroundColor="#FFFF00C0"><span tts:color="red">Red</span> <span tts:color="#00FF0080">Green</span> <span tts:color="rgb(0, 0, 255)" tts:opacity="0.2">Blue</span></p>
+    </div>
+  </body>
+</tt>

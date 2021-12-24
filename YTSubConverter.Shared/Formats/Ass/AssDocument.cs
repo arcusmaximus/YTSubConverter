@@ -354,12 +354,15 @@ namespace YTSubConverter.Shared.Formats.Ass
             for (int sectionIdx = line.Sections.Count - 1; sectionIdx >= 0; sectionIdx--)
             {
                 AssSection section = (AssSection)line.Sections[sectionIdx];
-                if (section.RubyPosition == RubyPosition.None)
+                if (section.RubyPart == RubyPart.None)
                     continue;
 
                 MatchCollection matches = Regex.Matches(section.Text, @"\[(?<text>.+?)/(?<ruby>.+?)\]");
                 if (matches.Count == 0)
+                {
+                    section.RubyPart = RubyPart.None;
                     continue;
+                }
 
                 line.Sections.RemoveAt(sectionIdx);
 
@@ -370,9 +373,9 @@ namespace YTSubConverter.Shared.Formats.Ass
                     if (match.Index > interStartPos)
                         InsertRubySection(line, section, section.Text.Substring(interStartPos, match.Index - interStartPos), RubyPart.None, sectionIdx, ref numSubSections);
 
-                    InsertRubySection(line, section, match.Groups["text"].Value, RubyPart.Text, sectionIdx, ref numSubSections);
+                    InsertRubySection(line, section, match.Groups["text"].Value, RubyPart.Base, sectionIdx, ref numSubSections);
                     InsertRubySection(line, section, "(", RubyPart.Parenthesis, sectionIdx, ref numSubSections);
-                    InsertRubySection(line, section, match.Groups["ruby"].Value, section.RubyPosition == RubyPosition.Below ? RubyPart.RubyBelow : RubyPart.RubyAbove, sectionIdx, ref numSubSections);
+                    InsertRubySection(line, section, match.Groups["ruby"].Value, section.RubyPart, sectionIdx, ref numSubSections);
                     InsertRubySection(line, section, ")", RubyPart.Parenthesis, sectionIdx, ref numSubSections);
 
                     interStartPos = match.Index + match.Length;
@@ -645,15 +648,15 @@ namespace YTSubConverter.Shared.Formats.Ass
 
                 AppendSectionTags(section, prevSection, lineContent);
 
-                if (section.RubyPart == RubyPart.Text)
+                if (section.RubyPart == RubyPart.Base)
                 {
                     RubyPart rubyPart;
-                    if (i + 4 > line.Sections.Count || ((rubyPart = line.Sections[i + 2].RubyPart) != RubyPart.RubyAbove && rubyPart != RubyPart.RubyBelow))
+                    if (i + 4 > line.Sections.Count || ((rubyPart = line.Sections[i + 2].RubyPart) != RubyPart.TextBefore && rubyPart != RubyPart.TextAfter))
                         throw new InvalidDataException("Invalid ruby sequence");
 
                     if (rubyPart != currentRubyPosition)
                     {
-                        lineContent.AppendTag("ytruby", rubyPart == RubyPart.RubyAbove ? 8 : 2);
+                        lineContent.AppendTag("ytruby", rubyPart == RubyPart.TextBefore ? 8 : 2);
                         currentRubyPosition = rubyPart;
                     }
                     lineContent.AppendText($"[{section.Text}/{line.Sections[i + 2].Text}]");

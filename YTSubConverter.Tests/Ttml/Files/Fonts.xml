@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling">
+  <head>
+    <styling>
+      <initial tts:fontSize="1em" />
+    </styling>
+  </head>
+  <body>
+    <div>
+        <p begin="0s"  end="2s"  tts:fontFamily="default">Default</p>
+        <p begin="2s"  end="4s"  tts:fontFamily="monospace">Monospace</p>
+        <p begin="4s"  end="6s"  tts:fontFamily="sansSerif">Sans serif</p>
+        <p begin="6s"  end="8s"  tts:fontFamily="serif">Serif</p>
+        <p begin="8s"  end="10s" tts:fontFamily="monospaceSansSerif">Monospace sans serif</p>
+        <p begin="10s" end="12s" tts:fontFamily="monospaceSerif">Monospace serif</p>
+        <p begin="12s" end="14s" tts:fontFamily="proportionalSansSerif">Proportional sans serif</p>
+        <p begin="14s" end="16s" tts:fontFamily="proportionalSerif">Proportional serif</p>
+        <p begin="16s" end="18s" tts:fontFamily="Comic Sans MS,Arial">Comic Sans</p>
+        <p begin="18s" end="20s" tts:fontFamily="&quot;Carrois Gothic SC&quot; , Arial">Carrois Gothic SC</p>
+        <p begin="20s" end="22s" tts:fontFamily="'Monotype Corsiva'">Monotype Corsiva</p>
+        <p begin="22s" end="24s"><span tts:fontSize="2em">Large</span> <span tts:fontSize="0.5em">Small</span></p>
+    </div>
+  </body>
+</tt>

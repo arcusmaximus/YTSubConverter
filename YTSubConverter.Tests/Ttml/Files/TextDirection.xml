@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling" tts:extent="1920px 1080px">
+  <head>
+    <layout>
+      <region xml:id="center" tts:origin="50% 50%" />
+      <region xml:id="topleft" tts:origin="30% 10%" tts:writingMode="tbrl" />
+      <region xml:id="topright" tts:origin="70% 10%" tts:writingMode="tblr" />
+      <region xml:id="bottomleft" tts:origin="30% 50%" tts:writingMode="tbrl" />
+      <region xml:id="bottomright" tts:origin="70% 50%" tts:writingMode="tblr" />
+      <region xml:id="right" tts:origin="80% 10%" tts:writingMode="tb" />
+    </layout>
+  </head>
+  <body>
+    <div>
+        <p begin="0s" end="5s" region="center" tts:textAlign="center" tts:direction="rtl">Right to left.</p>
+        <p begin="0s" end="5s" region="topleft" tts:textAlign="left" tts:displayAlign="before">Top bottom<br/>right left</p>
+        <p begin="0s" end="5s" region="topright" tts:textAlign="left" tts:displayAlign="before">Top bottom<br/>left right</p>
+        <p begin="0s" end="5s" region="bottomleft" tts:textOrientation="upright" tts:textAlign="left" tts:displayAlign="before">Top bottom<br/>right left</p>
+        <p begin="0s" end="5s" region="bottomright" tts:textOrientation="upright" tts:textAlign="left" tts:displayAlign="before">Top bottom<br/>left right</p>
+        <p begin="0s" end="5s" region="right" tts:textCombine="all" tts:textOrientation="upright" tts:textAlign="left" tts:displayAlign="before">2021<span tts:textCombine="none">年</span>12<span tts:textCombine="none">月</span>12<span tts:textCombine="none">日</span></p>
+    </div>
+  </body>
+</tt>

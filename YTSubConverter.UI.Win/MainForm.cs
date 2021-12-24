@@ -439,11 +439,19 @@ namespace YTSubConverter.UI.Win
                         break;
                     }
 
+                    case ".sbv":
+                    {
+                        SbvDocument inputDoc = new SbvDocument(_txtInputFile.Text);
+                        outputDoc = new SrtDocument(inputDoc);
+                        outputExtension = ".srt";
+                        break;
+                    }
+
                     default:
                     {
                         SubtitleDocument inputDoc = SubtitleDocument.Load(_txtInputFile.Text);
-                        outputDoc = new SrtDocument(inputDoc);
-                        outputExtension = ".srt";
+                        outputDoc = new YttDocument(inputDoc);
+                        outputExtension = ".ytt";
                         break;
                     }
                 }
@@ -509,14 +517,9 @@ namespace YTSubConverter.UI.Win
                 return null;
 
             string filePath = filePaths[0];
-            string extension = (Path.GetExtension(filePath) ?? string.Empty).ToLower();
-            if (extension != ".ass" &&
-                extension != ".ytt" &&
-                extension != ".srv3" &&
-                extension != ".sbv")
-            {
+            string extension = Path.GetExtension(filePath);
+            if (!SubtitleDocument.IsExtensionSupported(extension))
                 return null;
-            }
 
             return filePath;
         }
