@@ -17,12 +17,12 @@ YouTube's built-in subtitle editor doesn't support styling of any kind. If you w
 
 YTSubConverter can produce this file format for you.
 
-The current version is **1.5.4** and is available for Windows, macOS and Linux (the Linux version requires Mono).
+The current version is **1.6.0** and is available for Windows, macOS and Linux (the Linux version requires Mono).
 
 [![Download](images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases)
 
 ## Usage
-YTSubConverter is an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](https://github.com/Aegisub/Aegisub/releases/tag/v3.2.2).
+YTSubConverter is primarily an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](https://github.com/Aegisub/Aegisub/releases/tag/v3.2.2).
 
 Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe (Windows only). In both cases, you'll get a .ytt file that's ready for upload.
 
@@ -35,6 +35,8 @@ You'll notice that each .ass shadow can turn into one of four different YouTube 
 ![Style options](images/style-options.png)
 
 Apart from converting from .ass to .ytt, the tool can also convert from .sbv (the format you get when downloading subs from YouTube's built-in editor) to .srt. This allows you to download existing, unstyled subs and add styling to them. Simply open the .sbv file, click Convert, and open the resulting .srt file in Aegisub.
+
+Conversion between .ttml and .ytt is also possible. YouTube already supports uploading TTML files directly, but this support is rather limited - if you convert to .ytt and upload that instead, you get access to more features, not to mention workarounds for YouTube bugs. That being said, certain features like karaoke and transitions are still only available through .ass.
 
 ## ASS feature support
 YTSubConverter supports the following .ass style features:
