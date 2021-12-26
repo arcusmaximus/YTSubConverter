@@ -19,6 +19,7 @@
         <p begin="18s" end="20s" tts:fontFamily="&quot;Carrois Gothic SC&quot; , Arial">Carrois Gothic SC</p>
         <p begin="20s" end="22s" tts:fontFamily="'Monotype Corsiva'">Monotype Corsiva</p>
         <p begin="22s" end="24s"><span tts:fontSize="2em">Large</span> <span tts:fontSize="0.5em">Small</span></p>
+        <p begin="24s" end="26s" tts:fontVariant="super"><span tts:fontVariant="normal">Normal</span> Superscript <span tts:fontVariant="sub">Subscript</span></p>
     </div>
   </body>
 </tt>

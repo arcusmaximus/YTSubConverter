@@ -330,7 +330,7 @@ namespace YTSubConverter.Shared {
         }
         
         /// <summary>
-        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt に類似しているローカライズされた文字列を検索します。
+        ///   Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt|Timed Text Markup Language|*.ttml;*.xml;*.dfxp に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string SubtitleFileFilter {
             get {

@@ -1,10 +1,22 @@
 ﻿using System;
 using System.Drawing;
+using System.Text;
 
 namespace YTSubConverter.Shared.Formats.Ttml
 {
     public class TtmlOutline
     {
+        public TtmlOutline()
+        {
+        }
+
+        public TtmlOutline(Color color, TtmlLength thickness, TtmlLength blurRadius)
+        {
+            Color = color;
+            Thickness = thickness;
+            BlurRadius = blurRadius;
+        }
+
         public Color Color
         {
             get;
@@ -51,12 +63,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             if (!reader.IsAtEnd)
                 return false;
 
-            outline = new TtmlOutline
-                      {
-                          Color = color,
-                          Thickness = thickness,
-                          BlurRadius = blurRadius
-                      };
+            outline = new TtmlOutline(color, thickness, blurRadius);
             return true;
         }
 
@@ -69,6 +76,27 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 throw new FormatException();
 
             return outline;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+
+            if (!Color.IsEmpty)
+            {
+                result.Append(TtmlColor.ToString(Color));
+                result.Append(" ");
+            }
+
+            result.Append(Thickness);
+
+            if (BlurRadius.Value > 0)
+            {
+                result.Append(" ");
+                result.Append(BlurRadius);
+            }
+
+            return result.ToString();
         }
     }
 }

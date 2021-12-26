@@ -437,11 +437,19 @@ namespace YTSubConverter.UI.Mac
                         break;
                     }
 
-                    default:
+                    case ".sbv":
                     {
                         SubtitleDocument inputDoc = SubtitleDocument.Load(_lblInputFile.StringValue);
                         outputDoc = new SrtDocument(inputDoc);
                         outputExtension = ".srt";
+                        break;
+                    }
+
+                    default:
+                    {
+                        SubtitleDocument inputDoc = SubtitleDocument.Load(_lblInputFile.StringValue);
+                        outputDoc = new YttDocument(inputDoc);
+                        outputExtension = ".ytt";
                         break;
                     }
                 }
@@ -471,11 +479,7 @@ namespace YTSubConverter.UI.Mac
 
             string filePath = url.Path;
             string extension = (Path.GetExtension(filePath) ?? string.Empty).ToLower();
-            bool allowed = extension == ".ass" ||
-                           extension == ".ytt" ||
-                           extension == ".srv3" ||
-                           extension == ".sbv";
-            return allowed ? NSDragOperation.Copy : NSDragOperation.None;
+            return SubtitleDocument.IsExtensionSupported(extension) ? NSDragOperation.Copy : NSDragOperation.None;
         }
 
         public bool PerformDrag(NSDraggingInfo info)

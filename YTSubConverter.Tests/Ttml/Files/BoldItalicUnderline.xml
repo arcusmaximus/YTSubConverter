@@ -3,7 +3,7 @@
   <body>
     <div>
         <p begin="0s" end="5s" tts:fontWeight="bold">Bold <span tts:fontWeight="normal">Normal</span></p>
-        <p begin="5s" end="10s" tts:fontStyle="italic">Italic <span tts:fontStyle="normal">Normal</span></p>
+        <p begin="5s" end="10s" tts:fontStyle="italic">Italic <span tts:fontStyle="normal">Normal <span tts:fontStyle="oblique">Oblique</span></span></p>
         <p begin="10s" end="15s" tts:textDecoration="underline">Underline <span tts:textDecoration="none">None</span> <span tts:textDecoration="noUnderline">NoUnderline</span></p>
     </div>
   </body>

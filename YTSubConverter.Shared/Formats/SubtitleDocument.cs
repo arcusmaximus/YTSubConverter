@@ -23,7 +23,7 @@ namespace YTSubConverter.Shared.Formats
         protected SubtitleDocument(SubtitleDocument doc)
         {
             VideoDimensions = doc.VideoDimensions;
-            Lines.AddRange(doc.Lines);
+            Lines.AddRange(doc.Lines.Where(l => l.Sections.Any(s => s.Text.Length > 0)));
         }
 
         public Size VideoDimensions
@@ -34,6 +34,11 @@ namespace YTSubConverter.Shared.Formats
 
         public List<Line> Lines { get; } = new List<Line>();
 
+        public static bool IsExtensionSupported(string extension)
+        {
+            return GetLoader(extension) != null;
+        }
+
         public static SubtitleDocument Load(string filePath)
         {
             Func<string, SubtitleDocument> loader = GetLoader(Path.GetExtension(filePath));
@@ -43,9 +48,31 @@ namespace YTSubConverter.Shared.Formats
             return loader(filePath);
         }
 
-        public static bool IsExtensionSupported(string extension)
+        public static SubtitleDocument Convert(SubtitleDocument doc, string newExtension, bool visual)
         {
-            return GetLoader(extension) != null;
+            switch (newExtension?.ToLower())
+            {
+                case ".ass":
+                    return visual ? new VisualizingAssDocument(doc) : new AssDocument(doc);
+
+                case ".sbv":
+                    return new SbvDocument(doc);
+
+                case ".srt":
+                    return new SrtDocument(doc);
+
+                case ".srv3":
+                case ".ytt":
+                    return new YttDocument(doc);
+
+                case ".xml":
+                case ".ttml":
+                case ".dfxp":
+                    return new TtmlDocument(doc);
+
+                default:
+                    throw new NotSupportedException("Destination format not supported");
+            }
         }
 
         private static Func<string, SubtitleDocument> GetLoader(string extension)
@@ -199,6 +226,17 @@ namespace YTSubConverter.Shared.Formats
                     line.Sections.Insert(sectionIdx + i, subSection);
                 }
             }
+        }
+
+        protected static Dictionary<T, int> ExtractAttributes<T>(IEnumerable<T> objects, IEqualityComparer<T> comparer)
+        {
+            Dictionary<T, int> attributes = new Dictionary<T, int>(comparer);
+            foreach (T attr in objects)
+            {
+                if (!attributes.ContainsKey(attr))
+                    attributes.Add(attr, 1 + attributes.Count);
+            }
+            return attributes;
         }
 
         public void CloseGaps()

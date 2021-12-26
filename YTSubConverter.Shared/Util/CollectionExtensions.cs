@@ -117,6 +117,12 @@ namespace YTSubConverter.Shared.Util
             return keys.Count;
         }
 
+        public static void Deconstruct<TKey, TValue>(this KeyValuePair<TKey, TValue> pair, out TKey key, out TValue value)
+        {
+            key = pair.Key;
+            value = pair.Value;
+        }
+
         private class Grouping<TKey, TItem> : IGrouping<TKey, TItem>
         {
             public Grouping(TKey key)

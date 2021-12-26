@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using YTSubConverter.Shared.Formats;
-using YTSubConverter.Shared.Formats.Ass;
 
 namespace YTSubConverter.Shared
 {
@@ -23,15 +22,7 @@ namespace YTSubConverter.Shared
             try
             {
                 SubtitleDocument sourceDoc = SubtitleDocument.Load(parsedArgs.SourceFilePath);
-                SubtitleDocument destinationDoc =
-                    Path.GetExtension(parsedArgs.DestinationFilePath).ToLower() switch
-                    {
-                        ".ass" => parsedArgs.ForVisualization ? new VisualizingAssDocument(sourceDoc) : new AssDocument(sourceDoc),
-                        ".srv3" => new YttDocument(sourceDoc),
-                        ".ytt" => new YttDocument(sourceDoc),
-                        ".srt" => new SrtDocument(sourceDoc),
-                        _ => throw new NotSupportedException("Destination format not supported")
-                    };
+                SubtitleDocument destinationDoc = SubtitleDocument.Convert(sourceDoc, Path.GetExtension(parsedArgs.DestinationFilePath), parsedArgs.ForVisualization);
                 destinationDoc.Save(parsedArgs.DestinationFilePath);
             }
             catch (Exception ex)

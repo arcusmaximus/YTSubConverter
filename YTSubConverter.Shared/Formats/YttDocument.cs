@@ -24,7 +24,6 @@ namespace YTSubConverter.Shared.Formats
         public YttDocument(SubtitleDocument doc)
             : base(doc)
         {
-            Lines.RemoveAll(l => !l.Sections.Any(s => s.Text.Length > 0));
         }
 
         public YttDocument(string filePath)
@@ -174,9 +173,9 @@ namespace YTSubConverter.Shared.Formats
             pen.Scale = GetRealFontScale(elem.GetIntAttribute("sz") ?? 100);
 
             pen.Offset = GetOffsetType(elem.GetIntAttribute("of") ?? 1);
-            pen.Bold = Convert.ToBoolean(elem.GetIntAttribute("b") ?? 0);
-            pen.Italic = Convert.ToBoolean(elem.GetIntAttribute("i") ?? 0);
-            pen.Underline = Convert.ToBoolean(elem.GetIntAttribute("u") ?? 0);
+            pen.Bold = System.Convert.ToBoolean(elem.GetIntAttribute("b") ?? 0);
+            pen.Italic = System.Convert.ToBoolean(elem.GetIntAttribute("i") ?? 0);
+            pen.Underline = System.Convert.ToBoolean(elem.GetIntAttribute("u") ?? 0);
 
             Color fc = ColorUtil.FromHtml(elem.Attributes["fc"]?.Value ?? "#FFFFFF");
             int fo = elem.GetIntAttribute("fo") ?? 254;
@@ -201,7 +200,7 @@ namespace YTSubConverter.Shared.Formats
             }
 
             pen.RubyPart = GetRubyPart(elem.GetIntAttribute("rb") ?? 0);
-            pen.Packed = Convert.ToBoolean(elem.GetIntAttribute("hg") ?? 0);
+            pen.Packed = System.Convert.ToBoolean(elem.GetIntAttribute("hg") ?? 0);
             return (id, pen);
         }
 
@@ -962,17 +961,6 @@ namespace YTSubConverter.Shared.Formats
                 list.Add(default);
             }
             list[item.Item1] = item.Item2;
-        }
-
-        private static Dictionary<T, int> ExtractAttributes<T>(IEnumerable<T> objects,  IEqualityComparer<T> comparer)
-        {
-            Dictionary<T, int> attributes = new Dictionary<T, int>(comparer);
-            foreach (T attr in objects)
-            {
-                if (!attributes.ContainsKey(attr))
-                    attributes.Add(attr, 1 + attributes.Count);
-            }
-            return attributes;
         }
 
         private static int GetAnchorPointId(AnchorPoint anchorPoint)

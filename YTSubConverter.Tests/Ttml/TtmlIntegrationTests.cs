@@ -29,6 +29,31 @@ namespace YTSubConverter.Tests.Ttml
             }
         }
 
+        [TestCaseSource(nameof(GetReverseConversionTestCases))]
+        public void TestReverseConversion(string inputYttFilePath)
+        {
+            SubtitleDocument yttDoc = new YttDocument(inputYttFilePath);
+            SubtitleDocument ttmlDoc = new TtmlDocument(yttDoc);
+
+            try
+            {
+                ttmlDoc.Save("actual.xml");
+
+                ttmlDoc = new TtmlDocument("actual.xml");
+                yttDoc = new YttDocument(ttmlDoc);
+                yttDoc.Save("actual.ytt");
+
+                string actual = File.ReadAllText("actual.ytt");
+                string expected = File.ReadAllText(inputYttFilePath);
+                Assert.That(actual, Is.EqualTo(expected));
+            }
+            finally
+            {
+                File.Delete("actual.xml");
+                File.Delete("actual.ytt");
+            }
+        }
+
         private static IEnumerable<TestCaseData> GetForwardConversionTestCases()
         {
             foreach (string ttmlFilePath in Directory.EnumerateFiles(Path.Combine(DllFolderPath, "Ttml\\Files"), "*.xml"))
@@ -36,6 +61,15 @@ namespace YTSubConverter.Tests.Ttml
                 string name = Path.GetFileNameWithoutExtension(ttmlFilePath) + " (Forward)";
                 string yttFilePath = Path.ChangeExtension(ttmlFilePath, ".ytt");
                 yield return new TestCaseData(ttmlFilePath, yttFilePath).SetName(name);
+            }
+        }
+
+        private static IEnumerable<TestCaseData> GetReverseConversionTestCases()
+        {
+            foreach (string yttFilePath in Directory.EnumerateFiles(Path.Combine(DllFolderPath, "Ttml\\Files"), "*.ytt"))
+            {
+                string name = Path.GetFileNameWithoutExtension(yttFilePath) + " (Reverse)";
+                yield return new TestCaseData(yttFilePath).SetName(name);
             }
         }
     }

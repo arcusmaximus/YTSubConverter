@@ -187,7 +187,7 @@
     <value>Opcje stylów</value>
   </data>
   <data name="SubtitleFileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt</value>
+    <value>Advanced SubStation Alpha|*.ass|YouTube subtitles|*.sbv;*.srv3;*.ytt|Timed Text Markup Language|*.ttml;*.xml;*.dfxp</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
     <value>Pomyślnie utworzono {0}</value>

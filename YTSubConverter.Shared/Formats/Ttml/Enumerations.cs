@@ -29,6 +29,17 @@ namespace YTSubConverter.Shared.Formats.Ttml
     }
 
     [Flags]
+    public enum TtmlFontVariant
+    {
+        Normal = 0,
+        Super = 1,
+        Sub = 2,
+        Full = 4,
+        Half = 8,
+        Ruby = 16
+    }
+
+    [Flags]
     public enum TtmlTextDecoration
     {
         None = 0,

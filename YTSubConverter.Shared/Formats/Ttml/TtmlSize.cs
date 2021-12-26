@@ -11,6 +11,12 @@ namespace YTSubConverter.Shared.Formats.Ttml
             Height = height;
         }
 
+        public TtmlSize(float widthValue, TtmlUnit widthUnit, float heightValue, TtmlUnit heightUnit)
+        {
+            Width = new TtmlLength(widthValue, widthUnit);
+            Height = new TtmlLength(heightValue, heightUnit);
+        }
+
         public TtmlLength Width;
         public TtmlLength Height;
 

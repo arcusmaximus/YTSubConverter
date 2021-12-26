@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling">
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:tts="http://www.w3.org/ns/ttml#styling" tts:extent="1280px 720px">
+  <head>
+    <layout>
+      <region xml:id="partial" tts:origin="200px 200px" tts:extent="880px 320px" />
+    </layout>
+  </head>
   <body>
     <div>
-        <p begin="0s" end="5s" tts:displayAlign="before" tts:textAlign="left">Before left</p>
-        <p begin="0s" end="5s" tts:displayAlign="before" tts:textAlign="center">Before center</p>
-        <p begin="0s" end="5s" tts:displayAlign="before" tts:textAlign="right">Before right</p>
-        <p begin="0s" end="5s" tts:displayAlign="center" tts:textAlign="left">Center left</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="before" tts:textAlign="left">Before left</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="before" tts:textAlign="center">Before center</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="before" tts:textAlign="right">Before right</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="center" tts:textAlign="left">Center left</p>
         <p begin="0s" end="5s" tts:displayAlign="center" tts:textAlign="center">Center center</p>
-        <p begin="0s" end="5s" tts:displayAlign="center" tts:textAlign="right">Center right</p>
-        <p begin="0s" end="5s" tts:displayAlign="after" tts:textAlign="left">After left</p>
-        <p begin="0s" end="5s" tts:displayAlign="after" tts:textAlign="center">After center</p>
-        <p begin="0s" end="5s" tts:displayAlign="after" tts:textAlign="right">After right</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="center" tts:textAlign="right">Center right</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="after" tts:textAlign="left">After left</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="after" tts:textAlign="center">After center</p>
+        <p region="partial" begin="0s" end="5s" tts:displayAlign="after" tts:textAlign="right">After right</p>
         
         <p begin="5s" end="10s" tts:displayAlign="justify" tts:textAlign="start">Justify start</p>
-        <p begin="5s" end="10s" tts:displayAlign="justify" tts:textAlign="justify">Justify justify</p>
         <p begin="5s" end="10s" tts:displayAlign="justify" tts:textAlign="end">Justify end</p>
+        
+        <p begin="10s" end="15s" tts:displayAlign="justify" tts:textAlign="justify">Justify justify</p>
     </div>
   </body>
 </tt>

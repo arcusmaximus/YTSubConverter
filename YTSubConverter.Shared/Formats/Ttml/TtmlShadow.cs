@@ -6,6 +6,17 @@ namespace YTSubConverter.Shared.Formats.Ttml
 {
     public class TtmlShadow
     {
+        public TtmlShadow()
+        {
+        }
+
+        public TtmlShadow(TtmlSize offset, TtmlLength blurRadius, Color color)
+        {
+            Offset = offset;
+            BlurRadius = blurRadius;
+            Color = color;
+        }
+
         public TtmlSize Offset
         {
             get;
@@ -44,12 +55,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             if (!reader.IsAtEnd)
                 return false;
 
-            shadow = new TtmlShadow
-                     {
-                         Offset = new TtmlSize(xOffset, yOffset),
-                         BlurRadius = blurRadius,
-                         Color = color
-                     };
+            shadow = new TtmlShadow(new TtmlSize(xOffset, yOffset), blurRadius, color);
             return true;
         }
 

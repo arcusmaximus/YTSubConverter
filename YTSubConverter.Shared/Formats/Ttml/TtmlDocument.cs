@@ -12,6 +12,14 @@ namespace YTSubConverter.Shared.Formats.Ttml
 {
     public class TtmlDocument : SubtitleDocument
     {
+        internal static class Namespaces
+        {
+            public const string Xml = "http://www.w3.org/XML/1998/namespace";
+            public const string Tt = "http://www.w3.org/ns/ttml";
+            public const string Ttp = "http://www.w3.org/ns/ttml#parameter";
+            public const string Tts = "http://www.w3.org/ns/ttml#styling";
+        }
+
         public TtmlDocument()
         {
             CellResolution = new Size(32, 15);
@@ -40,6 +48,11 @@ namespace YTSubConverter.Shared.Formats.Ttml
             : this()
         {
             Load(reader);
+        }
+
+        public TtmlDocument(SubtitleDocument doc)
+            : base(doc)
+        {
         }
 
         public Size CellResolution
@@ -96,10 +109,10 @@ namespace YTSubConverter.Shared.Formats.Ttml
             doc.Load(reader);
 
             XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
-            nsmgr.AddNamespace("xml", "http://www.w3.org/XML/1998/namespace");
-            nsmgr.AddNamespace("tt", "http://www.w3.org/ns/ttml");
-            nsmgr.AddNamespace("ttp", "http://www.w3.org/ns/ttml#parameter");
-            nsmgr.AddNamespace("tts", "http://www.w3.org/ns/ttml#styling");
+            nsmgr.AddNamespace("xml", Namespaces.Xml);
+            nsmgr.AddNamespace("tt", Namespaces.Tt);
+            nsmgr.AddNamespace("ttp", Namespaces.Ttp);
+            nsmgr.AddNamespace("tts", Namespaces.Tts);
 
             XmlElement ttElem = (XmlElement)doc.SelectSingleNode("/tt:tt", nsmgr);
             if (ttElem == null)
@@ -254,10 +267,29 @@ namespace YTSubConverter.Shared.Formats.Ttml
             }
             else if (context.Style.Origin != null)
             {
-                position = (PointF)context.Style.Origin.Value.Resolve(context);
+                PointF origin = (PointF)context.Style.Origin.Value.Resolve(context);
+                SizeF extent = context.Style.Extent?.Resolve(context) ?? VideoDimensions;
+
+                float x = context.Style.TextAlign switch
+                          {
+                              TtmlTextAlign.Left => origin.X,
+                              TtmlTextAlign.Start => origin.X,
+                              TtmlTextAlign.Justify => origin.X,
+                              TtmlTextAlign.Center => origin.X + extent.Width / 2,
+                              TtmlTextAlign.Right => origin.X + extent.Width,
+                              TtmlTextAlign.End => origin.X + extent.Width
+                          };
+                float y = context.Style.DisplayAlign switch
+                          {
+                              TtmlDisplayAlign.Before => origin.Y,
+                              TtmlDisplayAlign.Justify => origin.Y,
+                              TtmlDisplayAlign.Center => origin.Y + extent.Height / 2,
+                              TtmlDisplayAlign.After => origin.Y + extent.Height
+                          };
+                position = new PointF(x, y);
             }
 
-            (HorizontalTextDirection hDir, VerticalTextType vDir) = GetTextDirections(context.Style);
+            (HorizontalTextDirection hDir, VerticalTextType vDir) = GetTextDirections(context.Style.WritingMode, context.Style.TextOrientation, context.Style.Direction);
 
             Line line = new Line(context.BeginTime, context.EndTime)
                         {
@@ -291,8 +323,14 @@ namespace YTSubConverter.Shared.Formats.Ttml
                                   Font = ConvertTtmlFontFamily(style.FontFamilies),
                                   Scale = style.FontSize.Resolve(context, TtmlProgression.Inline) / defaultFontSize,
                                   Bold = (style.FontWeight == TtmlFontWeight.Bold),
-                                  Italic = (style.FontStyle == TtmlFontStyle.Italic),
+                                  Italic = (style.FontStyle == TtmlFontStyle.Italic || style.FontStyle == TtmlFontStyle.Oblique),
                                   Underline = (style.TextDecoration & TtmlTextDecoration.Underline) != 0,
+                                  Offset = (style.FontVariant & (TtmlFontVariant.Sub | TtmlFontVariant.Super)) switch
+                                           {
+                                               TtmlFontVariant.Super => OffsetType.Superscript,
+                                               TtmlFontVariant.Sub => OffsetType.Subscript,
+                                               _ => OffsetType.Regular
+                                           },
                                   ForeColor = ColorUtil.ChangeAlpha(style.Color, (int)(style.Color.A * style.Opacity)),
                                   BackColor = ColorUtil.ChangeAlpha(style.BackgroundColor, (int)(style.BackgroundColor.A * style.Opacity)),
                                   Packed = style.TextCombine == TtmlTextCombine.All,
@@ -530,17 +568,230 @@ namespace YTSubConverter.Shared.Formats.Ttml
             }
         }
 
+        public override void Save(TextWriter textWriter)
+        {
+            MergeIdenticallyFormattedSections();
+
+            Dictionary<Line, int> regions = ExtractAttributes(Lines, new RegionAttributeComparer());
+            Dictionary<Section, int> styles = ExtractAttributes(Lines.SelectMany(l => l.Sections), new SectionFormatComparer());
+
+            using XmlWriter writer = XmlWriter.Create(textWriter, new XmlWriterSettings { CloseOutput = false });
+            writer.WriteStartElement("tt", Namespaces.Tt);
+            writer.WriteAttributeString("xmlns", "tts", null, Namespaces.Tts);
+            writer.WriteAttributeString("tts", "extent", null, new TtmlSize(VideoDimensions.Width, TtmlUnit.Pixels, VideoDimensions.Height, TtmlUnit.Pixels).ToString());
+
+            WriteHead(writer, regions, styles);
+            WriteBody(writer, regions, styles);
+
+            writer.WriteEndElement();
+        }
+
+        private void WriteHead(XmlWriter writer, Dictionary<Line, int> regions, Dictionary<Section, int> styles)
+        {
+            writer.WriteStartElement("head");
+            WriteRegions(writer, regions);
+            WriteStyles(writer, styles);
+            writer.WriteEndElement();
+        }
+
+        private void WriteRegions(XmlWriter writer, Dictionary<Line, int> regions)
+        {
+            writer.WriteStartElement("layout");
+            foreach ((Line region, int regionId) in regions)
+            {
+                WriteRegion(writer, regionId, region);
+            }
+            writer.WriteEndElement();
+        }
+
+        private void WriteRegion(XmlWriter writer, int regionId, Line region)
+        {
+            writer.WriteStartElement("region");
+            writer.WriteAttributeString("xml", "id", null, "region" + regionId);
+
+            (TtmlDisplayAlign displayAlign, TtmlTextAlign textAlign) = GetAlignments(region.AnchorPoint);
+            if (displayAlign != TtmlDisplayAlign.Before)
+                writer.WriteAttributeString("tts", "displayAlign", null, displayAlign.ToString().ToLower());
+
+            if (textAlign != TtmlTextAlign.Left)
+                writer.WriteAttributeString("tts", "textAlign", null, textAlign.ToString().ToLower());
+
+            PointF position = region.Position ?? GetDefaultPosition(region.AnchorPoint);
+            float originX = textAlign switch
+                            {
+                                TtmlTextAlign.Left => position.X,
+                                TtmlTextAlign.Center => position.X - VideoDimensions.Width / 2,
+                                TtmlTextAlign.Right => position.X - VideoDimensions.Width
+                            };
+            float originY = displayAlign switch
+                            {
+                                TtmlDisplayAlign.Before => position.Y,
+                                TtmlDisplayAlign.Center => position.Y - VideoDimensions.Height / 2,
+                                TtmlDisplayAlign.After => position.Y - VideoDimensions.Height
+                            };
+            writer.WriteAttributeString("tts", "origin", null, new TtmlSize(originX, TtmlUnit.Pixels, originY, TtmlUnit.Pixels).ToString());
+
+                (TtmlWritingMode writingMode, TtmlTextOrientation orientation, TtmlDirection direction) = GetWritingModes(region.HorizontalTextDirection, region.VerticalTextType);
+            if (writingMode != TtmlWritingMode.Lr)
+                writer.WriteAttributeString("tts", "writingMode", null, writingMode.ToString().ToLower());
+
+            if (orientation != TtmlTextOrientation.Mixed)
+                writer.WriteAttributeString("tts", "textOrientation", null, orientation.ToString().ToLower());
+
+            writer.WriteAttributeString("tts", "direction", null, direction.ToString().ToLower());
+
+            writer.WriteEndElement();
+        }
+
+        private void WriteStyles(XmlWriter writer, Dictionary<Section, int> styles)
+        {
+            writer.WriteStartElement("styling");
+            foreach ((Section style, int styleId) in styles)
+            {
+                WriteStyle(writer, styleId, style);
+            }
+            writer.WriteEndElement();
+        }
+
+        private void WriteStyle(XmlWriter writer, int styleId, Section style)
+        {
+            writer.WriteStartElement("style");
+            writer.WriteAttributeString("xml", "id", null, "style" + styleId);
+
+            if (style.Bold)
+                writer.WriteAttributeString("tts", "fontWeight", null, "bold");
+
+            if (style.Italic)
+                writer.WriteAttributeString("tts", "fontStyle", null, "italic");
+
+            if (style.Underline)
+                writer.WriteAttributeString("tts", "textDecoration", null, "underline");
+
+            TtmlFontVariant fontVariant = GetFontVariant(style.Offset);
+            if (fontVariant != TtmlFontVariant.Normal)
+                writer.WriteAttributeString("tts", "fontVariant", null, fontVariant.ToString().ToLower());
+
+            if (style.Font != null)
+                writer.WriteAttributeString("tts", "fontFamily", null, style.Font);
+
+            if (!style.BackColor.IsEmpty)
+                writer.WriteAttributeString("tts", "backgroundColor", null, TtmlColor.ToString(style.BackColor));
+
+            if (!style.ForeColor.IsEmpty)
+                writer.WriteAttributeString("tts", "color", null, TtmlColor.ToString(style.ForeColor));
+
+            if (style.Scale != 1.0f)
+                writer.WriteAttributeString("tts", "fontSize", null, new TtmlLength(style.Scale, TtmlUnit.Em).ToString());
+
+            if (style.ShadowColors.ContainsKey(ShadowType.Glow))
+                writer.WriteAttributeString("tts", "textOutline", null, new TtmlOutline(style.ShadowColors[ShadowType.Glow], new TtmlLength(5, TtmlUnit.Percent), new TtmlLength()).ToString());
+
+            string shadows = GetTextShadows(style.ShadowColors);
+            if (!string.IsNullOrEmpty(shadows))
+                writer.WriteAttributeString("tts", "textShadow", null, shadows);
+
+            if (style.Packed)
+                writer.WriteAttributeString("tts", "textCombine", null, "all");
+
+            switch (style.RubyPart)
+            {
+                case RubyPart.Base:
+                    writer.WriteAttributeString("tts", "ruby", null, "base");
+                    break;
+
+                case RubyPart.Parenthesis:
+                    writer.WriteAttributeString("tts", "ruby", null, "delimiter");
+                    break;
+
+                case RubyPart.TextBefore:
+                    writer.WriteAttributeString("tts", "ruby", null, "text");
+                    break;
+
+                case RubyPart.TextAfter:
+                    writer.WriteAttributeString("tts", "ruby", null, "text");
+                    writer.WriteAttributeString("tts", "rubyPosition", null, "after");
+                    break;
+            }
+
+            writer.WriteEndElement();
+        }
+
+        private void WriteBody(XmlWriter writer, Dictionary<Line, int> regionIds, Dictionary<Section, int> styleIds)
+        {
+            writer.WriteStartElement("body");
+            writer.WriteStartElement("div");
+
+            foreach (Line line in Lines)
+            {
+                WriteLine(writer, line, regionIds, styleIds);
+            }
+
+            writer.WriteEndElement();
+            writer.WriteEndElement();
+        }
+
+        private void WriteLine(XmlWriter writer, Line line, Dictionary<Line, int> regionIds, Dictionary<Section, int> styleIds)
+        {
+            writer.WriteStartElement("p");
+            writer.WriteAttributeString("begin", TtmlTime.ToString(line.Start));
+            writer.WriteAttributeString("end", TtmlTime.ToString(line.End));
+            writer.WriteAttributeString("region", "region" + regionIds[line]);
+
+            int i = 0;
+            while (i < line.Sections.Count)
+            {
+                Section section = line.Sections[i];
+                if (section.RubyPart == RubyPart.Base)
+                {
+                    writer.WriteStartElement("span");
+                    writer.WriteAttributeString("tts", "ruby", null, "container");
+                    WriteSection(writer, line.Sections[i + 0], styleIds);
+                    WriteSection(writer, line.Sections[i + 1], styleIds);
+                    WriteSection(writer, line.Sections[i + 2], styleIds);
+                    WriteSection(writer, line.Sections[i + 3], styleIds);
+                    writer.WriteEndElement();
+                    i += 4;
+                }
+                else
+                {
+                    WriteSection(writer, section, styleIds);
+                    i++;
+                }
+            }
+
+            writer.WriteEndElement();
+        }
+
+        private void WriteSection(XmlWriter writer, Section section, Dictionary<Section, int> styleIds)
+        {
+            writer.WriteStartElement("span");
+            writer.WriteAttributeString("style", "style" + styleIds[section]);
+
+            string[] lines = section.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                writer.WriteValue(lines[i]);
+                if (i < lines.Length - 1)
+                {
+                    writer.WriteStartElement("br");
+                    writer.WriteEndElement();
+                }
+            }
+
+            writer.WriteEndElement();
+        }
+
         private static AnchorPoint GetAnchorPoint(TtmlDisplayAlign displayAlign, TtmlTextAlign textAlign)
         {
             displayAlign = displayAlign switch
                            {
-                               TtmlDisplayAlign.Justify => TtmlDisplayAlign.Center,
+                               TtmlDisplayAlign.Justify => TtmlDisplayAlign.Before,
                                _ => displayAlign
                            };
             textAlign = textAlign switch
                         {
                             TtmlTextAlign.Start => TtmlTextAlign.Left,
-                            TtmlTextAlign.Justify => TtmlTextAlign.Center,
+                            TtmlTextAlign.Justify => TtmlTextAlign.Left,
                             TtmlTextAlign.End => TtmlTextAlign.Right,
                             _ => textAlign
                         };
@@ -565,6 +816,22 @@ namespace YTSubConverter.Shared.Formats.Ttml
                                                      TtmlTextAlign.Center => AnchorPoint.BottomCenter,
                                                      TtmlTextAlign.Right => AnchorPoint.BottomRight
                                                  }
+                   };
+        }
+
+        private static (TtmlDisplayAlign, TtmlTextAlign) GetAlignments(AnchorPoint anchorPoint)
+        {
+            return anchorPoint switch
+                   {
+                       AnchorPoint.TopLeft => (TtmlDisplayAlign.Before, TtmlTextAlign.Left),
+                       AnchorPoint.TopCenter => (TtmlDisplayAlign.Before, TtmlTextAlign.Center),
+                       AnchorPoint.TopRight => (TtmlDisplayAlign.Before, TtmlTextAlign.Right),
+                       AnchorPoint.MiddleLeft => (TtmlDisplayAlign.Center, TtmlTextAlign.Left),
+                       AnchorPoint.Center => (TtmlDisplayAlign.Center, TtmlTextAlign.Center),
+                       AnchorPoint.MiddleRight => (TtmlDisplayAlign.Center, TtmlTextAlign.Right),
+                       AnchorPoint.BottomLeft => (TtmlDisplayAlign.After, TtmlTextAlign.Left),
+                       AnchorPoint.BottomCenter => (TtmlDisplayAlign.After, TtmlTextAlign.Center),
+                       AnchorPoint.BottomRight => (TtmlDisplayAlign.After, TtmlTextAlign.Right)
                    };
         }
 
@@ -593,24 +860,24 @@ namespace YTSubConverter.Shared.Formats.Ttml
                    };
         }
 
-        private static (HorizontalTextDirection, VerticalTextType) GetTextDirections(TtmlStyle style)
+        private static (HorizontalTextDirection, VerticalTextType) GetTextDirections(TtmlWritingMode writingMode, TtmlTextOrientation textOrientation, TtmlDirection direction)
         {
             HorizontalTextDirection horizontal;
             VerticalTextType vertical;
 
-            if (style.WritingMode == TtmlWritingMode.Tbrl || style.WritingMode == TtmlWritingMode.Tb)
+            if (writingMode == TtmlWritingMode.Tbrl || writingMode == TtmlWritingMode.Tb)
             {
                 horizontal = HorizontalTextDirection.RightToLeft;
-                vertical = style.TextOrientation == TtmlTextOrientation.Upright ? VerticalTextType.Positioned : VerticalTextType.Rotated;
+                vertical = textOrientation == TtmlTextOrientation.Upright ? VerticalTextType.Positioned : VerticalTextType.Rotated;
             }
-            else if (style.WritingMode == TtmlWritingMode.Tblr)
+            else if (writingMode == TtmlWritingMode.Tblr)
             {
                 horizontal = HorizontalTextDirection.LeftToRight;
-                vertical = style.TextOrientation == TtmlTextOrientation.Upright ? VerticalTextType.Positioned : VerticalTextType.Rotated;
+                vertical = textOrientation == TtmlTextOrientation.Upright ? VerticalTextType.Positioned : VerticalTextType.Rotated;
             }
-            else if (style.WritingMode == TtmlWritingMode.Rltb ||
-                     style.WritingMode == TtmlWritingMode.Rl ||
-                     style.Direction == TtmlDirection.Rtl)
+            else if (writingMode == TtmlWritingMode.Rltb ||
+                     writingMode == TtmlWritingMode.Rl ||
+                     direction == TtmlDirection.Rtl)
             {
                 horizontal = HorizontalTextDirection.RightToLeft;
                 vertical = VerticalTextType.None;
@@ -624,6 +891,70 @@ namespace YTSubConverter.Shared.Formats.Ttml
             return (horizontal, vertical);
         }
 
+        private static (TtmlWritingMode, TtmlTextOrientation, TtmlDirection) GetWritingModes(HorizontalTextDirection horizontal, VerticalTextType vertical)
+        {
+            switch (vertical)
+            {
+                case VerticalTextType.None:
+                    return (
+                               horizontal == HorizontalTextDirection.RightToLeft ? TtmlWritingMode.Rl : TtmlWritingMode.Lr,
+                               TtmlTextOrientation.Mixed,
+                               horizontal == HorizontalTextDirection.RightToLeft ? TtmlDirection.Rtl : TtmlDirection.Ltr
+                           );
+
+                case VerticalTextType.Rotated:
+                    return (
+                               horizontal == HorizontalTextDirection.RightToLeft ? TtmlWritingMode.Tbrl : TtmlWritingMode.Tblr,
+                               TtmlTextOrientation.Sideways,
+                               TtmlDirection.Ltr
+                           );
+
+                case VerticalTextType.Positioned:
+                    return (
+                               horizontal == HorizontalTextDirection.RightToLeft ? TtmlWritingMode.Tbrl : TtmlWritingMode.Tblr,
+                               TtmlTextOrientation.Upright,
+                               TtmlDirection.Ltr
+                           );
+
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        private static TtmlFontVariant GetFontVariant(OffsetType offsetType)
+        {
+            return offsetType switch
+                   {
+                       OffsetType.Subscript => TtmlFontVariant.Sub,
+                       OffsetType.Superscript => TtmlFontVariant.Super,
+                       _ => TtmlFontVariant.Normal
+                   };
+        }
+
+        private static string GetTextShadows(Dictionary<ShadowType, Color> shadows)
+        {
+            List<TtmlShadow> ttmlShadows = new List<TtmlShadow>();
+            foreach ((ShadowType type, Color color) in shadows)
+            {
+                switch (type)
+                {
+                    case ShadowType.Bevel:
+                        ttmlShadows.Add(new TtmlShadow(new TtmlSize(-4, TtmlUnit.Percent, -4, TtmlUnit.Percent), new TtmlLength(), color));
+                        ttmlShadows.Add(new TtmlShadow(new TtmlSize(4, TtmlUnit.Percent, 4, TtmlUnit.Percent), new TtmlLength(), color));
+                        break;
+
+                    case ShadowType.HardShadow:
+                        ttmlShadows.Add(new TtmlShadow(new TtmlSize(4, TtmlUnit.Percent, 4, TtmlUnit.Percent), new TtmlLength(), color));
+                        break;
+
+                    case ShadowType.SoftShadow:
+                        ttmlShadows.Add(new TtmlShadow(new TtmlSize(4, TtmlUnit.Percent, 4, TtmlUnit.Percent), new TtmlLength(2, TtmlUnit.Percent), color));
+                        break;
+                }
+            }
+            return string.Join(", ", ttmlShadows);
+        }
+
         private static (int, int) ParseIntPair(string str)
         {
             Match match = Regex.Match(str, @"^(\d+)\s+(\d+)$");
@@ -631,6 +962,25 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 throw new FormatException();
 
             return (int.Parse(match.Groups[1].Value), int.Parse(match.Groups[2].Value));
+        }
+
+        private class RegionAttributeComparer : IEqualityComparer<Line>
+        {
+            public bool Equals(Line x, Line y)
+            {
+                return x.AnchorPoint == y.AnchorPoint &&
+                       x.Position == y.Position &&
+                       x.HorizontalTextDirection == y.HorizontalTextDirection &&
+                       x.VerticalTextType == y.VerticalTextType;
+            }
+
+            public int GetHashCode(Line obj)
+            {
+                return obj.AnchorPoint.GetHashCode() ^
+                       obj.Position.GetHashCode() ^
+                       obj.HorizontalTextDirection.GetHashCode() ^
+                       obj.VerticalTextType.GetHashCode();
+            }
         }
     }
 }

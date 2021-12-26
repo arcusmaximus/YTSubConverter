@@ -7,9 +7,9 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.arcusmaximus.YTSubConverter</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.5.4</string>
+	<string>1.6.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.5.4</string>
+	<string>1.6.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.14</string>
 	<key>CFBundleDevelopmentRegion</key>

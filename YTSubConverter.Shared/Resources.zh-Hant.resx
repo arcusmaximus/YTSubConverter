@@ -193,7 +193,7 @@
     <value>樣式選項</value>
   </data>
   <data name="SubtitleFileFilter" xml:space="preserve">
-    <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv;*.srv3;*.ytt</value>
+    <value>Advanced SubStation Alpha|*.ass|YouTube字幕|*.sbv;*.srv3;*.ytt|Timed Text Markup Language|*.ttml;*.xml;*.dfxp</value>
   </data>
   <data name="SuccessfullyCreated0" xml:space="preserve">
     <value>{0}轉換成功。</value>

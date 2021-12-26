@@ -19,6 +19,9 @@ namespace YTSubConverter.Shared.Formats.Ttml
         private bool? _underline;
         private bool? _lineThrough;
         private bool? _overline;
+        private TtmlFontVariant? _fontVariantSubSuper;
+        private TtmlFontVariant? _fontVariantFullHalf;
+        private TtmlFontVariant? _fontVariantRuby;
         private Color? _color;
         private Color? _backgroundColor;
         private float? _opacity;
@@ -60,6 +63,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             _fontWeight = elem.GetEnumAttribute<TtmlFontWeight>("fontWeight", tts);
             _fontStyle = elem.GetEnumAttribute<TtmlFontStyle>("fontStyle", tts);
             GetTextDecoration(elem, tts, out _underline, out _lineThrough, out _overline);
+            GetFontVariant(elem, tts, out _fontVariantSubSuper, out _fontVariantFullHalf, out _fontVariantRuby);
             _color = elem.GetTypedAttribute<Color>("color", tts, TtmlColor.TryParse);
             _backgroundColor = elem.GetTypedAttribute<Color>("backgroundColor", tts, TtmlColor.TryParse);
             _opacity = elem.GetFloatAttribute("opacity", tts);
@@ -92,8 +96,8 @@ namespace YTSubConverter.Shared.Formats.Ttml
                        Color = Color.White,
                        BackgroundColor = Color.FromArgb(192, 8, 8, 8),
                        Opacity = 1,
-                       TextAlign = TtmlTextAlign.Center,
-                       DisplayAlign = TtmlDisplayAlign.After,
+                       TextAlign = TtmlTextAlign.Left,
+                       DisplayAlign = TtmlDisplayAlign.Before,
                        TextCombine = TtmlTextCombine.None,
                        TextShadows = new List<TtmlShadow>(),
                        Display = TtmlDisplayMode.Auto,
@@ -110,7 +114,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
         public static TtmlStyle CreateAggregateStyle(XmlElement elem, XmlNamespaceManager nsmgr, bool includeStyleElements, TtmlDocument doc)
         {
             TtmlStyle style = doc.InitialStyle;
-            
+
             // style="" attribute
             string styleId = elem.GetAttribute("style");
             if (!string.IsNullOrEmpty(styleId))
@@ -161,6 +165,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 {
                     style = style.BaseStyle;
                 }
+
                 return style;
             }
         }
@@ -215,6 +220,30 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 _underline = (value & TtmlTextDecoration.Underline) != 0;
                 _lineThrough = (value & TtmlTextDecoration.LineThrough) != 0;
                 _overline = (value & TtmlTextDecoration.Overline) != 0;
+            }
+        }
+
+        public TtmlFontVariant FontVariant
+        {
+            get
+            {
+                TtmlFontVariant variant = BaseStyle?.FontVariant ?? 0;
+                if (_fontVariantSubSuper != null)
+                    variant = (variant & ~(TtmlFontVariant.Sub | TtmlFontVariant.Super)) | _fontVariantSubSuper.Value;
+
+                if (_fontVariantFullHalf != null)
+                    variant = (variant & ~(TtmlFontVariant.Full | TtmlFontVariant.Half)) | _fontVariantFullHalf.Value;
+
+                if (_fontVariantRuby != null)
+                    variant = (variant & ~TtmlFontVariant.Ruby) | _fontVariantRuby.Value;
+
+                return variant;
+            }
+            set
+            {
+                _fontVariantSubSuper = value & (TtmlFontVariant.Sub | TtmlFontVariant.Super);
+                _fontVariantFullHalf = value & (TtmlFontVariant.Full | TtmlFontVariant.Half);
+                _fontVariantRuby = value & TtmlFontVariant.Ruby;
             }
         }
 
@@ -337,6 +366,9 @@ namespace YTSubConverter.Shared.Formats.Ttml
                        _underline = ResolveFieldBeforeInitial(s => s._underline),
                        _lineThrough = ResolveFieldBeforeInitial(s => s._lineThrough),
                        _overline = ResolveFieldBeforeInitial(s => s._overline),
+                       _fontVariantSubSuper = ResolveFieldBeforeInitial(s => s._fontVariantSubSuper),
+                       _fontVariantFullHalf = ResolveFieldBeforeInitial(s => s._fontVariantFullHalf),
+                       _fontVariantRuby = ResolveFieldBeforeInitial(s => s._fontVariantRuby),
                        _color = ResolveFieldBeforeInitial(s => s._color),
                        _backgroundColor = ResolveFieldBeforeInitial(s => s._backgroundColor),
                        _opacity = ResolveFieldBeforeInitial(s => s._opacity),
@@ -370,6 +402,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
                 style = style.BaseStyle;
             }
+
             return default;
         }
 
@@ -432,6 +465,49 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
                     case "noOverline":
                         overline = false;
+                        break;
+                }
+            }
+        }
+
+        private static void GetFontVariant(XmlElement elem, string tts, out TtmlFontVariant? subSuper, out TtmlFontVariant? fullHalf, out TtmlFontVariant? ruby)
+        {
+            subSuper = null;
+            fullHalf = null;
+            ruby = null;
+
+            string fontVariant = elem.GetAttribute("fontVariant", tts);
+            if (string.IsNullOrEmpty(fontVariant))
+                return;
+
+            foreach (string keyword in Regex.Split(fontVariant, @"\s+"))
+            {
+                switch (keyword)
+                {
+                    case "normal":
+                        subSuper = 0;
+                        fullHalf = 0;
+                        ruby = 0;
+                        break;
+
+                    case "super":
+                        subSuper = TtmlFontVariant.Super;
+                        break;
+
+                    case "sub":
+                        subSuper = TtmlFontVariant.Sub;
+                        break;
+
+                    case "full":
+                        fullHalf = TtmlFontVariant.Full;
+                        break;
+
+                    case "half":
+                        fullHalf = TtmlFontVariant.Half;
+                        break;
+
+                    case "ruby":
+                        ruby = TtmlFontVariant.Ruby;
                         break;
                 }
             }
