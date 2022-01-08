@@ -677,7 +677,7 @@ namespace YTSubConverter.Shared.Formats.Ass
         private void WriteLineMetadata(AssLine line, AssStyle style, TextWriter writer)
         {
             string effects = !line.AndroidDarkTextHackAllowed ? EffectNames.NoAndroidDarkTextHack : string.Empty;
-            writer.Write($"Dialogue: {line.Layer},{line.Start:H:mm:ss.ff},{line.End:H:mm:ss.ff},{style.Name},,0,0,0,{effects},");
+            writer.Write(@$"Dialogue: {line.Layer},{line.Start:H\:mm\:ss\.ff},{line.End:H\:mm\:ss\.ff},{style.Name},,0,0,0,{effects},");
         }
 
         private AssStyle GetStyleMatchingStructure(AssSection section)
