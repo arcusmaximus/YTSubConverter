@@ -7,13 +7,13 @@ namespace YTSubConverter.UI.Linux
     {
         public static void Main(string[] args)
         {
-            Application.Init();
             if (args.Length > 0)
             {
                 CommandLineHandler.Handle(args);
                 return;
             }
 
+            Application.Init();
             new MainWindow().Show();
             Application.Run();
         }
