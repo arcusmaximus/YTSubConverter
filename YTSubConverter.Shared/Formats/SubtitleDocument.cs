@@ -18,15 +18,23 @@ namespace YTSubConverter.Shared.Formats
         protected SubtitleDocument()
         {
             VideoDimensions = new Size(1280, 720);
+            LineMergeType = LineMergeType.MoveNew;
         }
 
         protected SubtitleDocument(SubtitleDocument doc)
         {
             VideoDimensions = doc.VideoDimensions;
+            LineMergeType = doc.LineMergeType;
             Lines.AddRange(doc.Lines.Where(l => l.Sections.Any(s => s.Text.Length > 0)));
         }
 
         public Size VideoDimensions
+        {
+            get;
+            protected set;
+        }
+
+        public LineMergeType LineMergeType
         {
             get;
             protected set;
@@ -143,7 +151,7 @@ namespace YTSubConverter.Shared.Formats
                 if (firstLine.Start < secondLine.Start)
                     InsertConcatenedLine(lines, i, firstLine.Start, secondLine.Start, false, firstLine);
 
-                if (AnchorPointUtil.IsBottomAligned(firstLine.AnchorPoint))
+                if (AnchorPointUtil.IsBottomAligned(firstLine.AnchorPoint) ^ (LineMergeType == LineMergeType.MoveExisting))
                     InsertConcatenedLine(lines, i, secondLine.Start, TimeUtil.Min(firstLine.End, secondLine.End), false, secondLine, firstLine);
                 else
                     InsertConcatenedLine(lines, i, secondLine.Start, TimeUtil.Min(firstLine.End, secondLine.End), false, firstLine, secondLine);

@@ -67,6 +67,7 @@ namespace YTSubConverter.Shared.Formats.Ass
 
             AssDocumentSection infoSection = fileSections["Script Info"];
             VideoDimensions = new Size(infoSection.GetItemInt("PlayResX", 384), infoSection.GetItemInt("PlayResY", 288));
+            LineMergeType = infoSection.GetItemString("Collisions") == "Reverse" ? LineMergeType.MoveExisting : LineMergeType.MoveNew;
 
             _styles = fileSections["V4+ Styles"].MapItems("Style", i => new AssStyle(i))
                                                 .ToDictionaryOverwrite(s => s.Name);

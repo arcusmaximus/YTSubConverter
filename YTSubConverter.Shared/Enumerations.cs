@@ -1,5 +1,11 @@
 ﻿namespace YTSubConverter.Shared
 {
+    public enum LineMergeType
+    {
+        MoveNew,
+        MoveExisting
+    }
+
     public enum AnchorPoint
     {
         TopLeft,

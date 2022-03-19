@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?><timedtext format="3"><head><wp id="0" ap="7" ah="0" av="0" /><wp id="1" ap="7" ah="50" av="100" /><ws id="0" ju="2" pd="0" sd="0" /><ws id="1" ju="2" pd="0" sd="0" /><pen id="0" sz="100" fc="#000000" fo="0" bo="0" /><pen id="1" sz="0" fc="#A0AAB4" fo="0" bo="0" /><pen id="2" sz="100" fc="#FEFEFE" fo="254" bc="#000000" bo="195" /></head><body><p t="1" d="616" wp="1" ws="1"><s p="1">​</s>​<s p="2">​ ​Line 1​ ​</s><s p="1">​</s></p><p t="617" d="768" wp="1" ws="1"><s p="1">​</s>​<s p="2">​ ​Line 1​ ​</s><s p="1">​
+​</s><s p="2">​ ​Line 2​ ​</s><s p="1">​</s></p><p t="1385" d="1001" wp="1" ws="1"><s p="1">​</s>​<s p="2">​ ​Line 1​ ​</s><s p="1">​
+​</s><s p="2">​ ​Line 2​ ​</s><s p="1">​
+​</s><s p="2">​ ​Line 3​ ​</s><s p="1">​</s></p><p t="2386" d="1301" wp="1" ws="1"><s p="1">​</s>​<s p="2">​ ​Line 1​ ​</s><s p="1">​
+​</s><s p="2">​ ​Line 2​ ​</s><s p="1">​</s></p><p t="3687" d="668" wp="1" ws="1"><s p="1">​</s>​<s p="2">​ ​Line 1​ ​</s><s p="1">​</s></p></body></timedtext>
