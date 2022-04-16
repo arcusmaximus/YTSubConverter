@@ -10,6 +10,9 @@ namespace YTSubConverter.Shared.Formats.Ass
 {
     public class VisualizingAssDocument : AssDocument
     {
+        private DateTime _simultaneousEndTime;
+        private int _simultaneousLayer;
+
         public VisualizingAssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
             : base(filePath, styleOptions)
         {
@@ -19,8 +22,10 @@ namespace YTSubConverter.Shared.Formats.Ass
             : base(doc)
         {
             ClearExplicitDefaultPositions();
-            AssignLayers();
             EmulateKaraokeForLinesWithBackgroundOrShadow();
+
+            // Sort lines by timestamp so that layer assigning works correctly afterwards
+            SortLines();
         }
 
         // If a line has an explicit position that's the same as the default position for its alignment,
@@ -39,29 +44,6 @@ namespace YTSubConverter.Shared.Formats.Ass
                 {
                     line.Position = null;
                 }
-            }
-        }
-
-        // Assign layers to prevent time-overlapping, default-positioned lines from stacking
-        private void AssignLayers()
-        {
-            List<AssLine> sortedLines = Lines.Where(l => l.Position == null)
-                                             .OrderBy(l => l.Start)
-                                             .Cast<AssLine>()
-                                             .ToList();
-            DateTime endTime = DateTime.MinValue;
-            int layer = 0;
-            foreach (AssLine line in sortedLines)
-            {
-                if (line.Start < endTime)
-                    layer++;
-                else
-                    layer = 0;
-
-                line.Layer = layer;
-
-                if (line.End > endTime)
-                    endTime = line.End;
             }
         }
 
@@ -95,6 +77,13 @@ namespace YTSubConverter.Shared.Formats.Ass
             return FontSizeMapper.FontSizeToLineHeight(font, fontSize);
         }
 
+        public override void Save(TextWriter writer)
+        {
+            _simultaneousEndTime = DateTime.MinValue;
+            _simultaneousLayer = 0;
+            base.Save(writer);
+        }
+
         protected override void WriteLine(AssLine line, TextWriter writer)
         {
             MoveLineBreaksToSeparateSections(line);
@@ -103,23 +92,41 @@ namespace YTSubConverter.Shared.Formats.Ass
 
             if (line.Sections.All(s => s.ShadowColors.Count == 0))
             {
+                AssignLayer(line);
                 base.WriteLine(line, writer);
                 return;
             }
 
             if (line.Sections.Any(s => s.BackColor.A > 0))
-                base.WriteLine(CreateBackgroundVisualizationLine(line), writer);
+            {
+                AssLine backgroundLine = CreateBackgroundVisualizationLine(line);
+                AssignLayer(backgroundLine);
+                base.WriteLine(backgroundLine, writer);
+            }
 
-            int layerOffset = 1000;
             foreach (AssLine shadowLine in CreateShadowVisualizationLines(line))
             {
-                shadowLine.Layer += layerOffset++;
+                AssignLayer(shadowLine);
                 base.WriteLine(shadowLine, writer);
             }
 
             AssLine textLine = CreateTextVisualizationLine(line);
-            textLine.Layer += layerOffset;
+            AssignLayer(textLine);
             base.WriteLine(textLine, writer);
+        }
+
+        // Assign layer to prevent time-overlapping lines from stacking
+        private void AssignLayer(AssLine line)
+        {
+            if (line.Start < _simultaneousEndTime)
+                _simultaneousLayer++;
+            else
+                _simultaneousLayer = 0;
+
+            line.Layer = _simultaneousLayer;
+
+            if (line.End > _simultaneousEndTime)
+                _simultaneousEndTime = line.End;
         }
 
         // Aegisub's background boxes can have padding just like on YouTube, and the horizontal and vertical padding

@@ -110,6 +110,13 @@ namespace YTSubConverter.Shared.Formats
             }
         }
 
+        public void SortLines()
+        {
+            List<Line> sortedLines = Lines.OrderBy(l => l.Start).ToList();
+            Lines.Clear();
+            Lines.AddRange(sortedLines);
+        }
+
         public void MergeSimultaneousLines()
         {
             List<Line> lines = Lines.Where(l => l.Start < l.End)
