@@ -67,7 +67,7 @@ namespace YTSubConverter.UI.Linux
             Icon = new Gdk.Pixbuf(Assembly.GetEntryAssembly().GetManifestResourceStream("YTSubConverter.UI.Linux.icon32.png"));
 
             List<AssStyleOptions> builtinStyleOptions = AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions);
-            List<AssStyleOptions> customStyleOptions = AssStyleOptionsList.LoadFromFile();
+            List<AssStyleOptions> customStyleOptions = AssStyleOptionsList.LoadFromFile(GetStyleOptionsFilePath());
             _styleOptions = customStyleOptions.Concat(builtinStyleOptions).ToDictionaryOverwrite(o => o.Name);
             _builtinStyleNames = builtinStyleOptions.Select(o => o.Name).ToHashSet();
 
@@ -507,13 +507,26 @@ namespace YTSubConverter.UI.Linux
 
         private void MainWindow_DeleteEvent(object sender, DeleteEventArgs e)
         {
+            string filePath = GetStyleOptionsFilePath();
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(filePath));
             AssStyleOptionsList.SaveToFile(
                 _styleOptions.Where(p => !_builtinStyleNames.Contains(p.Key))
-                             .Select(p => p.Value)
+                             .Select(p => p.Value),
+                filePath
             );
 
             Application.Quit();
             e.RetVal = true;
+        }
+
+        private static string GetStyleOptionsFilePath()
+        {
+            string filePath = AssStyleOptionsList.GetDefaultFilePath();
+            if (File.Exists(filePath))
+                return filePath;
+
+            string homeFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            return System.IO.Path.Combine(homeFolderPath, ".config", "ytsubconverter", AssStyleOptionsList.FileName);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace YTSubConverter.Shared
     [XmlRoot("StyleOptions")]
     public class AssStyleOptionsList
     {
-        private const string FileName = "StyleOptions.xml";
+        public const string FileName = "StyleOptions.xml";
 
         public AssStyleOptionsList()
         {
@@ -29,9 +29,7 @@ namespace YTSubConverter.Shared
 
         public static List<AssStyleOptions> LoadFromFile(string filePath = null)
         {
-            if (filePath == null)
-                filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
-
+            filePath ??= GetDefaultFilePath();
             if (!File.Exists(filePath))
                 return new List<AssStyleOptions>();
 
@@ -65,13 +63,15 @@ namespace YTSubConverter.Shared
 
         public static void SaveToFile(IEnumerable<AssStyleOptions> options, string filePath = null)
         {
-            if (filePath == null)
-                filePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
-
-            using Stream stream = File.Open(filePath, FileMode.Create, FileAccess.Write);
+            using Stream stream = File.Open(filePath ?? GetDefaultFilePath(), FileMode.Create, FileAccess.Write);
             XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
             AssStyleOptionsList list = new AssStyleOptionsList(options);
             serializer.Serialize(stream, list);
+        }
+
+        private static string GetDefaultFilePath()
+        {
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
         }
     }
 }
