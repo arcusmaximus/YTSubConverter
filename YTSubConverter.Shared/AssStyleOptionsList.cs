@@ -69,7 +69,7 @@ namespace YTSubConverter.Shared
             serializer.Serialize(stream, list);
         }
 
-        private static string GetDefaultFilePath()
+        public static string GetDefaultFilePath()
         {
             return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), FileName);
         }
