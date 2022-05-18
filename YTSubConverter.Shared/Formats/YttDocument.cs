@@ -373,7 +373,7 @@ namespace YTSubConverter.Shared.Formats
         }
 
         /// <summary>
-        /// If a section has a soft shadow and doesn't have a space at the end (like in "This {\i1}word{\i0} is important"),
+        /// If a section has a shadow and doesn't have a space at the end (like in "This {\i1}word{\i0} is important"),
         /// the shadow will get cut off which doesn't look pretty. To fix this, steal the starting space of the next section
         /// (if available) so we get "This {\i1}word {\i0}is important", giving the shadow room to fall into.
         /// For RTL languages, we should steal the ending space of the preceding section instead.
@@ -391,7 +391,7 @@ namespace YTSubConverter.Shared.Formats
                     continue;
                 }
 
-                if (!currSection.ShadowColors.ContainsKey(ShadowType.SoftShadow))
+                if (currSection.ShadowColors.Count == 0)
                     continue;
 
                 if (currSection.Text.Any(CharacterRange.IsRightToLeft))
