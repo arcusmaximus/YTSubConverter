@@ -245,9 +245,13 @@ namespace YTSubConverter.Shared.Formats
             while (i < line.Sections.Count)
             {
                 Section section = line.Sections[i];
-                if (i > 0 && Regex.IsMatch(section.Text, @"^[\r\n]+$"))
+                if (Regex.IsMatch(section.Text, @"^[\r\n]+$") && line.Sections.Count > 1)
                 {
-                    line.Sections[i - 1].Text += section.Text;
+                    if ((i > 0 && line.Sections[i - 1].Scale == section.Scale) || i == line.Sections.Count - 1)
+                        line.Sections[i - 1].Text += section.Text;
+                    else
+                        line.Sections[i + 1].Text = section.Text + line.Sections[i + 1].Text;
+
                     section.Text = "";
                 }
 
@@ -568,44 +572,20 @@ namespace YTSubConverter.Shared.Formats
         ///   obvious but didn't actually fix it.)
         /// - It's not RTL-aware. Padding that's supposed to be on the outer sides ends up in the middle instead,
         ///   leaving the subtitle with not just cut-off ends but also unwanted gaps.
-        /// For this reason, we hide YouTube's padding and make our own with spaces instead. We need to do this in
-        /// two cases:
-        /// - The subtitle has a background box.
-        /// - The subtitle overlaps another in time and position. (In this case, having manual padding on one
-        ///   subtitle but not the other might very well result in them getting misaligned. Also, this is a
-        ///   two-birds-in-one-stone workaround for a new bug YouTube introduced in May 2020, where overlapping
-        ///   subtitles flicker horribly or don't show up at all: the bug only affects lines with a single
-        ///   section, and applying manual padding ensures we have multiple.
+        /// What's more:
+        /// - In order to work around YouTube's age-old multisection bug (see WriteLine())
+        ///   we need to add a zero-width space, but doing so changes the line height on
+        ///   some browsers/platforms/fonts. This means we need to make sure *every* line of text
+        ///   has at least one zwsp, as otherwise, subtitles may visibly shift when transitioning
+        ///   from multiple sections (with zwsp) to one section (without zwsp), such as at
+        ///   the last syllable of a karaoke line.
+        /// - In May 2020, YouTube introduced a bug that causes overlapping subtitles to flicker horribly
+        ///   or not show up at all. The bug only affects lines with a single section,
+        ///   and applying manual padding ensures we always have multiple.
         /// </summary>
         private void ApplyManualLinePadding()
         {
-            List<Line> sortedLines = Lines.ToList();
-            sortedLines.Sort((x, y) => x.Start.CompareTo(y.Start));
-
-            HashSet<Line> linesToPad = new HashSet<Line>();
-            for (int i = 0; i < sortedLines.Count; i++)
-            {
-                Line line1 = sortedLines[i];
-                Point line1Position = GetYouTubePosition(line1);
-
-                for (int j = i + 1; j < sortedLines.Count; j++)
-                {
-                    Line line2 = sortedLines[j];
-                    if (line2.Start >= line1.End)
-                        break;
-
-                    if (GetYouTubePosition(line2) != line1Position)
-                        continue;
-
-                    linesToPad.Add(line1);
-                    linesToPad.Add(line2);
-                }
-
-                if (line1.Sections.Any(s => s.BackColor.A > 0))
-                    linesToPad.Add(line1);
-            }
-
-            foreach (Line line in linesToPad)
+            foreach (Line line in Lines)
             {
                 ApplyManualLinePadding(line);
                 AvoidZeroDurationKaraoke(line);
@@ -625,8 +605,7 @@ namespace YTSubConverter.Shared.Formats
                 new Section
                 {
                     BackColor = Color.FromArgb(0, 130, 140, 150),
-                    ForeColor = Color.FromArgb(0, 160, 170, 180),
-                    Scale = 0.1f
+                    ForeColor = Color.FromArgb(0, 160, 170, 180)
                 };
 
             int i = 0;
@@ -634,6 +613,8 @@ namespace YTSubConverter.Shared.Formats
             {
                 Section section = line.Sections[i];
                 int nextSectionIdx = i + (section.RubyPart == RubyPart.Base ? 4 : 1);
+
+                hiddenSectionTemplate.Scale = section.Scale;
 
                 if (section.Text.Contains("\r\n"))
                 {
@@ -839,7 +820,7 @@ namespace YTSubConverter.Shared.Formats
 
             if (line.Sections.Count == 1)
             {
-                WriteSectionValue(writer, line, line.Sections[0]);
+                WriteSectionValue(writer, line.Sections[0]);
             }
             else
             {
@@ -865,32 +846,13 @@ namespace YTSubConverter.Shared.Formats
             if (section.StartOffset > TimeSpan.Zero)
                 writer.WriteAttributeString("t", ((int)section.StartOffset.TotalMilliseconds).ToString());
 
-            WriteSectionValue(writer, line, section);
+            WriteSectionValue(writer, section);
             writer.WriteEndElement();
         }
 
-        private void WriteSectionValue(XmlWriter writer, Line line, Section section)
+        private void WriteSectionValue(XmlWriter writer, Section section)
         {
-            string text = section.Text;
-            if (line.VerticalTextType != VerticalTextType.Positioned)
-                text = AddLineHeightEqualizers(text);
-
-            writer.WriteValue(text);
-        }
-
-        // In order to work around YouTube's age-old multisection bug (see WriteLine())
-        // we need to add a zero-width space, but doing so changes the line height on
-        // some browsers/platforms/fonts. This means we need to make sure *every* line of text
-        // has at least one zwsp, as otherwise, subtitles may visibly shift when transitioning
-        // from multiple sections (with zwsp) to one section (without zwsp), such as at
-        // the last syllable of a karaoke line.
-        private static string AddLineHeightEqualizers(string text)
-        {
-            return Regex.Replace(
-                text,
-                @"[^\r\n]+",
-                m => !m.Value.Contains(ZeroWidthSpace) ? ZeroWidthSpace + m.Value : m.Value
-            );
+            writer.WriteValue(section.Text);
         }
 
         // YouTube decided to be helpful by moving your subtitles slightly towards the center so they'll never sit at the video's edge.
