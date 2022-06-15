@@ -525,8 +525,9 @@ namespace YTSubConverter.UI.Linux
             if (File.Exists(filePath))
                 return filePath;
 
-            string homeFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            return System.IO.Path.Combine(homeFolderPath, ".config", "ytsubconverter", AssStyleOptionsList.FileName);
+            string configDir = Environment.GetEnvironmentVariable("XDG_CONFIG_HOME") ??
+                               System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".config");
+            return System.IO.Path.Combine(configDir, "ytsubconverter", AssStyleOptionsList.FileName);
         }
     }
 }
