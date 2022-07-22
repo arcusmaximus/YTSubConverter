@@ -122,7 +122,7 @@ While this approach can save you a lot of time, it does require some initial set
 * Launch the program.
 * Open the menu Tools → Options.
   * On the "HTTPS" tab, enable "Capture HTTPS CONNECTs" as well as "Decrypt HTTPS traffic."
-  * Allow the program to install the security certificate. (Note: if you're using Firefox, some [additional steps](https://docs.telerik.com/fiddler/Configure-Fiddler/Tasks/FirefoxHTTPS) may be needed)
+  * Allow the program to install the security certificate. (Note: if you're using Firefox and still getting certificate errors, you may need to click "Export Root Certificate to Desktop" and then [import it manually](https://docs.titanhq.com/en/3834-importing-ssl-certificate-in-mozilla-firefox.html).)
   * Click OK.
 * In the toolbar, change "Keep: All sessions" to "Keep: 100 sessions." (This is to keep the request log from growing too much if you leave the program open for a long time)
 * Switch to the "AutoResponder" tab in the right hand panel.
