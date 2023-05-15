@@ -22,7 +22,7 @@ The current version is **1.6.3** and is available for Windows, macOS and Linux (
 [![Download](images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases)
 
 ## Usage
-YTSubConverter is primarily an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](https://github.com/Aegisub/Aegisub/releases/tag/v3.2.2).
+YTSubConverter is primarily an .ass → .ytt converter. You can create .ass subtitles using [Aegisub](https://github.com/wangqr/Aegisub/releases).
 
 Conversion is straightforward: launch the program, open your .ass file and click Convert. Alternatively, drag the .ass straight onto the .exe (Windows only). In both cases, you'll get a .ytt file that's ready for upload.
 
@@ -198,7 +198,7 @@ Then do the following for each video:
 * When you're done, copy all the text and paste it into Aegisub's subtitle grid (simply click the grid and press Ctrl-V).
 * Next, run the script by clicking Automation → Replace markers → \<channel name\> in the Aegisub menu. This will remove the markers and assign the corresponding styles.
 * Set up the timings and additional formatting.
-  * If the video has hardsubs, you can save a lot of time by using the "Align subtitle to video" feature of this [unofficial Aegisub version](https://github.com/wangqr/Aegisub/releases). Simply select the softsub, activate the feature from the toolbar, click a point in the hardsub and click OK; the timing of the softsub will be automatically updated to match. To work even faster, set up a hotkey for this feature using the `time/align` command name.
+  * If the video has hardsubs, you can save a lot of time by using the "Align subtitle to video" feature. Simply select the softsub, activate the feature from the toolbar, click a point in the hardsub and click OK; the timing of the softsub will be automatically updated to match. To work even faster, set up a hotkey for this feature using the `time/align` command name.
 * Save the subtitles as an .ass file.
 * Convert the .ass to .ytt using YTSubConverter.
 * Send the .ytt to the channel owner for uploading and publishing.
