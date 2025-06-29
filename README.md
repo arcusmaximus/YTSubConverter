@@ -97,7 +97,7 @@ It also supports the following [override tags](https://aegi.vmoe.info/docs/3.0/A
   * `{\ytchroma(offsetX, offsetY, intime, outtime)}` - the first copy starts at `offsetX` pixels to the left of and `offsetY` pixels above the subtitle position. (The last copy starts at the same distance in the opposite direction.) Both offsets can be negative.
   * `{\ytchroma(color1, color2..., alpha, offsetX, offsetY, intime, outtime)}` - replace the default red/green/blue by any number of custom colors. Both the colors and the alpha value should be specified in hexadecimal (`&H...&`).
 * `{\ytkt}` - enables advanced Karaoke Types.
-  * `{\ytktFade}` - Configure the line to use fading karaoke.
+  * `{\ytktFade}` - Configure the line to use fading karaoke. While the effect looks nice, it results in very large subtitle files and can cause lag on certain devices.
   * `{\ytktGlitch}` - Configure the line to use karaoke with glitching text. Looks for Latin, Chinese, Japanese and Korean characters in each syllable and generates random ones accordingly. Works best with left-aligned text and invisible unsung lyrics (= fully transparent secondary color).
   * `{\ytkt(Cursor,text)}` - Places the specified text after the word that's currently being sung.
   * `{\ytkt(Cursor,formatting tags,text)}` - Like the above, but you can customize the look of the cursor with override tags (similar to `\t`).
