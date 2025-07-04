@@ -1,6 +1,3 @@
-# This script was based on `https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/CustomRules.js`.
-# All merit goes to that original script.
-
 # READ THESES INSTRUCTIONS!!!!!!!!!!
 
 # Edit "REPLACE ME" in the "subtitle_location" line to be the location of your subtitles.
@@ -129,7 +126,7 @@ def makeSubtitlesVisible(flow: http.HTTPFlow):
     split_website = split_ytInitialPlayerResponse(response_body)
     youtube_json = jsonload(split_website[1])
     
-    if not ("captions" in youtube_json): return
+    if not "captions" not in youtube_json: return
 
     video_id = youtube_json["videoDetails"]["videoId"]
     youtube_json["captions"] = generate_dummy_captions(video_id) 
