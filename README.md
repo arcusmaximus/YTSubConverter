@@ -114,7 +114,7 @@ The repository contains two sample .ass files:
 ## Testing on PC
 After you upload a subtitle file to a video, you get a preview in YouTube's subtitle editor - however, this is a barebones preview that merely shows the text with the default style. To see your custom styling, you'd have to publish the subtitles so you can view them in the "real" player, and repeat this each time you make a change. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
 
-Fortunately, there's a faster way to get a full preview: running a special program that sends your locally stored subtitle file directly to your browser, letting you view them in the "real" player without uploading them at all. There are (at least) two such programs availble for free. Click their name for details:
+Fortunately, there's a faster way to get a full preview: running a special program that sends your locally stored subtitle file directly to your browser, letting you view them in the "real" player without uploading them at all. There are (at least) two such programs available for free. Click their name for details:
 
 <details>
 <summary>Fiddler Classic</summary>
