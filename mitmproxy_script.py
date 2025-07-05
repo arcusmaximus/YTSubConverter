@@ -1,9 +1,7 @@
-# READ THESES INSTRUCTIONS!!!!!!!!!!
-
-# Edit "REPLACE ME" in the "subtitle_location" line to be the location of your subtitles.
+# Change the "REPLACE ME" below to the location of your subtitles.
 # Keep the quotes and the starting R.
-
 # It should look something like this (without the hashtag at the start):
+#
 # subtitle_location = r"C:\Users\Administrator\Documents\my cool subtitles.ytt"
 
 subtitle_location = r"REPLACE ME"
@@ -66,8 +64,7 @@ def read_subtitle_file() -> bytes:
 read_subtitle_file()
 
 def generate_dummy_captions(video_id: str) -> dict[str, Any]:
-    # generate text track
-    captionTrack = {
+    caption_track = {
         "baseUrl": "https://www.youtube.com/api/timedtext?v=" + video_id,
         "vssId": ".pr",
         "languageCode": "pr",
@@ -79,17 +76,15 @@ def generate_dummy_captions(video_id: str) -> dict[str, Any]:
         }
     }
 
-    # generate audio track
-    audioTrack = {
+    audio_track = {
         "defaultCaptionTrackIndex": 0,
         "hasDefaultTrack": True,
         "captionTrackIndices": [ 0 ],
     }
 
-    #put it all together
     renderer = {
-        "captionTracks": [ captionTrack ],
-        "audioTracks": [ audioTrack ],
+        "captionTracks": [ caption_track ],
+        "audioTracks": [ audio_track ],
         "defaultAudioTrackIndex": 0,
     }
     return { "playerCaptionsTracklistRenderer": renderer }
@@ -110,11 +105,10 @@ def ensure_subtitle_selector(flow: http.HTTPFlow) -> None:
     video_id = player_response["videoDetails"]["videoId"]
     player_response["captions"] = generate_dummy_captions(video_id)
 
-    # put back the HTML with the new json
     html = html[:match.start(1)] + json.dumps(player_response) + html[match.end(1):]
     flow.response.content = html.encode()
 
-def apply_custom_subtitles(flow: http.HTTPFlow):
+def apply_custom_subtitles(flow: http.HTTPFlow) -> None:
     if not flow.request.url.startswith("https://www.youtube.com/api/timedtext"):
         return
 
@@ -130,8 +124,8 @@ def apply_custom_subtitles(flow: http.HTTPFlow):
     )
 
 # mitmproxy functions
-def response(flow: http.HTTPFlow):
+def response(flow: http.HTTPFlow) -> None:
     ensure_subtitle_selector(flow)
 
-def request(flow: http.HTTPFlow):
+def request(flow: http.HTTPFlow) -> None:
     apply_custom_subtitles(flow)
