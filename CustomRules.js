@@ -12,6 +12,8 @@ import System.Web;
 import System.Windows.Forms;
 import Fiddler;
 import Fiddler.WebFormats;
+import Newtonsoft.Json;
+import Newtonsoft.Json.Linq; 
 
 class Handlers
 {
@@ -25,61 +27,61 @@ class Handlers
         if (!responseMatch.Success)
             return;
         
-        var playerResponse: Hashtable = JSON.JsonDecode(responseMatch.Groups[1].Value).JSONObject;
+        var playerResponse: JObject = JObject.Parse(responseMatch.Groups[1].Value);
         if (playerResponse["captions"] != null)
             return;
         
         var videoId: String = playerResponse["videoDetails"]["videoId"];
         playerResponse["captions"] = CreateCaptionsObject(videoId);
         html = html.Substring(0, responseMatch.Groups[1].Index) +
-               JSON.JsonEncode(playerResponse) +
+               JsonConvert.SerializeObject(playerResponse) +
                html.Substring(responseMatch.Groups[1].Index + responseMatch.Groups[1].Length);
         
         oSession.utilSetResponseBody(html);
     }
       
-    static function CreateCaptionsObject(videoId: String): Object {
-        var captionTracks = new ArrayList();
+    static function CreateCaptionsObject(videoId: String): JObject {
+        var captionTracks = new JArray();
         captionTracks.Add(CreateCaptionTrackObject(videoId));
         
-        var audioTracks = new ArrayList();
+        var audioTracks = new JArray();
         audioTracks.Add(CreateAudioTrackObject());
         
-        var renderer = new Hashtable();
+        var renderer = new JObject();
         renderer["captionTracks"] = captionTracks;
         renderer["audioTracks"] = audioTracks;
         renderer["defaultAudioTrackIndex"] = 0;
         
-        var captions = new Hashtable();
+        var captions = new JObject();
         captions["playerCaptionsTracklistRenderer"] = renderer;
         return captions;
     }
         
-    static function CreateCaptionTrackObject(videoId: String): Object {
-        var captionTrack = new Hashtable();
+    static function CreateCaptionTrackObject(videoId: String): JObject {
+        var captionTrack = new JObject();
         captionTrack["baseUrl"] = "https://www.youtube.com/api/timedtext?v=" + Uri.EscapeUriString(videoId);
         captionTrack["vssId"] = ".pr";
         captionTrack["languageCode"] = "pr";
         captionTrack["isTranslatable"] = true;
         
-        var run = new Hashtable();
+        var run = new JObject();
         run["text"] = "Preview";
-        var runs = new ArrayList();
+        var runs = new JArray();
         runs.Add(run);
-        var name = new Hashtable();
+        var name = new JObject();
         name["runs"] = runs;
-        captionTrack.Add("name", name);
+        captionTrack["name"] = name;
         return captionTrack;
     }
         
-    static function CreateAudioTrackObject(): Object {
-        var audioTrack = new Hashtable();
-        audioTrack.Add("defaultCaptionTrackIndex", 0);
-        audioTrack.Add("hasDefaultTrack", true);
+    static function CreateAudioTrackObject(): JObject {
+        var audioTrack = new JObject();
+        audioTrack["defaultCaptionTrackIndex"] = 0;
+        audioTrack["hasDefaultTrack"] = true;
         
-        var captionTrackIndices = new ArrayList();
+        var captionTrackIndices = new JArray();
         captionTrackIndices.Add(0);
-        audioTrack.Add("captionTrackIndices", captionTrackIndices);
+        audioTrack["captionTrackIndices"] = captionTrackIndices;
         
         return audioTrack;
     }
