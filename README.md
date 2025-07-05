@@ -112,19 +112,21 @@ The repository contains two sample .ass files:
 * [Karaoke sample](sample2.ass) ([YouTube video](https://www.youtube.com/watch?v=eB90el6Zb_k))
 
 ## Testing on PC
-After you upload a subtitle file, YouTube gives you a preview so you can try it out before submitting. This is nice, except that the preview only shows the file's text; it doesn't show the styling. This complicates testing: each time you make a change and want to see the result, you'd have to actually publish the subtitles so you can see them in the "real" player. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
+After you upload a subtitle file to a video, you get a preview in YouTube's subtitle editor - however, this is a barebones preview that merely shows the text with the default style. To see your custom styling, you'd have to publish the subtitles so you can view them in the "real" player, and repeat this each time you make a change. This is especially bothersome if you're contributing to someone else's channel, as you'd have to get the subtitles approved each time (or make a copy of the video on your own channel).
 
-Fortunately, there are easier ways to preview your subtitles: they involve running a special program that intercepts network traffic from your browser and modifies it to use your subtitles - pretend it's magic if don't know what that any of that means. The first method of previewing your subtitles is using **Fiddler Classic**.  It is a free, proprietary software that is only available on Windows. If you're not tech-savvy, you should use this one, as it has a simple setup process. Not everyone uses Windows, or maybe you use Windows and prefer using open-source programs - there's a second method for this case, mitmproxy. It has a slightly more complex setup, but it's still simple enough to configure in 10 minutes.
+Fortunately, there's a faster way to get a full preview: running a special program that sends your locally stored subtitle file directly to your browser, letting you view them in the "real" player without uploading them at all. There are (at least) two such programs availble for free. Click their name for details:
 
 <details>
 <summary>Fiddler Classic</summary>
 
-* Download and install [Fiddler](https://www.telerik.com/download/fiddler). (Note that the link points to the "Classic" version, which is free but only runs on Windows. The "Everywhere" version also runs on macOS and Linux, but requires a monthly subscription.)
+Fiddler Classic is easy to use, but is proprietary and only runs on Windows. (The more modern Fiddler Everywhere also runs on macOS and Linux, but requires a monthly subscription.)
+
+* Download and install [Fiddler Classic](https://www.telerik.com/download/fiddler). You don't need to enter a valid email address.
 * Place the script [CustomRules.js](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/CustomRules.js) in the folder Documents\Fiddler2\Scripts. This will later enable previewing subtitles on videos that don't have any subtitles yet. (If it causes problems, you can just delete it again.)
 * Launch the program.
 * Open the menu Tools → Options.
   * On the "HTTPS" tab, enable "Capture HTTPS CONNECTs" as well as "Decrypt HTTPS traffic."
-  * Allow the program to install the security certificate. (Note: if you're using Firefox and still get certificate errors after this, you may need to click "Export Root Certificate to Desktop" and then [import it manually](https://docs.titanhq.com/en/3834-importing-ssl-certificate-in-mozilla-firefox.html).)
+  * Allow the program to install the security certificate. (Note: if you're using Firefox and still get certificate errors after this, you may need to click "Actions → Export Root Certificate to Desktop" and then [import it manually](https://docs.titanhq.com/en/3834-importing-ssl-certificate-in-mozilla-firefox.html).)
   * Click OK.
 * In the toolbar, change "Keep: All sessions" to "Keep: 100 sessions." (This is to keep the request log from growing too much if you leave the program open for a long time)
 * Switch to the "AutoResponder" tab in the right hand panel.
@@ -134,31 +136,40 @@ Fortunately, there are easier ways to preview your subtitles: they involve runni
   * Click "Save."
 
 Once this initial setup is done, you only need to do the following whenever you want to test subtitles:
-* Launch Fiddler
-* Select the rule on the "AutoResponder" tab
-* Put the path to your local .ytt file in the bottom textbox in the "Rule Editor"
+* Launch Fiddler.
+* Select the rule on the "AutoResponder" tab.
+* Put the path to your local .ytt file in the bottom textbox in the "Rule Editor".
 * Click "Save."
 
-As long as Fiddler is running (and the rule is enabled), any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it: simply disable and re-enable CCs in the video to make the YouTube player "redownload" them.
 </details>
 
 <details>
 <summary>mitmproxy</summary>
-Before you start, do note that the "mitm" in mitmproxy stands for "Man In The Middle". It's a common digital security attack that involves putting a third-party between your computer and the internet. That third-party will then intercept the communication and compromise it in a way that it can easily listen in on what you're doing. This is essentially what mitmproxy doing, in an environment controlled by you. This explanation is provided so you don't freak out when your browser says you're getting hacked.
 
-And you might also want to use a different **browser** profile for subtitles, as you'll change multiple sensitive settings that you'll have to switch back once you're done previewing subtitles.
+mitmproxy is open source and runs on Windows, Linux, and macOS. However, it's somewhat harder to set up.
 
-* Download and install [mitmproxy](https://mitmproxy.org/). If you're on Linux, install it through your package manager.
-* Download the [script](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/mitmproxy_script.py) and place it in an easily accessible folder, like the folder you put YTSubConverter.
-* Open your terminal (On Windows, press Win+R, type "cmd" then Enter), type in "mitmdump", and press enter. It should tell you it's listening to the port 8080. Don't worry if it's on a different port, just replace 8080 with that port in the next steps.
-* Open your browser, access its settings (this is where I recommend switching to a different browser profile) and set it to use a proxy. Configure it to use "127.0.0.1:8080" for both HTTP and HTTPS. At this point, if you try accessing Google or any other website, your browser will give you a security warning. That's normal, it just means your browser has discovered there's a MITM proxy trying to fool it, which is indeed what we're doing.
-* Access "http://mitm.it", it will have a list of digital certificates for you to install and the procedure to install each. Install the necessary ones accordingly, usually just the one for your OS and the one for Firefox if you use it. Do note that your browser might adopt a "certificate pinning" technique to combat against MITM attack, and you'll have to disable it to use the proxy. This is usually done by accessing the developer settings in your browser and disabling the setting (for example, accessing `about:config` on Firefox and setting `security.cert_pinning.enforcement_level` to 0. This is a sensitive setting! If you're not using a separate browser profile by now, you should set it back to its previous value after doing your subtitle work.) Once that's done, you'll be able to access any website normally again, and the terminal window you opened previously will be thriving with logs of what your browser is accessing.
-* Close the terminal window or press Ctrl+C while it's selected to close down the proxy.
-* Open the previously downloaded script in a text editor, and insert the location to the subtitles in the right place. There'll be instructions telling you where to put it. If you know how to code in Python, this might be a good moment to read what the script does. It's good practice to check what random online scripts do before running them!
-* At last, through a terminal, access the folder you put the script in, and run `mitmdump -s mitmproxy_script.py`. Pay attention to what the terminal says, if you accidentally followed the last step wrongly, it'll error out as soon as it can.
+* Download and install [mitmproxy](https://mitmproxy.org/). If you're on Linux, it may be available through your package manager.
+* Start the program "mitmdump".
+* Open your browser's settings, search for "Proxy", and configure it to use the proxy with address 127.0.0.1 and the port that mitmdump displays (normally 8080). This should be done for both HTTP and HTTPS.
+  * Chrome doesn't have its own proxy configuration and will point you to your system settings instead.
+  * Once you apply this change, your browser will start showing security warnings about your network traffic being intercepted. This is expected - after all, the whole reason we're setting up mitmproxy is to intercept and modify the traffic between your browser and YouTube.
+* Browse to http://mitm.it and follow the instructions to install the certificate. This will tell your browser that mitmproxy can be trusted so that it will no longer show the security warnings.
+  * If you still can't access YouTube at this point, your browser might have an additional security feature called "certificate pinning." This will also need to be disabled to use mitmproxy. In Firefox, this can be done by browsing to `about:config` and setting `security.cert_pinning.enforcement_level` to 0. Once you're done testing your subtitles, make sure to set it back to 1.
+* Download the script [mitmproxy_script.py](https://raw.githubusercontent.com/arcusmaximus/YTSubConverter/master/mitmproxy_script.py) and place it in an easily accessible folder, ideally right next to the mitmproxy binaries.
+* Create a shell script with the following content: `mitmdump -s mitmproxy_script.py`. (On Windows, you can create a .txt file and rename it to .bat)
+* Close the mitmdump window.
 
-And that should be it! Once you try to access any youtube video, the captions should appear as "Preview" and it should be the one you specified in the script earlier. You can make a shortcut or shell script to execute the last step automatically, if you want.
+Once this initial setup is done, you need to do the following whenever you want to test subtitles:
+
+* Edit mitmproxy_script.py and replace the text `REPLACE ME` by the path to your subtitle file.
+* Start mitmdump using the shell script (.bat file) you created.
+* Enable the proxy in your browser's (or system's) proxy settings.
+
+When you're done, close mitmdump and disable the proxy in your browser's (or system's) settings again.
+
 </details>
+
+As long as Fiddler/mitmproxy is running, any YouTube video you view will have the specified .ytt file as its subtitles. If you make a change to the file, you don't even need to refresh the page in your browser to see it: simply disable and re-enable CCs in the video to make the YouTube player "redownload" them.
 
 To save even more time while testing and tweaking, you can click the "Autoconvert" button in the converter GUI. As long as this button is enabled, YTSubConverter will automatically convert the currently selected .ass file whenever it detects a change. This means you can make a change in Aegisub, save the .ass, and reload the subtitles in YouTube to see the result without ever having to pass by the converter.
 
