@@ -210,7 +210,7 @@ Apart from the usual .ass → .ytt, YTSubConverter can also convert in the oppos
   * By default, it'll produce an .ass file that you can edit and convert back to .ytt, getting the exact same look with different text. Example use cases: fixing a mistake in your own published subtitles if you already deleted the .ass, or translating someone else's published subtitles for which you never had the .ass in the first place.
   * You can also get an .ass that emulates how the subtitles look on YouTube. To do this, you need to call the converter from the command line, passing it the .ytt/.srv3 path along with the `--visual` option. While the resulting .ass can't be converted back to .ytt, it does give you (almost) the same visual experience in a local media player as on YouTube. Example use case: archiving videos so you can keep watching them, with visually accurate subtitles, even if they get taken down.
 
-You can download a video along with its published .ytt/.srv3 subtitles by using [youtube-dl](https://youtube-dl.org/) with the following options: `--write-sub --all-subs --sub-format=srv3`
+You can download a video along with its published .ytt/.srv3 subtitles by using [yt-dlp](https://github.com/yt-dlp/yt-dlp) with the following options: `--write-subs --sub-langs all --sub-format=srv3`
 
 Alternatively, you can download just the subtitles using the following steps:
 * Browse to the video, start playing it, then pause it.
@@ -228,7 +228,7 @@ First do some initial setup:
 * Choose a marker (ideally a single, special character) for each style and link these markers to their styles inside the script. The script contains some examples, and as you'll see, it's in fact possible to register multiple marker sets for different YouTube channels.
 
 Then do the following for each video:
-* Download the video using e.g. [youtube-dl](https://youtube-dl.org/).
+* Download the video using e.g. [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 * Open the locally saved video in a player that supports global hotkeys (e.g. VLC). If you haven't yet, set up hotkeys for pausing, resuming and rewinding the video.
 * Open Notepad and type out the subtitles, using the global hotkeys to control the video without having to switch between windows.
 * While typing, prefix each line with the marker of the style it should get later on. (e.g. `*Hello, Darling!`)
