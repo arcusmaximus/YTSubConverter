@@ -39,6 +39,13 @@ namespace YTSubConverter.UI.Win
 
             ExpandCollapseStyleOptions();
             ClearUI();
+
+            string lastFilePath = Properties.Settings.Default.LastFilePath;
+            if (!string.IsNullOrEmpty(lastFilePath) && File.Exists(lastFilePath))
+            {
+                LoadFile(lastFilePath);
+            }
+
         }
 
         private void LocalizeUI()
@@ -106,6 +113,11 @@ namespace YTSubConverter.UI.Win
             {
                 SubtitleDocument doc = SubtitleDocument.Load(filePath);
                 PopulateUI(filePath, doc);
+
+                // Save the file path to settings
+                Properties.Settings.Default.LastFilePath = filePath;
+                Properties.Settings.Default.Save();
+
             }
             catch (Exception ex)
             {
@@ -137,7 +149,7 @@ namespace YTSubConverter.UI.Win
             _subtitleRenameWatcher.EnableRaisingEvents = false;
             _subtitleRenameWatcher.Path = Path.GetDirectoryName(filePath);
             _subtitleRenameWatcher.Filter = Path.GetFileNameWithoutExtension(filePath) + "_tmp_*" + Path.GetExtension(filePath);
-            
+
             _btnConvert.Enabled = true;
         }
 
