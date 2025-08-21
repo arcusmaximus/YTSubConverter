@@ -70,8 +70,8 @@ It also supports the following [override tags](https://aegi.vmoe.info/docs/3.0/A
 * `{\an}` - alignment. The same rules for subtitle movement on mouseover apply as described above.
 * `{\k}` - karaoke segment duration
 * `{\r}` - reset to current or specified style
-* `{\fad}` - simple fade. Due to YouTube limitations, shadows don't fade along unless their color is &H222222&.
-* `{\fade}` - complex fade. Due to YouTube limitations, shadows don't fade along unless their color is &H222222&.
+* `{\fad}` - simple fade. Due to YouTube limitations, shadows and outlines don't fade along unless their color is &H222222&.
+* `{\fade}` - complex fade. Due to YouTube limitations, shadows and outlines don't fade along unless their color is &H222222&.
 * `{\move}` - move from one point to another
 * `{\t}` - animate colors, transparencies and font sizes.
 * `{\ytsub}` - start using subscript (only works on PC)
