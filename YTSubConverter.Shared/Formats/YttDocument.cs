@@ -395,7 +395,7 @@ namespace YTSubConverter.Shared.Formats
                     continue;
                 }
 
-                if (currSection.ShadowColors.Count == 0)
+                if (currSection.ShadowColors.Count == 0 || currSection.Underline)
                     continue;
 
                 if (currSection.Text.Any(CharacterRange.IsRightToLeft))
