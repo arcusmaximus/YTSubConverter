@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using YTSubConverter.Shared.Formats.Ass;
 using YTSubConverter.Shared.Util;
@@ -159,12 +160,13 @@ namespace YTSubConverter.Shared.Animations
             bool needTextReset = animations.Any(a => a.Animation.AffectsText);
 
             AssLine frameLine = originalLine;
+            PointF basePosition = originalLine.Position ?? document.GetDefaultPosition(originalLine.AnchorPoint);
             for (int frame = rangeStartFrame; frame <= lastIterationFrame; frame += frameStepSize)
             {
                 frameLine = (AssLine)frameLine.Clone();
                 frameLine.Start = TimeUtil.FrameToStartTime(frame);
                 frameLine.End = frame < lastIterationFrame ? TimeUtil.FrameToEndTime(frame + frameStepSize - 1) : timeRange.End;
-                frameLine.Position = originalLine.Position ?? document.GetDefaultPosition(originalLine.AnchorPoint);
+                frameLine.Position = basePosition;
                 if (needTextReset)
                     ResetText(frameLine, originalLine);
 
@@ -182,6 +184,8 @@ namespace YTSubConverter.Shared.Animations
                     else if (interpFrame >= animEndFrame && interpFrame < animEndFrame + frameStepSize)
                     {
                         ApplyAnimation(frameLine, animWithSection, 1);
+                        if (animWithSection.Animation is MoveAnimation)
+                            basePosition = frameLine.Position.Value;
                     }
                 }
                 yield return frameLine;
