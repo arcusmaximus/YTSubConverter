@@ -1067,12 +1067,11 @@ namespace YTSubConverter.Shared.Formats
         {
             return id switch
                    {
-                       0 => RubyPart.None,
                        1 => RubyPart.Base,
                        2 => RubyPart.Parenthesis,
                        4 => RubyPart.TextBefore,
                        5 => RubyPart.TextAfter,
-                       _ => throw new ArgumentOutOfRangeException()
+                       _ => RubyPart.None
                    };
         }
 
