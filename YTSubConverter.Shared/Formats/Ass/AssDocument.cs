@@ -189,7 +189,7 @@ namespace YTSubConverter.Shared.Formats.Ass
                     continue;
                 }
 
-                Match match = Regex.Match(line, @"(\w+):\s*(.+)");
+                Match match = Regex.Match(line, @"^([\w ]+):\s*(.+)$");
                 if (!match.Success)
                     throw new InvalidDataException($"Unrecognized line in .ass: {line}");
 
@@ -207,7 +207,7 @@ namespace YTSubConverter.Shared.Formats.Ass
                 }
                 else
                 {
-                    currentSection.AddItem(type, values);
+                    currentSection.AddItem(type, values.Select(v => v.Trim()).ToList());
                 }
             }
 

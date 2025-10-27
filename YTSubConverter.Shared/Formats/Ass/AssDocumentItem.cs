@@ -83,5 +83,10 @@ namespace YTSubConverter.Shared.Formats.Ass
                 int.Parse(match.Groups[4].Value) * 10
             );
         }
+
+        public override string ToString()
+        {
+            return Type;
+        }
     }
 }
