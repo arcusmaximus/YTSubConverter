@@ -140,13 +140,13 @@
     <value>Resources\defaultstyles.ass;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="DragNDropTip" xml:space="preserve">
-    <value>Drag&amp;drop .ass/.sbv file or click the "..." button</value>
+    <value>Agarra y suelta un archivo .ass/.sbv o pulsa click en el botón de "..."</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="FailedToLoadFile0" xml:space="preserve">
-    <value>Failed to load file: {0}</value>
+    <value>No se ha podido cargar el archivo: {0}</value>
   </data>
   <data name="FontName" xml:space="preserve">
     <value />
@@ -182,7 +182,7 @@
     <value>Esto es un </value>
   </data>
   <data name="PreviewSampleKaraoke2" xml:space="preserve">
-    <value>Texto de </value>
+    <value>texto de </value>
   </data>
   <data name="PreviewSampleKaraoke3" xml:space="preserve">
     <value>ejemplo</value>
