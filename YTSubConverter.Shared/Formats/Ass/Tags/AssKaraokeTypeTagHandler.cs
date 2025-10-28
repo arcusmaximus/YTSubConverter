@@ -22,7 +22,7 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
         private static IKaraokeType GetKaraokeType(string arg)
         {
             List<string> args = ParseStringList(arg);
-            string typeName = args != null ? args[0] : arg;
+            string typeName = args != null && args.Count > 0 ? args[0] : arg;
             switch (typeName.ToLower())
             {
                 case "fade":

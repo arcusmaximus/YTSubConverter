@@ -714,6 +714,7 @@ namespace YTSubConverter.Shared.Formats
             (int pd, int sd) = GetPrintAndScrollDirectionIds(style.HorizontalTextDirection, style.VerticalTextType);
             writer.WriteAttributeString("pd", pd.ToString());
             writer.WriteAttributeString("sd", sd.ToString());
+            writer.WriteAttributeString("wfo", "0");
             writer.WriteEndElement();
         }
 
