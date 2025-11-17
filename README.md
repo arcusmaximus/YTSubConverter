@@ -17,7 +17,7 @@ YouTube's built-in subtitle editor doesn't support styling of any kind. If you w
 
 YTSubConverter can produce this file format for you.
 
-The current version is **1.6.3** and is available for Windows, macOS and Linux (the Linux version requires Mono).
+The current version is **1.6.4** and is available for Windows, macOS and Linux.
 
 [![Download](images/download.png)](https://github.com/arcusmaximus/YTSubConverter/releases)
 
