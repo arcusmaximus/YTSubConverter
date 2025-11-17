@@ -245,6 +245,7 @@ Thanks to the following people for providing the UI translations:
 * Admiy02 - Malay
 * Kasaka-117 (@kasaka_117) - Korean
 * Mali (@mali_5157) - Chinese
+* PretzelBubbleTea - Spanish
 * Saiv46 - Russian
 * tototo (@vvto33) - Japanese
 * XDgierman - Polish
