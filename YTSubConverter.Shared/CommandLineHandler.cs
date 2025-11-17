@@ -7,7 +7,7 @@ namespace YTSubConverter.Shared
 {
     public static class CommandLineHandler
     {
-        public static void Handle(string[] args)
+        public static void Handle(string[] args, ITextMeasurer textMeasurer)
         {
             Arguments parsedArgs = ParseArguments(args);
             if (parsedArgs == null)
@@ -22,7 +22,12 @@ namespace YTSubConverter.Shared
             try
             {
                 SubtitleDocument sourceDoc = SubtitleDocument.Load(parsedArgs.SourceFilePath);
-                SubtitleDocument destinationDoc = SubtitleDocument.Convert(sourceDoc, Path.GetExtension(parsedArgs.DestinationFilePath), parsedArgs.ForVisualization);
+                SubtitleDocument destinationDoc = SubtitleDocument.Convert(
+                    sourceDoc,
+                    Path.GetExtension(parsedArgs.DestinationFilePath),
+                    parsedArgs.ForVisualization,
+                    textMeasurer
+                );
                 destinationDoc.Save(parsedArgs.DestinationFilePath);
             }
             catch (Exception ex)

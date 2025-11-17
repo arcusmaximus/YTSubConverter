@@ -19,7 +19,8 @@ namespace YTSubConverter.UI.Mac
 
             if (args.Length > 0)
             {
-                CommandLineHandler.Handle(args);
+                using CocoaTextMeasurer textMeasurer = new();
+                CommandLineHandler.Handle(args, textMeasurer);
                 return;
             }
 

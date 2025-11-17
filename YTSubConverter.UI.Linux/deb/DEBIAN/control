@@ -1,0 +1,8 @@
+Package: ytsubconverter
+Version: 1.6-4
+Section: video
+Priority: optional
+Architecture: amd64
+Maintainer: arc_
+Description: Conversion tool for YouTube's proprietary subtitle format.
+Homepage: https://github.com/arcusmaximus/YTSubConverter

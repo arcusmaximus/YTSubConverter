@@ -56,12 +56,12 @@ namespace YTSubConverter.Shared.Formats
             return loader(filePath);
         }
 
-        public static SubtitleDocument Convert(SubtitleDocument doc, string newExtension, bool visual)
+        public static SubtitleDocument Convert(SubtitleDocument doc, string newExtension, bool visual, ITextMeasurer textMeasurer = null)
         {
             switch (newExtension?.ToLower())
             {
                 case ".ass":
-                    return visual ? new VisualizingAssDocument(doc) : new AssDocument(doc);
+                    return visual ? new VisualizingAssDocument(doc, textMeasurer) : new AssDocument(doc);
 
                 case ".sbv":
                     return new SbvDocument(doc);

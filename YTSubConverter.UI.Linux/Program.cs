@@ -7,14 +7,16 @@ namespace YTSubConverter.UI.Linux
     {
         public static void Main(string[] args)
         {
+            Application.Init("ytsubconverter", ref args);
             if (args.Length > 0)
             {
-                CommandLineHandler.Handle(args);
+                using GtkTextMeasurer textMeasurer = new();
+                CommandLineHandler.Handle(args, textMeasurer);
                 return;
             }
-
-            Application.Init();
-            new MainWindow().Show();
+            
+            using var window = new MainWindow();
+            window.Show();
             Application.Run();
         }
     }

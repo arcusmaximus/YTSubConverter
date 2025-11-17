@@ -295,7 +295,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bSy-zr-mFB">
-                                                                    <rect key="frame" x="5" y="90" width="94" height="16"/>
+                                                                    <rect key="frame" x="5" y="90" width="153" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Shadow types:" id="nr9-Vb-wen">
                                                                         <font key="font" usesAppearanceFont="YES"/>

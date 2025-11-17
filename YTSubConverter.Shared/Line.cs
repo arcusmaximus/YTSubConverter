@@ -27,9 +27,9 @@ namespace YTSubConverter.Shared
             Sections.AddRange(sections);
         }
 
-        public Line(Line line)
+        public Line(Line line, bool copySections = true)
         {
-            Assign(line);
+            Assign(line, copySections);
         }
 
         public DateTime Start
@@ -91,7 +91,7 @@ namespace YTSubConverter.Shared
             return new Line(this);
         }
 
-        protected virtual void Assign(Line line)
+        protected virtual void Assign(Line line, bool assignSections = true)
         {
             Start = line.Start;
             End = line.End;
@@ -101,8 +101,11 @@ namespace YTSubConverter.Shared
             VerticalTextType = line.VerticalTextType;
             AndroidDarkTextHackAllowed = line.AndroidDarkTextHackAllowed;
 
-            Sections.Clear();
-            Sections.AddRange(line.Sections.Select(CreateSection));
+            if (assignSections)
+            {
+                Sections.Clear();
+                Sections.AddRange(line.Sections.Select(CreateSection));
+            }
         }
 
         protected virtual Section CreateSection(Section section)

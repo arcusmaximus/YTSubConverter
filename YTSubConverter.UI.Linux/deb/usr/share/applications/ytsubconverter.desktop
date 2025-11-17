@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=YTSubConverter
+Version=1.6.4
+Type=Application
+GenericName=YouTube Subtitle Converter
+Comment=Conversion tool for YouTube's proprietary subtitle format
+Exec=/opt/ytsubconverter/ytsubconverter %f
+Icon=ytsubconverter
+Terminal=false
+Categories=AudioVideo;AudioVideoEditing;GTK;
+Keywords=subtitles;subtitle;captions;captioning;video;audio;

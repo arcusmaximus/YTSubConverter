@@ -398,7 +398,7 @@ namespace YTSubConverter.Shared.Formats
                 if (currSection.ShadowColors.Count == 0 || currSection.Underline)
                     continue;
 
-                if (currSection.Text.Any(CharacterRange.IsRightToLeft))
+                if (currSection.Text.Any(Util.CharacterRange.IsRightToLeft))
                 {
                     if (currSection.Text.StartsWith(" ") || i == 0)
                         continue;

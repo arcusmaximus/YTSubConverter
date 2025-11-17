@@ -20,7 +20,8 @@ namespace YTSubConverter.UI.Win
             if (args.Length > 0)
             {
                 AttachConsole(ATTACH_PARENT_PROCESS);
-                CommandLineHandler.Handle(args);
+                using ITextMeasurer textMeasurer = new WinTextMeasurer();
+                CommandLineHandler.Handle(args, textMeasurer);
                 return;
             }
 

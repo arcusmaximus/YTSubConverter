@@ -15,8 +15,8 @@ namespace YTSubConverter.Shared.Formats.Ass
         {
         }
 
-        public AssLine(Line line)
-            : base(line)
+        public AssLine(Line line, bool copySections = true)
+            : base(line, copySections)
         {
             if (line is AssLine || Sections.All(s => s.StartOffset == TimeSpan.Zero))
                 return;
@@ -69,10 +69,10 @@ namespace YTSubConverter.Shared.Formats.Ass
             return new AssLine(this);
         }
 
-        protected override void Assign(Line line)
+        protected override void Assign(Line line, bool assignSections = true)
         {
-            base.Assign(line);
-            if (!(line is AssLine assLine))
+            base.Assign(line, assignSections);
+            if (line is not AssLine assLine)
                 return;
 
             Layer = assLine.Layer;

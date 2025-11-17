@@ -10,19 +10,23 @@ namespace YTSubConverter.Shared.Formats.Ass
 {
     public class VisualizingAssDocument : AssDocument
     {
+        private readonly ITextMeasurer _textMeasurer;
         private DateTime _simultaneousEndTime;
         private int _simultaneousLayer;
 
-        public VisualizingAssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
+        public VisualizingAssDocument(string filePath, List<AssStyleOptions> styleOptions, ITextMeasurer textMeasurer)
             : base(filePath, styleOptions)
         {
+            _textMeasurer = textMeasurer;
         }
 
-        public VisualizingAssDocument(SubtitleDocument doc)
+        public VisualizingAssDocument(SubtitleDocument doc, ITextMeasurer textMeasurer)
             : base(doc)
         {
+            _textMeasurer = textMeasurer ?? throw new ArgumentNullException(nameof(textMeasurer));
             ClearExplicitDefaultPositions();
             EmulateKaraokeForLinesWithBackgroundOrShadow();
+            VisualizeRubyText();
 
             // Sort lines by timestamp so that layer assigning works correctly afterwards
             SortLines();
@@ -63,6 +67,23 @@ namespace YTSubConverter.Shared.Formats.Ass
 
                 Lines.RemoveAt(i);
                 Lines.InsertRange(i, CreateEmulatedKaraokeLines(line));
+            }
+        }
+
+        /// <summary>
+        /// Aegisub has no builtin facility for positioning ruby text, so we do it ourselves
+        /// </summary>
+        private void VisualizeRubyText()
+        {
+            for (int i = 0; i < Lines.Count; i++)
+            {
+                AssLine line = (AssLine)Lines[i];
+                if (line.Sections.Any(s => s.RubyPart is RubyPart.TextBefore or RubyPart.TextAfter))
+                {
+                    Lines.RemoveAt(i);
+                    line.Position ??= GetDefaultPosition(line.AnchorPoint);
+                    Lines.InsertRange(i, new RubyVisualizer(line, DefaultStyle.LineHeight, _textMeasurer).MakeVisualizationLines());
+                }
             }
         }
 

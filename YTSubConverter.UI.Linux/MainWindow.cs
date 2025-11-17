@@ -64,8 +64,6 @@ namespace YTSubConverter.UI.Linux
             _builder = builder;
             _builder.Autoconnect(this);
 
-            Icon = new Gdk.Pixbuf(Assembly.GetEntryAssembly().GetManifestResourceStream("YTSubConverter.UI.Linux.icon32.png"));
-
             List<AssStyleOptions> builtinStyleOptions = AssStyleOptionsList.LoadFromString(Resources.DefaultStyleOptions);
             List<AssStyleOptions> customStyleOptions = AssStyleOptionsList.LoadFromFile(GetStyleOptionsFilePath());
             _styleOptions = customStyleOptions.Concat(builtinStyleOptions).ToDictionaryOverwrite(o => o.Name);
@@ -82,7 +80,7 @@ namespace YTSubConverter.UI.Linux
             LocalizeUI();
             ClearUI();
 
-            Drag.DestSet(this, DestDefaults.All, new[] { new TargetEntry("text/uri-list", 0, 0) }, Gdk.DragAction.Copy);
+            Drag.DestSet(this, DestDefaults.All, [new TargetEntry("text/uri-list", 0, 0)], Gdk.DragAction.Copy);
         }
 
         private void LocalizeUI()
@@ -149,8 +147,7 @@ namespace YTSubConverter.UI.Linux
         {
             _btnInputFile.SetFilename(filePath);
 
-            AssDocument assDoc = document as AssDocument;
-            if (assDoc != null)
+            if (document is AssDocument assDoc)
             {
                 _grpStyleOptions.Sensitive = true;
                 RefreshStyleList(assDoc);
@@ -191,9 +188,9 @@ namespace YTSubConverter.UI.Linux
             int styleIndex = document.Styles.IndexOf(s => s.Name == selectedStyleName);
 
             if (styleIndex >= 0)
-                _lstStyles.SetCursor(new TreePath(new[] { styleIndex }), _lstStyles.Columns[0], false);
+                _lstStyles.SetCursor(new TreePath([styleIndex]), _lstStyles.Columns[0], false);
             else if (store.IterNChildren() > 0)
-                _lstStyles.SetCursor(new TreePath(new[] { 0 }), _lstStyles.Columns[0], false);
+                _lstStyles.SetCursor(new TreePath([0]), _lstStyles.Columns[0], false);
         }
 
         private void ClearUI()
