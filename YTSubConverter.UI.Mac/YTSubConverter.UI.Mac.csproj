@@ -84,6 +84,7 @@
     <EmbeddedResource Include="Resources.ms.resx" />
     <EmbeddedResource Include="Resources.pl.resx" />
     <EmbeddedResource Include="Resources.ru.resx" />
+    <EmbeddedResource Include="Resources.vi.resx" />
     <EmbeddedResource Include="Resources.zh-Hans.resx" />
     <EmbeddedResource Include="Resources.zh-Hant.resx" />
   </ItemGroup>
