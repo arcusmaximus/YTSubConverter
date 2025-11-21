@@ -240,6 +240,9 @@ Then do the following for each video:
 * Convert the .ass to .ytt using YTSubConverter.
 * Send the .ytt to the channel owner for uploading and publishing.
 
+## Format documentation
+Documentation on the [SRV3 format](https://github.com/arcusmaximus/YTSubConverter/blob/master/ytt.ytt) is also available in this repo.
+
 ## Credits
 Thanks to the following people for providing the UI translations:
 * Admiy02 - Malay
