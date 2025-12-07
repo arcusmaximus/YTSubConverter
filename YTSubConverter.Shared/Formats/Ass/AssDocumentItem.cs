@@ -77,11 +77,11 @@ namespace YTSubConverter.Shared.Formats.Ass
                 SubtitleDocument.TimeBase.Year,
                 SubtitleDocument.TimeBase.Month,
                 SubtitleDocument.TimeBase.Day,
-                int.Parse(match.Groups[1].Value),
+                0,
                 int.Parse(match.Groups[2].Value),
                 int.Parse(match.Groups[3].Value),
                 int.Parse(match.Groups[4].Value) * 10
-            );
+            ).AddHours(int.Parse(match.Groups[1].Value));
         }
 
         public override string ToString()

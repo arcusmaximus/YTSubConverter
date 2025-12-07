@@ -78,10 +78,13 @@
     <!-- Text combination (\ytpack in YTSubConverter). Not supported on mobile -->
     <pen id="35" fc="#FEFEFE" hg="1" />
     
-    <!-- Horizontal text alignment -->
-    <ws id="1" ju="0" />                <!-- Left   -->
-    <ws id="2" ju="1" />                <!-- Right  -->
-    <ws id="3" ju="2" />                <!-- Center -->
+    <!-- Horizontal text alignment (justify) -->
+    <!-- The "wfo" attribute is the opacity of the "window", the secondary background box for YouTube subtitles.            -->
+    <!-- By default it's not visible, but like with "fo", it's prone to being enabled by accident (by pressing W).          -->
+    <!-- Therefore YTSubConverter always exports wfo="0" to explicitly disable the window regardless of viewers' settings.  -->
+    <ws id="1" ju="0" wfo="0" />        <!-- Left   -->
+    <ws id="2" ju="1" wfo="0" />        <!-- Right  -->
+    <ws id="3" ju="2" wfo="0" />        <!-- Center -->
     
     <!-- Vertical text alignment (not supported on mobile) --> 
     <ws id="4" pd="2" sd="0" />         <!-- Characters positioned above each other but not rotated; columns going from right to left   -->

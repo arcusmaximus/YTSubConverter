@@ -25,7 +25,7 @@ namespace YTSubConverter.Shared.Util
 
         public static int EndTimeToFrame(DateTime time)
         {
-            return (int)((time.TimeOfDay.TotalMilliseconds + 1) / 33.36666666666667);
+            return (int)(((time - SubtitleDocument.TimeBase).TotalMilliseconds + 1) / 33.36666666666667);
         }
 
         public static DateTime FrameToStartTime(int frame)
