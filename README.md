@@ -210,7 +210,7 @@ Apart from the usual .ass → .ytt, YTSubConverter can also convert in the oppos
   * By default, it'll produce an .ass file that you can edit and convert back to .ytt, getting the exact same look with different text. Example use cases: fixing a mistake in your own published subtitles if you already deleted the .ass, or translating someone else's published subtitles for which you never had the .ass in the first place.
   * You can also get an .ass that emulates how the subtitles look on YouTube. To do this, you need to call the converter from the command line, passing it the .ytt/.srv3 path along with the `--visual` option. While the resulting .ass can't be converted back to .ytt, it does give you (almost) the same visual experience in a local media player as on YouTube. Example use case: archiving videos so you can keep watching them, with visually accurate subtitles, even if they get taken down.
 
-You can download a video along with its published .ytt/.srv3 subtitles by using [yt-dlp](https://github.com/yt-dlp/yt-dlp) with the following options: `--write-subs --sub-langs all --sub-format=srv3`
+You can download a video along with its published .ytt/.srv3 subtitles by using [yt-dlp](https://github.com/yt-dlp/yt-dlp) with the following options: `--write-subs --sub-langs all --sub-format=srv3`. You can also add `--skip-download` to skip the video and download just the subtitles.
 
 Alternatively, you can download just the subtitles using the following steps:
 * Browse to the video, start playing it, then pause it.
