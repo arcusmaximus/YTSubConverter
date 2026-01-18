@@ -209,15 +209,9 @@ On macOS, you can run `YTSubConverter.app/Contents/MacOS/YTSubConverter` from th
 Apart from the usual .ass → .ytt, YTSubConverter can also convert in the opposite direction: from .ytt (or .srv3, which is the same) to .ass. What's more, it can do this for two different purposes: editing and archiving.
   * By default, it'll produce an .ass file that you can edit and convert back to .ytt, getting the exact same look with different text. Example use cases: fixing a mistake in your own published subtitles if you already deleted the .ass, or translating someone else's published subtitles for which you never had the .ass in the first place.
   * You can also get an .ass that emulates how the subtitles look on YouTube. To do this, you need to call the converter from the command line, passing it the .ytt/.srv3 path along with the `--visual` option. While the resulting .ass can't be converted back to .ytt, it does give you (almost) the same visual experience in a local media player as on YouTube. Example use case: archiving videos so you can keep watching them, with visually accurate subtitles, even if they get taken down.
+    * As an alternative to this, the [mpv.net](https://github.com/mpvnet-player/mpv.net/releases/) media player can render .srv3 subtitles directly without converting them to .ass first.
 
 You can download a video along with its published .ytt/.srv3 subtitles by using [yt-dlp](https://github.com/yt-dlp/yt-dlp) with the following options: `--write-subs --sub-langs all --sub-format=srv3`. You can also add `--skip-download` to skip the video and download just the subtitles.
-
-Alternatively, you can download just the subtitles using the following steps:
-* Browse to the video, start playing it, then pause it.
-* Open your browser's Development Tools (typically by pressing F12) and switch to the Network tab.
-* Click the video's "CC" button to display the subtitles. You should see an entry appear in the Network tab that contains "timedtext".
-* Rightclick this entry and copy its URL (it should start with https://www.youtube.com/api/timedtext?v...).
-* Paste the URL somewhere, change "json3" to "srv3", and paste the result into your browser address bar. This should get you an .xml file that you can rename to .ytt.
 
 ## Example workflow for quick style assignment
 Subtitles for a certain channel will often have recurring looks. For example, Kizuna AI's gaming channel has pink subtitles for talking, red for screaming and yellow for explanations. To avoid having to put tags everywhere, you should of course define these recurring looks as Aegisub styles. Assigning these styles to the individual subtitles can be quite a hassle, however. This section offers a quicker way.
