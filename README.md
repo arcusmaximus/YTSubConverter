@@ -62,7 +62,7 @@ It also supports the following [override tags](https://aegi.vmoe.info/docs/3.0/A
 * `{\3c}` - outline color
 * `{\4c}` - shadow color
 * `{\1a}` - regular text transparency
-* `{\2a}` - unsung karaoke text transparency. If this is fully transparent, YTSubConverter will use YouTube's "native" karaoke mode, which hides the text and background box of unsung text even on mobile.
+* `{\2a}` - unsung karaoke text transparency. If this is fully transparent, YTSubConverter will use YouTube's native karaoke feature, which hides the text and background box of unsung text even on mobile.
 * `{\3a}` - background transparency
 * `{\4a}` - shadow transparency. Due to YouTube limitations, this only works if the shadow color is &H222222& and the shadow transparency equals the text transparency.
 * `{\alpha}` - set all transparencies at the same time
