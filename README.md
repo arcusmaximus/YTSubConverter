@@ -68,7 +68,7 @@ It also supports the following [override tags](https://aegi.vmoe.info/docs/3.0/A
 * `{\alpha}` - set all transparencies at the same time
 * `{\pos}` - position
 * `{\an}` - alignment. The same rules for subtitle movement on mouseover apply as described above.
-* `{\k}` - karaoke segment duration
+* `{\k}` - karaoke segment duration. If the secondary color is fully transparent, YTSubConverter will use YouTube's "native" karaoke mode, which hides the text and background box of unsung text even on mobile.
 * `{\r}` - reset to current or specified style
 * `{\fad}` - simple fade. Due to YouTube limitations, shadows and outlines don't fade along unless their color is &H222222&.
 * `{\fade}` - complex fade. Due to YouTube limitations, shadows and outlines don't fade along unless their color is &H222222&.
