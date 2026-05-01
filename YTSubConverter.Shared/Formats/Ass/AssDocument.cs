@@ -207,7 +207,7 @@ namespace YTSubConverter.Shared.Formats.Ass
                 }
                 else
                 {
-                    currentSection.AddItem(type, values.Select(v => v.Trim()).ToList());
+                    currentSection.AddItem(type, values.Select(v => v.Trim(' ')).ToList());
                 }
             }
 
