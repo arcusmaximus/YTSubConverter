@@ -1,4 +1,6 @@
-﻿namespace YTSubConverter.Shared.Formats.Ass.Tags
+using YTSubConverter.Shared.Animations;
+
+namespace YTSubConverter.Shared.Formats.Ass.Tags
 {
     internal class AssFontSizeTagHandler : AssTagHandlerBase
     {
@@ -12,6 +14,7 @@
                 lineHeight = context.Style.LineHeight;
 
             context.Section.Scale = lineHeight / context.Document.DefaultStyle.LineHeight;
+            context.Section.Animations.RemoveAll(a => a is ScaleAnimation);
         }
     }
 }
