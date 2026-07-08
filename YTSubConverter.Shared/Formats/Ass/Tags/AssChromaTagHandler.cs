@@ -24,7 +24,7 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
                 {
                     AssLine originalLine = context.Line;
                     PointF center = originalLine.Position ?? context.Document.GetDefaultPosition(originalLine.AnchorPoint);
-                    List<AssLine> chromaLines = new List<AssLine>();
+                    List<AssLine> chromaLines = [];
 
                     if (colors.Count == 0)
                     {
@@ -53,7 +53,7 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
 
         private static bool TryParseArgs(string arg, out List<Color> colors, out int alpha, out int maxOffsetX, out int maxOffsetY, out int chromaInMs, out int chromaOutMs)
         {
-            colors = new List<Color>();
+            colors = [];
             alpha = 128;
             maxOffsetX = 20;
             maxOffsetY = 0;
@@ -109,8 +109,8 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
                 float offsetFactor = colors.Count > 1 ? (float)i / (colors.Count - 1) : 0.5f;
                 float offsetX = offsetFactor * (-maxOffsetX * 2) + maxOffsetX;
                 float offsetY = offsetFactor * (-maxOffsetY * 2) + maxOffsetY;
-                PointF farPosition = new PointF(center.X + offsetX, center.Y + offsetY);
-                PointF nearPosition = new PointF(center.X + offsetX / 5, center.Y + offsetY / 5);
+                PointF farPosition = new(center.X + offsetX, center.Y + offsetY);
+                PointF nearPosition = new(center.X + offsetX / 5, center.Y + offsetY / 5);
                 if (moveIn)
                 {
                     chromaLine.End = TimeUtil.RoundTimeToFrameCenter(originalLine.Start.AddMilliseconds(durationMs));

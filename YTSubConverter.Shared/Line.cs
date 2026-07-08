@@ -44,7 +44,7 @@ namespace YTSubConverter.Shared
             set;
         }
 
-        public List<Section> Sections { get; } = new List<Section>();
+        public List<Section> Sections { get; } = [];
 
         public string Text
         {

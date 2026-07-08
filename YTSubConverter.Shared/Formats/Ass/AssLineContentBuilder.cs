@@ -8,8 +8,8 @@ namespace YTSubConverter.Shared.Formats.Ass
 {
     internal class AssLineContentBuilder
     {
-        private readonly StringBuilder _pendingTags = new StringBuilder();
-        private readonly StringBuilder _content = new StringBuilder();
+        private readonly StringBuilder _pendingTags = new();
+        private readonly StringBuilder _content = new();
 
         public void AppendTag(string tagName, params object[] args)
         {

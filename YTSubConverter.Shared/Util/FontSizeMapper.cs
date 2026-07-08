@@ -12,7 +12,7 @@ namespace YTSubConverter.Shared.Util
     public static class FontSizeMapper
     {
         private static readonly Dictionary<string, float> LineHeightToFontSizeFactors =
-            new Dictionary<string, float>
+            new()
             {
                 { "carrois gothic sc", 32f / 38f },
                 { "comic sans ms",     32f / 45f },

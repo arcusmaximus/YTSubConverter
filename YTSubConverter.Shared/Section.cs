@@ -75,7 +75,7 @@ namespace YTSubConverter.Shared
             set;
         }
 
-        public Dictionary<ShadowType, Color> ShadowColors { get; } = new Dictionary<ShadowType, Color>();
+        public Dictionary<ShadowType, Color> ShadowColors { get; } = new();
 
         public RubyPart RubyPart
         {

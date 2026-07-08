@@ -23,23 +23,14 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
         {
             List<string> args = ParseStringList(arg);
             string typeName = args != null && args.Count > 0 ? args[0] : arg;
-            switch (typeName.ToLower())
+            return typeName.ToLower() switch
             {
-                case "fade":
-                    return FadeKaraokeType;
-
-                case "glitch":
-                    return GlitchKaraokeType;
-
-                case "cursor":
-                    return CreateCursorKaraokeType(args, false);
-
-                case "lcursor":
-                    return CreateCursorKaraokeType(args, true);
-
-                default:
-                    return SimpleKaraokeType;
-            }
+                "fade"      => FadeKaraokeType,
+                "glitch"    => GlitchKaraokeType,
+                "cursor"    => CreateCursorKaraokeType(args, false),
+                "lcursor"   => CreateCursorKaraokeType(args, true),
+                _           => SimpleKaraokeType,
+            };
         }
 
         // \ytktCursor
@@ -49,7 +40,7 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
         private static IKaraokeType CreateCursorKaraokeType(List<string> args, bool beforeSinging)
         {
             TimeSpan interval;
-            List<string> cursors = new List<string>();
+            List<string> cursors = [];
 
             if (args == null || args.Count == 1)
             {

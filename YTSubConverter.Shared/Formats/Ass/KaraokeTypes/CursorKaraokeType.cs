@@ -49,9 +49,9 @@ namespace YTSubConverter.Shared.Formats.Ass.KaraokeTypes
             AssSection section = (AssSection)initialFormatting.Clone();
             section.Text = string.Empty;
 
-            AssLine line = new AssLine(SubtitleDocument.TimeBase, SubtitleDocument.TimeBase);
+            AssLine line = new(SubtitleDocument.TimeBase, SubtitleDocument.TimeBase);
             AssTagContext context =
-                new AssTagContext
+                new()
                 {
                     Document = doc,
                     Line = line,

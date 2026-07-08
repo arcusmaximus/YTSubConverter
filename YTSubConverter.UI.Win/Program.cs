@@ -16,6 +16,7 @@ namespace YTSubConverter.UI.Win
         internal static void Main(string[] args)
         {
             PreloadResources();
+            Shared.OperatingSystem.IsWindows = true;
 
             if (args.Length > 0)
             {
@@ -52,7 +53,7 @@ namespace YTSubConverter.UI.Win
 
                 string culture = match.Groups[1].Value;
                 using Stream stream = assembly.GetManifestResourceStream(resourceName);
-                ResourceSet resSet = new ResourceSet(stream);
+                ResourceSet resSet = new(stream);
                 resourceSets.Add(culture, resSet);
             }
         }

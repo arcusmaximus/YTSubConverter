@@ -42,7 +42,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             if (string.IsNullOrEmpty(text))
                 return false;
 
-            TtmlMultipartAttributeReader reader = new TtmlMultipartAttributeReader(text);
+            TtmlMultipartAttributeReader reader = new(text);
             if (!reader.TryRead(TtmlLength.TryParse, out TtmlLength xOffset))
                 return false;
 
@@ -72,7 +72,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            StringBuilder result = new();
             result.Append(Offset);
 
             if (BlurRadius.Value > 0)

@@ -12,7 +12,7 @@ namespace YTSubConverter.Shared.Formats.Ass.KaraokeTypes
         {
             ApplyFadeInKaraokeEffect(context.StepLine, context.SingingSections);
             ApplyFadeOutKaraokeEffect(context.OriginalLine, context.StepLine, context.ActiveSectionsPerStep, context.StepIndex);
-            return new[] { context.StepLine };
+            return [context.StepLine];
         }
 
         private static void ApplyFadeInKaraokeEffect(AssLine stepLine, List<AssSection> singingSections)

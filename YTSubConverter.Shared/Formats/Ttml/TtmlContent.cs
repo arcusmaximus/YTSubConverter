@@ -23,7 +23,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
         protected TtmlContent(string text, TtmlContent parent)
         {
             Parent = parent;
-            Children = new List<TtmlContent>();
+            Children = [];
             Text = text;
         }
 

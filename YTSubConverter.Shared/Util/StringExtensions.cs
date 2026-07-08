@@ -14,7 +14,7 @@ namespace YTSubConverter.Shared.Util
 
         public static List<string> Split(this string str, string separator, int? maxItems = null)
         {
-            List<string> result = new List<string>();
+            List<string> result = [];
             int start = 0;
             int end;
             while (start <= str.Length)

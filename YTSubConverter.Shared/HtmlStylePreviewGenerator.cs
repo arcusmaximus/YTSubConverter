@@ -7,37 +7,39 @@ namespace YTSubConverter.Shared
     {
         public static string Generate(AssStyle style, AssStyleOptions options, AssStyle defaultStyle, float windowsScaleFactor)
         {
-            StringBuilder html = new StringBuilder();
-            html.Append($@"
-                  <!DOCTYPE html>
-                  <html>
-                  <head>
-                      <meta http-equiv=""X-UA-Compatible"" content=""IE=edge"" />
-                      <style>
-                          html, body
-                          {{
-                              width: 100%;
-                              height: 100%;
-                              padding: 0;
-                              margin: 0;
-                              cursor: default;
-                          }}
-                          body
-                          {{
-                              display: table;
-                              -ms-user-select: none;
-                              -webkit-user-select: none;
-                              user-select: none;
-                          }}
-                          #wrapper
-                          {{
-                              display: table-cell;
-                              height: 100%;
-                              padding: 10px;
-                              text-align: {GetTextAlign(style, options)};
-                              vertical-align: {GetVerticalAlign(style, options)};
-                          }}
-            ");
+            StringBuilder html = new();
+            html.Append(
+                $$"""
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                    <style>
+                        html, body
+                        {
+                            width: 100%;
+                            height: 100%;
+                            padding: 0;
+                            margin: 0;
+                            cursor: default;
+                        }
+                        body
+                        {
+                            display: table;
+                            -ms-user-select: none;
+                            -webkit-user-select: none;
+                            user-select: none;
+                        }
+                        #wrapper
+                        {
+                            display: table-cell;
+                            height: 100%;
+                            padding: 10px;
+                            text-align: {{GetTextAlign(style, options)}};
+                            vertical-align: {{GetVerticalAlign(style, options)}};
+                        }
+                """
+            );
 
             GenerateBackgroundImageCss(html, "body", options, true);
 
@@ -60,12 +62,14 @@ namespace YTSubConverter.Shared
                 }
             }
 
-            html.Append(@"
-                      </style>
-                  </head>
-                  <body oncontextmenu=""return false;"">
-                      <div id=""wrapper"">
-            ");
+            html.Append(
+                """
+                    </style>
+                </head>
+                <body oncontextmenu="return false;">
+                    <div id="wrapper">
+                """
+            );
 
             if (options != null)
             {
@@ -85,11 +89,13 @@ namespace YTSubConverter.Shared
                 html.Append(@"</span>");
             }
 
-            html.Append(@"
-                      </div>
-                  </body>
-                  </html>
-            ");
+            html.Append(
+                """
+                    </div>
+                </body>
+                </html>
+                """
+            );
             return html.ToString();
         }
     }

@@ -14,18 +14,18 @@ namespace YTSubConverter.Shared
     public abstract class StylePreviewGenerator
     {
         protected static readonly string[][] FontLists =
-            {
-                new[] { "Courier New", "Courier", "Nimbus Mono L", "Cutive Mono", "monospace" },
-                new[] { "Times New Roman", "Times", "Georgia", "Cambria", "PT Serif Caption", "serif" },
-                new[] { "Lucida Console", "Deja Vu Sans Mono", "DejaVu Sans Mono", "Monaco", "Consolas", "PT Mono", "monospace" },
-                new[] { "Comic Sans MS", "Impact", "Handlee", "fantasy" },
-                new[] { "Monotype Corsiva", "URW Chancery L", "Apple Chancery", "Dancing Script", "cursive" },
-                new[] { "Carrois Gothic SC", "sans-serif-smallcaps" },
-                new[] { "Roboto", "YouTube Noto", "Arial Unicode Ms", "Arial", "Helvetica", "Verdana", "PT Sans Caption", "sans-serif" }
-            };
+            [
+                ["Courier New", "Courier", "Nimbus Mono L", "Cutive Mono", "monospace"],
+                ["Times New Roman", "Times", "Georgia", "Cambria", "PT Serif Caption", "serif"],
+                ["Lucida Console", "Deja Vu Sans Mono", "DejaVu Sans Mono", "Monaco", "Consolas", "PT Mono", "monospace"],
+                ["Comic Sans MS", "Impact", "Handlee", "fantasy"],
+                ["Monotype Corsiva", "URW Chancery L", "Apple Chancery", "Dancing Script", "cursive"],
+                ["Carrois Gothic SC", "sans-serif-smallcaps"],
+                ["Roboto", "YouTube Noto", "Arial Unicode Ms", "Arial", "Helvetica", "Verdana", "PT Sans Caption", "sans-serif"]
+            ];
 
         protected static readonly Dictionary<string, string> ExtensionToMimeType =
-            new Dictionary<string, string>
+            new()
             {
                 { ".bmp", "image/bmp" },
                 { ".gif", "image/gif" },
@@ -38,14 +38,16 @@ namespace YTSubConverter.Shared
 
         protected static void GenerateBackgroundImageCss(StringBuilder css, string selector, AssStyleOptions options, bool useDataUrl)
         {
-            css.Append($@"
-                {selector}
-                {{
-                    background-image: url({GetBackgroundImageUrl(options, useDataUrl)});
-                    background-position: {GetBackgroundImagePosition(options)};
-                    background-repeat: {GetBackgroundImageRepeat(options)};
-                }}
-            ");
+            css.Append(
+                $$"""
+                {{selector}}
+                {
+                    background-image: url({{GetBackgroundImageUrl(options, useDataUrl)}});
+                    background-position: {{GetBackgroundImagePosition(options)}};
+                    background-repeat: {{GetBackgroundImageRepeat(options)}};
+                }
+                """
+            );
         }
 
         protected static void GenerateBackgroundCss(StringBuilder css, string selector, AssStyle style, AssStyle defaultStyle, float windowsScaleFactor)
@@ -82,7 +84,7 @@ namespace YTSubConverter.Shared
             css.Append($"font-family: {string.Join(", ", GetFontListContaining(style.Font).Select(f => "\"" + f + "\""))};");
             css.Append($"color: {ToRgba(foreColor)};");
 
-            List<string> shadows = new List<string>();
+            List<string> shadows = [];
 
             if (style.HasOutline && !style.OutlineIsBox)
                 shadows.Add($"0 0 2px {ToHex(outlineColor)}, 0 0 2px {ToHex(outlineColor)}, 0 0 3px {ToHex(outlineColor)}, 0 0 4px {ToHex(outlineColor)}");

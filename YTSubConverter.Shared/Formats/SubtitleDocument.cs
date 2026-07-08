@@ -13,7 +13,7 @@ namespace YTSubConverter.Shared.Formats
 {
     public abstract class SubtitleDocument
     {
-        public static readonly DateTime TimeBase = new DateTime(2000, 1, 1);
+        public static readonly DateTime TimeBase = new(2000, 1, 1);
 
         protected SubtitleDocument()
         {
@@ -40,7 +40,7 @@ namespace YTSubConverter.Shared.Formats
             protected set;
         }
 
-        public List<Line> Lines { get; } = new List<Line>();
+        public List<Line> Lines { get; } = [];
 
         public static bool IsExtensionSupported(string extension)
         {
@@ -53,7 +53,7 @@ namespace YTSubConverter.Shared.Formats
             if (loader == null)
                 throw new NotSupportedException();
 
-            return loader(filePath);
+            return loader(ToSafePath(filePath));
         }
 
         public static SubtitleDocument Convert(SubtitleDocument doc, string newExtension, bool visual, ITextMeasurer textMeasurer = null)
@@ -208,7 +208,7 @@ namespace YTSubConverter.Shared.Formats
 
         protected static void MergeIdenticallyFormattedSections(Line line)
         {
-            SectionFormatComparer comparer = new SectionFormatComparer();
+            SectionFormatComparer comparer = new();
             int i = 0;
             while (i < line.Sections.Count - 1)
             {
@@ -245,7 +245,7 @@ namespace YTSubConverter.Shared.Formats
 
         protected static Dictionary<T, int> ExtractAttributes<T>(IEnumerable<T> objects, IEqualityComparer<T> comparer)
         {
-            Dictionary<T, int> attributes = new Dictionary<T, int>(comparer);
+            Dictionary<T, int> attributes = new(comparer);
             foreach (T attr in objects)
             {
                 if (!attributes.ContainsKey(attr))
@@ -256,7 +256,7 @@ namespace YTSubConverter.Shared.Formats
 
         public void CloseGaps()
         {
-            SortedList<DateTime, object> startTimes = new SortedList<DateTime, object>();
+            SortedList<DateTime, object> startTimes = [];
             foreach (Line line in Lines)
             {
                 startTimes[line.Start] = null;
@@ -326,19 +326,27 @@ namespace YTSubConverter.Shared.Formats
 
         public void Save(string filePath)
         {
-            using Stream stream = File.Open(filePath, FileMode.Create, FileAccess.Write);
+            using Stream stream = File.Open(ToSafePath(filePath), FileMode.Create, FileAccess.Write);
             Save(stream);
         }
 
         public void Save(Stream stream)
         {
-            using StreamWriter writer = new StreamWriter(stream, Encoding.UTF8, 1024, true);
+            using StreamWriter writer = new(stream, Encoding.UTF8, 1024, true);
             Save(writer);
         }
 
         public virtual void Save(TextWriter writer)
         {
             throw new NotImplementedException();
+        }
+
+        private static string ToSafePath(string filePath)
+        {
+            if (OperatingSystem.IsWindows && !filePath.StartsWith(@"\\?\"))
+                filePath = @"\\?\" + Path.GetFullPath(filePath);
+
+            return filePath;
         }
     }
 }

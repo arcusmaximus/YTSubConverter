@@ -28,7 +28,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 return false;
             }
 
-            TtmlMultipartAttributeReader reader = new TtmlMultipartAttributeReader(text);
+            TtmlMultipartAttributeReader reader = new(text);
             if (!reader.TryRead(TtmlLength.TryParse, out TtmlLength width) ||
                 !reader.TryRead(TtmlLength.TryParse, out TtmlLength height) ||
                 !reader.IsAtEnd)
@@ -52,7 +52,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             return size;
         }
 
-        internal SizeF Resolve(TtmlResolutionContext context)
+        internal readonly SizeF Resolve(TtmlResolutionContext context)
         {
             return new SizeF(
                 Width.Resolve(context, TtmlProgression.Inline),
@@ -60,7 +60,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             );
         }
 
-        public override string ToString()
+        public readonly override string ToString()
         {
             return Width + " " + Height;
         }

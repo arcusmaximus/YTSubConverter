@@ -26,21 +26,21 @@ namespace YTSubConverter.Shared.Formats.Ttml
             FrameRate = 30;
             SubFrameRate = 1;
             TickRate = 1;
-            Styles = new Dictionary<string, TtmlStyle>();
-            Regions = new Dictionary<string, TtmlRegion>();
+            Styles = new();
+            Regions = new();
         }
 
         public TtmlDocument(string filePath)
             : this()
         {
-            using StreamReader reader = new StreamReader(filePath);
+            using StreamReader reader = new(filePath);
             Load(reader);
         }
 
         public TtmlDocument(Stream stream)
             : this()
         {
-            using StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            using StreamReader reader = new(stream, Encoding.UTF8, true, 1024, true);
             Load(reader);
         }
 
@@ -105,19 +105,16 @@ namespace YTSubConverter.Shared.Formats.Ttml
         {
             InitialStyle = TtmlStyle.CreateDefaultInitialStyle();
 
-            XmlDocument doc = new XmlDocument { PreserveWhitespace = true };
+            XmlDocument doc = new() { PreserveWhitespace = true };
             doc.Load(reader);
 
-            XmlNamespaceManager nsmgr = new XmlNamespaceManager(doc.NameTable);
+            XmlNamespaceManager nsmgr = new(doc.NameTable);
             nsmgr.AddNamespace("xml", Namespaces.Xml);
             nsmgr.AddNamespace("tt", Namespaces.Tt);
             nsmgr.AddNamespace("ttp", Namespaces.Ttp);
             nsmgr.AddNamespace("tts", Namespaces.Tts);
 
-            XmlElement ttElem = (XmlElement)doc.SelectSingleNode("/tt:tt", nsmgr);
-            if (ttElem == null)
-                throw new InvalidDataException("No <tt> element at root");
-
+            XmlElement ttElem = (XmlElement)doc.SelectSingleNode("/tt:tt", nsmgr) ?? throw new InvalidDataException("No <tt> element at root");
             ReadDocumentRoot(ttElem, nsmgr);
 
             XmlElement headElem = (XmlElement)ttElem.SelectSingleNode("tt:head", nsmgr);
@@ -200,10 +197,10 @@ namespace YTSubConverter.Shared.Formats.Ttml
             if (initialElem != null)
                 InitialStyle = new TtmlStyle(initialElem, nsmgr, InitialStyle) { IsInitial = true };
 
-            Dictionary<TtmlStyle, string> baseStyleIds = new Dictionary<TtmlStyle, string>();
+            Dictionary<TtmlStyle, string> baseStyleIds = new();
             foreach (XmlElement styleElem in stylingElem.SelectNodes("tt:style", nsmgr))
             {
-                TtmlStyle style = new TtmlStyle(styleElem, nsmgr, InitialStyle);
+                TtmlStyle style = new(styleElem, nsmgr, InitialStyle);
                 Styles.Add(style.Id, style);
 
                 string baseStyleId = styleElem.GetAttribute("style");
@@ -224,7 +221,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
         {
             foreach (XmlElement regionElem in layoutElem.SelectNodes("tt:region", nsmgr))
             {
-                TtmlRegion region = new TtmlRegion(regionElem, nsmgr, this);
+                TtmlRegion region = new(regionElem, nsmgr, this);
                 Regions.Add(region.Id, region);
             }
         }
@@ -242,7 +239,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
         {
             TtmlResolutionContext initialContext = TtmlResolutionContext.CreateInitialContext(this);
             TtmlResolutionContext bodyContext = TtmlResolutionContext.Extend(initialContext, null, Body);
-            return ConvertTtmlToCommon(Body, bodyContext) as List<Line> ?? new List<Line>();
+            return ConvertTtmlToCommon(Body, bodyContext) as List<Line> ?? [];
         }
 
         private object ConvertTtmlToCommon(TtmlContent content, TtmlResolutionContext context)
@@ -291,7 +288,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
             (HorizontalTextDirection hDir, VerticalTextType vDir) = GetTextDirections(context.Style.WritingMode, context.Style.TextOrientation, context.Style.Direction);
 
-            Line line = new Line(context.BeginTime, context.EndTime)
+            Line line = new(context.BeginTime, context.EndTime)
                         {
                             AnchorPoint = anchorPoint,
                             Position = position,
@@ -315,10 +312,10 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
             TtmlStyle style = context.Style;
             if (string.IsNullOrEmpty(span.Text) || style.Display == TtmlDisplayMode.None)
-                return new List<Section>();
+                return [];
 
             float defaultFontSize = (Body.Style ?? Body.Region?.Style ?? InitialStyle).FontSize.Resolve(context, TtmlProgression.Inline);
-            Section section = new Section(span.Text)
+            Section section = new(span.Text)
                               {
                                   Font = ConvertTtmlFontFamily(style.FontFamilies),
                                   Scale = style.FontSize.Resolve(context, TtmlProgression.Inline) / defaultFontSize,
@@ -348,15 +345,15 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
             ConvertTtmlShadows(style, section);
 
-            return new List<Section> { section };
+            return [section];
         }
 
         private List<Section> ConvertRubyTtmlSpanToSections(TtmlSpan span, TtmlResolutionContext context)
         {
-            List<Section> baseSections = new List<Section>();
-            List<Section> openParenthesisSections = new List<Section>();
-            List<Section> textSections = new List<Section>();
-            List<Section> closeParenthesisSections = new List<Section>();
+            List<Section> baseSections = [];
+            List<Section> openParenthesisSections = [];
+            List<Section> textSections = [];
+            List<Section> closeParenthesisSections = [];
             ConvertRubyTtmlSpanToSections(span, context, baseSections, openParenthesisSections, textSections, closeParenthesisSections);
 
             int numParts = Math.Min(baseSections.Count, textSections.Count);
@@ -381,7 +378,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 closeParenthesisSections.Add(closeParenthesisSection);
             }
 
-            List<Section> result = new List<Section>();
+            List<Section> result = [];
             for (int i = 0; i < numParts; i++)
             {
                 result.Add(baseSections[i]);
@@ -523,7 +520,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
         private List<T> ConvertTtmlChildren<T>(TtmlContent content, TtmlResolutionContext context)
         {
-            List<T> result = new List<T>();
+            List<T> result = [];
             TtmlResolutionContext prevChildContext = null;
             foreach (TtmlContent ttmlChild in content.Children)
             {
@@ -767,7 +764,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             writer.WriteStartElement("span");
             writer.WriteAttributeString("style", "style" + styleIds[section]);
 
-            string[] lines = section.Text.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            string[] lines = section.Text.Split(["\r\n"], StringSplitOptions.None);
             for (int i = 0; i < lines.Length; i++)
             {
                 writer.WriteValue(lines[i]);
@@ -933,7 +930,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
         private static string GetTextShadows(Dictionary<ShadowType, Color> shadows)
         {
-            List<TtmlShadow> ttmlShadows = new List<TtmlShadow>();
+            List<TtmlShadow> ttmlShadows = [];
             foreach ((ShadowType type, Color color) in shadows)
             {
                 switch (type)

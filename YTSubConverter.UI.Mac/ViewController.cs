@@ -13,6 +13,7 @@ using YTSubConverter.Shared.Formats;
 using YTSubConverter.Shared.Formats.Ass;
 using YTSubConverter.Shared.Util;
 using Foundation;
+using UniformTypeIdentifiers;
 
 namespace YTSubConverter.UI.Mac
 {
@@ -44,7 +45,7 @@ namespace YTSubConverter.UI.Mac
             base.ViewDidAppear();
 
             ((View)View).Controller = this;
-            View.RegisterForDraggedTypes(new[] { NSPasteboard.NSPasteboardTypeFileUrl.ToString() });
+            View.RegisterForDraggedTypes([UTTypes.FileUrl.Identifier]);
 
             Version version = Assembly.GetEntryAssembly().GetName().Version;
             View.Window.Title = $"YTSubConverter {version.Major}.{version.Minor}.{version.Build}";
@@ -112,7 +113,7 @@ namespace YTSubConverter.UI.Mac
             if (result != NSModalResponse.OK)
                 return;
 
-            LoadFile(_dlgOpenSubtitles.Filename);
+            LoadFile(_dlgOpenSubtitles.Url.Path);
         }
 
         private void LoadFile(string filePath)
@@ -420,7 +421,7 @@ namespace YTSubConverter.UI.Mac
                     case ".ass":
                     {
 
-                        AssDocument inputDoc = new AssDocument(_lblInputFile.StringValue, ((SimpleTableViewDataSource<AssStyleOptions>)_lstStyles.DataSource)?.InnerList);
+                        AssDocument inputDoc = new(_lblInputFile.StringValue, ((SimpleTableViewDataSource<AssStyleOptions>)_lstStyles.DataSource)?.InnerList);
                         outputDoc = new YttDocument(inputDoc);
                         outputExtension = ".ytt";
 
@@ -431,7 +432,7 @@ namespace YTSubConverter.UI.Mac
                     case ".ytt":
                     case ".srv3":
                     {
-                        YttDocument inputDoc = new YttDocument(_lblInputFile.StringValue);
+                        YttDocument inputDoc = new(_lblInputFile.StringValue);
                         outputDoc = new AssDocument(inputDoc);
                         outputExtension = inputExtension == ".ytt" ? ".reverse.ass" : ".ass";
                         break;
@@ -468,9 +469,9 @@ namespace YTSubConverter.UI.Mac
             }
         }
 
-        public NSDragOperation GetDragOperation(NSDraggingInfo info)
+        public NSDragOperation GetDragOperation(INSDraggingInfo info)
         {
-            if (!info.DraggingPasteboard.Types.Contains(NSPasteboard.NSPasteboardTypeFileUrl.ToString()))
+            if (!info.DraggingPasteboard.Types.Contains(UTTypes.FileUrl.Identifier))
                 return NSDragOperation.None;
 
             NSUrl url = NSUrl.FromPasteboard(info.DraggingPasteboard);
@@ -482,7 +483,7 @@ namespace YTSubConverter.UI.Mac
             return SubtitleDocument.IsExtensionSupported(extension) ? NSDragOperation.Copy : NSDragOperation.None;
         }
 
-        public bool PerformDrag(NSDraggingInfo info)
+        public bool PerformDrag(INSDraggingInfo info)
         {
             if (GetDragOperation(info) == NSDragOperation.None)
                 return false;

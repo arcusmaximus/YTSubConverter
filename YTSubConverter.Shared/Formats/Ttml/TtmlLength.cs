@@ -58,7 +58,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
             return length;
         }
 
-        internal float Resolve(TtmlResolutionContext context, TtmlProgression progression)
+        internal readonly float Resolve(TtmlResolutionContext context, TtmlProgression progression)
         {
             return Unit switch
                    {

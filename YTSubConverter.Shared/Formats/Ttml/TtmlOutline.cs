@@ -51,7 +51,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
             outline = null;
 
-            TtmlMultipartAttributeReader reader = new TtmlMultipartAttributeReader(text);
+            TtmlMultipartAttributeReader reader = new(text);
 
             reader.TryRead(TtmlColor.TryParse, out Color color);
             
@@ -80,7 +80,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
 
         public override string ToString()
         {
-            StringBuilder result = new StringBuilder();
+            StringBuilder result = new();
 
             if (!Color.IsEmpty)
             {

@@ -6,7 +6,7 @@ namespace YTSubConverter.Shared.Formats.Ass.KaraokeTypes
 {
     public class SimpleKaraokeType : IKaraokeType
     {
-        public static readonly SimpleKaraokeType Instance = new SimpleKaraokeType();
+        public static readonly SimpleKaraokeType Instance = new();
 
         public virtual IEnumerable<AssLine> Apply(AssKaraokeStepContext context)
         {
@@ -34,7 +34,7 @@ namespace YTSubConverter.Shared.Formats.Ass.KaraokeTypes
                 }
             }
 
-            return new[] { context.StepLine };
+            return [context.StepLine];
         }
     }
 }

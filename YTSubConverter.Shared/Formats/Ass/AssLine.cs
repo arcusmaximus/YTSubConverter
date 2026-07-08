@@ -34,7 +34,7 @@ namespace YTSubConverter.Shared.Formats.Ass
 
         public int Alpha { get; set; } = 255;
 
-        public List<Animation> Animations { get; } = new List<Animation>();
+        public List<Animation> Animations { get; } = [];
 
         public IKaraokeType KaraokeType { get; set; } = SimpleKaraokeType.Instance;
 

@@ -58,7 +58,7 @@ namespace YTSubConverter.Shared.Formats.Ass
             set;
         }
 
-        public List<Animation> Animations { get; } = new List<Animation>();
+        public List<Animation> Animations { get; } = [];
 
         public override object Clone()
         {
@@ -68,7 +68,7 @@ namespace YTSubConverter.Shared.Formats.Ass
         protected override void Assign(Section section)
         {
             base.Assign(section);
-            if (!(section is AssSection assSection))
+            if (section is not AssSection assSection)
                 return;
 
             SecondaryColor = assSection.SecondaryColor;

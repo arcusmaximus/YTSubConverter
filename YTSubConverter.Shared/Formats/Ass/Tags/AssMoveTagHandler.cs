@@ -18,8 +18,8 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
                 return;
 
             AssLine line = context.Line;
-            PointF startPos = new PointF(args[0], args[1]);
-            PointF endPos = new PointF(args[2], args[3]);
+            PointF startPos = new(args[0], args[1]);
+            PointF endPos = new(args[2], args[3]);
 
             DateTime startTime = line.Start;
             DateTime endTime = line.End;

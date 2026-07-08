@@ -57,7 +57,7 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
             if (items == null)
                 return null;
 
-            List<float> list = new List<float>();
+            List<float> list = [];
             foreach (string item in items)
             {
                 float.TryParse(item.Replace(" ", ""), NumberStyles.Float, CultureInfo.InvariantCulture, out float value);
@@ -69,7 +69,7 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
         protected static List<string> ParseStringList(string arg)
         {
             if (string.IsNullOrWhiteSpace(arg))
-                return new List<string>();
+                return [];
 
             arg = arg.Trim();
             if (!arg.StartsWith("("))

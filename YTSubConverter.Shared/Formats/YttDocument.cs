@@ -15,7 +15,7 @@ namespace YTSubConverter.Shared.Formats
         private const string ZeroWidthSpace = "\x200B";
         private const string PaddingSpace = "\x200B \x200B"; // Surround with zwsp's so we can recognize and remove it during reverse conversion
 
-        private static readonly Size ReferenceVideoDimensions = new Size(1280, 720);
+        private static readonly Size ReferenceVideoDimensions = new(1280, 720);
 
         public YttDocument()
         {
@@ -28,13 +28,13 @@ namespace YTSubConverter.Shared.Formats
 
         public YttDocument(string filePath)
         {
-            using StreamReader reader = new StreamReader(filePath);
+            using StreamReader reader = new(filePath);
             Load(reader);
         }
 
         public YttDocument(Stream stream)
         {
-            using StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            using StreamReader reader = new(stream, Encoding.UTF8, true, 1024, true);
             Load(reader);
         }
 
@@ -45,7 +45,7 @@ namespace YTSubConverter.Shared.Formats
 
         private void Load(TextReader reader)
         {
-            XmlDocument doc = new XmlDocument { PreserveWhitespace = true };
+            XmlDocument doc = new() { PreserveWhitespace = true };
             doc.Load(reader);
 
             VideoDimensions = ReferenceVideoDimensions;
@@ -114,9 +114,9 @@ namespace YTSubConverter.Shared.Formats
 
         private void ReadHead(XmlElement headElement, out List<Line> positions, out List<Line> windowStyles, out List<Section> pens)
         {
-            positions = new List<Line>();
-            windowStyles = new List<Line>();
-            pens = new List<Section>();
+            positions = [];
+            windowStyles = [];
+            pens = [];
             if (headElement == null)
                 return;
 
@@ -142,9 +142,10 @@ namespace YTSubConverter.Shared.Formats
         private (int, Line) ReadWindowPosition(XmlElement elem)
         {
             int id = elem.GetIntAttribute("id") ?? 0;
-            Line position = new Line(TimeBase, TimeBase);
-
-            position.AnchorPoint = GetAnchorPoint(elem.GetIntAttribute("ap") ?? 7);
+            Line position = new(TimeBase, TimeBase)
+            {
+                AnchorPoint = GetAnchorPoint(elem.GetIntAttribute("ap") ?? 7)
+            };
 
             int ah = elem.GetIntAttribute("ah") ?? 0;
             int av = elem.GetIntAttribute("av") ?? 0;
@@ -155,7 +156,7 @@ namespace YTSubConverter.Shared.Formats
         private static (int, Line) ReadWindowStyle(XmlElement elem)
         {
             int id = elem.GetIntAttribute("id") ?? 0;
-            Line windowStyle = new Line(TimeBase, TimeBase);
+            Line windowStyle = new(TimeBase, TimeBase);
 
             int printDirection = elem.GetIntAttribute("pd") ?? 0;
             int scrollDirection = elem.GetIntAttribute("sd") ?? 0;
@@ -166,7 +167,7 @@ namespace YTSubConverter.Shared.Formats
         private static (int, Section) ReadPen(XmlElement elem)
         {
             int id = elem.GetIntAttribute("id") ?? 0;
-            Section pen = new Section();
+            Section pen = new();
 
             int fontStyleId = elem.GetIntAttribute("fs") ?? 0;
             pen.Font = GetFontName(fontStyleId);
@@ -216,7 +217,7 @@ namespace YTSubConverter.Shared.Formats
 
             DateTime start = TimeBase.AddMilliseconds(t);
             DateTime end = start.AddMilliseconds(d);
-            Line line = new Line(start, end);
+            Line line = new(start, end);
 
             Line position = GetItemAtIndexSafe(positions, elem.GetIntAttribute("wp"));
             if (position != null)
@@ -347,13 +348,13 @@ namespace YTSubConverter.Shared.Formats
                 return;
 
             Line italicLine =
-                new Line(TimeUtil.RoundTimeToFrameCenter(TimeBase.AddMilliseconds(5000)), TimeUtil.RoundTimeToFrameCenter(TimeBase.AddMilliseconds(5100)))
+                new(TimeUtil.RoundTimeToFrameCenter(TimeBase.AddMilliseconds(5000)), TimeUtil.RoundTimeToFrameCenter(TimeBase.AddMilliseconds(5100)))
                 {
                     Position = new PointF(0, 0),
                     AnchorPoint = AnchorPoint.BottomRight
                 };
             Section section =
-                new Section(ZeroWidthSpace)
+                new(ZeroWidthSpace)
                 {
                     ForeColor = Color.FromArgb(1, 255, 255, 255),
                     BackColor = Color.Empty,
@@ -473,7 +474,7 @@ namespace YTSubConverter.Shared.Formats
                 foreach (KeyValuePair<ShadowType, Color> shadowColor in section.ShadowColors)
                 {
                     if (shadowColor.Value.A != 254 && ((shadowColor.Value.ToArgb() & 0xFFFFFF) != 0x222222 || shadowColor.Value.A != section.ForeColor.A))
-                        (shadowTypesToChange ??= new List<ShadowType>()).Add(shadowColor.Key);
+                        (shadowTypesToChange ??= []).Add(shadowColor.Key);
                 }
 
                 if (shadowTypesToChange == null)
@@ -496,11 +497,11 @@ namespace YTSubConverter.Shared.Formats
             if (maxNumShadows <= 1)
                 return 1;
 
-            List<List<ShadowType>> lineLayerShadowTypes = new List<List<ShadowType>>();
-            ShadowType[] orderedShadowTypes = { ShadowType.SoftShadow, ShadowType.HardShadow, ShadowType.Bevel, ShadowType.Glow };
+            List<List<ShadowType>> lineLayerShadowTypes = [];
+            ShadowType[] orderedShadowTypes = [ShadowType.SoftShadow, ShadowType.HardShadow, ShadowType.Bevel, ShadowType.Glow];
             foreach (Section section in line.Sections)
             {
-                List<ShadowType> sectionLayerShadowTypes = new List<ShadowType>();
+                List<ShadowType> sectionLayerShadowTypes = [];
                 foreach (ShadowType shadowType in orderedShadowTypes)
                 {
                     if (section.ShadowColors.ContainsKey(shadowType))
@@ -602,7 +603,7 @@ namespace YTSubConverter.Shared.Formats
             // Use a (hopefully) unique color combination so the padding sections won't be merged with others during upload.
             // (This is important for working around the May 2020 bug described above)
             Section hiddenSectionTemplate =
-                new Section
+                new()
                 {
                     BackColor = Color.FromArgb(0, 130, 140, 150),
                     ForeColor = Color.FromArgb(0, 160, 170, 180)
@@ -830,7 +831,7 @@ namespace YTSubConverter.Shared.Formats
                 int multiSectionWorkaroundIdx = line.Sections[0].RubyPart == RubyPart.None ? 0 : 3;
                 for (int i = 0; i < line.Sections.Count; i++)
                 {
-                    WriteSection(writer, line, line.Sections[i], penIds);
+                    WriteSection(writer, line.Sections[i], penIds);
                     if (i == multiSectionWorkaroundIdx)
                         writer.WriteValue(ZeroWidthSpace);
                 }
@@ -839,7 +840,7 @@ namespace YTSubConverter.Shared.Formats
             writer.WriteEndElement();
         }
 
-        private void WriteSection(XmlWriter writer, Line line, Section section, Dictionary<Section, int> penIds)
+        private void WriteSection(XmlWriter writer, Section section, Dictionary<Section, int> penIds)
         {
             writer.WriteStartElement("s");
             writer.WriteAttributeString("p", penIds[section].ToString());

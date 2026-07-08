@@ -73,7 +73,7 @@ namespace YTSubConverter.Shared
         public List<ShadowType> ShadowTypes
         {
             get;
-        } = new List<ShadowType>();
+        } = [];
 
         public void SetShadowTypeEnabled(ShadowType type, bool enable)
         {

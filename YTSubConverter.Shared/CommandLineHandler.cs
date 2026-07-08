@@ -38,9 +38,9 @@ namespace YTSubConverter.Shared
 
         private static Arguments ParseArguments(string[] args)
         {
-            Arguments parsedArgs = new Arguments();
+            Arguments parsedArgs = new();
 
-            List<string> filePaths = new List<string>();
+            List<string> filePaths = [];
             foreach (string arg in args)
             {
                 if (arg.StartsWith("-"))

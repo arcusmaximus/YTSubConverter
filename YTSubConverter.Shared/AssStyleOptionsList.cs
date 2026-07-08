@@ -31,18 +31,18 @@ namespace YTSubConverter.Shared
         {
             filePath ??= GetDefaultFilePath();
             if (!File.Exists(filePath))
-                return new List<AssStyleOptions>();
+                return [];
 
             try
             {
                 using Stream stream = File.Open(filePath, FileMode.Open, FileAccess.Read);
-                XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
+                XmlSerializer serializer = new(typeof(AssStyleOptionsList));
                 AssStyleOptionsList options = (AssStyleOptionsList)serializer.Deserialize(stream);
                 return options.Options;
             }
             catch
             {
-                return new List<AssStyleOptions>();
+                return [];
             }
         }
 
@@ -50,22 +50,22 @@ namespace YTSubConverter.Shared
         {
             try
             {
-                using StringReader reader = new StringReader(data);
-                XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
+                using StringReader reader = new(data);
+                XmlSerializer serializer = new(typeof(AssStyleOptionsList));
                 AssStyleOptionsList options = (AssStyleOptionsList)serializer.Deserialize(reader);
                 return options.Options;
             }
             catch
             {
-                return new List<AssStyleOptions>();
+                return [];
             }
         }
 
         public static void SaveToFile(IEnumerable<AssStyleOptions> options, string filePath = null)
         {
             using Stream stream = File.Open(filePath ?? GetDefaultFilePath(), FileMode.Create, FileAccess.Write);
-            XmlSerializer serializer = new XmlSerializer(typeof(AssStyleOptionsList));
-            AssStyleOptionsList list = new AssStyleOptionsList(options);
+            XmlSerializer serializer = new(typeof(AssStyleOptionsList));
+            AssStyleOptionsList list = new(options);
             serializer.Serialize(stream, list);
         }
 

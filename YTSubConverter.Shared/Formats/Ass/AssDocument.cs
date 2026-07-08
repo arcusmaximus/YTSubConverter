@@ -79,10 +79,7 @@ namespace YTSubConverter.Shared.Formats.Ass
 
             foreach (AssDialogue dialogue in fileSections["Events"].MapItems("Dialogue", i => new AssDialogue(i)))
             {
-                AssStyle style = GetStyle(dialogue.Style);
-                if (style == null)
-                    throw new Exception($"Line \"{dialogue.Text}\" refers to style \"{dialogue.Style}\" which doesn't exist.");
-
+                AssStyle style = GetStyle(dialogue.Style) ?? throw new Exception($"Line \"{dialogue.Text}\" refers to style \"{dialogue.Style}\" which doesn't exist.");
                 AssStyleOptions options = GetStyleOptions(dialogue.Style);
 
                 List<AssLine> lines = ParseLine(dialogue, style, options);
@@ -407,12 +404,12 @@ namespace YTSubConverter.Shared.Formats.Ass
         private IEnumerable<AssLine> ExpandLineForKaraoke(AssLine line)
         {
             if (line.Sections.Cast<AssSection>().All(s => s.Duration == TimeSpan.Zero))
-                return new[] { line };
+                return [line];
 
             if (CanUseNativeKaraoke(line))
             {
                 ApplyNativeKaraoke(line);
-                return new[] { line };
+                return [line];
             }
 
             return CreateEmulatedKaraokeLines(line);
@@ -689,7 +686,7 @@ namespace YTSubConverter.Shared.Formats.Ass
 
         private AssStyle GetStyleMatchingStructure(AssSection section)
         {
-            HashSet<ShadowType> sectionShadowTypes = new HashSet<ShadowType>(section.ShadowColors.Keys);
+            HashSet<ShadowType> sectionShadowTypes = new(section.ShadowColors.Keys);
 
             foreach (AssStyle style in _styles.Values)
             {
@@ -698,7 +695,7 @@ namespace YTSubConverter.Shared.Formats.Ass
                 if (style.HasOutlineBox != (section.BackColor.A > 0))
                     continue;
 
-                HashSet<ShadowType> styleShadowTypes = new HashSet<ShadowType>();
+                HashSet<ShadowType> styleShadowTypes = new();
                 if (style.HasOutline && !style.OutlineIsBox)
                     styleShadowTypes.Add(ShadowType.Glow);
 

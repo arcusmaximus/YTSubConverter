@@ -89,7 +89,7 @@ namespace YTSubConverter.UI.Linux
 
         public static Pango.Rectangle ToPixelsInclusive(this Pango.Rectangle rect)
         {
-            Pango.Rectangle dummy = new Pango.Rectangle();
+            Pango.Rectangle dummy = new();
             Pango.Global.ExtentsToPixels(ref rect, ref dummy);
             return rect;
         }
@@ -101,7 +101,7 @@ namespace YTSubConverter.UI.Linux
 
         public static void ApplyCss(this Widget widget, string css)
         {
-            CssProvider provider = new CssProvider();
+            CssProvider provider = new();
             provider.LoadFromData(css);
             widget.StyleContext.AddProvider(provider, 800);
         }

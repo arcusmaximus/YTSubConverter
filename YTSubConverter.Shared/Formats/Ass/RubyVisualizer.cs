@@ -30,7 +30,7 @@ namespace YTSubConverter.Shared.Formats.Ass
 
         public IEnumerable<AssLine> MakeVisualizationLines()
         {
-            List<SplitLineVisualization> visualizations = new();
+            List<SplitLineVisualization> visualizations = [];
             foreach (AssLine splitLine in GetSplitLines())
             {
                 visualizations.Add(MakeSplitLineVisualization(splitLine));
@@ -77,7 +77,7 @@ namespace YTSubConverter.Shared.Formats.Ass
 
         private SplitLineVisualization MakeSplitLineVisualization(AssLine splitLine)
         {
-            _vizLines = new();
+            _vizLines = [];
             _lastBaseVizLine = null;
             _vizRight = 0;
             _vizTop = 0;
@@ -121,12 +121,12 @@ namespace YTSubConverter.Shared.Formats.Ass
         private void AppendBaseSection(AssSection section)
         {
             SizeF size = MeasureSection(section);
-            AddBaseSection(section, size);
+            AddBaseSection(section);
             _vizTop = Math.Min(-size.Height, _vizTop);
             _vizRight += size.Width;
         }
 
-        private void AddBaseSection(AssSection section, SizeF sectionSize)
+        private void AddBaseSection(AssSection section)
         {
             if (_lastBaseVizLine == null)
             {
@@ -144,7 +144,7 @@ namespace YTSubConverter.Shared.Formats.Ass
             float maxWidth = Math.Max(baseSize.Width, rubySize.Width);
             if (rubySize.Width <= baseSize.Width)
             {
-                AddBaseSection(baseSection, baseSize);
+                AddBaseSection(baseSection);
             }
             else
             {

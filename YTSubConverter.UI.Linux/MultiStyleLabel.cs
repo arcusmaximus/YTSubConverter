@@ -57,7 +57,7 @@ namespace YTSubConverter.UI.Linux
             text = doc.Root.Value;
 
             int offset = 0;
-            segments = new List<MarkupSegment>();
+            segments = [];
             foreach (XNode node in doc.Root.Nodes())
             {
                 MarkupSegment segment;
@@ -88,7 +88,7 @@ namespace YTSubConverter.UI.Linux
         private Task<List<LayoutSegment>> GetLayoutSegmentsAsync(string text, List<MarkupSegment> markupSegments)
         {
             string markup = CreateLayoutMarkup(text, markupSegments);
-            Label layoutLabel = new Label
+            Label layoutLabel = new()
                                 {
                                     UseMarkup = true,
                                     Markup = markup,
@@ -110,7 +110,7 @@ namespace YTSubConverter.UI.Linux
 
                 layoutLabel.TranslateCoordinates(Child, 0, 0, out int baseX, out int baseY);
 
-                List<LayoutSegment> layoutSegments = new List<LayoutSegment>();
+                List<LayoutSegment> layoutSegments = [];
                 Pango.LayoutIter iter = layoutLabel.Layout.Iter;
                 do
                 {
@@ -122,7 +122,7 @@ namespace YTSubConverter.UI.Linux
 
                     iter.GetRunExtents(out Pango.Rectangle inkRect, out Pango.Rectangle logicalRect);
                     logicalRect = logicalRect.ToPixelsInclusive();
-                    Point position = new Point(baseX + logicalRect.X, baseY + logicalRect.Y);
+                    Point position = new(baseX + logicalRect.X, baseY + logicalRect.Y);
 
                     layoutSegments.Add(new LayoutSegment(offset, length, position));
                 } while (iter.NextRun());
@@ -135,10 +135,10 @@ namespace YTSubConverter.UI.Linux
 
         private static string CreateLayoutMarkup(string text, List<MarkupSegment> markupSegments)
         {
-            StringBuilder markup = new StringBuilder();
+            StringBuilder markup = new();
             foreach (MarkupSegment markupSegment in markupSegments)
             {
-                XElement spanElem = new XElement("span") { Value = text.Substring(markupSegment.Offset, markupSegment.Length) };
+                XElement spanElem = new("span") { Value = text.Substring(markupSegment.Offset, markupSegment.Length) };
                 spanElem.SetAttributeValue("color", $"#{markupSegment.Offset:X06}");
                 spanElem.SetAttributeValue("font", CreatePangoFontDescFromCss(markupSegment.CssProperties));
                 markup.Append(spanElem.ToString());
@@ -149,7 +149,7 @@ namespace YTSubConverter.UI.Linux
         private static string CreatePangoFontDescFromCss(string css)
         {
             Dictionary<string, string> cssDict = ParseCssProperties(css);
-            List<string> fontItems = new List<string>();
+            List<string> fontItems = [];
             foreach (string keyword in new[] { "font-family", "font-weight", "font-style", "font-size" })
             {
                 string value = cssDict.GetOrDefault(keyword);
@@ -175,7 +175,7 @@ namespace YTSubConverter.UI.Linux
                 {
                     LayoutSegment layoutSegment = layoutLine[segmentIdx];
 
-                    Label label = new Label
+                    Label label = new()
                                   {
                                       Text = text.Substring(layoutSegment.Offset, layoutSegment.Length),
                                       Halign = Align.Start,
@@ -243,7 +243,7 @@ namespace YTSubConverter.UI.Linux
         private static int[] ParseSpacing(string spacing)
         {
             if (spacing == null)
-                return new[] { 0, 0, 0, 0 };
+                return [0, 0, 0, 0];
 
             Match match = Regex.Match(spacing, @"^(?:\s*(-?\d+)px)+\s*$");
             if (!match.Success)
@@ -255,11 +255,11 @@ namespace YTSubConverter.UI.Linux
                                          .ToArray();
 
             if (items.Length == 1)
-                items = new[] { items[0], items[0], items[0], items[0] };
+                items = [items[0], items[0], items[0], items[0]];
             else if (items.Length == 2)
-                items = new[] { items[0], items[1], items[0], items[1] };
+                items = [items[0], items[1], items[0], items[1]];
             else if (items.Length == 3)
-                items = new[] { items[0], items[1], items[2], items[1] };
+                items = [items[0], items[1], items[2], items[1]];
 
             return items;
         }

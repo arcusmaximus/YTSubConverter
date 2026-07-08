@@ -13,11 +13,11 @@ namespace YTSubConverter.Shared.Formats.Ass
             set;
         }
 
-        public List<AssDocumentItem> Items { get; } = new List<AssDocumentItem>();
+        public List<AssDocumentItem> Items { get; } = [];
 
         public void SetFormat(List<string> format)
         {
-            Format = new Dictionary<string, int>();
+            Format = new();
             for (int i = 0; i < format.Count; i++)
             {
                 Format.Add(format[i], i);

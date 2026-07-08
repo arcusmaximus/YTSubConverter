@@ -18,22 +18,22 @@ namespace YTSubConverter.UI.Mac
             set;
         }
 
-        public override NSDragOperation DraggingEntered(NSDraggingInfo sender)
+        public override NSDragOperation DraggingEntered(INSDraggingInfo sender)
         {
             return Controller.GetDragOperation(sender);
         }
 
-        public override NSDragOperation DraggingUpdated(NSDraggingInfo sender)
+        public override NSDragOperation DraggingUpdated(INSDraggingInfo sender)
         {
             return Controller.GetDragOperation(sender);
         }
 
-        public override bool PrepareForDragOperation(NSDraggingInfo sender)
+        public override bool PrepareForDragOperation(INSDraggingInfo sender)
         {
             return Controller.GetDragOperation(sender) != NSDragOperation.None;
         }
 
-        public override bool PerformDragOperation(NSDraggingInfo sender)
+        public override bool PerformDragOperation(INSDraggingInfo sender)
         {
             return Controller.PerformDrag(sender);
         }

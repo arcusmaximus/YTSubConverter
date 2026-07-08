@@ -4,71 +4,58 @@
     {
         public static bool IsLeftAligned(AnchorPoint anchorPoint)
         {
-            return anchorPoint == AnchorPoint.TopLeft ||
-                   anchorPoint == AnchorPoint.MiddleLeft ||
-                   anchorPoint == AnchorPoint.BottomLeft;
+            return anchorPoint is AnchorPoint.TopLeft or
+                                  AnchorPoint.MiddleLeft or
+                                  AnchorPoint.BottomLeft;
         }
 
         public static bool IsCenterAligned(AnchorPoint anchorPoint)
         {
-            return anchorPoint == AnchorPoint.TopCenter ||
-                   anchorPoint == AnchorPoint.Center ||
-                   anchorPoint == AnchorPoint.BottomCenter;
+            return anchorPoint is AnchorPoint.TopCenter or
+                                  AnchorPoint.Center or
+                                  AnchorPoint.BottomCenter;
         }
 
         public static bool IsRightAligned(AnchorPoint anchorPoint)
         {
-            return anchorPoint == AnchorPoint.TopRight ||
-                   anchorPoint == AnchorPoint.MiddleRight ||
-                   anchorPoint == AnchorPoint.BottomRight;
+            return anchorPoint is AnchorPoint.TopRight or
+                                  AnchorPoint.MiddleRight or
+                                  AnchorPoint.BottomRight;
         }
 
         public static bool IsTopAligned(AnchorPoint anchorPoint)
         {
-            return anchorPoint == AnchorPoint.TopLeft ||
-                   anchorPoint == AnchorPoint.TopCenter ||
-                   anchorPoint == AnchorPoint.TopRight;
+            return anchorPoint is AnchorPoint.TopLeft or
+                                  AnchorPoint.TopCenter or
+                                  AnchorPoint.TopRight;
         }
 
         public static bool IsMiddleAligned(AnchorPoint anchorPoint)
         {
-            return anchorPoint == AnchorPoint.MiddleLeft ||
-                   anchorPoint == AnchorPoint.Center ||
-                   anchorPoint == AnchorPoint.MiddleRight;
+            return anchorPoint is AnchorPoint.MiddleLeft or
+                                  AnchorPoint.Center or
+                                  AnchorPoint.MiddleRight;
         }
 
         public static bool IsBottomAligned(AnchorPoint anchorPoint)
         {
-            return anchorPoint == AnchorPoint.BottomLeft ||
-                   anchorPoint == AnchorPoint.BottomCenter ||
-                   anchorPoint == AnchorPoint.BottomRight;
+            return anchorPoint is AnchorPoint.BottomLeft or
+                                  AnchorPoint.BottomCenter or
+                                  AnchorPoint.BottomRight;
         }
 
         public static AnchorPoint GetVerticalOpposite(AnchorPoint anchorPoint)
         {
-            switch (anchorPoint)
+            return anchorPoint switch
             {
-                case AnchorPoint.TopLeft:
-                    return AnchorPoint.BottomLeft;
-
-                case AnchorPoint.TopCenter:
-                    return AnchorPoint.BottomCenter;
-
-                case AnchorPoint.TopRight:
-                    return AnchorPoint.BottomRight;
-
-                case AnchorPoint.BottomLeft:
-                    return AnchorPoint.TopLeft;
-
-                case AnchorPoint.BottomCenter:
-                    return AnchorPoint.TopCenter;
-
-                case AnchorPoint.BottomRight:
-                    return AnchorPoint.TopRight;
-
-                default:
-                    return anchorPoint;
-            }
+                AnchorPoint.TopLeft         => AnchorPoint.BottomLeft,
+                AnchorPoint.TopCenter       => AnchorPoint.BottomCenter,
+                AnchorPoint.TopRight        => AnchorPoint.BottomRight,
+                AnchorPoint.BottomLeft      => AnchorPoint.TopLeft,
+                AnchorPoint.BottomCenter    => AnchorPoint.TopCenter,
+                AnchorPoint.BottomRight     => AnchorPoint.TopRight,
+                _ => anchorPoint,
+            };
         }
 
         public static AnchorPoint MakeTopAligned(AnchorPoint anchorPoint)

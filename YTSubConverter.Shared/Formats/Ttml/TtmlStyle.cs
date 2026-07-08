@@ -88,7 +88,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
         {
             return new TtmlStyle
                    {
-                       FontFamilies = new List<string> { "default" },
+                       FontFamilies = ["default"],
                        FontSize = new TtmlLength(DefaultFontSize, TtmlUnit.Pixels),
                        FontWeight = TtmlFontWeight.Normal,
                        FontStyle = TtmlFontStyle.Normal,
@@ -99,7 +99,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
                        TextAlign = TtmlTextAlign.Left,
                        DisplayAlign = TtmlDisplayAlign.Before,
                        TextCombine = TtmlTextCombine.None,
-                       TextShadows = new List<TtmlShadow>(),
+                       TextShadows = [],
                        Display = TtmlDisplayMode.Auto,
                        Visibility = TtmlVisibility.Visible,
                        Direction = TtmlDirection.Ltr,
@@ -520,9 +520,9 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 return null;
 
             if (textShadows == "none")
-                return new List<TtmlShadow>();
+                return [];
 
-            List<TtmlShadow> parsedTextShadows = new List<TtmlShadow>();
+            List<TtmlShadow> parsedTextShadows = [];
             foreach (Match match in Regex.Matches(textShadows, @"(?:\(.+?\)|[^\(\),])+"))
             {
                 if (!TtmlShadow.TryParse(match.Value.Trim(), out TtmlShadow parsedTextShadow))

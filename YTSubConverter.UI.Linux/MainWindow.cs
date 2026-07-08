@@ -69,11 +69,11 @@ namespace YTSubConverter.UI.Linux
             _styleOptions = customStyleOptions.Concat(builtinStyleOptions).ToDictionaryOverwrite(o => o.Name);
             _builtinStyleNames = builtinStyleOptions.Select(o => o.Name).ToHashSet();
 
-            _subtitleRenameWatcher = new FileSystemWatcher();
+            _subtitleRenameWatcher = new();
             _subtitleRenameWatcher.NotifyFilter = NotifyFilters.FileName;
             _subtitleRenameWatcher.Renamed += HandleTmpFileRenamed;
 
-            _subtitleModifyWatcher = new FileSystemWatcher();
+            _subtitleModifyWatcher = new();
             _subtitleModifyWatcher.NotifyFilter = NotifyFilters.LastWrite;
             _subtitleModifyWatcher.Changed += HandleFileModified;
 
@@ -105,8 +105,10 @@ namespace YTSubConverter.UI.Linux
             string[] filterParts = Resources.SubtitleFileFilter.Split('|');
             for (int i = 0; i < filterParts.Length; i += 2)
             {
-                FileFilter filter = new FileFilter();
-                filter.Name = filterParts[i] + " (" + filterParts[i + 1].Replace(";", " ") + ")";
+                FileFilter filter = new()
+                {
+                    Name = filterParts[i] + " (" + filterParts[i + 1].Replace(";", " ") + ")"
+                };
                 foreach (string pattern in filterParts[i + 1].Split(';'))
                 {
                     filter.AddPattern(pattern);
@@ -181,7 +183,7 @@ namespace YTSubConverter.UI.Linux
 
             string selectedStyleName = SelectedStyleOptions?.Name;
 
-            ListStore store = new ListStore(typeof(AssStyleOptions));
+            ListStore store = new(typeof(AssStyleOptions));
             store.AddRange(document.Styles.Select(s => _styleOptions[s.Name]));
             _lstStyles.Model = store;
 
@@ -393,7 +395,7 @@ namespace YTSubConverter.UI.Linux
                     case ".ass":
                     {
                         List<AssStyleOptions> options = ((ListStore)_lstStyles.Model).AsEnumerable<AssStyleOptions>().ToList();
-                        AssDocument inputDoc = new AssDocument(_btnInputFile.Filename, options);
+                        AssDocument inputDoc = new(_btnInputFile.Filename, options);
                         outputDoc = new YttDocument(inputDoc);
                         outputExtension = ".ytt";
 
@@ -404,7 +406,7 @@ namespace YTSubConverter.UI.Linux
                     case ".ytt":
                     case ".srv3":
                     {
-                        YttDocument inputDoc = new YttDocument(_btnInputFile.Filename);
+                        YttDocument inputDoc = new(_btnInputFile.Filename);
                         outputDoc = new AssDocument(inputDoc);
                         outputExtension = inputExtension == ".ytt" ? ".reverse.ass" : ".ass";
                         break;
@@ -448,7 +450,7 @@ namespace YTSubConverter.UI.Linux
             switch (args.Event.Key)
             {
                 case Gdk.Key.o:
-                    FileChooserNative dialog = new FileChooserNative(null, this, FileChooserAction.Open, null, null);
+                    FileChooserNative dialog = new(null, this, FileChooserAction.Open, null, null);
                     dialog.SetCurrentFolder(_btnInputFile.CurrentFolder);
                     foreach (FileFilter filter in _btnInputFile.Filters)
                     {
@@ -489,7 +491,7 @@ namespace YTSubConverter.UI.Linux
             if (e.SelectionData.Uris.Length != 1)
                 return;
 
-            Uri uri = new Uri(e.SelectionData.Uris[0]);
+            Uri uri = new(e.SelectionData.Uris[0]);
             if (!uri.IsFile)
                 return;
 

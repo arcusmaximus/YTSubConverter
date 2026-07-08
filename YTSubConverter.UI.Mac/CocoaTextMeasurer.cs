@@ -34,7 +34,7 @@ namespace YTSubConverter.UI.Mac
             using NSAttributedString str = new(text, new NSStringAttributes { Font = _lastFont });
             _storage.SetString(str);
             _layout.EnsureLayoutForTextContainer(_container);
-            CGRect rect = _layout.GetUsedRectForTextContainer(_container);
+            CGRect rect = _layout.GetUsedRect(_container);
             return new SizeF((float)rect.Width, (float)rect.Height);
         }
 

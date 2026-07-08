@@ -7,6 +7,7 @@ using System.Threading;
 using AppKit;
 using YTSubConverter.Shared;
 using Foundation;
+using System.Runtime.InteropServices;
 
 namespace YTSubConverter.UI.Mac
 {

@@ -13,6 +13,6 @@ namespace YTSubConverter.Shared.Formats.Ass
         public AssStyleOptions StyleOptions;
         public AssLine Line;
         public AssSection Section;
-        public readonly List<PostProcessor> PostProcessors = new List<PostProcessor>();
+        public readonly List<PostProcessor> PostProcessors = [];
     }
 }

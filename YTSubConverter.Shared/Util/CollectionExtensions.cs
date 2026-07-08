@@ -9,7 +9,7 @@ namespace YTSubConverter.Shared.Util
     {
         public static Dictionary<TKey, TValue> ToDictionaryOverwrite<TKey, TValue>(this IEnumerable<TValue> items, Func<TValue, TKey> keySelector)
         {
-            Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
+            Dictionary<TKey, TValue> dict = new();
             foreach (TValue value in items)
             {
                 dict[keySelector(value)] = value;
@@ -62,9 +62,7 @@ namespace YTSubConverter.Shared.Util
                     currentGroup = null;
                 }
 
-                if (currentGroup == null)
-                    currentGroup = new Grouping<TKey, TItem>(key);
-
+                currentGroup ??= new Grouping<TKey, TItem>(key);
                 currentGroup.Items.Add(item);
             }
             if (currentGroup != null)
@@ -128,7 +126,7 @@ namespace YTSubConverter.Shared.Util
             public Grouping(TKey key)
             {
                 Key = key;
-                Items = new List<TItem>();
+                Items = [];
             }
 
             public TKey Key

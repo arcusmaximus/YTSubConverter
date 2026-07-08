@@ -26,12 +26,12 @@ namespace YTSubConverter.Shared.Formats.Ttml
                 return false;
             }
 
-            TtmlMultipartAttributeReader reader = new TtmlMultipartAttributeReader(text);
+            TtmlMultipartAttributeReader reader = new(text);
             
             TtmlPosHBase hBase = TtmlPosHBase.Center;
-            TtmlLength hOffset = new TtmlLength();
+            TtmlLength hOffset = new();
             TtmlPosVBase vBase = TtmlPosVBase.Center;
-            TtmlLength vOffset = new TtmlLength();
+            TtmlLength vOffset = new();
 
             bool allowTwopart = reader.Count > 2;
 
@@ -198,7 +198,7 @@ namespace YTSubConverter.Shared.Formats.Ttml
                    };
         }
 
-        public override string ToString()
+        public readonly override string ToString()
         {
             return $"{FormatHorizontalBase(HBase)} {Offset.Width} {FormatVerticalBase(VBase)} {Offset.Height}";
         }

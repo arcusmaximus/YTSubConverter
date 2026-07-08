@@ -16,7 +16,7 @@ namespace YTSubConverter.Shared.Formats.Ass.Tags
 
         static AssTransformTagHandler()
         {
-            TransformTagHandlers = new Dictionary<string, TransformTagHandler>
+            TransformTagHandlers = new()
                                    {
                                        { "c", HandleTransformForeColorTag },
                                        { "1c", HandleTransformForeColorTag },

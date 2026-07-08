@@ -44,14 +44,14 @@ namespace YTSubConverter.Shared.Animations
 
         private static List<AnimationWithSectionIndex> GetAnimationsWithSectionIndex(AssLine line)
         {
-            List<AnimationWithSectionIndex> animations = new List<AnimationWithSectionIndex>();
+            List<AnimationWithSectionIndex> animations = [];
 
             foreach (Animation anim in line.Animations.Where(a => a is MoveAnimation))
             {
                 animations.Add(new AnimationWithSectionIndex(anim, -1));
             }
 
-            foreach (Animation anim in line.Animations.Where(a => !(a is MoveAnimation)))
+            foreach (Animation anim in line.Animations.Where(a => a is not MoveAnimation))
             {
                 animations.Add(new AnimationWithSectionIndex(anim, -1));
             }
@@ -72,14 +72,14 @@ namespace YTSubConverter.Shared.Animations
         {
             List<TimeRange> clusterRanges = GetAnimationClusterTimeRanges(allAnims.Select(a => a.Animation));
 
-            TimeRange lineRange = new TimeRange(line.Start, line.End);
+            TimeRange lineRange = new(line.Start, line.End);
             var clusters = new SortedList<TimeRange, List<AnimationWithSectionIndex>>();
             foreach (TimeRange clusterRange in clusterRanges)
             {
                 if (!clusterRange.Overlaps(lineRange))
                     continue;
 
-                List<AnimationWithSectionIndex> clusterAnims = new List<AnimationWithSectionIndex>();
+                List<AnimationWithSectionIndex> clusterAnims = [];
                 foreach (AnimationWithSectionIndex animWithSection in allAnims)
                 {
                     if (clusterRange.Contains(animWithSection.Animation.StartTime) && animWithSection.Animation.EndTime > animWithSection.Animation.StartTime)
@@ -89,17 +89,17 @@ namespace YTSubConverter.Shared.Animations
                 clusterRange.IntersectWith(lineRange);
                 clusterRange.Start = TimeUtil.RoundTimeToFrameCenter(clusterRange.Start);
                 clusterRange.End = TimeUtil.RoundTimeToFrameCenter(clusterRange.End);
-                clusters.FetchValue(clusterRange, () => new List<AnimationWithSectionIndex>()).AddRange(clusterAnims);
+                clusters.FetchValue(clusterRange, () => []).AddRange(clusterAnims);
             }
             return clusters;
         }
 
         private static List<TimeRange> GetAnimationClusterTimeRanges(IEnumerable<Animation> animations)
         {
-            List<TimeRange> clusterRanges = new List<TimeRange>();
+            List<TimeRange> clusterRanges = [];
             foreach (Animation animation in animations)
             {
-                TimeRange animationRange = new TimeRange(animation.StartTime, animation.EndTime);
+                TimeRange animationRange = new(animation.StartTime, animation.EndTime);
                 for (int i = clusterRanges.Count - 1; i >= 0; i--)
                 {
                     if (clusterRanges[i].Overlaps(animationRange))

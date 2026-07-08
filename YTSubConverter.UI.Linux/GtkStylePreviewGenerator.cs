@@ -22,7 +22,7 @@ namespace YTSubConverter.UI.Linux
                     markup = GetRegularPreviewMarkup(style, options, defaultStyle);
 
                 MultiStyleLabel label =
-                    new MultiStyleLabel(backgroundBox)
+                    new(backgroundBox)
                     {
                         Markup = markup,
                         Visible = true
@@ -37,13 +37,13 @@ namespace YTSubConverter.UI.Linux
 
         private static Box CreateBackgroundBox()
         {
-            Box backgroundBox = new Box(Orientation.Horizontal, 0)
+            Box backgroundBox = new(Orientation.Horizontal, 0)
                                 {
                                     Name = "background",
                                     Visible = true
                                 };
 
-            StringBuilder css = new StringBuilder();
+            StringBuilder css = new();
             GenerateBackgroundImageCss(css, "#background", null, false);
             backgroundBox.ApplyCss(css);
             return backgroundBox;
@@ -51,7 +51,7 @@ namespace YTSubConverter.UI.Linux
 
         private static string GetRegularPreviewMarkup(AssStyle style, AssStyleOptions options, AssStyle defaultStyle)
         {
-            StringBuilder css = new StringBuilder();
+            StringBuilder css = new();
             GenerateBackgroundCss(css, null, style, defaultStyle, 1);
             GenerateForegroundCss(css, null, style, style.PrimaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
             return GetSpanMarkup(css, Resources.PreviewSampleRegular);
@@ -59,9 +59,9 @@ namespace YTSubConverter.UI.Linux
 
         private static string GetKaraokePreviewMarkup(AssStyle style, AssStyleOptions options, AssStyle defaultStyle)
         {
-            StringBuilder markup = new StringBuilder();
+            StringBuilder markup = new();
 
-            StringBuilder css = new StringBuilder();
+            StringBuilder css = new();
             GenerateBackgroundCss(css, null, style, defaultStyle, 1);
             GenerateForegroundCss(css, null, style, style.PrimaryColor, style.OutlineColor, style.ShadowColor, options.ShadowTypes);
             markup.Append(GetSpanMarkup(css, Resources.PreviewSampleKaraoke1));

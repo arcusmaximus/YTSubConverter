@@ -5,13 +5,13 @@ VisualStudioVersion = 17.14.36408.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.Tests", "YTSubConverter.Tests\YTSubConverter.Tests.csproj", "{1A6D0829-801D-428B-B04B-65DD35B9F4F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.UI.Mac", "YTSubConverter.UI.Mac\YTSubConverter.UI.Mac.csproj", "{78B54FB4-2824-4476-9B90-68238867ABE8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YTSubConverter.Shared", "YTSubConverter.Shared\YTSubConverter.Shared.csproj", "{D68C2D8E-1300-42B6-8476-EBE12E274C88}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.UI.Win", "YTSubConverter.UI.Win\YTSubConverter.UI.Win.csproj", "{FE339CAD-14BD-43DB-A700-5DDC8B75F43B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.UI.Linux", "YTSubConverter.UI.Linux\YTSubConverter.UI.Linux.csproj", "{8C3964FE-0005-42CA-AABD-8B086979D469}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTSubConverter.UI.Mac", "YTSubConverter.UI.Mac\YTSubConverter.UI.Mac.csproj", "{C50FF7C4-2186-45C2-8EE3-1B59784FB2E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{1A6D0829-801D-428B-B04B-65DD35B9F4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A6D0829-801D-428B-B04B-65DD35B9F4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A6D0829-801D-428B-B04B-65DD35B9F4F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78B54FB4-2824-4476-9B90-68238867ABE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78B54FB4-2824-4476-9B90-68238867ABE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78B54FB4-2824-4476-9B90-68238867ABE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78B54FB4-2824-4476-9B90-68238867ABE8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D68C2D8E-1300-42B6-8476-EBE12E274C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D68C2D8E-1300-42B6-8476-EBE12E274C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D68C2D8E-1300-42B6-8476-EBE12E274C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{8C3964FE-0005-42CA-AABD-8B086979D469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C3964FE-0005-42CA-AABD-8B086979D469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C3964FE-0005-42CA-AABD-8B086979D469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50FF7C4-2186-45C2-8EE3-1B59784FB2E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50FF7C4-2186-45C2-8EE3-1B59784FB2E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50FF7C4-2186-45C2-8EE3-1B59784FB2E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50FF7C4-2186-45C2-8EE3-1B59784FB2E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

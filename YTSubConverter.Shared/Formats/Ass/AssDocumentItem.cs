@@ -6,51 +6,29 @@ using System.Text.RegularExpressions;
 
 namespace YTSubConverter.Shared.Formats.Ass
 {
-    internal struct AssDocumentItem
+    internal record struct AssDocumentItem(AssDocumentSection Section, string Type, List<string> Values)
     {
-        public AssDocumentItem(AssDocumentSection section, string type, List<string> values)
-        {
-            Section = section;
-            Type = type;
-            Values = values;
-        }
-
-        public AssDocumentSection Section
-        {
-            get;
-        }
-
-        public string Type
-        {
-            get;
-        }
-
-        public List<string> Values
-        {
-            get;
-        }
-
-        public string GetString(string field)
+        public readonly string GetString(string field)
         {
             return Values[Section.Format[field]];
         }
 
-        public int GetInt(string field, int defaultValue = 0)
+        public readonly int GetInt(string field, int defaultValue = 0)
         {
             return int.TryParse(GetString(field), out int result) ? result : defaultValue;
         }
 
-        public float GetFloat(string field, float defaultValue = 0)
+        public readonly float GetFloat(string field, float defaultValue = 0)
         {
             return float.TryParse(GetString(field), NumberStyles.Any, CultureInfo.InvariantCulture, out float result) ? result : defaultValue;
         }
 
-        public bool GetBool(string field, bool defaultValue = false)
+        public readonly bool GetBool(string field, bool defaultValue = false)
         {
             return Convert.ToBoolean(GetInt(field, Convert.ToInt32(defaultValue)));
         }
 
-        public Color GetColor(string field)
+        public readonly Color GetColor(string field)
         {
             string value = GetString(field);
             if (value.Length != 10 || !value.StartsWith("&H"))
@@ -66,7 +44,7 @@ namespace YTSubConverter.Shared.Formats.Ass
             return Color.FromArgb(a, r, g, b);
         }
 
-        public DateTime GetTimestamp(string field)
+        public readonly DateTime GetTimestamp(string field)
         {
             string value = GetString(field);
             Match match = Regex.Match(value, @"^(\d+):(\d\d):(\d\d)\.(\d\d)$");
@@ -84,7 +62,7 @@ namespace YTSubConverter.Shared.Formats.Ass
             ).AddHours(int.Parse(match.Groups[1].Value));
         }
 
-        public override string ToString()
+        public readonly override string ToString()
         {
             return Type;
         }
