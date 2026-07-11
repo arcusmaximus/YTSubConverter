@@ -1,0 +1,46 @@
+# The name of your package
+Name: ytsubconverter
+
+# A short summary of your package
+Summary: Conversion tool for YouTube's proprietary subtitle format.
+
+# The version of your package
+Version: 1.6.6
+
+# The release number of your package
+Release: 1
+
+# Any license you wish to list
+License: MIT
+
+# What group this RPM would typically reside in
+Group: Applications/Multimedia
+
+# Who packaged this RPM
+Packager: arc_
+
+# The build architecture of this RPM (noarch/x86_64/i386/etc)
+Buildarch: x86_64
+
+# You generally should not need to mess with this setting
+Buildroot: %{_tmppath}/%{name}
+
+# Change this extension to change the compression level in your RPM
+#  tar / tar.gz / tar.bz2
+Source0: %{name}.tar.gz
+
+# If you are having trouble building a package and need to disable
+#  automatic dependency/provides checking, uncomment this:
+# AutoReqProv: no
+
+# If this package has prerequisites, uncomment this line and
+#  list them here - examples are already listed
+#Requires: bash, python >= 2.7
+
+# A more verbose description of your package
+%description
+Conversion tool for YouTube's proprietary subtitle format.
+
+# You probably do not need to change this
+%define debug_package %{nil}
+

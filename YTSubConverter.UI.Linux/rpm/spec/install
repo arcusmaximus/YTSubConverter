@@ -1,0 +1,2 @@
+%install
+rsync -a . %{buildroot}/

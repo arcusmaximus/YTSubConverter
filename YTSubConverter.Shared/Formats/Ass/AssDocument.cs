@@ -44,13 +44,13 @@ namespace YTSubConverter.Shared.Formats.Ass
 
         public AssDocument(string filePath, List<AssStyleOptions> styleOptions = null)
         {
-            using StreamReader reader = new StreamReader(filePath);
+            using StreamReader reader = new(filePath);
             Load(reader, styleOptions);
         }
 
         public AssDocument(Stream stream, List<AssStyleOptions> styleOptions = null)
         {
-            using StreamReader reader = new StreamReader(stream, Encoding.UTF8, true, 1024, true);
+            using StreamReader reader = new(stream, Encoding.UTF8, true, 1024, true);
             Load(reader, styleOptions);
         }
 
