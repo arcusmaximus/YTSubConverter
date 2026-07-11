@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using YTSubConverter.Shared.Formats;
+using YTSubConverter.Shared.Util;
 
 namespace YTSubConverter.Shared
 {
@@ -70,7 +71,7 @@ namespace YTSubConverter.Shared
                 return null;
             }
 
-            parsedArgs.SourceFilePath = filePaths[0];
+            parsedArgs.SourceFilePath = PathUtil.ToSafePath(filePaths[0]);
             if (filePaths.Count == 1)
             {
                 string destinationExtension =
@@ -81,11 +82,11 @@ namespace YTSubConverter.Shared
                         ".srv3" => ".ass",
                         _ => ".ytt"
                     };
-                parsedArgs.DestinationFilePath = Path.ChangeExtension(parsedArgs.SourceFilePath, destinationExtension);
+                parsedArgs.DestinationFilePath = PathUtil.ToSafePath(Path.ChangeExtension(parsedArgs.SourceFilePath, destinationExtension));
             }
             else
             {
-                parsedArgs.DestinationFilePath = filePaths[1];
+                parsedArgs.DestinationFilePath = PathUtil.ToSafePath(filePaths[1]);
             }
 
             return parsedArgs;

@@ -422,7 +422,7 @@ namespace YTSubConverter.UI.Win
                 {
                     case ".ass":
                     {
-                        AssDocument inputDoc = new AssDocument(_txtInputFile.Text, (List<AssStyleOptions>)_lstStyles.DataSource);
+                        AssDocument inputDoc = new(_txtInputFile.Text, (List<AssStyleOptions>)_lstStyles.DataSource);
                         outputDoc = new YttDocument(inputDoc);
                         outputExtension = ".ytt";
 
@@ -433,7 +433,7 @@ namespace YTSubConverter.UI.Win
                     case ".ytt":
                     case ".srv3":
                     {
-                        YttDocument inputDoc = new YttDocument(_txtInputFile.Text);
+                        YttDocument inputDoc = new(_txtInputFile.Text);
                         outputDoc = new AssDocument(inputDoc);
                         outputExtension = inputExtension == ".ytt" ? ".reverse.ass" : ".ass";
                         break;
@@ -441,7 +441,7 @@ namespace YTSubConverter.UI.Win
 
                     case ".sbv":
                     {
-                        SbvDocument inputDoc = new SbvDocument(_txtInputFile.Text);
+                        SbvDocument inputDoc = new(_txtInputFile.Text);
                         outputDoc = new SrtDocument(inputDoc);
                         outputExtension = ".srt";
                         break;

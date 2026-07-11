@@ -53,7 +53,7 @@ namespace YTSubConverter.Shared.Formats
             if (loader == null)
                 throw new NotSupportedException();
 
-            return loader(ToSafePath(filePath));
+            return loader(PathUtil.ToSafePath(filePath));
         }
 
         public static SubtitleDocument Convert(SubtitleDocument doc, string newExtension, bool visual, ITextMeasurer textMeasurer = null)
@@ -326,7 +326,7 @@ namespace YTSubConverter.Shared.Formats
 
         public void Save(string filePath)
         {
-            using Stream stream = File.Open(ToSafePath(filePath), FileMode.Create, FileAccess.Write);
+            using Stream stream = File.Open(PathUtil.ToSafePath(filePath), FileMode.Create, FileAccess.Write);
             Save(stream);
         }
 
@@ -339,14 +339,6 @@ namespace YTSubConverter.Shared.Formats
         public virtual void Save(TextWriter writer)
         {
             throw new NotImplementedException();
-        }
-
-        private static string ToSafePath(string filePath)
-        {
-            if (OperatingSystem.IsWindows && !filePath.StartsWith(@"\\?\"))
-                filePath = @"\\?\" + Path.GetFullPath(filePath);
-
-            return filePath;
         }
     }
 }
