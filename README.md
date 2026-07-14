@@ -190,6 +190,9 @@ For videos on someone else's channel, things are a bit trickier. YouTube used to
 
 ## Limitations
 YouTube has some bugs and limitations when it comes to styled subtitles. Please be aware of the following:
+* Some limitations exist for large YTT subtitle files
+  * On browsers, YTT subtitles will not display if the compressed file size in bits of the JSON3 converted YTT file divided by the total seconds runtime of the video is larger than 10240. In normal usage, this limitation is extremely hard (but not impossible) to reach.
+  * On mobile, YTT subtitles making considerable utilization of effects such as transforms, fades, or movemements will not be displayed as an option to the viewer.
 * Subtitles positioned off-center will move out towards the sides in PC theater mode, possibly even hanging out of the video frame.
 * The mobile apps don't support background customization; they show a black rectangle no matter what color or transparency you specify. This means you need to be careful with dark text, because while it'll be perfectly readable on a custom bright background on PC, it'll be barely readable on the default background on mobile.
   * YTSubConverter detects dark text and adds an invisible, brighter subtitle on top of it. Because the Android app ignores transparency, (only) Android users will see this bright version and be able to read the subtitle. iOS users, however, are not so lucky - the app doesn't show the invisible subtitle, leaving only unreadable black-on-black text.
